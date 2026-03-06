@@ -16,27 +16,30 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest-4-cores
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Quarto
         uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: 1.6.42
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y --no-install-recommends pandoc
 
       - name: Render Book
         run: |
-          quarto render --no-execute
+          export QUARTO_DENO_OPTIONS="--allow-all --no-check"
+          export DENO_NO_PACKAGE_JSON=1
+          quarto render . --to html --no-execute
 
-      - name: Render Presentaciones
-        run: |
-          cd presentaciones
-          quarto render --no-execute
-
-      - name: Copy presentaciones to _book
-        run: |
-          mkdir -p _book/presentaciones
-          cp -r presentaciones/_site/* _book/presentaciones/ || true
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        with:
+          static_site_generator: "quarto"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
