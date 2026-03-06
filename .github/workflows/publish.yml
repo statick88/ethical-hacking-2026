@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-4-cores
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,7 +26,6 @@ jobs:
 
       - name: Render Book
         run: |
-          export QUARTO_DENO_OPTIONS="--allow-all --no-check"
           quarto render --no-execute
 
       - name: Render Presentaciones
