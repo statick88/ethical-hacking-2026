@@ -23,23 +23,11 @@ jobs:
 
       - name: Setup Quarto
         uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render with Quarto
+        uses: quarto-dev/quarto-actions/render@v2
         with:
-          version: 1.6.42
-
-      - name: Install dependencies
-        run: |
-          sudo apt-get update && sudo apt-get install -y --no-install-recommends pandoc
-
-      - name: Render Book
-        run: |
-          export QUARTO_DENO_OPTIONS="--allow-all --no-check"
-          export DENO_NO_PACKAGE_JSON=1
-          quarto render . --to html --no-execute
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-        with:
-          static_site_generator: "quarto"
+          to: html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
