@@ -1,0 +1,342 @@
+# Unidad 7: Ciberseguridad Industrial
+
+## Objetivos de Aprendizaje
+
+- **Comprender** la arquitectura de sistemas OT/ICS.
+- **Ejecutar** hardening en entornos industriales.
+- **Auditar** redes y protocolos industriales.
+- **Utilizar** herramientas especializadas como OpenClaw y Pentagi.
+
+---
+
+## Contenido Teórico
+
+### 7.1 Introducción a OT
+
+Operational Technology (OT) abarca sistemas de control industrial: SCADA, DCS, PLCs, RTUs.
+
+#### Arquitectura Purdue
+
+Modelo de referencia para seguridad industrial:
+
+```
+Nivel 5: Enterprise Network (IT)
+    ↓
+Nivel 4: Business Planning
+    ↓
+Nivel 3: Operations Management (DMZ)
+    ↓
+Nivel 2: Supervisory Control (HMI, SCADA)
+    ↓
+Nivel 1: Basic Control (PLCs, RTUs)
+    ↓
+Nivel 0: Process (Sensores, Actuadores)
+```
+
+**Componentes clave**:
+
+- **PLC (Programmable Logic Controller)**: Controlador lógico programable
+- **RTU (Remote Terminal Unit)**: Unidad terminal remota
+- **HMI (Human-Machine Interface)**: Interfaz operador-máquina
+- **SCADA (Supervisory Control and Data Acquisition)**: Sistema de supervisión
+- **ICS (Industrial Control System)**: Sistema de control industrial
+
+#### Protocolos Industriales
+
+**Modbus**:
+- Protocolo serie (Modbus RTU) y TCP (Modbus TCP)
+- Puerto 502
+- Funciones: Read Coils, Read Holding Registers, etc.
+
+```
+# Ejemplo de trama Modbus TCP
+Transaction ID: 2 bytes
+Protocol ID: 2 bytes (0000)
+Length: 2 bytes
+Unit ID: 1 byte
+Function Code: 1 byte
+Data: N bytes
+```
+
+**S7comm** (Siemens S7):
+- Protocolo de comunicación con PLCs Siemens
+- Puerto 102
+- Servicios: S7 communication, Fetch/Write
+
+**Otros protocolos**:
+- DNP3 (Utilities)
+- EtherNet/IP
+- PROFINET
+- BACnet (Building Automation)
+
+#### Protocolo DNP3 — Estructura y Vectores de Ataque
+
+DNP3 (Distributed Network Protocol 3) es ampliamente utilizado en utilities eléctricas y de agua. A diferencia de Modbus, incluye mecanismos de autenticación y confirmación, pero su implementación real a menudo omite estas protecciones.
+
+**Estructura de trama DNP3**:
+```
+Trama DNP3 (capa de enlace):
+  Start Bytes: 0x0564           (2 bytes)
+  Length:       0x?             (1 byte)
+  Control:      DIR|PRM|FCB|FCV|FC  (1 byte)
+  Destination:  0x????          (2 bytes)
+  Source:       0x????          (2 bytes)
+  Data:         CRC-protegido   (N bytes)
+```
+
+**Tipos de objetos DNP3 relevantes para pentesting**:
+| Object Group | Descripción | Relevancia |
+|---|---|---|
+| 1 / 2 | Binary Input / Change | Estado de sensores |
+| 10 | Binary Output | Control de actuadores |
+| 20 / 22 | Counter | Lecturas de medidores |
+| 30 / 32 | Analog Input | Temperatura, presión |
+| 40 / 41 | Analog Output | Setpoints de control |
+
+**Ataques documentados contra DNP3**:
+
+1. **Replay attack**: El protocolo sin autenticación (Secure Authentication v5 deshabilitado) acepta comandos retransmitidos capturados previamente.
+2. **Spoofing de origen**: Sin cifrado de capa de enlace, un atacante en la misma red puede inyectar tramas con Source Address de un HMI legítimo.
+3. **Function Code Abuse**: Enviar FC 0x81 (Direct Operate) para activar salidas binarias (abrir válvulas, desconectar interruptores).
+
+```bash
+# Escaneo DNP3 con nmap NSE
+nmap -p 20000 --script dnp3-info 192.168.1.0/24
+
+# Captura y análisis con Wireshark
+# Filtro: dnp3
+```
+
+#### Segmentación de Redes OT/IT
+
+La convergencia IT/OT es el principal vector de entrada a redes industriales. IEC 62443 y NIST SP 800-82 coinciden en que la segmentación es el control más efectivo.
+
+**Modelo de zonas y conductos (IEC 62443-3-2)**:
+```
+Zona IT (ERP, Email)
+        ↕  Conducto controlado (firewall industrial)
+Zona DMZ Industrial (historians, reporting servers)
+        ↕  Conducto controlado (firewall unidireccional)
+Zona OT Supervisión (SCADA, HMI)
+        ↕  Conducto estricto (data diode o firewall L7)
+Zona OT Control (PLCs, DCS)
+        ↕  Sin conducto externo
+Zona OT Proceso (sensores, actuadores)
+```
+
+**Controles de segmentación recomendados**:
+- **Data Diodes (Unidirectional Gateways)**: Permiten flujo de datos solo de OT → IT, eliminando la superficie de ataque bidireccional. Fabricantes: Waterfall Security, Owl Cyber Defense.
+- **Firewalls industriales**: Con inspección profunda de paquetes para protocolos Modbus, DNP3 y S7comm. Ejemplos: Cisco IE3000, Fortinet FortiGate Rugged.
+- **Jump servers / Bastión OT**: Todo acceso remoto a la red OT debe pasar por un servidor bastión con MFA, grabación de sesión y sin acceso directo a la red de control.
+- **VLAN isolation**: Separar cada zona de PLCs en VLANs distintas con ACLs que bloqueen tráfico lateral no autorizado.
+
+**Errores de segmentación más comunes detectados en auditorías**:
+1. Shares SMB del historian accesibles desde la red corporativa
+2. RDP habilitado directamente sobre HMIs (sin bastión)
+3. Reglas de firewall tipo "any-any" entre DMZ industrial y red OT
+4. Ingenieros con VPN split-tunnel que conectan su portátil a IT y OT simultáneamente
+
+---
+
+### 7.2 OpenClaw
+
+Framework de hardening para sistemas Linux industriales.
+
+**Instalación**:
+```bash
+git clone https://github.com/OTRF/OpenClaw
+cd OpenClaw
+pip install -r requirements.txt
+```
+
+**Uso**:
+```bash
+# Hardening de un sistema Linux industrial
+python openclaw.py --target 192.168.1.100 --report report.html
+
+# Hardening específico
+python openclaw.py --target 192.168.1.100 --modules network,logging,authentication
+```
+
+**Módulos de hardening**:
+- **Network**: Configuración de firewalls, puertos
+- **Logging**: Syslog, auditd
+- **Authentication**: PAM, SSH hardening
+- **Services**: Deshabilitar servicios innecesarios
+- **Updates**: Gestión de parches
+
+**Best Practices**:
+1. Reducir superficie de ataque
+2. Segmentar redes OT de IT
+3. Monitorear tráfico industrial
+4. Implementar IDS/IPS industriales
+5. Plan de respuesta a incidentes
+
+---
+
+### 7.3 Pentagi
+
+Framework de pentesting automatizado específico para entornos OT/ICS.
+
+**Instalación**:
+```bash
+git clone https://github.com/OTRF/pentagi
+cd pentagi
+docker build -t pentagi .
+docker run -d -p 5000:5000 pentagi
+```
+
+**Funcionalidades**:
+- Escaneo de redes OT
+-Enumeración de protocolos industriales
+- Detección de vulnerabilidades
+- Generación de reportes
+
+**Uso**:
+```bash
+# Iniciar pentest
+python3 pentagi.py --target 192.168.1.0/24
+
+# Opciones avanzadas
+python3 pentagi.py --target 192.168.1.0/24 --modules modbus,s7comm --report report.html
+```
+
+**Módulos**:
+- **Reconnaissance**: Descubrimiento de dispositivos
+- **Enumeration**: Puertos, servicios, protocolos
+- **Vulnerability Assessment**: Busqueda de vulnerabilidades
+- **Exploitation**: Pruebas de explotación controlada
+
+---
+
+### 7.4 Herramientas Avanzadas
+
+#### PLCsploit
+
+Framework de explotación de PLCs.
+
+**Instalación**:
+```bash
+git clone https://github.com/dark-lbp/plcsploit
+cd plcsploit
+pip install -r requirements.txt
+```
+
+**Uso**:
+```bash
+# Escaneo de PLCs
+python3 plcsploit.py -t 192.168.1.100 -m scan
+
+# Leer datos
+python3 plcsploit.py -t 192.168.1.100 -m read -r 40001
+
+# Escribir datos
+python3 plcsploit.py -t 192.168.1.100 -m write -r 40001 -v 1
+```
+
+**Módulos**:
+- Scanner: Descubrimiento de PLCs
+- Enum: Enumeración de recursos
+- Read/Write: Lectura/escritura de registros
+- Exploit: Pruebas de explotación
+
+#### s7scan
+
+Escáner de redes S7comm.
+
+**Instalación**:
+```bash
+git clone https://github.com/和信息安全/s7scan
+cd s7scan
+pip install -r requirements.txt
+```
+
+**Uso**:
+```bash
+# Escaneo básico
+python s7scan.py -i eth0
+
+# Escaneo de rango
+python s7scan.py -i eth0 -r 192.168.1.0/24
+
+# Info de dispositivo
+python s7scan.py -i eth0 -t 192.168.1.100
+```
+
+#### Fuzzing de Protocolos Industriales
+
+**Boofuzz**:
+```bash
+# Instalación
+pip install boofuzz
+
+# Fuzzing de Modbus
+python modbus_fuzzer.py
+```
+
+**Fuzzing con Sulley**:
+```python
+from sulley import *
+
+s_initialize("modbus")
+s_static("\x00\x01")  # Transaction ID
+s_static("\x00\x00")  # Protocol ID
+s_static("\x00\x06")  # Length
+s_static("\x01")      # Unit ID
+s_static("\x03")      # Function code
+s_group("register", values=[format(i, '04x') for i in range(0, 100)])
+s_repeat("register", min=1, max=10)
+```
+
+---
+
+## Herramientas
+
+| Herramienta | Propósito | Instalación |
+|-------------|-----------|-------------|
+| **OpenClaw** | Hardening OT | `git clone` |
+| **Pentagi** | Pentesting OT | Docker |
+| **PLCsploit** | Explotación PLCs | `git clone` |
+| **s7scan** | Escaneo S7comm | `git clone` |
+| **Wireshark** | Análisis de tráfico | wireshark.org |
+| **PLCscan** | Escaneo PLCs | `git clone` |
+| **Modscan** | Escaneo Modbus | `git clone` |
+| **Boofuzz** | Fuzzing | `pip install boofuzz` |
+| **OpenPLC** | PLC simulador | Docker |
+
+---
+
+## Laboratorio
+
+> Ver [`labs/lab-unidad7.md`](../labs/lab-unidad7.md) para el escenario completo.
+
+**Escenario**: Entorno simulado con OpenPLC:
+1. Instalar OpenPLC en Docker
+2. Escanear con s7scan/modscan
+3. Hardening con OpenClaw
+4. Pentest con Pentagi
+5. Documentar hallazgos y remediaciones
+
+**Entregable**: Informe de hardening antes/después + hallazgos de pentest.
+
+---
+
+## Recursos Adicionales
+
+- [IEC 62443: Industrial Automation and Control Systems Security](https://www.isa.org/standards-and-publications/isa-standards/isa-iec-62443-series-of-standards) — Estándar internacional de seguridad para sistemas de control industrial
+- [NIST SP 800-82 Rev. 3 (Draft): Guide to Operational Technology (OT) Security](https://csrc.nist.gov/publications/detail/sp/800-82/rev-3/draft) — Guía actualizada específica para OT
+- [Industrial Control Systems Cyber Emergency Response Team (ICS-CERT)](https://www.cisa.gov/ics) — Alertas y recursos de CISA
+- [SANS ICS Security](https://ics.sans.org/) — Recursos de formación y papers de seguridad industrial
+- [Project Basecamp: ICS Security Compendium](https://www.dragos.com/resource/project-basecamp/) — Documentación de Dragos sobre arquitecturas ICS
+- [OpenPLC Forum](https://openplcproject.com/forum/) — Comunidad y documentación de OpenPLC
+
+---
+
+## Bibliografía
+
+- [NIST SP 800-82: Guide to ICS Security](https://csrc.nist.gov/publications/detail/sp/800-82/rev-2/final)
+- [ICS-CERT](https://www.cisa.gov/resources-tools/services/ics-cert)
+- [OpenClaw Documentation](https://github.com/OTRF/OpenClaw)
+- [Pentagi Documentation](https://github.com/OTRF/pentagi)
+- [Modbus Protocol Specification](https://www.modbus.org/specs.php)
+- [S7comm Protocol Documentation](https://github.com/danielketterer/s7comm)

