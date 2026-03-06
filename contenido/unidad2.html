@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 2 - Ethical Hacking 2026</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1 { color: #2c3e50; }
+        a { color: #3498db; }
+    </style>
+</head>
+<body>
+    <h1>Unidad 2: Ethical Hacking</h1>
+    <p><a href="../index.html">← Volver al índice</a></p>
+    <hr>
+    <div class="content">
+# Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje
+
+## Objetivos de Aprendizaje
+
+- **Identificar** las vulnerabilidades específicas en sistemas de IA y modelos de lenguaje.
+- **Ejecutar** ataques de Prompt Injection en diferentes escenarios.
+- **Analizar** técnicas de Jailbreaking y sus variaciones.
+- **Aplicar** metodologías de Bug Bounty en plataformas de IA.
+- **Evaluar** el riesgo de ataques a LLMs en aplicaciones empresariales.
+
+---
+
+## Contenido Teórico
+
+### 2.1 Fundamentos de Seguridad en IA
+
+La seguridad en sistemas de IA es un campo emergente que ha cobrado relevancia crítica con la adopción masiva de Large Language Models (LLMs) en aplicaciones empresariales. Los LLMs presentan una superficie de ataque única que combina vulnerabilidades tradicionales de software con nuevas categorías específicas de IA.
+
+#### Superficie de Ataque en LLMs
+
+Un LLM típico en producción tiene múltiples puntos de entrada:
+
+1. **Prompt del usuario**: La entrada directa del usuario al modelo
+2. **Contexto/Historial**: Conversaciones previas que influyen en respuestas
+3. **Herramientas externas**: APIs y plugins que el LLM puede invocar
+4. **Memoria persistente**: Bases de conocimiento y vectores retrieval
+5. **Cadena de ejecución**: Agentes que ejecutan acciones basadas en output del LLM
+
+#### Taxonomía OWASP Top 10 para LLMs (2025)
+
+El proyecto OWASP LLM Top 10 categoriza las vulnerabilidades más críticas:
+
+| # | Vulnerabilidad | Descripción |
+|---|---------------|-------------|
+| LLM01 | Prompt Injection | Manipulación del prompt a través de entrada maliciosa |
+| LLM02 | Insecure Output Handling | Procesamiento inseguro de outputs del modelo |
+| LLM03 | Training Data Poisoning | Contaminación de datos de entrenamiento |
+| LLM04 | Model Denial of Service | Agotamiento de recursos del modelo |
+| LLM05 | Supply Chain Vulnerabilities | Vulnerabilidades en la cadena de suministro |
+| LLM06 | Sensitive Information Disclosure | Exposición de información sensible |
+| LLM07 | Insecure Plugin Design | Diseño inseguro de plugins/herramientas |
+| LLM08 | Excessive Agency | Capacidad excesiva del agente |
+| LLM09 | Overreliance | Dependencia excesiva en outputs del LLM |
+| LLM10 | Model Theft | Robo o exfiltración del modelo |
+
+#### Conceptos Clave
+
+**Temperatura y Top-p**
+
+Parámetros que controlan la "creatividad" del modelo:
+    </div>
+</body>
+</html>

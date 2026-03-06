@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorio Unidad 8 - Ethical Hacking 2026</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1 { color: #2c3e50; }
+        a { color: #3498db; }
+    </style>
+</head>
+<body>
+    <h1>Laboratorio Unidad 8</h1>
+    <p><a href="../index.html">← Volver al índice</a></p>
+    <hr>
+    <div class="content">
+# Lab 8 — Proyecto Final: Pentest End-to-End
+
+## Objetivo
+
+Ejecutar un pentest profesional completo contra Metasploitable 2, aplicando todas las técnicas aprendidas durante el curso. El estudiante pasará por cada fase del ciclo de vida de un pentest real: reconocimiento, escaneo y enumeración, explotación de múltiples vectores, post-explotación, y entrega de un reporte profesional con hallazgos, evidencias y recomendaciones de remediación.
+
+Al finalizar, el estudiante habrá demostrado capacidad para:
+- Identificar servicios vulnerables en una red interna
+- Explotar al menos tres vectores de ataque diferentes
+- Escalar privilegios y mantener persistencia
+- Documentar hallazgos con CVEs, scores CVSS y pasos de reproducción
+- Redactar un reporte ejecutivo y técnico orientado al cliente
+
+## Prerrequisitos
+
+- Haber completado Labs 1–7
+- Kali Linux 2024.x (VirtualBox o VMware) — mínimo 4 GB RAM, 40 GB disco
+- Metasploitable 2 descargado e importado como VM separada
+- Conocimiento básico de Metasploit Framework, nmap y enumeración de servicios
+
+## Entorno
+
+| Máquina     | SO                   | IP                                         | Rol      |
+|-------------|----------------------|--------------------------------------------|----------|
+| Atacante    | Kali Linux 2024.x    | 192.168.56.101                             | Pentest  |
+| Objetivo    | Metasploitable 2     | 192.168.56.102 *(ajustar según entorno)*   | Víctima  |
+
+- **Red**: Host-Only (`vboxnet0`) o NAT interno — el objetivo NO debe tener salida a Internet
+- **Tiempo estimado**: 4–6 horas
+- **Herramientas**: nmap, metasploit, enum4linux, nikto, dirb, smbclient, netdiscover, hydra, john — todas incluidas en Kali
+
+```bash
+# Verificar conectividad antes de comenzar
+ping -c 3 192.168.56.102
+
+# Guardar la IP como variable de entorno
+export TARGET=192.168.56.102
+echo "Objetivo: $TARGET"
+```
+
+---
+
+## Fase 1: Reconocimiento
+
+**Objetivo**: Identificar el objetivo en la red, sistemas operativos y primera impresión de la superficie de ataque.
+
+### 1.1 Descubrimiento de Host
+
+```bash
+# Descubrir hosts activos en la subred
+netdiscover -r 192.168.56.0/24 -i eth0
+
+# Alternativa con nmap (más rápido)
+nmap -sn 192.168.56.0/24 -oG hosts_activos.txt
+grep "Up" hosts_activos.txt
+```
+
+**Output esperado**:
+```
+Starting Nmap 7.94 ( https://nmap.org )
+Nmap scan report for 192.168.56.102
+Host is up (0.00041s latency).
+MAC Address: 08:00:27:XX:XX:XX (Oracle VirtualBox)
+```
+
+### 1.2 Escaneo de Puertos — Primera Pasada
+
+```bash
+# Escaneo rápido TCP SYN para descubrir puertos abiertos
+nmap -sS -T4 -p- $TARGET -oN fase1_puertos.txt
+
+# Ver resumen de puertos abiertos
+grep "^[0-9]" fase1_puertos.txt
+```
+
+**Output esperado (extracto)**:
+```
+21/tcp    open   ftp
+22/tcp    open   ssh
+23/tcp    open   telnet
+25/tcp    open   smtp
+53/tcp    open   domain
+80/tcp    open   http
+111/tcp   open   rpcbind
+139/tcp   open   netbios-ssn
+445/tcp   open   microsoft-ds
+512/tcp   open   exec
+513/tcp   open   login
+514/tcp   open   shell
+1099/tcp  open   rmiregistry
+1524/tcp  open   ingreslock
+2049/tcp  open   nfs
+2121/tcp  open   ccproxy-ftp
+3306/tcp  open   mysql
+5432/tcp  open   postgresql
+5900/tcp  open   vnc
+6000/tcp  open   X11
+6667/tcp  open   irc
+8009/tcp  open   ajp13
+8180/tcp  open   unknown
+    </div>
+</body>
+</html>

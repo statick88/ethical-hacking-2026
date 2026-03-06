@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 7 - Ethical Hacking 2026</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1 { color: #2c3e50; }
+        a { color: #3498db; }
+    </style>
+</head>
+<body>
+    <h1>Unidad 7: Ethical Hacking</h1>
+    <p><a href="../index.html">← Volver al índice</a></p>
+    <hr>
+    <div class="content">
+# Unidad 7: Ciberseguridad Industrial
+
+## Objetivos de Aprendizaje
+
+- **Comprender** la arquitectura de sistemas OT/ICS.
+- **Ejecutar** hardening en entornos industriales.
+- **Auditar** redes y protocolos industriales.
+- **Utilizar** herramientas especializadas como OpenClaw y Pentagi.
+
+---
+
+## Contenido Teórico
+
+### 7.1 Introducción a OT
+
+Operational Technology (OT) abarca sistemas de control industrial: SCADA, DCS, PLCs, RTUs.
+
+#### Arquitectura Purdue
+
+Modelo de referencia para seguridad industrial:
+
+```
+Nivel 5: Enterprise Network (IT)
+    ↓
+Nivel 4: Business Planning
+    ↓
+Nivel 3: Operations Management (DMZ)
+    ↓
+Nivel 2: Supervisory Control (HMI, SCADA)
+    ↓
+Nivel 1: Basic Control (PLCs, RTUs)
+    ↓
+Nivel 0: Process (Sensores, Actuadores)
+```
+
+**Componentes clave**:
+
+- **PLC (Programmable Logic Controller)**: Controlador lógico programable
+- **RTU (Remote Terminal Unit)**: Unidad terminal remota
+- **HMI (Human-Machine Interface)**: Interfaz operador-máquina
+- **SCADA (Supervisory Control and Data Acquisition)**: Sistema de supervisión
+- **ICS (Industrial Control System)**: Sistema de control industrial
+
+#### Protocolos Industriales
+
+**Modbus**:
+- Protocolo serie (Modbus RTU) y TCP (Modbus TCP)
+- Puerto 502
+- Funciones: Read Coils, Read Holding Registers, etc.
+    </div>
+</body>
+</html>

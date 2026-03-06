@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 4 - Ethical Hacking 2026</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1 { color: #2c3e50; }
+        a { color: #3498db; }
+    </style>
+</head>
+<body>
+    <h1>Unidad 4: Ethical Hacking</h1>
+    <p><a href="../index.html">← Volver al índice</a></p>
+    <hr>
+    <div class="content">
+# Unidad 4: Hacking de Identidad y AD Moderno
+
+## Objetivos de Aprendizaje
+
+- **Evaluar** la seguridad de entornos Active Directory.
+- **Explotar** vulnerabilidades comunes en AD (Kerberoasting, Pass-the-Hash, Golden Ticket).
+- **Auditar** configuraciones de Azure AD / Entra ID.
+- **Ejecutar** técnicas de pivoting y lateral movement.
+
+---
+
+## Contenido Teórico
+
+### 4.1 Active Directory Fundamentals
+
+Active Directory (AD) es el servicio de directorio de Microsoft que gestiona identidades y recursos en redes empresariales. Es el objetivo principal en evaluaciones de seguridad corporativas.
+
+#### Arquitectura de AD
+
+**Componentes clave**:
+
+- **Domain**: Zona administrativa que comparte políticas de seguridad
+- **Forest**: Colección de dominios que comparten esquema y configuración
+- **Organizational Units (OU)**: Contenedores lógicos para organización
+- **Objects**: Usuarios, equipos, grupos, impresoras, etc.
+- **Domain Controllers (DC)**: Servidores que autentican y almacenan AD
+
+**Árbol de AD**:
+```
+Forest (contoso.com)
+  └── Domain (contoso.com)
+    └── OU: IT
+      └── OU: Servers
+        └── OU: Workstations
+```
+
+#### Protocolos de Autenticación
+
+**Kerberos**:
+- Protocolo default en AD moderno
+- Tickets TGT (Ticket Granting Ticket)
+- Tickets de servicio (ST)
+- Puerto 88 (TCP/UDP)
+
+**NTLM**:
+- Legacy, aún habilitado en muchos entornos
+- Challenge-Response
+- Vulnerable a Pass-the-Hash
+
+**LDAP**:
+    </div>
+</body>
+</html>

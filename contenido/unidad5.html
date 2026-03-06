@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 5 - Ethical Hacking 2026</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1 { color: #2c3e50; }
+        a { color: #3498db; }
+    </style>
+</head>
+<body>
+    <h1>Unidad 5: Ethical Hacking</h1>
+    <p><a href="../index.html">← Volver al índice</a></p>
+    <hr>
+    <div class="content">
+# Unidad 5: Pentesting Autónomo y Red Teaming Agéntico
+
+## Objetivos de Aprendizaje
+
+- **Automatizar** tareas de pentesting utilizando agentes de IA.
+- **Planificar** y ejecutar campañas de Red Team completas.
+- **Utilizar** herramientas autonomous de pentesting.
+- **Generar** reportes automatizados profesionales.
+
+---
+
+## Contenido Teórico
+
+### 5.1 Automatización con IA
+
+El pentesting automatizado con IA representa la evolución de las herramientas tradicionales hacia sistemas que pueden tomar decisiones autonomously.
+
+#### Agentic Pentesting
+
+Un agente de pentesting es un sistema que:
+1. Recibe un objetivo
+2. Planifica ataques automáticamente
+3. Ejecuta exploits
+4. Adapta basada en resultados
+5. Reporta hallazgos
+
+**Arquitectura**:
+```
+Input: Objetivo (URL/IP)
+    ↓
+[Agente IA - Planner]
+    ↓
+[Agente IA - Executor] → Herramientas (Nmap, SQLmap, etc.)
+    ↓
+[Agente IA - Analyzer] → Evalúa resultados
+    ↓
+[Agente IA - Reporter] → Genera reporte
+```
+
+#### Herramientas de Pentesting AI
+
+**AutoPentest**:
+```bash
+# Instalación
+git clone https://github.com/verovaleros/AutoPentest
+cd AutoPentest
+pip install -r requirements.txt
+
+# Uso
+python autopentest.py --target 10.10.10.10
+    </div>
+</body>
+</html>

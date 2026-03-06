@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 3 - Ethical Hacking 2026</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1 { color: #2c3e50; }
+        a { color: #3498db; }
+    </style>
+</head>
+<body>
+    <h1>Unidad 3: Ethical Hacking</h1>
+    <p><a href="../index.html">← Volver al índice</a></p>
+    <hr>
+    <div class="content">
+# Unidad 3: Explotación Web y APIs 2026
+
+## Objetivos de Aprendizaje
+
+- **Identificar** y explotar vulnerabilidades web modernas según OWASP Top 10.
+- **Auditar** APIs REST y GraphQL identificando vulnerabilidades específicas.
+- **Ejecutar** ataques avanzados como XSS, SQLi y bypasses de seguridad.
+- **Aplicar** técnicas de pentesting web con herramientas profesionales.
+
+---
+
+## Contenido Teórico
+
+### 3.1 OWASP Top 10 2025
+
+El OWASP Top 10 es la referencia fundamental para seguridad web. La versión 2025 incluye:
+
+| # | Categoría | Descripción | Severidad |
+|---|----------|-------------|-----------|
+| A01 | Broken Access Control | Deficiencias en controls de autorización | Crítica |
+| A02 | Cryptographic Failures | Fallos en cifrado de datos sensibles | Alta |
+| A03 | Injection | Inyección SQL, NoSQL, OS command | Crítica |
+| A04 | Insecure Design | Falta de diseño seguro | Alta |
+| A05 | Security Misconfiguration | Configuraciones inseguras | Media |
+| A06 | Vulnerable Components | Componentes con vulnerabilidades | Alta |
+| A07 | Auth Failures | Fallos en autenticación/gestión de sesiones | Alta |
+| A08 | Data Integrity Failures | Fallos en integridad de software/datos | Media |
+| A09 | Security Logging Failures | Logs insuficientes para detección | Media |
+| A10 | SSRF | Server-Side Request Forgery | Alta |
+
+#### A01: Broken Access Control
+
+**Concepto**: El usuario puede actuar fuera de su intención autorizada.
+
+**Ejemplos de ataque**:
+- Elevación de privilegios horizontal/vertical
+- IDOR (Insecure Direct Object Reference)
+- Bypass de restricciones URL
+- Acceso a API sin verificación
+
+**Payloads de prueba**:
+```
+# IDOR
+GET /api/user/1234  → GET /api/user/1235
+
+# Bypass
+GET /admin/deleteUser → POST /admin/deleteUser?_method=DELETE
+
+# Path traversal
+GET /files/../../etc/passwd
+    </div>
+</body>
+</html>

