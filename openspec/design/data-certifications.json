@@ -1,0 +1,373 @@
+{
+  "certifications": [
+    {
+      "id": "oscp-plus",
+      "name": "OSCP+ (Offensive Security Certified Professional Plus)",
+      "provider": "Offensive Security",
+      "description": "Advanced penetration testing certification focused on hands-on exploitation",
+      "level": "Advanced",
+      "cost": "$950",
+      "prep_time_weeks": "12-24",
+      "exam_duration_hours": 48,
+      "passing_score": "70%",
+      "modules_core": [1, 3, 5, 8],
+      "modules_related": [2, 4, 6, 7],
+      "coverage_percentage": 95,
+      "prerequisites": "Basic networking knowledge",
+      "url": "https://www.offsec.com/courses/pen-200/",
+      "requirements": "OSCP+ includes hands-on lab access and practical exam",
+      "validity_years": 3,
+      "renewal_process": "Retake exam or submit proof of penetration tests",
+      "industry_recognition": "High - highly valued in cybersecurity community",
+      "market_salary_usd": "120000-150000"
+    },
+    {
+      "id": "ceh-v13",
+      "name": "CEH v13 (Certified Ethical Hacker v13)",
+      "provider": "EC-Council",
+      "description": "Entry to intermediate level ethical hacking certification",
+      "level": "Intermediate",
+      "cost": "$325",
+      "prep_time_weeks": "8-12",
+      "exam_duration_hours": 4,
+      "passing_score": "70%",
+      "modules_core": [1, 2, 3],
+      "modules_related": [4, 5, 6, 7],
+      "coverage_percentage": 65,
+      "prerequisites": "2+ years security or IT experience recommended",
+      "url": "https://www.eccouncil.org/programs/certified-ethical-hacker-ceh/",
+      "requirements": "Online proctored exam, can retake unlimited times",
+      "validity_years": 3,
+      "renewal_process": "Continuing education credits or retake exam",
+      "industry_recognition": "Medium-High - widely recognized in industry",
+      "market_salary_usd": "80000-110000"
+    },
+    {
+      "id": "ejpt-v2",
+      "name": "eJPTv2 (eLearnSecurity Junior Penetration Tester v2)",
+      "provider": "eLearnSecurity",
+      "description": "Entry-level penetration testing certification",
+      "level": "Beginner",
+      "cost": "Free online (paid $200 for official cert voucher)",
+      "prep_time_weeks": "4-8",
+      "exam_duration_hours": 5,
+      "passing_score": "60%",
+      "modules_core": [1, 3],
+      "modules_related": [2, 4, 5],
+      "coverage_percentage": 50,
+      "prerequisites": "No formal requirements",
+      "url": "https://ine.com/learning/paths/junior-penetration-tester",
+      "requirements": "Online proctored exam with exam fee",
+      "validity_years": "Lifetime",
+      "renewal_process": "No renewal required",
+      "industry_recognition": "Medium - good entry-level credential",
+      "market_salary_usd": "60000-80000"
+    },
+    {
+      "id": "pnpt",
+      "name": "PNPT (Practical Network Penetration Tester)",
+      "provider": "TCM Security",
+      "description": "Practical penetration testing certification with real-world scenarios",
+      "level": "Intermediate",
+      "cost": "$399",
+      "prep_time_weeks": "8-16",
+      "exam_duration_hours": 48,
+      "passing_score": "70%",
+      "modules_core": [1, 3, 5],
+      "modules_related": [2, 4, 6],
+      "coverage_percentage": 80,
+      "prerequisites": "Basic networking knowledge recommended",
+      "url": "https://certifications.tcm-sec.com/pnpt/",
+      "requirements": "Practical lab exam with write-up submission",
+      "validity_years": 3,
+      "renewal_process": "Retake exam or submit proof of penetration tests",
+      "industry_recognition": "Medium-High - growing industry recognition",
+      "market_salary_usd": "90000-130000"
+    },
+    {
+      "id": "crtp",
+      "name": "CRTP (Certified Red Team Professional)",
+      "provider": "Altered Security",
+      "description": "Active Directory and red team focused certification",
+      "level": "Advanced",
+      "cost": "$249",
+      "prep_time_weeks": "6-12",
+      "exam_duration_hours": 48,
+      "passing_score": "70%",
+      "modules_core": [4, 5],
+      "modules_related": [1, 3, 6],
+      "coverage_percentage": 85,
+      "prerequisites": "Understanding of Windows Active Directory",
+      "url": "https://www.alteredsecurity.com/adlab",
+      "requirements": "Practical exam in lab environment with write-up",
+      "validity_years": 3,
+      "renewal_process": "Retake exam",
+      "industry_recognition": "High - specialized in AD attack techniques",
+      "market_salary_usd": "110000-140000"
+    },
+    {
+      "id": "security-plus",
+      "name": "Security+ (CompTIA Security+)",
+      "provider": "CompTIA",
+      "description": "Entry-level security certification covering broad security concepts",
+      "level": "Beginner-Intermediate",
+      "cost": "$370",
+      "prep_time_weeks": "6-8",
+      "exam_duration_hours": 3,
+      "passing_score": "75%",
+      "modules_core": [2, 3],
+      "modules_related": [1, 4, 6, 8],
+      "coverage_percentage": 60,
+      "prerequisites": "CompTIA Network+ or equivalent experience recommended",
+      "url": "https://www.comptia.org/certifications/security",
+      "requirements": "Online or in-person proctored exam",
+      "validity_years": 3,
+      "renewal_process": "Continuing education credits or retake exam",
+      "industry_recognition": "High - DoD 8570 approved",
+      "market_salary_usd": "70000-100000"
+    },
+    {
+      "id": "bug-bounty",
+      "name": "Bug Bounty Hunter (HackerOne/Bugcrowd)",
+      "provider": "Bug Bounty Platforms",
+      "description": "Validation through successful vulnerability reports on public programs",
+      "level": "Intermediate-Advanced",
+      "cost": "Free (platform dependent)",
+      "prep_time_weeks": "Ongoing",
+      "exam_duration_hours": "Variable",
+      "passing_score": "Accepted vulnerabilities",
+      "modules_core": [3, 5],
+      "modules_related": [1, 2, 4, 6, 8],
+      "coverage_percentage": 70,
+      "prerequisites": "Understanding of common vulnerabilities",
+      "url": "https://www.hackerone.com / https://www.bugcrowd.com",
+      "requirements": "Active participation in bug bounty programs",
+      "validity_years": "Ongoing verification",
+      "renewal_process": "Continuous participation in bug bounty programs",
+      "industry_recognition": "Medium-High - demonstrates real-world skills",
+      "market_salary_usd": "Variable (bounties range $100-50000+)"
+    },
+    {
+      "id": "azure-500",
+      "name": "AZ-500 (Microsoft Azure Security Engineer)",
+      "provider": "Microsoft",
+      "description": "Azure cloud security certification",
+      "level": "Intermediate-Advanced",
+      "cost": "$165",
+      "prep_time_weeks": "8-12",
+      "exam_duration_hours": 2,
+      "passing_score": "70%",
+      "modules_core": [4],
+      "modules_related": [2, 5, 8],
+      "coverage_percentage": 40,
+      "prerequisites": "Azure fundamentals knowledge (AZ-900)",
+      "url": "https://learn.microsoft.com/en-us/certifications/azure-security-engineer/",
+      "requirements": "Online proctored exam",
+      "validity_years": 1,
+      "renewal_process": "Retake exam annually",
+      "industry_recognition": "High - cloud-focused",
+      "market_salary_usd": "100000-130000"
+    },
+    {
+      "id": "gsec",
+      "name": "GSEC (GIAC Security Essentials)",
+      "provider": "GIAC",
+      "description": "Security fundamentals and incident handling certification",
+      "level": "Beginner-Intermediate",
+      "cost": "$2195",
+      "prep_time_weeks": "10-16",
+      "exam_duration_hours": 3,
+      "passing_score": "58%",
+      "modules_core": [2, 6, 8],
+      "modules_related": [1, 3],
+      "coverage_percentage": 55,
+      "prerequisites": "3+ years information security experience",
+      "url": "https://www.giac.org/certification/security-essentials-gsec",
+      "requirements": "Proctored exam at authorized testing center",
+      "validity_years": 4,
+      "renewal_process": "Continuing education or retake exam",
+      "industry_recognition": "High - DoD 8570 approved",
+      "market_salary_usd": "90000-120000"
+    },
+    {
+      "id": "gpen",
+      "name": "GPEN (GIAC Penetration Tester)",
+      "provider": "GIAC",
+      "description": "Advanced penetration testing and ethical hacking certification",
+      "level": "Advanced",
+      "cost": "$2195",
+      "prep_time_weeks": "12-24",
+      "exam_duration_hours": 3,
+      "passing_score": "58%",
+      "modules_core": [3, 5, 8],
+      "modules_related": [1, 2, 4, 6, 7],
+      "coverage_percentage": 90,
+      "prerequisites": "GSEC or equivalent experience required",
+      "url": "https://www.giac.org/certification/penetration-tester-gpen",
+      "requirements": "Proctored exam at authorized testing center",
+      "validity_years": 4,
+      "renewal_process": "Continuing education or retake exam",
+      "industry_recognition": "High - specialized pentesting credential",
+      "market_salary_usd": "120000-150000"
+    }
+  ],
+  "certification_matrix": {
+    "modules": [
+      {
+        "module_id": 1,
+        "module_name": "Fundamentos y Reconocimiento Agéntico",
+        "certifications": {
+          "oscp-plus": "core",
+          "ceh-v13": "core",
+          "ejpt-v2": "core",
+          "pnpt": "core",
+          "crtp": "related",
+          "security-plus": "core",
+          "bug-bounty": "core",
+          "azure-500": "none",
+          "gsec": "core",
+          "gpen": "core"
+        }
+      },
+      {
+        "module_id": 2,
+        "module_name": "Vulnerabilidades en IA y Modelos de Lenguaje",
+        "certifications": {
+          "oscp-plus": "related",
+          "ceh-v13": "core",
+          "ejpt-v2": "related",
+          "pnpt": "related",
+          "crtp": "none",
+          "security-plus": "core",
+          "bug-bounty": "related",
+          "azure-500": "related",
+          "gsec": "related",
+          "gpen": "related"
+        }
+      },
+      {
+        "module_id": 3,
+        "module_name": "Explotación Web y APIs 2026",
+        "certifications": {
+          "oscp-plus": "core",
+          "ceh-v13": "core",
+          "ejpt-v2": "core",
+          "pnpt": "core",
+          "crtp": "related",
+          "security-plus": "core",
+          "bug-bounty": "core",
+          "azure-500": "none",
+          "gsec": "related",
+          "gpen": "core"
+        }
+      },
+      {
+        "module_id": 4,
+        "module_name": "Hacking de Identidad y AD Moderno",
+        "certifications": {
+          "oscp-plus": "core",
+          "ceh-v13": "related",
+          "ejpt-v2": "related",
+          "pnpt": "related",
+          "crtp": "core",
+          "security-plus": "related",
+          "bug-bounty": "none",
+          "azure-500": "core",
+          "gsec": "related",
+          "gpen": "related"
+        }
+      },
+      {
+        "module_id": 5,
+        "module_name": "Pentesting Autónomo y Red Teaming Agéntico",
+        "certifications": {
+          "oscp-plus": "core",
+          "ceh-v13": "related",
+          "ejpt-v2": "related",
+          "pnpt": "core",
+          "crtp": "core",
+          "security-plus": "none",
+          "bug-bounty": "core",
+          "azure-500": "related",
+          "gsec": "none",
+          "gpen": "core"
+        }
+      },
+      {
+        "module_id": 6,
+        "module_name": "Evasión de Defensas",
+        "certifications": {
+          "oscp-plus": "core",
+          "ceh-v13": "related",
+          "ejpt-v2": "none",
+          "pnpt": "related",
+          "crtp": "related",
+          "security-plus": "related",
+          "bug-bounty": "related",
+          "azure-500": "none",
+          "gsec": "related",
+          "gpen": "core"
+        }
+      },
+      {
+        "module_id": 7,
+        "module_name": "Ciberseguridad Industrial",
+        "certifications": {
+          "oscp-plus": "related",
+          "ceh-v13": "related",
+          "ejpt-v2": "none",
+          "pnpt": "related",
+          "crtp": "none",
+          "security-plus": "none",
+          "bug-bounty": "none",
+          "azure-500": "none",
+          "gsec": "related",
+          "gpen": "related"
+        }
+      },
+      {
+        "module_id": 8,
+        "module_name": "Post-Explotación, Reporte y Ética",
+        "certifications": {
+          "oscp-plus": "core",
+          "ceh-v13": "related",
+          "ejpt-v2": "none",
+          "pnpt": "related",
+          "crtp": "related",
+          "security-plus": "core",
+          "bug-bounty": "core",
+          "azure-500": "related",
+          "gsec": "core",
+          "gpen": "core"
+        }
+      }
+    ],
+    "legend": {
+      "core": "Core topic - primary certification focus",
+      "related": "Related/Advanced topic - secondary coverage",
+      "none": "Not covered by this certification"
+    },
+    "post_certification_roadmap": {
+      "short_term": {
+        "duration": "1-3 months",
+        "certifications": ["Security+", "CEH v13"],
+        "focus": "Entry-level credentials with broad security knowledge"
+      },
+      "medium_term": {
+        "duration": "2-6 months",
+        "certifications": ["OSCP+", "Azure Security Engineer (AZ-500)"],
+        "focus": "Intermediate penetration testing and cloud security"
+      },
+      "long_term": {
+        "duration": "6-12 months",
+        "certifications": ["GPEN", "GIAC", "Advanced certifications"],
+        "focus": "Advanced penetration testing and specialized domains"
+      },
+      "alternative_path": {
+        "duration": "Ongoing",
+        "focus": "Bug Bounty hunting and real-world validation",
+        "platforms": ["HackerOne", "Bugcrowd", "Intigriti", "Synack"]
+      }
+    }
+  }
+}
