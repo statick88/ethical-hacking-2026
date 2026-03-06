@@ -21,13 +21,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
-
-      - name: Render with Quarto
-        uses: quarto-dev/quarto-actions/render@v2
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          to: html
+          node-version: '20'
+
+      - name: Install Quarto CLI
+        run: |
+          wget -q https://github.com/quarto-dev/quarto-cli/releases/download/v1.6.42/quarto-1.6.42-linux-amd64.tar.gz -O /tmp/quarto.tar.gz
+          sudo tar -xzf /tmp/quarto.tar.gz -C /opt
+          sudo ln -sf /opt/quarto-1.6.42/bin/quarto /usr/local/bin/quarto
+
+      - name: Render Book
+        run: |
+          /usr/local/bin/quarto render . --to html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
