@@ -25,14 +25,19 @@ jobs:
         uses: quarto-dev/quarto-actions/setup@v2
 
       - name: Render Book
-        uses: quarto-dev/quarto-actions/render@v2
+        run: |
+          export QUARTO_DENO_OPTIONS="--allow-all --no-check"
+          quarto render --no-execute
 
       - name: Render Presentaciones
-        run: quarto render presentaciones
+        run: |
+          cd presentaciones
+          quarto render --no-execute
 
       - name: Copy presentaciones to _book
         run: |
-          cp -r presentaciones/_site _book/presentaciones || true
+          mkdir -p _book/presentaciones
+          cp -r presentaciones/_site/* _book/presentaciones/ || true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
