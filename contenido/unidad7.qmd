@@ -1,6 +1,6 @@
-# Unidad 7: Ciberseguridad Industrial
+# 🏭 Unidad 7: Ciberseguridad Industrial
 
-## Objetivos de Aprendizaje
+## 🎯 Objetivos de Aprendizaje
 
 - **Comprender** la arquitectura de sistemas OT/ICS.
 - **Ejecutar** hardening en entornos industriales.
@@ -9,13 +9,13 @@
 
 ---
 
-## Contenido Teórico
+## 📚 Contenido Teórico
 
-### 7.1 Introducción a OT
+### 🏭 7.1 Introducción a OT
 
 Operational Technology (OT) abarca sistemas de control industrial: SCADA, DCS, PLCs, RTUs.
 
-#### Arquitectura Purdue
+#### 🏗️ Arquitectura Purdue
 
 Modelo de referencia para seguridad industrial:
 
@@ -41,7 +41,7 @@ Nivel 0: Process (Sensores, Actuadores)
 - **SCADA (Supervisory Control and Data Acquisition)**: Sistema de supervisión
 - **ICS (Industrial Control System)**: Sistema de control industrial
 
-#### Protocolos Industriales
+#### 🔌 Protocolos Industriales
 
 **Modbus**:
 - Protocolo serie (Modbus RTU) y TCP (Modbus TCP)
@@ -69,7 +69,7 @@ Data: N bytes
 - PROFINET
 - BACnet (Building Automation)
 
-#### Protocolo DNP3 — Estructura y Vectores de Ataque
+#### 🔧 DNP3 — Estructura y Vectores de Ataque
 
 DNP3 (Distributed Network Protocol 3) es ampliamente utilizado en utilities eléctricas y de agua. A diferencia de Modbus, incluye mecanismos de autenticación y confirmación, pero su implementación real a menudo omite estas protecciones.
 
@@ -107,7 +107,7 @@ nmap -p 20000 --script dnp3-info 192.168.1.0/24
 # Filtro: dnp3
 ```
 
-#### Segmentación de Redes OT/IT
+#### 🛡️ Segmentación de Redes OT/IT
 
 La convergencia IT/OT es el principal vector de entrada a redes industriales. IEC 62443 y NIST SP 800-82 coinciden en que la segmentación es el control más efectivo.
 
@@ -138,7 +138,7 @@ Zona OT Proceso (sensores, actuadores)
 
 ---
 
-### 7.2 OpenClaw
+### 🔧 7.2 OpenClaw
 
 Framework de hardening para sistemas Linux industriales.
 
@@ -174,7 +174,7 @@ python openclaw.py --target 192.168.1.100 --modules network,logging,authenticati
 
 ---
 
-### 7.3 Pentagi
+### 🤖 7.3 Pentagi
 
 Framework de pentesting automatizado específico para entornos OT/ICS.
 
@@ -209,9 +209,9 @@ python3 pentagi.py --target 192.168.1.0/24 --modules modbus,s7comm --report repo
 
 ---
 
-### 7.4 Herramientas Avanzadas
+### 🚀 7.4 Herramientas Avanzadas
 
-#### PLCsploit
+#### ⚙️ PLCsploit
 
 Framework de explotación de PLCs.
 
@@ -240,7 +240,7 @@ python3 plcsploit.py -t 192.168.1.100 -m write -r 40001 -v 1
 - Read/Write: Lectura/escritura de registros
 - Exploit: Pruebas de explotación
 
-#### s7scan
+#### 📡 s7scan
 
 Escáner de redes S7comm.
 
@@ -263,7 +263,7 @@ python s7scan.py -i eth0 -r 192.168.1.0/24
 python s7scan.py -i eth0 -t 192.168.1.100
 ```
 
-#### Fuzzing de Protocolos Industriales
+#### 🔬 Fuzzing de Protocolos Industriales
 
 **Boofuzz**:
 ```bash
@@ -290,7 +290,7 @@ s_repeat("register", min=1, max=10)
 
 ---
 
-## Herramientas
+## 🛠️ Herramientas
 
 | Herramienta | Propósito | Instalación |
 |-------------|-----------|-------------|
@@ -306,7 +306,7 @@ s_repeat("register", min=1, max=10)
 
 ---
 
-## Laboratorio
+## 🔬 Laboratorio
 
 > Ver [`labs/lab-unidad7.md`](../labs/lab-unidad7.md) para el escenario completo.
 
@@ -321,7 +321,7 @@ s_repeat("register", min=1, max=10)
 
 ---
 
-## Recursos Adicionales
+## 📚 Recursos Adicionales
 
 - [IEC 62443: Industrial Automation and Control Systems Security](https://www.isa.org/standards-and-publications/isa-standards/isa-iec-62443-series-of-standards) — Estándar internacional de seguridad para sistemas de control industrial
 - [NIST SP 800-82 Rev. 3 (Draft): Guide to Operational Technology (OT) Security](https://csrc.nist.gov/publications/detail/sp/800-82/rev-3/draft) — Guía actualizada específica para OT
@@ -332,7 +332,7 @@ s_repeat("register", min=1, max=10)
 
 ---
 
-## Bibliografía
+## 📖 Bibliografía
 
 - [NIST SP 800-82: Guide to ICS Security](https://csrc.nist.gov/publications/detail/sp/800-82/rev-2/final)
 - [ICS-CERT](https://www.cisa.gov/resources-tools/services/ics-cert)

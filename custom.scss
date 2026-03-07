@@ -10,16 +10,17 @@ $info: #268bd2;
 
 /*-- scss:rules --*/
 
-// Code blocks - dark background
+// Code blocks - dark background with white text
 pre, code {
   background-color: #002b36 !important;
-  color: #839496;
+  color: #fff !important;
   border-radius: 4px;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 // Headers
 h1, h2, h3, h4, h5, h6 {
-  color: #b58900;
+  color: #fff !important;
 }
 
 // Links
@@ -40,12 +41,18 @@ a {
   background-color: #002b36;
 }
 
+// Main content
+main, .body {
+  background-color: #002b36;
+  color: #fff;
+}
+
 // Code block borders
 pre {
   border: 1px solid #073642;
 }
 
-// Inline code
-code {
-  padding: 2px 6px;
+// Paragraphs
+p {
+  color: #839496;
 }

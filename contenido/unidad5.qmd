@@ -1,6 +1,6 @@
-# Unidad 5: Pentesting Autónomo y Red Teaming Agéntico
+# 🚀 Unidad 5: Pentesting Autónomo y Red Teaming Agéntico
 
-## Objetivos de Aprendizaje
+## 🎯 Objetivos de Aprendizaje
 
 - **Automatizar** tareas de pentesting utilizando agentes de IA.
 - **Planificar** y ejecutar campañas de Red Team completas.
@@ -9,13 +9,13 @@
 
 ---
 
-## Contenido Teórico
+## 📚 Contenido Teórico
 
-### 5.1 Automatización con IA
+### 🤖 5.1 Automatización con IA
 
 El pentesting automatizado con IA representa la evolución de las herramientas tradicionales hacia sistemas que pueden tomar decisiones autonomously.
 
-#### Agentic Pentesting
+#### 🎯 Agentic Pentesting
 
 Un agente de pentesting es un sistema que:
 1. Recibe un objetivo
@@ -37,7 +37,7 @@ Input: Objetivo (URL/IP)
 [Agente IA - Reporter] → Genera reporte
 ```
 
-#### Herramientas de Pentesting AI
+#### 🛠️ Herramientas de Pentesting AI
 
 **AutoPentest**:
 ```bash
@@ -63,7 +63,7 @@ pentestgpt --target example.com --api-key YOUR_KEY
 python reconaigent.py --domain target.com
 ```
 
-#### AI-Assisted Reconnaissance
+#### 🤖 AI-Assisted Reconnaissance
 
 Combina herramientas tradicionales con LLM para análisis:
 - Análisis automático de resultados de Nmap
@@ -72,11 +72,11 @@ Combina herramientas tradicionales con LLM para análisis:
 
 ---
 
-### 5.2 Red Teaming
+### ⚔️ 5.2 Red Teaming
 
 Red Teaming es una evaluación de seguridad integral que simula un adversario real, no solo vulnerabilidades técnicas.
 
-#### Planificación de Campañas
+#### 📋 Planificación de Campañas
 
 **Fases de un Red Team**:
 
@@ -88,7 +88,7 @@ Red Teaming es una evaluación de seguridad integral que simula un adversario re
 6. **Exfiltration**: Envío de datos al C2
 7. **Reporting**: Documentación ejecutiva
 
-#### MITRE ATT&CK
+#### 📊 MITRE ATT&CK
 
 Framework que documenta TTPs (Tactics, Techniques, Procedures):
 
@@ -118,7 +118,7 @@ npm install
 npm start
 ```
 
-#### C2 Frameworks
+#### 🎯 C2 Frameworks
 
 Command and Control frameworks gestionan la comunicación con implants comprometidos.
 
@@ -170,9 +170,9 @@ sliver
 
 ---
 
-### 5.3 Herramientas Autonomous
+### 🤖 5.3 Herramientas Autonomous
 
-#### CustomGPTs para Pentesting
+#### 🧠 CustomGPTs para Pentesting
 
 OpenAI permite crear GPTs personalizados:
 - Análisis de logs de seguridad
@@ -184,7 +184,7 @@ OpenAI permite crear GPTs personalizados:
 - Generación de reportes
 - Análisis de resultados de escaneo
 
-#### Autonomous Scanning Tools
+#### 🔍 Autonomous Scanning Tools
 
 **AutoRecon**:
 ```bash
@@ -217,9 +217,9 @@ nuclei -u target -tags cve
 
 ---
 
-### 5.4 Reporting Automatizado
+### 📝 5.4 Reporting Automatizado
 
-#### Priorización de Hallazgos
+#### ⚖️ Priorización de Hallazgos
 
 **CVSS (Common Vulnerability Scoring System)**:
 - 0.0 - 3.9: Bajo
@@ -233,7 +233,7 @@ nuclei -u target -tags cve
 - Impacto de negocio
 - Exposición
 
-#### Herramientas de Reporting
+#### 📄 Herramientas de Reporting
 
 **Dradis CE**:
 ```bash
@@ -279,7 +279,7 @@ La aplicación es vulnerable a SQL Injection en el parámetro 'id'.
 
 ---
 
-## Herramientas
+## 🛠️ Herramientas
 
 | Herramienta | Propósito | Instalación |
 |-------------|-----------|-------------|
@@ -295,7 +295,7 @@ La aplicación es vulnerable a SQL Injection en el parámetro 'id'.
 
 ---
 
-## Laboratorio
+## 🔬 Laboratorio
 
 > Ver [`labs/lab-unidad5.md`](../labs/lab-unidad5.md) para el escenario completo.
 
@@ -309,7 +309,7 @@ La aplicación es vulnerable a SQL Injection en el parámetro 'id'.
 
 ---
 
-## Recursos Adicionales
+## 📚 Recursos Adicionales
 
 - [MITRE ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/) — herramienta visual interactiva para mapear TTPs de Red Team contra la matriz ATT&CK
 - [Metasploit Unleashed](https://www.offensive-security.com/metasploit-unleashed/) — curso gratuito de Offensive Security sobre Metasploit Framework
@@ -320,7 +320,7 @@ La aplicación es vulnerable a SQL Injection en el parámetro 'id'.
 
 ---
 
-## Bibliografía
+## 📖 Bibliografía
 
 - [MITRE ATT&CK](https://attack.mitre.org/)
 - [Sliver Documentation](https://sliver.sh/docs)

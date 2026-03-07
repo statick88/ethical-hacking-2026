@@ -1,6 +1,6 @@
-# Unidad 1: Fundamentos y Reconocimiento Agéntico
+# 🛡️ Unidad 1: Fundamentos y Reconocimiento Agéntico
 
-## Objetivos de Aprendizaje
+## 🎯 Objetivos de Aprendizaje
 
 - **Identificar** las fases del pentesting y su importancia en una evaluación de seguridad.
 - **Ejecutar** técnicas de reconocimiento pasivo y activo utilizando herramientas automatizadas.
@@ -10,36 +10,36 @@
 
 ---
 
-## Contenido Teórico
+## 📚 Contenido Teórico
 
-### 1.1 Metodología de Pentesting
+### 1.1 Metodología de Pentesting 🔍
 
 El pentesting (penetration testing) es una evaluación de seguridad autorizada que simula ataques reales contra sistemas, aplicaciones o redes para identificar vulnerabilidades explotables. A diferencia de los escaneos automatizados de vulnerabilidades, el pentesting implica explotación manual, creatividad y pensamiento lateral.
 
-#### Fases del Pentesting
+#### 📋 Fases del Pentesting
 
 El estándar más aceptado define 5 fases principales:
 
-1. **Reconocimiento (Information Gathering)**: Recolección de información sobre el objetivo. Puede ser pasiva (sin interacción directa) o activa (con interacción directa).
+1. **Reconocimiento (Information Gathering)** 🔎: Recolección de información sobre el objetivo. Puede ser pasiva (sin interacción directa) o activa (con interacción directa).
 
-2. **Escaneo (Enumeration)**: Identificación de puertos abiertos, servicios instalados y versiones. Determinación de vulnerabilidades potenciales.
+2. **Escaneo (Enumeration)** 📡: Identificación de puertos abiertos, servicios instalados y versiones. Determinación de vulnerabilidades potenciales.
 
-3. **Explotación (Exploitation)**: Aprovechamiento de vulnerabilidades encontradas para obtener acceso al sistema.
+3. **Explotación (Exploitation)** 💥: Aprovechamiento de vulnerabilidades encontradas para obtener acceso al sistema.
 
-4. **Post-Explotación (Post-Exploitation)**: Mantenimiento del acceso, pivoting a otros sistemas, escalamiento de privilegios, exfiltración de datos.
+4. **Post-Explotación (Post-Exploitation)** 🎯: Mantenimiento del acceso, pivoting a otros sistemas, escalamiento de privilegios, exfiltración de datos.
 
-5. **Reporte (Reporting)**: Documentación técnica y ejecutiva de hallazgos, recomendaciones de remediación.
+5. **Reporte (Reporting)** 📝: Documentación técnica y ejecutiva de hallazgos, recomendaciones de remediación.
 
-#### Marcos de Trabajo
+#### 📊 Marcos de Trabajo
 
-**OSSTMM (Open Source Security Testing Methodology Manual)**
+**OSSTMM (Open Source Security Testing Methodology Manual)** 📖
 
 Desarrollado por ISECOM, proporciona una metodología científica para pruebas de seguridad. Se centra en:
 - Análisis de seguridad de canales (redes, comunicaciones, etc.)
 - Medición de seguridad en términos de pérdida de confidencialidad, integridad, disponibilidad y privacidad
 - Ranking de seguridad (Carnellie Index)
 
-**PTES (Penetration Testing Execution Standard)**
+**PTES (Penetration Testing Execution Standard)** ⚙️
 
 Más práctico y orientado a la industria, define:
 - Pre-engagement Interactions (alcance, reglas de compromiso)
@@ -49,7 +49,7 @@ Más práctico y orientado a la industria, define:
 - Exploitation (explotación)
 - Reporting (reporte)
 
-**Comparativa de Marcos**
+**Comparativa de Marcos** 📈
 
 | Aspecto | OSSTMM | PTES | OWASP Testing Guide |
 |---------|--------|------|---------------------|
@@ -58,51 +58,51 @@ Más práctico y orientado a la industria, define:
 | Aplicación | Auditorías profundas | Pentests generales | Web apps |
 | Métricas | Carnellie Index | Directo | CVSS |
 
-> **Nota del instructor**: En este curso utilizaremos PTES como referencia principal por su aplicabilidad directa, complementado con OSSTMM para métricas y OWASP para aplicaciones web.
+> **💡 Nota del instructor**: En este curso utilizaremos PTES como referencia principal por su aplicabilidad directa, complementado con OSSTMM para métricas y OWASP para aplicaciones web.
 
 ---
 
-### 1.2 Reconocimiento Agéntico
+### 1.2 Reconocimiento Agénticor 🤖
 
 El reconocimiento (reconnaissance) es la fase más crítica del pentesting. Un reconocimiento exhaustivo puede revelar el 70% de la información necesaria para un ataque exitoso. El reconocimiento agéntico se refiere al uso de herramientas automatizadas que actúan como "agentes" de recolección de información.
 
-#### OSINT (Open Source Intelligence)
+#### OSINT (Open Source Intelligence) 🌐
 
 OSINT es la recolección de información de fuentes públicamente disponibles:
 
-- **Motores de búsqueda**: Google, Bing, DuckDuckGo
-- **Registros DNS**: WHOIS, DNS enumeration
-- **Redes sociales**: LinkedIn, Twitter, Facebook
-- **Shodan**: Dispositivos IoT y servidores
-- **Censys**: Certificados y fingerprints
+- **Motores de búsqueda**: Google, Bing, DuckDuckGo 🔍
+- **Registros DNS**: WHOIS, DNS enumeration 📬
+- **Redes sociales**: LinkedIn, Twitter, Facebook 📱
+- **Shodan**: Dispositivos IoT y servidores 🖥️
+- **Censys**: Certificados y fingerprints 🔐
 
-**Google Dorks (Busquedas Avanzadas)**
+**Google Dorks (Búsquedas Avanzadas)** 🕵️
 
 ```
 site:example.com inurl:admin        # Páginas de admin
-site:example.com filetype:pdf        # Documentos PDF
-site:example.com "password"          # Exposed passwords
+site:example.com filetype:pdf       # Documentos PDF
+site:example.com "password"         # Exposed passwords
 site:example.com ext:log            # Archivos de log
 site:example.com intext:email       # Emails expuestos
 ```
 
-**Shodan Queries**
+**Shodan Queries** 🔎
 
 ```
 product:apache example.com          # Servidores Apache
 port:22 city:Madrid                 # SSH en Madrid
-vuln:CVE-2024-1234                 # Vulnerables a CVE
+vuln:CVE-2024-1234                  # Vulnerables a CVE
 ```
 
-#### Scraping y Recolección de Datos
+#### 🕸️ Scraping y Recolección de Datos
 
 El scraping automatizado permite extraer información de sitios web:
 
-- **theHarvester**: Recopila emails, subdominios, IPs de fuentes públicas
-- **Sherlock**: Búsqueda de usernames en redes sociales
-- **Maltego CE**: Análisis visual de relaciones entre entidades
+- **theHarvester** 📧: Recopila emails, subdominios, IPs de fuentes públicas
+- **Sherlock** 🔎: Búsqueda de usernames en redes sociales
+- **Maltego CE** 🕸️: Análisis visual de relaciones entre entidades
 
-**Ejemplo: theHarvester**
+**Ejemplo: theHarvester** 🛠️
 
 ```bash
 # Instalación
@@ -117,7 +117,7 @@ python theHarvester.py -d example.com -b all
 python theHarvester.py -d empresa.com -b google,bing,linkedin -s -v -n
 ```
 
-#### Automatización con Python
+#### 🐍 Automatización con Python
 
 Scripts personalizados para reconocimiento específico:
 
@@ -150,13 +150,13 @@ print(f"Puertos abiertos: {open_ports}")
 
 ---
 
-### 1.3 Herramientas de Escaneo
+### 1.3 Herramientas de Escaneo 🛠️
 
-#### Nmap (Network Mapper)
+#### Nmap (Network Mapper) 🗺️
 
 La herramienta de escaneo de red más versátil y utilizada.
 
-**Escaneos Básico**
+**Escaneos Básicos** ⚡
 
 ```bash
 # Escaneo TCP SYN rápido
@@ -172,7 +172,7 @@ nmap -sC target.com
 nmap -sU -p 53,161 target.com
 ```
 
-**Scripts NSE (Nmap Scripting Engine)**
+**Scripts NSE (Nmap Scripting Engine)** 📜
 
 ```bash
 # Scripts de vulnerabilidades
@@ -188,7 +188,7 @@ nmap --script ssl-enum-ciphers -p 443 target.com
 nmap --script auth target.com
 ```
 
-**Opciones Avanzadas**
+**Opciones Avanzadas** 🚀
 
 ```bash
 # Timing (T0-T5, más rápido = más ruido)
@@ -205,7 +205,7 @@ nmap -oA resultados target.com  # Todos los formatos
 nmap -oX resultados.xml target.com
 ```
 
-**Interpretación de Resultados**
+**Interpretación de Resultados** 📊
 
 ```
 PORT   STATE SERVICE VERSION
@@ -215,12 +215,12 @@ PORT   STATE SERVICE VERSION
 ```
 
 Estados de puerto:
-- **open**: Servicio escuchando
-- **filtered**: Probablemente filtrado por firewall
-- **closed**: Puerto cerrado
-- **open|filtered**: Estado不确定
+- **open** 🟢: Servicio escuchando
+- **filtered** 🟡: Probablemente filtrado por firewall
+- **closed** 🔴: Puerto cerrado
+- **open|filtered** ⚪: Estado不确定
 
-#### Recon-ng
+#### Recon-ng 🔧
 
 Framework de reconocimiento web modular written in Python.
 
@@ -233,7 +233,7 @@ marketplace install recon/domains-contacts/whois
 marketplace install discovery/info_disclosure/interesting_files
 
 # workspaces - crear proyecto
-workspaces create pentest_ empresa
+workspaces create pentest_empresa
 workspaces load empresa
 
 # Agregar dominio
@@ -248,13 +248,13 @@ run
 ```
 
 Módulos esenciales:
-- `recon/domains-contacts/whois`: Contactos WHOIS
-- `recon/domains-contacts/free_geoloc`: Geolocalización
-- `recon/domains-websites/bing_web`: Subdominios Bing
-- `recon/netblocks-whois/whois`: Rangos de red
-- `exploitation/injection/sqlmap`: SQLi automation
+- `recon/domains-contacts/whois` 📬: Contactos WHOIS
+- `recon/domains-contacts/free_geoloc` 🌍: Geolocalización
+- `recon/domains-websites/bing_web` 🔍: Subdominios Bing
+- `recon/netblocks-whois/whois` 🌐: Rangos de red
+- `exploitation/injection/sqlmap` 💉: SQLi automation
 
-#### SpiderFoot
+#### SpiderFoot 🕷️
 
 Herramienta de automatización OSINT con interfaz web y CLI.
 
@@ -275,55 +275,55 @@ python sfcli.py -s target.com -m sfp_dns,sfp_builtwith,sfp_hunter
 ```
 
 Módulos por categoría:
-- **Passive**: No toca el objetivo (Shodan, Hunter, DNS aggregates)
-- **Active**:Interactúa directamente (nmap, robots.txt)
-- **Footprint**: Análisis profundo (subdominios, fingerprints)
+- **Passive** 🤫: No toca el objetivo (Shodan, Hunter, DNS aggregates)
+- **Active** 🔓:Interactúa directamente (nmap, robots.txt)
+- **Footprint** 👣: Análisis profundo (subdominios, fingerprints)
 
 ---
 
-## Herramientas
+## 🛠️ Herramientas
 
 | Herramienta | Propósito | Instalación / URL |
 |-------------|-----------|-------------------|
-| **Nmap** | Escaneo de red y puertos | `sudo apt install nmap` o nmap.org |
-| **Recon-ng** | Framework de reconocimiento web | `pip install recon-ng` |
-| **SpiderFoot** | Automatización OSINT | spiderfoot.net |
-| **theHarvester** | Recopilación de emails/subdominios | `git clone theHarvester` |
-| **Maltego CE** | Análisis visual de enlaces | maltego.com |
-| **Shodan CLI** | Busqueda de dispositivos | `pip install shodan` |
-| **Hunter.io** | Emails corporativos | hunter.io (free tier) |
+| **Nmap** 🗺️ | Escaneo de red y puertos | `sudo apt install nmap` o nmap.org |
+| **Recon-ng** 🔧 | Framework de reconocimiento web | `pip install recon-ng` |
+| **SpiderFoot** 🕷️ | Automatización OSINT | spiderfoot.net |
+| **theHarvester** 📧 | Recopilación de emails/subdominios | `git clone theHarvester` |
+| **Maltego CE** 🕸️ | Análisis visual de enlaces | maltego.com |
+| **Shodan CLI** 🔎 | Búsqueda de dispositivos | `pip install shodan` |
+| **Hunter.io** 🎯 | Emails corporativos | hunter.io (free tier) |
 
 ---
 
-## Laboratorio
+## 🔬 Laboratorio
 
 > Ver [`labs/lab-unidad1.md`](../labs/lab-unidad1.md) para el escenario completo.
 
 **Escenario**: Realizar reconocimiento completo de un objetivo simulado (máquina TryHackMe o Docker con servicios expuestos). El estudiante debe identificar:
-- Información de dominio y DNS
-- Subdominios
-- Puertos abiertos y servicios
-- Vulnerabilidades potenciales
-- Correos electrónicos expuestos
+- Información de dominio y DNS 🌐
+- Subdominios 🔍
+- Puertos abiertos y servicios �_ports_
+- Vulnerabilidades potenciales ⚠️
+- Correos electrónicos expuestos 📧
 
-**Entregable**: Reporte técnico de reconocimiento con screenshots y comandos utilizados.
-
----
-
-## Recursos Adicionales
-
-- [Nmap Official Documentation](https://nmap.org/book/man.html)
-- [PTES Technical Guidelines](http://www.pentest-standard.org/index.php/PTES_Technical_Guidelines)
-- [OSSTMM 3.0](https://isecom.org/osstmm/)
-- [Nmap Scripting Engine Documentation](https://nmap.org/book/nse.html)
-- [Recon-ng Wiki](https://github.com/lanmaster53/recon-ng/wiki)
-- [SpiderFoot Documentation](https://spiderfoot.net/documentation/)
-- [TryHackMe: Intro to Reconnaissance](https://tryhackme.com/room/reconlearn)
-- [OWASP Testing Guide v4.2](https://owasp.org/www-project-web-security-testing-guide/)
+**Entregable**: Reporte técnico de reconocimiento con screenshots y comandos utilizados. 📝
 
 ---
 
-## Bibliografía
+## 📚 Recursos Adicionales
+
+- [Nmap Official Documentation](https://nmap.org/book/man.html) 📖
+- [PTES Technical Guidelines](http://www.pentest-standard.org/index.php/PTES_Technical_Guidelines) ⚙️
+- [OSSTMM 3.0](https://isecom.org/osstmm/) 📊
+- [Nmap Scripting Engine Documentation](https://nmap.org/book/nse.html) 🛠️
+- [Recon-ng Wiki](https://github.com/lanmaster53/recon-ng/wiki) 🔧
+- [SpiderFoot Documentation](https://spiderfoot.net/documentation/) 🕷️
+- [TryHackMe: Intro to Reconnaissance](https://tryhackme.com/room/reconlearn) 🎮
+- [OWASP Testing Guide v4.2](https://owasp.org/www-project-web-security-testing-guide/) 🛡️
+
+---
+
+## 📖 Bibliografía
 
 - [PTES - Penetration Testing Execution Standard](http://www.pentest-standard.org/)
 - [OSSTMM - Open Source Security Testing Methodology Manual](https://isecom.org/)
