@@ -1,37 +1,49 @@
 version: '3.8'
 
 services:
-  dvwa:
-    image: vulnerables/web-dvwa
-    container_name: lab8-dvwa
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: lab8-api
     ports:
-      - "80:80"
-      - "443:443"
+      - "5000:5000"
     environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=development
       - DB_HOST=db
       - DB_USER=root
       - DB_PASSWORD=password
-      - DB_NAME=dvwa
+      - DB_NAME=vulnerable_api
+    depends_on:
+      db:
+        condition: service_healthy
     networks:
       lab8-net:
         ipv4_address: 172.18.8.10
     volumes:
-      - dvwa-data:/var/www/html
+      - /tmp:/tmp
     deploy:
       resources:
         limits:
-          memory: 1G
-        reservations:
           memory: 512M
+        reservations:
+          memory: 256M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 
   db:
-    image: mariadb:10.5
+    image: mariadb:11.4
     container_name: lab8-db
     environment:
       - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=dvwa
-      - MYSQL_USER=dvwa
-      - MYSQL_PASSWORD=password
+      - MYSQL_DATABASE=vulnerable_api
+      - MYSQL_USER=apiuser
+      - MYSQL_PASSWORD=apipass
     networks:
       lab8-net:
         ipv4_address: 172.18.8.20
@@ -43,9 +55,15 @@ services:
           memory: 512M
         reservations:
           memory: 256M
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   kali:
-    image: kalilinux/kali-rolling
+    image: kalilinux/kali-rolling:2025.1
     container_name: lab8-kali
     tty: true
     stdin_open: true
@@ -71,8 +89,6 @@ networks:
         - subnet: 172.18.8.0/24
 
 volumes:
-  dvwa-data:
-    driver: local
   db-data:
     driver: local
   kali-data:
