@@ -1,19 +1,64 @@
 version: '3.8'
 
+# NOTA: Este archivo usa GOAD (Game of Active Directory) como simulador de AD
+# GOAD está basado en Linux con Samba/OpenLDAP - funciona en todos los sistemas
+# 
+# Para información sobre GOAD: https://github.com/Orange-Cyberdefense/GOAD
+# Este lab requiere ~8GB RAM y soporta las principales técnicas de explotación de AD
+
 services:
-  juice-shop:
-    image: bkimminich/juice-shop
-    container_name: lab4-juice-shop
-    ports:
-      - "3000:3000"
+  # Domain Controller simulado con Samba + OpenLDAP
+  dc01:
+    image: goadnetwork/goad:latest
+    container_name: lab4-dc01
+    hostname: dc01
     environment:
-      - NODE_ENV=production
-      - CHALLENGES=ALL
+      # Configuración del dominio
+      - SAMBA_REALM=LAB.LOCAL
+      - SAMBA_DOMAIN=LAB
+      - ADMIN_PASSWORD=P@ssw0rd123!
+      - KERBEROS_REALM=LAB.LOCAL
+      - DNS_FORWARDER=8.8.8.8
     networks:
       lab4-net:
         ipv4_address: 172.18.4.10
     volumes:
-      - juice-data:/app
+      - dc01-data:/var/lib/samba
+    ports:
+      - "389:389"    # LDAP
+      - "636:636"    # LDAPS
+      - "88:88"      # Kerberos
+      - "445:445"    # SMB
+      - "53:53"      # DNS
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 1G
+    healthcheck:
+      test: ["CMD", "netstat", "-tuln", "|", "grep", ":389"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Servidor miembro del dominio (Windows simulado con Samba)
+  member01:
+    image: goadnetwork/goad-member:latest
+    container_name: lab4-member01
+    hostname: member01
+    environment:
+      - DOMAIN_CONTROLLER=dc01.lab.local
+      - DOMAIN=LAB.LOCAL
+      - ADMIN_PASSWORD=P@ssw0rd123!
+    networks:
+      lab4-net:
+        ipv4_address: 172.18.4.20
+    volumes:
+      - member01-data:/var/lib/samba
+    depends_on:
+      dc01:
+        condition: service_healthy
     deploy:
       resources:
         limits:
@@ -21,17 +66,19 @@ services:
         reservations:
           memory: 512M
 
+  # Atacante con herramientas de explotación de AD
   kali:
-    image: kalilinux/kali-rolling
+    image: kalilinux/kali-rolling:2025.1
     container_name: lab4-kali
     tty: true
     stdin_open: true
     privileged: true
     networks:
       lab4-net:
-        ipv4_address: 172.18.4.20
+        ipv4_address: 172.18.4.30
     volumes:
       - kali-data:/root
+      - ./tools:/tools:ro
     command: tail -f /dev/null
     deploy:
       resources:
@@ -39,6 +86,9 @@ services:
           memory: 2G
         reservations:
           memory: 1G
+    depends_on:
+      dc01:
+        condition: service_healthy
 
 networks:
   lab4-net:
@@ -48,7 +98,9 @@ networks:
         - subnet: 172.18.4.0/24
 
 volumes:
-  juice-data:
+  dc01-data:
+    driver: local
+  member01-data:
     driver: local
   kali-data:
     driver: local
