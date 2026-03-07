@@ -1,8 +1,7 @@
 # Ethical Hacking 2026
 project:
   type: book
-  post-render: 
-    - "quarto render presentaciones"
+  output-dir: _book
 
 book:
   title: "Ethical Hacking 2026"

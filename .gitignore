@@ -1,7 +1,6 @@
 # Dependencias y Configuración
 node_modules/
 .quarto/
-_book/
 _site/
 
 # Entornos virtuales
@@ -64,3 +63,10 @@ yarn-error.log*
 # Quarto específico
 .quarto/session/*
 !_quarto/session/.gitkeep
+
+/.quarto/
+**/*.quarto_ipynb
+
+# Build outputs (excepto para GitHub Pages)
+_book/search.json
+_book/.quarto/
