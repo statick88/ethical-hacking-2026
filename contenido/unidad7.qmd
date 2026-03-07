@@ -246,7 +246,7 @@ Escáner de redes S7comm.
 
 **Instalación**:
 ```bash
-git clone https://github.com/和信息安全/s7scan
+git clone https://github.com/moki-ics/s7scan
 cd s7scan
 pip install -r requirements.txt
 ```

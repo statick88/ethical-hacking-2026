@@ -218,7 +218,7 @@ Estados de puerto:
 - **open** 🟢: Servicio escuchando
 - **filtered** 🟡: Probablemente filtrado por firewall
 - **closed** 🔴: Puerto cerrado
-- **open|filtered** ⚪: Estado不确定
+- **open|filtered** ⚪: Estado desconocido
 
 #### Recon-ng 🔧
 
