@@ -1,40 +1,51 @@
 /*-- scss:defaults --*/
 
-// Color palette
-$primary: #2c3e50;
-$secondary: #3498db;
-$success: #27ae60;
-$danger: #e74c3c;
-$warning: #f39c12;
-$info: #1abc9c;
+// Color palette - Solar theme overrides
+$primary: #b58900;
+$secondary: #2aa198;
+$success: #859900;
+$danger: #dc322f;
+$warning: #b58900;
+$info: #268bd2;
 
 /*-- scss:rules --*/
 
-// Navbar
-.navbar {
-  background-color: $primary !important;
-}
-
-// Links
-a {
-  color: $secondary;
-  &:hover {
-    color: darken($secondary, 10%);
-  }
-}
-
-// Code blocks
+// Code blocks - dark background
 pre, code {
-  background-color: #f4f4f4;
+  background-color: #002b36 !important;
+  color: #839496;
   border-radius: 4px;
 }
 
 // Headers
 h1, h2, h3, h4, h5, h6 {
-  color: $primary;
+  color: #b58900;
 }
 
-// Book title
-.book-title {
-  color: $primary;
+// Links
+a {
+  color: #2aa198;
+  &:hover {
+    color: #268bd2;
+  }
+}
+
+// Navbar
+.navbar {
+  background-color: #073642 !important;
+}
+
+// Sidebar
+.sidebar {
+  background-color: #002b36;
+}
+
+// Code block borders
+pre {
+  border: 1px solid #073642;
+}
+
+// Inline code
+code {
+  padding: 2px 6px;
 }
