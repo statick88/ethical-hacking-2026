@@ -41,7 +41,9 @@ book:
 
 format:
   html:
-    theme: cosmo
+    theme:
+      - solar
+      - custom.scss
 
 execute:
   echo: false

@@ -1,0 +1,40 @@
+/*-- scss:defaults --*/
+
+// Color palette
+$primary: #2c3e50;
+$secondary: #3498db;
+$success: #27ae60;
+$danger: #e74c3c;
+$warning: #f39c12;
+$info: #1abc9c;
+
+/*-- scss:rules --*/
+
+// Navbar
+.navbar {
+  background-color: $primary !important;
+}
+
+// Links
+a {
+  color: $secondary;
+  &:hover {
+    color: darken($secondary, 10%);
+  }
+}
+
+// Code blocks
+pre, code {
+  background-color: #f4f4f4;
+  border-radius: 4px;
+}
+
+// Headers
+h1, h2, h3, h4, h5, h6 {
+  color: $primary;
+}
+
+// Book title
+.book-title {
+  color: $primary;
+}
