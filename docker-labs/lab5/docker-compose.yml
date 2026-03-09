@@ -1,25 +1,27 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  owaspbricks:
-    image: vulnerables/owaspbricks
-    container_name: lab5-bricks
+  # TARGET 1: Log4Shell Vulnerable App
+  log4shell:
+    image: ghcr.io/christophetd/log4shell-vulnerable-app
+    container_name: lab5-log4shell
     ports:
       - "8080:8080"
-    environment:
-      - TZ=UTC
     networks:
       lab5-net:
         ipv4_address: 172.18.5.10
-    volumes:
-      - bricks-data:/var/www/html
-    deploy:
-      resources:
-        limits:
-          memory: 1G
-        reservations:
-          memory: 512M
 
+  # TARGET 2: Jenkins (Old vulnerable version)
+  jenkins:
+    image: jenkins/jenkins:2.60.3
+    container_name: lab5-jenkins
+    ports:
+      - "8081:8080"
+    networks:
+      lab5-net:
+        ipv4_address: 172.18.5.11
+
+  # ATTACKER: Kali con C2 & AI Tools
   kali:
     image: kalilinux/kali-rolling
     container_name: lab5-kali
@@ -29,15 +31,17 @@ services:
     networks:
       lab5-net:
         ipv4_address: 172.18.5.20
-    volumes:
-      - kali-data:/root
-    command: tail -f /dev/null
-    deploy:
-      resources:
-        limits:
-          memory: 2G
-        reservations:
-          memory: 1G
+    environment:
+      - DEBIAN_FRONTEND=noninteractive
+    command: >
+      bash -c "apt-get update && 
+      apt-get install -y curl wget git python3 python3-pip metasploit-framework iputils-ping && 
+      # Install Sliver C2
+      curl https://sliver.sh/install|sudo bash && 
+      # Install Nuclei
+      curl -sL https://github.com/projectdiscovery/nuclei/releases/download/v2.9.8/nuclei_2.9.8_linux_amd64.zip > nuclei.zip && 
+      unzip nuclei.zip && mv nuclei /usr/local/bin/ && rm nuclei.zip && 
+      tail -f /dev/null"
 
 networks:
   lab5-net:
@@ -45,9 +49,3 @@ networks:
     ipam:
       config:
         - subnet: 172.18.5.0/24
-
-volumes:
-  bricks-data:
-    driver: local
-  kali-data:
-    driver: local

@@ -316,3 +316,13 @@ Las plataformas de Bug Bounty han comenzado a incluir programas específicos par
 - [Prompt Injection Attack and Defenses](https://arxiv.org/abs/2306.05499)
 - [Garak: LLM Vulnerability Scanner](https://github.com/leondz/garak)
 - [Security and Privacy in Large Language Models - Google Research](https://research.google/pubs/pub52173/)
+
+
+## 🗺️ Ruta de Certificación HTB Academy (HCAIRT)
+
+Esta unidad cubre el 40% de los objetivos de la certificación **HTB Certified AI Red Teamer**. Se recomienda completar los siguientes módulos en la plataforma:
+
+1. **Prompt Injection Attacks**: Técnicas avanzadas de bypass.
+2. **LLM Output Attacks**: Explotación de handlers de salida.
+3. **AI Privacy**: Técnicas de extracción de datos de entrenamiento.
+4. **AI Defense**: Aplicación del framework Google SAIF.

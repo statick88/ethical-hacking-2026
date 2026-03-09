@@ -1,24 +1,48 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  webgoat:
-    image: webgoat/webgoat-8.0
-    container_name: lab3-webgoat
+  dvwa:
+    image: vulnerables/web-dvwa
+    container_name: lab3-dvwa
     ports:
-      - "8080:8080"
+      - "80:80"
     environment:
-      - TZ=UTC
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=password
+      - DB_NAME=dvwa
     networks:
       lab3-net:
         ipv4_address: 172.18.3.10
-    volumes:
-      - webgoat-data:/home/webgoat/.webgoat
-    deploy:
-      resources:
-        limits:
-          memory: 2G
-        reservations:
-          memory: 1G
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:10.5
+    container_name: lab3-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    networks:
+      lab3-net:
+        ipv4_address: 172.18.3.11
+
+  juice-shop:
+    image: bkimminich/juice-shop
+    container_name: lab3-juice-shop
+    ports:
+      - "3000:3000"
+    networks:
+      lab3-net:
+        ipv4_address: 172.18.3.12
+
+  vapi:
+    image: roottusk/vapi
+    container_name: lab3-vapi
+    ports:
+      - "8081:80"
+    networks:
+      lab3-net:
+        ipv4_address: 172.18.3.13
 
   kali:
     image: kalilinux/kali-rolling
@@ -29,15 +53,7 @@ services:
     networks:
       lab3-net:
         ipv4_address: 172.18.3.20
-    volumes:
-      - kali-data:/root
     command: tail -f /dev/null
-    deploy:
-      resources:
-        limits:
-          memory: 2G
-        reservations:
-          memory: 1G
 
 networks:
   lab3-net:
@@ -45,9 +61,3 @@ networks:
     ipam:
       config:
         - subnet: 172.18.3.0/24
-
-volumes:
-  webgoat-data:
-    driver: local
-  kali-data:
-    driver: local
