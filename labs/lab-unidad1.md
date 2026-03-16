@@ -1,3 +1,8 @@
+---
+title: "Lab 1: Reconocimiento y Enumeración"
+author: "Diego Saavedra"
+---
+
 # 🎯 Lab 1: Reconocimiento y Enumeración
 
 ## ⏱️ Timeline de Verificación
@@ -15,7 +20,7 @@
 
 ## 🎯 Objetivo
 
-Realizar un reconocimiento completo de un objetivo simulado utilizando herramientas de OSINT y escaneo de red. El estudiante aplicará técnicas de reconocimiento pasivo y activo **sin copiar comandos**, sino completándolos.
+Seremos capaces de realizar un reconocimiento completo de un objetivo simulado utilizando herramientas de OSINT y escaneo de red. Aplicaremos técnicas de reconocimiento pasivo y activo **sin copiar comandos**, sino completándolos.
 
 ---
 
@@ -27,18 +32,28 @@ Realizar un reconocimiento completo de un objetivo simulado utilizando herramien
 
 ---
 
-## Prerrequisitos
+## 1. Prerrequisitos
 
-- Máquina Kali Linux (VMware/VirtualBox)
-- Conexión a internet para acceder a recursos online
-- Docker instalado para levantar servicios vulnerables
+### 1.1. Software Necesario
 
-## Entorno
+- **Máquina Kali Linux**: VMware/VirtualBox
+- **Conexión a internet**: Para acceder a recursos online
+- **Docker**: Para levantar servicios vulnerables
+
+### 1.2. Recursos del Sistema
+
+- **RAM**: 4GB mínimo (8GB recomendado)
+- **CPU**: 2 núcleos mínimo
+- **Disco**: 20GB disponibles
+
+### 1.3. Entorno
 
 - **Atacante**: Kali Linux (192.168.56.10)
 - **Objetivo**: Máquina vulnerable en red local o TryHackMe
 
-## Escenario
+---
+
+## 2. Escenario
 
 Eres un pentester contratado por una empresa mediana para realizar la fase de reconocimiento de un pentest. Tu objetivo es obtener la máxima información posible sobre el objetivo sin interactuar directamente con sus sistemas de producción.
 

@@ -19,7 +19,7 @@ author: "Diego Saavedra"
 
 ## 🎯 Objetivo
 
-Ejecutar ataques de Prompt Injection y técnicas de Jailbreaking en modelos de lenguaje, documentando vectores de ataque y defensas **sin copiar técnicas**, sino desarrollando tu propio enfoque.
+Seremos capaces de ejecutar ataques de Prompt Injection y técnicas de Jailbreaking en modelos de lenguaje, documentando vectores de ataque y defensas **sin copiar técnicas**, sino desarrollando tu propio enfoque.
 
 ---
 
@@ -31,19 +31,36 @@ Ejecutar ataques de Prompt Injection y técnicas de Jailbreaking en modelos de l
 
 ---
 
-## Prerrequisitos
+## 1. Prerrequisitos
 
-- Acceso a internet
-- Cuentas en plataformas de laboratorio de IA
-- Navegador web con capacidad de captura de pantalla
+### 1.1. Software Necesario
 
-## Entorno
+- **Acceso a internet**: Para acceder a plataformas de IA
+- **Navegador web**: Chrome, Firefox o similar
+- **Herramienta de captura de pantalla**: Para documentar hallazgos
 
-- Navegador web
-- Línea de comandos (terminal)
-- Herramienta de captura de pantalla
+### 1.2. Cuentas Necesarias
 
-## Escenario
+- **Gandalf AI**: [https://gandalf.lakera.ai](https://gandalf.lakera.ai)
+- **HackAPrompt**: [https://hackaprompt.github.io](https://hackaprompt.github.io)
+
+### 1.3. Recursos del Sistema
+
+- **RAM**: 4GB mínimo
+- **CPU**: 2 núcleos mínimo
+- **Conexión estable**: Para interactuar con APIs de IA
+
+---
+
+## 2. Entorno
+
+- **Navegador web**: Para acceder a las plataformas
+- **Línea de comandos**: Terminal para comandos y scripts
+- **Herramienta de captura de pantalla**: Para documentar hallazgos
+
+---
+
+## 3. Escenario
 
 Eres un researcher de seguridad evaluando la resistencia de LLMs a ataques de prompt injection. Debes documentar técnicas exitosas y recomendaciones de defensa.
 
