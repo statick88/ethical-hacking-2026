@@ -1,7 +1,7 @@
 # Ethical Hacking 2026
 project:
   type: book
-  output-dir: _book
+  output-dir: docs
 
 book:
   title: "Ethical Hacking 2026"
