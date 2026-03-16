@@ -22,4 +22,22 @@
 3. Ofusca el binario (strip symbols, garble) para evadir análisis estático.
 
 ## 🛑 Limpieza
+
+### Opción 1: Usar scripts de automatización (Recomendado)
+
+```bash
+cd /ruta/a/tu/directorio/Ethical_Hacking/docker-labs/lab6
+
+# Iniciar el lab
+./setup.sh
+
+# Verificar estado
+./check-lab.sh
+
+# Resetear el lab (eliminar todo)
+./reset.sh
+```
+
+### Opción 2: Manual con Docker Compose
+
 `docker-compose down -v`

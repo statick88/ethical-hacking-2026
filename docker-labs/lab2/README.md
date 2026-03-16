@@ -65,6 +65,24 @@ Al completar este laboratorio serás capaz de:
 
 ## 🚀 INSTRUCCIONES DETALLADAS DE INSTALACIÓN
 
+### Opción 1: Usar scripts de automatización (Recomendado)
+
+```bash
+cd /ruta/a/tu/directorio/Ethical_Hacking/docker-labs/lab2
+
+# Iniciar el lab
+./setup.sh
+
+# Verificar estado
+./check-lab.sh
+
+# Resetear el lab (eliminar todo)
+./reset.sh
+```
+
+### Opción 2: Manual con Docker Compose
+
+
 ### Paso 1: Verificar Docker
 
 ```bash

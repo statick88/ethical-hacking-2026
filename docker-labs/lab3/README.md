@@ -21,4 +21,22 @@
 - Prueba Inyección de Comandos en la funcionalidad de reporte.
 
 ## 🛑 Limpieza
+
+### Opción 1: Usar scripts de automatización (Recomendado)
+
+```bash
+cd /ruta/a/tu/directorio/Ethical_Hacking/docker-labs/lab3
+
+# Iniciar el lab
+./setup.sh
+
+# Verificar estado
+./check-lab.sh
+
+# Resetear el lab (eliminar todo)
+./reset.sh
+```
+
+### Opción 2: Manual con Docker Compose
+
 `docker-compose down -v`

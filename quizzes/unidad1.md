@@ -1,148 +1,183 @@
-# Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico
+---
+title: "Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico"
+author: "Diego Saavedra"
+---
+
+# ⚠️ AVISO ANTI-IA
+
+**Esta evaluación está diseñada para medir TU comprensión, no la capacidad de una IA.**
+
+**Si detectamos uso de IA:**
+- La respuesta será marcada como inválida
+- Se te pedirá explicar cada paso verbalmente
+- Podrás perder puntos por copia no autorizada
+
+**Mi recomendación:** Responde basándote en tu comprensión real del tema.
+
+---
 
 **Puntaje mínimo**: 7/10 (70%)
 
 ---
 
-## Preguntas de Opción Múltiple
+## Sección A: Análisis de Escenarios (40%)
 
-### Pregunta 1 (Básica)
+### Escenario 1: Reconocimiento Inicial
 
-¿Cuál es la primera fase del pentesting según la metodología PTES?
+**Situación**: Eres pentester y recibes el objetivo `intranet.empresa.local`. No tienes acceso directo a la red, pero necesitas información inicial.
 
-a) Explotación
-b) Reconocimiento
-c) Reporte
-d) Escaneo
+**Comando parcial para completar:**
+```bash
+whois ___
+```
 
-**Respuesta correcta**: b
-**Explicación**: El reconocimiento (Intelligence Gathering) es la primera fase donde se recolecta información sobre el objetivo.
+**Pregunta 1:** ¿Qué información clave obtendrás de este comando que te ayudará en el reconocimiento?
 
----
-
-### Pregunta 2 (Básica)
-
-¿Qué tipo de reconocimiento NO toca directamente el objetivo?
-
-a) Escaneo de puertos
-b) OSINT pasivo
-c) Nmap activo
-d) Conexión directa
-
-**Respuesta correcta**: b
-**Explicación**: El OSINT pasivo usa fuentes públicas sin interactuar con el objetivo.
+**Tu respuesta debe incluir:**
+- Al menos 3 tipos de datos que whois proporciona
+- Cómo usarías cada uno en tu reconocimiento
 
 ---
 
-### Pregunta 3 (Intermedia)
+### Escenario 2: Análisis de Output
 
-¿Cuál de las siguientes herramientas se utiliza principalmente para reconocimiento web automatizado?
+**Output de Nmap:**
+```
+PORT   STATE    SERVICE
+22/tcp open     ssh
+80/tcp filtered http
+443/tcp open    https
+```
 
-a) Nmap
-b) Metasploit
-c) Recon-ng
-d) Burp Suite
-
-**Respuesta correcta**: c
-**Explicación**: Recon-ng es un framework modular específico para reconocimiento web.
-
----
-
-### Pregunta 4 (Intermedia)
-
-¿Qué flag de Nmap realiza un escaneo SYN (half-open)?
-
-a) -sT
-b) -sU
-c) -sS
-d) -sP
-
-**Respuesta correcta**: c
-**Explicación**: -sS es el escaneo SYN que no completa el handshake TCP.
+**Pregunta 2:** Analiza este output y responde:
+1. ¿Qué significa que el puerto 80 esté "filtered"?
+2. ¿Qué enfoque de ataque podrías intentar considerando este estado?
+3. ¿Qué comando parcial usarías para investigar más a fondo?
+   - `nmap -sV -p ___ [IP]`
 
 ---
 
-### Pregunta 5 (Intermedia)
+### Escenario 3: Comando Incompleto
 
-¿Cuál es el propósito del parámetro `-sC` en Nmap?
+**Situación**: Necesitas escanear todos los puertos de una IP específica, pero solo recuerdas parte del comando.
 
-a) Escaneo de servicios
-b) Ejecución de scripts NSE por defecto
-c) Detección de SO
-d) Escaneo rápido
+**Comando parcial:**
+```bash
+nmap -p- ___
+```
 
-**Respuesta correcta**: b
-**Explicación**: -sC ejecuta los scripts por defecto del NSE.
-
----
-
-### Pregunta 6 (Avanzada)
-
-En el contexto de OSINT, ¿qué es un "Google Dork"?
-
-a) Un exploit para Google
-b) Búsqueda avanzada con operadores
-c) Una herramienta de hacking
-d) Un tipo de ataque
-
-**Respuesta correcta**: b
-**Explicación**: Los Google Dorks son consultas avanzadas usando operadores como site:, filetype:, etc.
+**Pregunta 3:**
+1. Completa el comando con la IP adecuada (usa 192.168.1.100 como ejemplo)
+2. Explica qué hace cada flag del comando
+3. ¿Qué alternativa usarías si necesitaras escanear solo puertos TCP comunes?
 
 ---
 
-### Pregunta 7 (Básica)
+## Sección B: Razonamiento Técnico (30%)
 
-¿Qué protocolo usa Nmap por defecto para el escaneo?
+### Pregunta 4: Comparación de Herramientas
 
-a) UDP
-b) TCP
-c) ICMP
-d) HTTP
+**Instrucción:** No copies respuestas. Explica con tus propias palabras.
 
-**Respuesta correcta**: b
-**Explicación**: Nmap escanea puertos TCP por defecto.
+**Comando parcial 1:**
+```bash
+nmap -sS -F ___
+```
 
----
+**Comando parcial 2:**
+```bash
+masscan ___ --rate=1000
+```
 
-### Pregunta 8 (Intermedia)
-
-¿Cuál es el rango de puertos "bien conocidos" en TCP?
-
-a) 0-1023
-b) 1024-49151
-c) 49152-65535
-d) 1-80
-
-**Respuesta correcta**: a
-**Explicación**: Los puertos 0-1023 son puertos bien conocidos (well-known ports).
+**Pregunta:** 
+1. ¿En qué escenario usarías nmap vs masscan?
+2. ¿Qué ventajas tiene cada uno?
+3. Completa ambos comandos con una IP de ejemplo y explica el resultado esperado
 
 ---
 
-### Pregunta 9 (Avanzada)
+### Pregunta 5: Debugging de Comandos
 
-¿Qué herramienta es mejor para enumeración masiva de subdominios?
+**Situación:** Un compañero te envía este comando para enumerar subdominios, pero tiene errores:
 
-a) Nmap básico
-b) theHarvester
-c) Burp Suite
-d) SQLmap
+```bash
+subfinder -d ___ -o output.txt -v
+```
 
-**Respuesta correcta**: b
-**Explicación**: theHarvester está diseñado para enumerar subdominios, emails y más.
+**Pregunta:**
+1. ¿Qué parámetro falta en el comando?
+2. ¿Cómo verificarías que el comando funciona correctamente?
+3. ¿Qué alternativa usarías si subfinder no estuviera disponible?
 
 ---
 
-### Pregunta 10 (Intermedia)
+## Sección C: Aplicación Práctica (30%)
 
-¿Cuál es la principal ventaja del escaneo UDP comparado con TCP?
+### Reto 1: Construcción de Comando
 
-a) Más rápido
-b) Más silencioso
-c) Puede detectar servicios sin handshake
-d) Siempre más detallado
+**Objetivo:** Construye un comando de reconocimiento completo usando solo partes proporcionadas.
 
-**Respuesta correcta**: c
-**Explicación**: El escaneo UDP puede identificar servicios que responden sin necesidad de handshake.
+**Partes disponibles:**
+- Herramienta: `nmap`
+- Flags: `-sS`, `-sV`, `-p-`, `--open`
+- IP objetivo: `192.168.1.50`
+
+**Tu tarea:**
+1. Ordena las partes en un comando funcional
+2. Explica qué hace cada flag
+3. ¿Qué output esperas obtener?
+
+**Comando a completar:**
+```bash
+___ ___ ___ ___ ___
+```
+
+---
+
+### Reto 2: Análisis de Escenario Real
+
+**Escenario:** Estás realizando reconocimiento pasivo y encuentras que la empresa objetivo usa WordPress en su sitio principal.
+
+**Pregunta:**
+1. ¿Qué comandos parciales usarías para investigar vulnerabilidades específicas de WordPress?
+   - `wpscan --url ___ --enumerate ___`
+2. ¿Qué información buscarías específicamente?
+3. ¿Cómo integrarías esto en tu reporte de pentesting?
+
+---
+
+## Verificación de Autoría
+
+### Declaración Personal (Obligatoria)
+
+**Antes de entregar, responde:**
+
+> **¿Qué objeto está frente a tu cámara web o en tu escritorio en este momento?**
+
+**Tu respuesta debe ser:**
+- Personal y específica
+- Describe algo único de tu entorno
+- No puede ser genérica o copiada
+
+**Ejemplo de respuesta aceptada:**
+"Mi taza de café azul con un logo de la empresa, mi mouse negro Razer, y una nota adhesiva amarilla en el monitor"
+
+**Ejemplo de respuesta NO aceptada:**
+"Una computadora" o "Un escritorio"
+
+---
+
+### Checklist de Autoría
+
+- [ ] Escribí cada respuesta basándome en mi comprensión
+- [ ] Completo los comandos parciales sin copiar de fuentes externas
+- [ ] Puedo explicar verbalmente cada concepto
+- [ ] Mi respuesta de verificación es personal y específica
+- [ ] Si me borrarán todo, podría recrear las respuestas
+
+**Nombre:** _______________
+**Fecha:** _______________
+**ID Estudiante:** _______________
 
 ---
 

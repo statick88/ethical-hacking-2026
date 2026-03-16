@@ -56,6 +56,24 @@ lab4-net (172.18.4.0/24)
 
 ### Paso 1: Verificar soporte de Windows Server en Docker
 
+### Opción 1: Usar scripts de automatización (Recomendado)
+
+```bash
+cd /ruta/a/tu/directorio/Ethical_Hacking/docker-labs/lab4
+
+# Iniciar el lab
+./setup.sh
+
+# Verificar estado
+./check-lab.sh
+
+# Resetear el lab (eliminar todo)
+./reset.sh
+```
+
+### Opción 2: Manual con Docker Compose
+
+
 ```bash
 docker ps --all
 # Buscar si hay contenedores Windows

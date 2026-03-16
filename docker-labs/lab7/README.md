@@ -51,6 +51,24 @@ lab7-net (172.18.7.0/24)
 
 ### Paso 1: Ir al directorio del lab
 
+### Opción 1: Usar scripts de automatización (Recomendado)
+
+```bash
+cd /ruta/a/tu/directorio/Ethical_Hacking/docker-labs/lab7
+
+# Iniciar el lab
+./setup.sh
+
+# Verificar estado
+./check-lab.sh
+
+# Resetear el lab (eliminar todo)
+./reset.sh
+```
+
+### Opción 2: Manual con Docker Compose
+
+
 ```bash
 cd /ruta/a/Ethical_Hacking/docker-labs/lab7
 ```

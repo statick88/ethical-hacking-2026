@@ -1,22 +1,33 @@
 # Lab 1: Reconocimiento y Enumeración
 
-## Objetivos
+## Objetivos del Laboratorio
 
+En este laboratorio, seremos capaces de:
 - Realizar reconocimiento pasivo con herramientas OSINT
 - Escanear una red y enumerar puertos con Nmap
 - Enumerar servicios vulnerables con scripts de Nmap
 - Analizar una máquina vulnerable (Metasploitable 2)
 - Documentar hallazgos de seguridad
 
-## Prerrequisitos
+---
 
-- Docker Engine 24.0 o superior
-- Docker Compose 2.0 o superior
-- 8GB RAM mínimo (16GB recomendado)
-- 10GB de almacenamiento disponible
-- Conexión a internet para descargar imágenes
+## 1. Requisitos Previos
 
-## Arquitectura
+### 1.1. Software Necesario
+
+- **Docker Engine**: 24.0 o superior
+- **Docker Compose**: 2.0 o superior
+- **Conexión a internet**: Para descargar imágenes Docker
+
+### 1.2. Recursos del Sistema
+
+- **RAM**: 8GB mínimo (16GB recomendado)
+- **Almacenamiento**: 10GB disponibles
+- **CPU**: Mínimo 2 núcleos
+
+---
+
+## 2. Arquitectura del Laboratorio
 
 ```
 lab1-net (172.18.1.0/24)
@@ -24,9 +35,42 @@ lab1-net (172.18.1.0/24)
 └── metasploitable2 (172.18.1.20) — Objetivo vulnerable
 ```
 
-## Setup
+**Descripción**:
+- **Kali**: Máquina atacante con herramientas de pentesting
+- **Metasploitable2**: Máquina vulnerable con múltiples servicios expuestos
 
-### Paso 1: Clonar el repositorio (si no lo has hecho)
+---
+
+## 3. Configuración del Entorno
+
+### 3.1. Opción Recomendada: Scripts de Automatización
+
+Hemos creado scripts para facilitar el uso del laboratorio:
+
+```bash
+# Navegar al directorio del lab
+cd /ruta/a/tu/directorio/Ethical_Hacking/docker-labs/lab1
+
+# Iniciar el laboratorio
+./setup.sh
+
+# Verificar estado
+./check-lab.sh
+
+# Resetear el laboratorio (eliminar todo)
+./reset.sh
+```
+
+**¿Qué hace cada script?**
+- `setup.sh`: Verifica dependencias, inicia contenedores, verifica conectividad
+- `check-lab.sh`: Verifica estado de contenedores y recursos
+- `reset.sh`: Detiene y elimina contenedores, limpia volúmenes
+
+### 3.2. Opción Manual: Docker Compose
+
+Si prefieres control manual, sigue estos pasos:
+
+#### Paso 1: Clonar el Repositorio
 
 ```bash
 cd /ruta/a/tu/directorio
@@ -34,7 +78,7 @@ git clone <repo-url>
 cd Ethical_Hacking/docker-labs/lab1
 ```
 
-### Paso 2: Levantar el entorno
+#### Paso 2: Levantar el Entorno
 
 ```bash
 # Levantar servicios en modo detached (fondo)
@@ -44,7 +88,9 @@ docker compose up -d
 docker compose ps
 ```
 
-### Paso 3: Acceder a la máquina Kali
+**Resultado esperado**: Deberías ver dos contenedores corriendo.
+
+#### Paso 3: Acceder a la Máquina Kali
 
 ```bash
 # Ingresar a la consola de Kali
@@ -54,171 +100,143 @@ docker compose exec kali bash
 apt update && apt install -y nmap whois dig theharvester subfinder gobuster enum4linux
 ```
 
-## Laboratorio
+---
 
-### Paso 1: Reconocimiento Pasivo
+## 4. Ejercicios del Laboratorio
+
+### 4.1. Reconocimiento Pasivo
 
 **Objetivo**: Recolectar información sobre el objetivo sin interactuar directamente con él.
 
+#### Ejercicio 1: Información de Dominio con WHOIS
+
+Haremos uso de la herramienta `whois` para obtener información de registro.
+
+**Comando**:
 ```bash
-# Verificar conectividad a metasploitable
-ping 172.18.1.20
-
-# Obtener información DNS (simulada)
-host metasploitable2
+whois empresa-ejemplo.com
 ```
 
-### Paso 2: Escaneo de Red con Nmap
+**Resultado esperado**: Información de registro (contacto, fechas, nameservers).
 
-**Objetivo**: Identificar puertos abiertos y servicios.
+#### Ejercicio 2: Enumeración DNS con dig
 
+Haremos consultas DNS para descubrir servicios.
+
+**Comandos**:
 ```bash
-# Escaneo TCP SYN rápido
-nmap -sS -F 172.18.1.20
+# Consultar nameservers
+dig NS empresa-ejemplo.com
 
-# Escaneo completo con detección de servicios
-nmap -sS -sV -sC -p- 172.18.1.20 -oN scan_full.txt
-
-# Detección de sistema operativo
-nmap -O 172.18.1.20
-
-# Scripts de vulnerabilidad
-nmap --script vuln 172.18.1.20
+# Consultar mailservers
+dig MX empresa-ejemplo.com
 ```
 
-**Output esperado**:
-```
-Starting Nmap 7.93 ( https://nmap.org ) at 2026-03-04 10:30 UTC
-Nmap scan report for metasploitable2 (172.18.1.20)
-Host is up (0.00023s latency).
-Not shown: 65523 closed tcp ports (reset)
-PORT    STATE SERVICE     VERSION
-21/tcp  open  ftp         vsftpd 2.3.4
-22/tcp  open  ssh         OpenSSH 4.7p1 Debian 8ubuntu1
-23/tcp  open  telnet      Linux telnetd
-25/tcp  open  smtp        Postfix smtpd
-80/tcp  open  http        Apache httpd 2.2.8 ((Ubuntu) DAV/2)
-139/tcp open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
-445/tcp open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
-3306/tcp open mysql        MySQL 5.0.51a-3ubuntu5
-8080/tcp open http        Apache Tomcat/Coyote JSP engine 1.1
-```
+**Resultado esperado**: Lista de servidores de nombres y correos.
 
-### Paso 3: Enumeración de Servicios
+### 4.2. Escaneo de Red con Nmap
 
+**Objetivo**: Identificar puertos abiertos y servicios en la red.
+
+#### Ejercicio 3: Escaneo TCP SYN Rápido
+
+**Comando**:
 ```bash
-# Enumeración FTP (anónimo)
-ftp 172.18.1.20
-# Usuario: anonymous
-# Contraseña: anonymous
-
-# Enumeración SMB
-enum4linux 172.18.1.20
-
-# Enumeración HTTP
-whatweb http://172.18.1.20
-nikto -h http://172.18.1.20
-
-# Enumeración de directorios web
-gobuster dir -u http://172.18.1.20 -w /usr/share/wordlists/dirb/common.txt
+nmap -sS -F 192.168.56.0/24
 ```
 
-### Paso 4: Análisis de Vulnerabilidades
+**Resultado esperado**: Lista de hosts con puertos abiertos.
 
+#### Ejercicio 4: Escaneo Completo
+
+**Comando**:
 ```bash
-# Crear resumen de hallazgos
-cat > reconnaissance_report.md << EOF
-# Reporte de Reconocimiento — Metasploitable2
-## Objetivo: 172.18.1.20
-## Fecha: $(date)
+nmap -sS -sV -sC -p- 192.168.56.5 -oN scan_full.txt
+```
+
+**Resultado esperado**: Archivo con todos los puertos y servicios detectados.
+
+### 4.3. Enumeración de Servicios
+
+**Objetivo**: Identificar servicios vulnerables en el objetivo.
+
+#### Ejercicio 5: Enumeración SMB
+
+**Comando**:
+```bash
+enum4linux 192.168.56.5
+```
+
+**Resultado esperado**: Información de recursos compartidos SMB.
 
 ---
 
-## Información Básica
+## 5. Verificación del Laboratorio
 
-IP: 172.18.1.20
-Hostname: metasploitable2
+Hemos completado el laboratorio cuando:
 
----
-
-## Puertos Abiertos y Servicios
-
-$(grep "^[0-9]*\/" scan_full.txt)
-
----
-
-## Vulnerabilidades Detectadas
-
-1. **FTP vsftpd 2.3.4**: Vulnerable a backdoor (CVE-2011-2523)
-2. **Apache httpd 2.2.8**: Vulnerable a Directory Traversal
-3. **Samba smbd 3.X**: Vulnerable a Remote Code Execution
-4. **MySQL 5.0.51a**: Vulnerable a autenticación bypass
+- [ ] WHOIS devolvió información del dominio
+- [ ] DNS enumeró nameservers y mailservers
+- [ ] Encontraste al menos 1 subdominio
+- [ ] Escaneo completo guardado en `scan_full.txt`
+- [ ] Identificaste al menos 1 vulnerabilidad
+- [ ] Documentaste hallazgos en el reporte
 
 ---
 
-## Recomendaciones
+## 6. Troubleshooting
 
-1. Cerrar el puerto 21 (FTP anónimo)
-2. Actualizar Apache a la última versión
-3. Configurar autenticación fuerte en MySQL
-4. Implementar firewall para filtrar tráfico
+### Problema 1: "No hay conectividad entre contenedores"
 
-EOF
-
-# Verificar el reporte
-cat reconnaissance_report.md
-```
-
-## Troubleshooting
-
-### Problema: No hay conectividad entre contenedores
-
-**Solución**: Verifica que la red `lab1-net` esté creada:
-
+**Solución**:
 ```bash
+# Verifica que la red esté creada
 docker network ls
 docker network inspect lab1-net
 ```
 
-### Problema: No se puede acceder a Kali
+### Problema 2: "No se puede acceder a Kali"
 
-**Solución**: Reinicia el servicio:
-
+**Solución**:
 ```bash
+# Reinicia el servicio
 docker compose restart kali
 docker compose exec kali bash
 ```
 
-### Problema: Nmap no está instalado
+### Problema 3: "Nmap no está instalado"
 
-**Solución**: Instálalo desde dentro de Kali:
-
+**Solución**:
 ```bash
+# Instala nmap desde Kali
 apt update && apt install -y nmap
 ```
 
-## Cleanup
+---
 
-### Paso 1: Parar los servicios
+## 7. Entregable
 
-```bash
-docker compose down
-```
+**Archivo**: `reconnaissance_report.md`
 
-### Paso 2: Eliminar volúmenes (opcional)
+**Contenido**:
+- Información de dominio (WHOIS, DNS)
+- Subdominios encontrados
+- Puertos abiertos con servicios
+- Tecnologías identificadas
+- Hallazgos de seguridad iniciales
+- Recomendaciones para siguiente fase
 
-```bash
-docker compose down -v
-```
+---
 
-### Paso 3: Eliminar imágenes (opcional)
-
-```bash
-docker rmi kalilinux/kali-rolling tutum/metasploitable:latest
-```
-
-## Recursos
+## 8. Recursos
 
 - [Nmap Documentation](https://nmap.org/book/man.html)
-- [Metasploitable 2 Vulnerabilities](https://docs.rapid7.com/metasploit/metasploitable-2/)
 - [OSINT Framework](https://osintframework.com/)
+- [Metasploitable 2 Vulnerabilities](https://docs.rapid7.com/metasploit/metasploitable-2/)
+
+---
+
+**Alumno**: Diego Medardo Saavedra García  
+**Universidad**: Universidad Complutense de Madrid  
+**Máster**: Ciberseguridad: Seguridad Defensiva y Ofensiva  
+**Curso**: 2026/2027

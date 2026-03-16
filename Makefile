@@ -62,12 +62,22 @@ deploy:
 help:
 	@echo "${BLUE}=== Comandos disponibles para Ethical Hacking 2026 ===${NC}"
 	@echo ""
-	@echo "${GREEN}build${NC}     - Construir el proyecto"
-	@echo "${GREEN}dev${NC}       - Iniciar servidor de desarrollo"
-	@echo "${GREEN}test${NC}      - Verificar integridad del proyecto"
-	@echo "${GREEN}clean${NC}     - Limpiar archivos de construcción"
-	@echo "${GREEN}deploy${NC}    - Desplegar el proyecto"
-	@echo "${GREEN}help${NC}      - Mostrar esta ayuda"
+	@echo "${GREEN}build${NC}           - Construir el proyecto"
+	@echo "${GREEN}dev${NC}             - Iniciar servidor de desarrollo"
+	@echo "${GREEN}test${NC}            - Verificar integridad del proyecto"
+	@echo "${GREEN}clean${NC}           - Limpiar archivos de construcción"
+	@echo "${GREEN}deploy${NC}          - Desplegar el proyecto"
+	@echo ""
+	@echo "${BLUE}=== Comandos de Docker Labs ===${NC}"
+	@echo "${GREEN}start-lab N=1${NC}    - Iniciar laboratorio específico (ej: make start-lab N=1)"
+	@echo "${GREEN}check-lab N=1${NC}    - Verificar estado de laboratorio específico"
+	@echo "${GREEN}reset-lab N=1${NC}    - Resetear laboratorio específico"
+	@echo "${GREEN}start-labs${NC}       - Iniciar todos los laboratorios"
+	@echo "${GREEN}stop-labs${NC}        - Detener todos los laboratorios"
+	@echo "${GREEN}status-labs${NC}      - Verificar estado de todos los laboratorios"
+	@echo "${GREEN}check-labs${NC}       - Verificar configuración de todos los labs"
+	@echo ""
+	@echo "${GREEN}help${NC}             - Mostrar esta ayuda"
 
 # Aliases
 all: build
@@ -89,19 +99,52 @@ check-labs:
 		fi; \
 	done
 
-## Iniciar todos los laboratorios Docker
+## Iniciar laboratorio Docker específico (ej: make start-lab N=1)
+start-lab:
+	@if [ -z "$(N)" ]; then \
+		echo "${RED}[ERROR]${NC} Debe especificar el número del lab: make start-lab N=1"; \
+		exit 1; \
+	fi
+	@if [ -d "docker-labs/lab$(N)" ]; then \
+		echo "${BLUE}=== Iniciando laboratorio Docker lab$(N) ===${NC}"; \
+		cd docker-labs/lab$(N) && ./setup.sh; \
+	else \
+		echo "${RED}[ERROR]${NC} Lab $(N) no encontrado"; \
+		exit 1; \
+	fi
+
+## Verificar estado de laboratorio Docker específico (ej: make check-lab N=1)
+check-lab:
+	@if [ -z "$(N)" ]; then \
+		echo "${RED}[ERROR]${NC} Debe especificar el número del lab: make check-lab N=1"; \
+		exit 1; \
+	fi
+	@if [ -d "docker-labs/lab$(N)" ]; then \
+		echo "${BLUE}=== Verificando laboratorio Docker lab$(N) ===${NC}"; \
+		cd docker-labs/lab$(N) && ./check-lab.sh; \
+	else \
+		echo "${RED}[ERROR]${NC} Lab $(N) no encontrado"; \
+		exit 1; \
+	fi
+
+## Resetear laboratorio Docker específico (ej: make reset-lab N=1)
+reset-lab:
+	@if [ -z "$(N)" ]; then \
+		echo "${RED}[ERROR]${NC} Debe especificar el número del lab: make reset-lab N=1"; \
+		exit 1; \
+	fi
+	@if [ -d "docker-labs/lab$(N)" ]; then \
+		echo "${BLUE}=== Resetando laboratorio Docker lab$(N) ===${NC}"; \
+		cd docker-labs/lab$(N) && ./reset.sh; \
+	else \
+		echo "${RED}[ERROR]${NC} Lab $(N) no encontrado"; \
+		exit 1; \
+	fi
+
+## Iniciar todos los laboratorios Docker (usando scripts)
 start-labs:
 	@echo "${BLUE}=== Iniciando todos los laboratorios Docker ===${NC}"
-	@for i in {1..8}; do \
-		if [ -d "docker-labs/lab$$i" ]; then \
-			cd docker-labs/lab$$i; \
-			docker-compose up -d; \
-			cd ../../; \
-			echo "${GREEN}[OK] Lab $$i iniciado${NC}"; \
-		else \
-			echo "${RED}[ERROR] Lab $$i: Directorio no encontrado${NC}"; \
-		fi; \
-	done
+	@cd docker-labs && ./setup-all.sh
 
 ## Detener todos los laboratorios Docker
 stop-labs:
@@ -110,22 +153,24 @@ stop-labs:
 		if [ -d "docker-labs/lab$$i" ]; then \
 			cd docker-labs/lab$$i; \
 			docker-compose down; \
-			cd ../../; \
+			cd ../..; \
 			echo "${GREEN}[OK] Lab $$i detenido${NC}"; \
 		else \
 			echo "${RED}[ERROR] Lab $$i: Directorio no encontrado${NC}"; \
 		fi; \
 	done
 
-## Verificar estado de los laboratorios
+## Verificar estado de los laboratorios (usando scripts)
 status-labs:
 	@echo "${BLUE}=== Verificando estado de laboratorios Docker ===${NC}"
 	@for i in {1..8}; do \
 		if [ -d "docker-labs/lab$$i" ]; then \
-			if [ -f "docker-labs/lab$$i/docker-compose.yml" ]; then \
-				echo "${GREEN}[OK] Lab $$i: Configuración Docker presente${NC}"; \
+			if [ -f "docker-labs/lab$$i/check-lab.sh" ]; then \
+				cd docker-labs/lab$$i; \
+				./check-lab.sh 2>/dev/null | grep -E "^\[OK\]|\[ERROR\]" || echo "${YELLOW}[INFO]${NC} Lab $$i no está corriendo"; \
+				cd ../..; \
 			else \
-				echo "${RED}[ERROR] Lab $$i: docker-compose.yml faltante${NC}"; \
+				echo "${RED}[ERROR]${NC} Lab $$i: check-lab.sh faltante"; \
 			fi; \
 		else \
 			echo "${RED}[ERROR] Lab $$i: Directorio no encontrado${NC}"; \
