@@ -20,11 +20,31 @@
     ]
   },
   {
-    "objectID": "index.html#certificaciones-y-roadmap-htb-academy-2026",
-    "href": "index.html#certificaciones-y-roadmap-htb-academy-2026",
+    "objectID": "index.html#objetivos-del-curso",
+    "href": "index.html#objetivos-del-curso",
     "title": "Ethical Hacking 2026",
-    "section": "🎓 Certificaciones y Roadmap HTB Academy 2026",
-    "text": "🎓 Certificaciones y Roadmap HTB Academy 2026\nEste curso está diseñado para prepararte para las certificaciones más exigentes de la industria. Cada unidad tiene un camino directo en Hack The Box Academy:\n\n🤖 AI Red Teamer (HCAIRT)\nRelacionado con: Unidad 2 y Unidad 5 - Fundamentos de IA: Conceptos core de ML y Deep Learning. - Prompt Injection Attacks: Ataques avanzados de manipulación. - AI Privacy: Inversión de modelos e inferencia de pertenencia. - AI Defense: Hardening de sistemas de IA (Google SAIF).\n\n\n🕷️ Web Penetration Tester (HBBH)\nRelacionado con: Unidad 3 - Server-Side Attacks: SSRF, XXE, Inyecciones. - API Penetration Testing: REST y GraphQL.\n\n\n🔐 Active Directory Pentester (CPTS)\nRelacionado con: Unidad 4 - Windows PrivEsc: Escalamiento local. - AD Security Assessment: Kerberoasting, BloodHound.\n\n\n🛡️ SOC Analyst (CDSA)\nRelacionado con: Unidad 6 y Unidad 8 - Security Monitoring: Análisis de logs y detección. - Incident Response: Forense básico y remediación.\n\nPerfil recomendado para el alumno: (HTB Pro)",
+    "section": "🎯 Objetivos del Curso",
+    "text": "🎯 Objetivos del Curso\nEste curso te preparará para convertirte en un profesional de la ciberseguridad con capacidades avanzadas de pentesting y seguridad ofensa. Al finalizar, serás capaz de:\n\nRealizar assessments de seguridad completos en infraestructuras empresariales\nIdentificar y explotar vulnerabilidades en aplicaciones web, APIs y sistemas\nImplementar estrategias de Red Teaming con herramientas autónomas\nDocumentar hallazgos con estándares profesionales de la industria\nMantener elevados estándares éticos en todas las actividades de seguridad",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Ethical Hacking 2026</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#metodología",
+    "href": "index.html#metodología",
+    "title": "Ethical Hacking 2026",
+    "section": "🛠️ Metodología",
+    "text": "🛠️ Metodología\nNuestro enfoque práctico garantiza que aprendas haciendo:\n\nLabs Hands-on: Entornos reales para practicar técnicas de pentesting\nCasos de estudio: Escenarios basados en incidentes reales\nProyectos integradores: Desafíos que combinan todas las habilidades\nEvaluación continua: Quizzes y exámenes por unidad",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Ethical Hacking 2026</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#requisitos",
+    "href": "index.html#requisitos",
+    "title": "Ethical Hacking 2026",
+    "section": "📋 Requisitos",
+    "text": "📋 Requisitos\n\nConocimientos básicos de redes y sistemas operativos\nGanas de aprender y practicar de forma ética\nCompromiso con la seguridad responsable",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Ethical Hacking 2026</span>"
     ]
