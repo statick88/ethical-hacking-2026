@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Ethical Hacking 2026",
     "section": "",
-    "text": "1 Ethical Hacking 2026 - ABACOM",
+    "text": "1 Ethical Hacking 2026 - ABACOM\nDuración: 120 horas",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Ethical Hacking 2026 - ABACOM</span>"
     ]
@@ -2315,6 +2315,61 @@
     "crumbs": [
       "Anexos",
       "<span class='chapter-number'>28</span>  <span class='chapter-title'>Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-opencv-seguro.html",
+    "href": "anexos/anexo-opencv-seguro.html",
+    "title": "29  Configuración Segura de OpenCV",
+    "section": "",
+    "text": "29.1 Introducción\nOpenCV (Open Source Computer Vision Library) es una de las librerías más utilizadas para visión por computadora. Sin embargo, su configuración por defecto puede presentar vulnerabilidades de seguridad si no se configura adecuadamente.",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>29</span>  <span class='chapter-title'>Configuración Segura de OpenCV</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-opencv-seguro.html#importancia-de-la-seguridad-en-opencv",
+    "href": "anexos/anexo-opencv-seguro.html#importancia-de-la-seguridad-en-opencv",
+    "title": "29  Configuración Segura de OpenCV",
+    "section": "29.2 ⚠️ Importancia de la Seguridad en OpenCV",
+    "text": "29.2 ⚠️ Importancia de la Seguridad en OpenCV\nOpenCV interactúa directamente con: - Cámaras y dispositivos de entrada - Archivos de imagen y video - Redes (en configuraciones cliente/servidor) - Memoria del sistema\nUna configuración insegura puede permitir: - Acceso no autorizado a cámaras - Ejecución de código arbitrario - Exposición de datos sensibles - Escalamiento de privilegios",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>29</span>  <span class='chapter-title'>Configuración Segura de OpenCV</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-opencv-seguro.html#configuración-segura",
+    "href": "anexos/anexo-opencv-seguro.html#configuración-segura",
+    "title": "29  Configuración Segura de OpenCV",
+    "section": "29.3 Configuración Segura",
+    "text": "29.3 Configuración Segura\n\n29.3.1 1. Permisos de Archivo\n# Restringir permisos de archivos de OpenCV\nchmod 700 /usr/local/lib/python3.*/site-packages/cv2/\nchmod 600 /usr/local/lib/python3.*/site-packages/cv2/*.so\n\n# Proteger archivos de configuración\nchmod 600 /etc/opencv.conf\n\n\n29.3.2 2. Variables de Entorno Seguras\n# Desactivar funcionalidades innecesarias\nexport OPENCV_VIDEOIO_DEBUG=0\nexport OPENCV_LOG_LEVEL=ERROR\nexport OPENCV_ENABLE_NONFREE=0\n\n# Limitar memoria\nexport OPENCV_MAX_THREADS=4\n\n\n29.3.3 3. Configuración de Python Seguro\nimport cv2\nimport os\n\n# Desactivar funciones peligrosas\ncv2.setNumThreads(4)  # Limitar hilos\n\n# Configurar logging seguro\ncv2.utils.switchToVerbose(False)\n\n# Validar entrada antes de procesar\ndef secure_image_read(filepath):\n    \"\"\"Lectura segura de imágenes con validación\"\"\"\n    # Verificar extensión\n    allowed_extensions = ['.jpg', '.jpeg', '.png', '.bmp', '.tiff']\n    ext = os.path.splitext(filepath)[1].lower()\n    \n    if ext not in allowed_extensions:\n        raise ValueError(f\"Extensión no permitida: {ext}\")\n    \n    # Verificar tamaño máximo (10MB)\n    if os.path.getsize(filepath) &gt; 10 * 1024 * 1024:\n        raise ValueError(\"Archivo demasiado grande\")\n    \n    # Verificar magic bytes\n    with open(filepath, 'rb') as f:\n        magic = f.read(4)\n        \n    valid_magic = {\n        b'\\xff\\xd8\\xff': 'jpeg',\n        b'\\x89PNG': 'png',\n        b'BM': 'bmp',\n        b'II\\x2a\\x00': 'tiff',\n        b'MM\\x00\\x2a': 'tiff'\n    }\n    \n    if magic[:4] not in valid_magic:\n        raise ValueError(\"Tipo de archivo no válido\")\n    \n    return cv2.imread(filepath)\n\n\n29.3.4 4. Configuración de Cámaras Seguras\n# Configuración segura de cámara\ndef secure_camera_config(camera_index=0):\n    \"\"\"Configuración segura para captura de video\"\"\"\n    cap = cv2.VideoCapture(camera_index)\n    \n    if not cap.isOpened():\n        raise RuntimeError(\"No se puede abrir la cámara\")\n    \n    # Establecer límites seguros\n    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)\n    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)\n    cap.set(cv2.CAP_PROP_FPS, 30)\n    \n    # Verificar configuración\n    width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)\n    height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)\n    \n    # No permitir más de 4K\n    if width * height &gt; 3840 * 2160:\n        cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)\n        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)\n    \n    return cap\n\n\n29.3.5 5. Hardening de OpenCV en Producción\n# production_settings.py\nimport cv2\nimport os\n\nclass SecureOpenCV:\n    \"\"\"Wrapper para operaciones seguras con OpenCV\"\"\"\n    \n    def __init__(self):\n        self._configure_security()\n    \n    def _configure_security(self):\n        # Desactivar optimización assembly potencialmente insecure\n        cv2.setUseOptimized(False)\n        \n        # Limitar tablas de lookup\n        cv2.setNumThreads(os.cpu_count() or 4)\n        \n        # Desactivar fallbacks peligrosos\n        os.environ['OPENCV_ALLOW_SSE2'] = '0' if os.environ.get('SECURE_MODE') else '1'\n    \n    def read_image(self, path, max_size_mb=10):\n        \"\"\"Lectura segura de imagen\"\"\"\n        if os.path.getsize(path) &gt; max_size_mb * 1024 * 1024:\n            raise ValueError(f\"Imagen excede {max_size_mb}MB\")\n        \n        img = cv2.imread(path)\n        if img is None:\n            raise ValueError(f\"No se pudo leer: {path}\")\n        \n        # Verificar dimensiones\n        if img.size &gt; 50 * 1024 * 1024:  # 50MB en memoria\n            raise ValueError(\"Imagen demasiado grande para procesar\")\n        \n        return img\n    \n    def process_video(self, path):\n        \"\"\"Procesamiento seguro de video\"\"\"\n        cap = cv2.VideoCapture(path)\n        \n        # Validar\n        if not cap.isOpened():\n            raise ValueError(f\"No se pudo abrir: {path}\")\n        \n        # Contador de frames para evitar loops infinitos\n        frame_count = 0\n        max_frames = 10000\n        \n        while frame_count &lt; max_frames:\n            ret, frame = cap.read()\n            if not ret:\n                break\n            # Procesar frame\n            frame_count += 1\n        \n        cap.release()\n        return frame_count",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>29</span>  <span class='chapter-title'>Configuración Segura de OpenCV</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-opencv-seguro.html#checklist-de-seguridad",
+    "href": "anexos/anexo-opencv-seguro.html#checklist-de-seguridad",
+    "title": "29  Configuración Segura de OpenCV",
+    "section": "29.4 Checklist de Seguridad",
+    "text": "29.4 Checklist de Seguridad\n\n\n\nConfiguración\nEstado\nPrioridad\n\n\n\n\nPermisos de archivos restringidos\n☐\nAlta\n\n\nVariables de entorno seguras\n☐\nAlta\n\n\nValidación de entrada\n☐\nAlta\n\n\nLímites de memoria\n☐\nMedia\n\n\nLogging de errores\n☐\nMedia\n\n\nActualizaciones de seguridad\n☐\nAlta",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>29</span>  <span class='chapter-title'>Configuración Segura de OpenCV</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-opencv-seguro.html#recursos-adicionales",
+    "href": "anexos/anexo-opencv-seguro.html#recursos-adicionales",
+    "title": "29  Configuración Segura de OpenCV",
+    "section": "29.5 Recursos Adicionales",
+    "text": "29.5 Recursos Adicionales\n\nOpenCV Security Documentation\nCVE Database - OpenCV\nHardening Guide for Computer Vision Systems\n\n\nNota: Esta configuración debe adaptarse a los requisitos específicos de cada implementación. Consulta con tu equipo de seguridad.",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>29</span>  <span class='chapter-title'>Configuración Segura de OpenCV</span>"
     ]
   }
 ]
