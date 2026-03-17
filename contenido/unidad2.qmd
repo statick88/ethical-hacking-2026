@@ -318,11 +318,11 @@ Las plataformas de Bug Bounty han comenzado a incluir programas específicos par
 - [Security and Privacy in Large Language Models - Google Research](https://research.google/pubs/pub52173/)
 
 
-## 🗺️ Ruta de Certificación HTB Academy (HCAIRT)
+## 🎯 Competencias Clave Desarrolladas
 
-Esta unidad cubre el 40% de los objetivos de la certificación **HTB Certified AI Red Teamer**. Se recomienda completar los siguientes módulos en la plataforma:
+Esta unidad desarrolla competencias esenciales en seguridad de IA, alineadas con los estándares de la industria:
 
-1. **Prompt Injection Attacks**: Técnicas avanzadas de bypass.
-2. **LLM Output Attacks**: Explotación de handlers de salida.
-3. **AI Privacy**: Técnicas de extracción de datos de entrenamiento.
-4. **AI Defense**: Aplicación del framework Google SAIF.
+1. **Prompt Injection Attacks**: Técnicas avanzadas de bypass y mitigación.
+2. **LLM Output Attacks**: Explotación de handlers de salida y defensas.
+3. **AI Privacy**: Técnicas de extracción de datos de entrenamiento y protección.
+4. **AI Defense**: Aplicación de frameworks de seguridad como Google SAIF y NIST AI RMF.

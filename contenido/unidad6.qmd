@@ -347,7 +347,7 @@ void delay() {
 - [AMSI.fail](https://amsi.fail/) — generador de bypasses AMSI ofuscados, útil para comprobar la robustez de detección en entornos Windows
 - [ired.team — Process Injection Techniques](https://www.ired.team/offensive-security/code-execution) — referencia técnica detallada con código fuente de DLL injection, hollowing y reflective loading
 - [MITRE ATT&CK — Defense Evasion (TA0005)](https://attack.mitre.org/tactics/TA0005/) — catálogo oficial de técnicas de evasión con mitigaciones y detecciones por técnica
-- [TryHackMe: Evading Logging and Monitoring](https://tryhackme.com/room/monitoringevasion) — laboratorio práctico sobre evasión de EDR, AMSI y event logging
+- [Windows Event Logging Security](https://github.com/api0cradle/UltimateWindowsSecurity) — recursos para entender y evadir mecanismos de logging en Windows
 - [MDSec — Bypassing Antivirus with Shellter](https://www.mdsec.co.uk/2015/07/using-shellter-with-msfvenom/) — whitepaper sobre inyección polimórfica de shellcode en ejecutables PE legítimos
 
 ---

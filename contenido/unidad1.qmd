@@ -299,7 +299,7 @@ Módulos por categoría:
 
 > Ver [`labs/lab-unidad1.md`](../labs/lab-unidad1.md) para el escenario completo.
 
-**Escenario**: Realizar reconocimiento completo de un objetivo simulado (máquina TryHackMe o Docker con servicios expuestos). El estudiante debe identificar:
+**Escenario**: Realizar reconocimiento completo de un objetivo simulado (máquina con servicios expuestos en Docker o entorno de laboratorio). El estudiante debe identificar:
 - Información de dominio y DNS 🌐
 - Subdominios 🔍
 - Puertos abiertos y servicios �_ports_

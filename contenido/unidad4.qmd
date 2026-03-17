@@ -292,7 +292,7 @@ plink.exe -L 8080:localhost:80 user@target
 
 > Ver [`labs/lab-unidad4.md`](../labs/lab-unidad4.md) para el escenario completo.
 
-**Escenario**: Comprometer un dominio Windows en entorno TryHackMe "Attacktive Directory" o similar:
+**Escenario**: Comprometer un dominio Windows en entorno de laboratorio con servicios de Active Directory expuestos:
 1. Enumeración inicial
 2. Kerberoasting
 3. Pass-the-Hash
@@ -308,7 +308,7 @@ plink.exe -L 8080:localhost:80 user@target
 - [BloodHound Documentation](https://bloodhound.readthedocs.io/) — guía oficial de la herramienta de análisis de rutas de ataque en AD
 - [Impacket GitHub](https://github.com/fortra/impacket) — colección de scripts Python para ataques a protocolos Windows (Kerberoasting, PtH, DCSync)
 - [MITRE ATT&CK — Credential Access (TA0006)](https://attack.mitre.org/tactics/TA0006/) — catálogo de técnicas documentadas de robo de credenciales
-- [TryHackMe: Attacktive Directory](https://tryhackme.com/room/attacktivedirectory) — laboratorio guiado de Kerberoasting, AS-REP Roasting y escalamiento en AD
+- [Active Directory Lab Environment](https://github.com/vysecurity/AD-Lab) — entorno de laboratorio para practicar técnicas de Active Directory
 - [Specterops — An ACE Up the Sleeve](https://specterops.io/wp-content/uploads/sites/3/2022/06/an_ace_up_the_sleeve.pdf) — whitepaper sobre ACL abuse en Active Directory
 
 ---

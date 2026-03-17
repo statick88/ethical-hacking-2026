@@ -373,7 +373,7 @@ Headers críticos 🛡️:
 - [PortSwigger Web Security Academy](https://portswigger.net/web-security) 🎓 — laboratorios gratuitos de Burp Suite para SQLi, XSS, CSRF, CORS y más
 - [OWASP API Security Top 10](https://owasp.org/www-project-api-security/) 🔐 — estándar de referencia para vulnerabilidades en APIs REST y GraphQL
 - [SQLmap Documentation](https://sqlmap.org/) 📖 — referencia oficial de la herramienta de automatización de inyección SQL
-- [TryHackMe: OWASP Top 10](https://tryhackme.com/room/owasptop10) 🔬 — sala práctica gratuita con ejercicios por cada categoría OWASP
+- [OWASP Juice Shop](https://owasp.org/www-project-juice-shop/) 🔬 — aplicación intencionalmente vulnerable para practicar OWASP Top 10
 - [HackTheBox: Web Challenges](https://app.hackthebox.com/challenges) ⚔️ — retos de aplicaciones web de dificultad progresiva
 
 ---

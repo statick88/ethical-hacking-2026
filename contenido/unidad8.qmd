@@ -378,7 +378,7 @@ La ética en pentesting es fundamental para la profesión.
 - [MITRE ATT&CK Framework](https://attack.mitre.org/) — Base de conocimiento de tácticas y técnicas adversarias
 - [Red Team Operations Course (SANS SEC564)](https://www.sans.org/cyber-security-courses/red-team-operations/) — Curso avanzado de red teaming
 - [PTES - Penetration Testing Execution Standard](http://www.pentest-standard.org/) — Metodología estándar de pentesting
-- [TryHackMe: Post-Exploitation Basics](https://tryhackme.com/room/postexploit) — Laboratorio práctico de post-explotación
+- [Linux Post-Exploitation Guide](https://github.com/initstring/linux_privilege_escalation) — guía completa de técnicas de escalada de privilegios en Linux
 
 ---
 

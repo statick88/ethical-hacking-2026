@@ -315,7 +315,7 @@ La aplicación es vulnerable a SQL Injection en el parámetro 'id'.
 - [Metasploit Unleashed](https://www.offensive-security.com/metasploit-unleashed/) — curso gratuito de Offensive Security sobre Metasploit Framework
 - [CVSS v3.1 Calculator — FIRST](https://www.first.org/cvss/calculator/3.1) — calculadora oficial para puntuar vulnerabilidades
 - [Nuclei Templates Repository](https://github.com/projectdiscovery/nuclei-templates) — biblioteca de más de 8.000 templates para detección automatizada de vulnerabilidades
-- [TryHackMe: Red Team Path](https://tryhackme.com/path/outline/redteam) — ruta de aprendizaje estructurada sobre operaciones de Red Team
+- [MITRE ATT&CK Evaluations](https://attackevals.mitre.org/) — evaluaciones de productos de seguridad contra el framework ATT&CK
 - [Cobalt Strike Threat Intelligence Report](https://www.cobaltstrike.com/blog) — análisis técnico del framework y sus mecanismos de C2
 
 ---

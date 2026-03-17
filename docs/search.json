@@ -78,7 +78,7 @@
     "href": "contenido/unidad1.html#laboratorio",
     "title": "2  🛡️ Unidad 1: Fundamentos y Reconocimiento Agéntico",
     "section": "2.4 🔬 Laboratorio",
-    "text": "2.4 🔬 Laboratorio\n\nVer labs/lab-unidad1.md para el escenario completo.\n\nEscenario: Realizar reconocimiento completo de un objetivo simulado (máquina TryHackMe o Docker con servicios expuestos). El estudiante debe identificar: - Información de dominio y DNS 🌐 - Subdominios 🔍 - Puertos abiertos y servicios �ports - Vulnerabilidades potenciales ⚠️ - Correos electrónicos expuestos 📧\nEntregable: Reporte técnico de reconocimiento con screenshots y comandos utilizados. 📝",
+    "text": "2.4 🔬 Laboratorio\n\nVer labs/lab-unidad1.md para el escenario completo.\n\nEscenario: Realizar reconocimiento completo de un objetivo simulado (máquina con servicios expuestos en Docker o entorno de laboratorio). El estudiante debe identificar: - Información de dominio y DNS 🌐 - Subdominios 🔍 - Puertos abiertos y servicios �ports - Vulnerabilidades potenciales ⚠️ - Correos electrónicos expuestos 📧\nEntregable: Reporte técnico de reconocimiento con screenshots y comandos utilizados. 📝",
     "crumbs": [
       "Contenido",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>🛡️ Unidad 1: Fundamentos y Reconocimiento Agéntico</span>"
@@ -184,11 +184,11 @@
     ]
   },
   {
-    "objectID": "contenido/unidad2.html#ruta-de-certificación-htb-academy-hcairt",
-    "href": "contenido/unidad2.html#ruta-de-certificación-htb-academy-hcairt",
+    "objectID": "contenido/unidad2.html#competencias-clave-desarrolladas",
+    "href": "contenido/unidad2.html#competencias-clave-desarrolladas",
     "title": "3  🤖 Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje",
-    "section": "3.7 🗺️ Ruta de Certificación HTB Academy (HCAIRT)",
-    "text": "3.7 🗺️ Ruta de Certificación HTB Academy (HCAIRT)\nEsta unidad cubre el 40% de los objetivos de la certificación HTB Certified AI Red Teamer. Se recomienda completar los siguientes módulos en la plataforma:\n\nPrompt Injection Attacks: Técnicas avanzadas de bypass.\nLLM Output Attacks: Explotación de handlers de salida.\nAI Privacy: Técnicas de extracción de datos de entrenamiento.\nAI Defense: Aplicación del framework Google SAIF.",
+    "section": "3.7 🎯 Competencias Clave Desarrolladas",
+    "text": "3.7 🎯 Competencias Clave Desarrolladas\nEsta unidad desarrolla competencias esenciales en seguridad de IA, alineadas con los estándares de la industria:\n\nPrompt Injection Attacks: Técnicas avanzadas de bypass y mitigación.\nLLM Output Attacks: Explotación de handlers de salida y defensas.\nAI Privacy: Técnicas de extracción de datos de entrenamiento y protección.\nAI Defense: Aplicación de frameworks de seguridad como Google SAIF y NIST AI RMF.",
     "crumbs": [
       "Contenido",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>🤖 Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje</span>"
@@ -254,7 +254,7 @@
     "href": "contenido/unidad3.html#recursos-adicionales",
     "title": "4  Unidad 3: Explotación Web y APIs 2026 🕷️",
     "section": "4.5 📚 Recursos Adicionales",
-    "text": "4.5 📚 Recursos Adicionales\n\nOWASP Web Security Testing Guide v4.2 📖 — guía exhaustiva de pruebas de seguridad web\nPortSwigger Web Security Academy 🎓 — laboratorios gratuitos de Burp Suite para SQLi, XSS, CSRF, CORS y más\nOWASP API Security Top 10 🔐 — estándar de referencia para vulnerabilidades en APIs REST y GraphQL\nSQLmap Documentation 📖 — referencia oficial de la herramienta de automatización de inyección SQL\nTryHackMe: OWASP Top 10 🔬 — sala práctica gratuita con ejercicios por cada categoría OWASP\nHackTheBox: Web Challenges ⚔️ — retos de aplicaciones web de dificultad progresiva",
+    "text": "4.5 📚 Recursos Adicionales\n\nOWASP Web Security Testing Guide v4.2 📖 — guía exhaustiva de pruebas de seguridad web\nPortSwigger Web Security Academy 🎓 — laboratorios gratuitos de Burp Suite para SQLi, XSS, CSRF, CORS y más\nOWASP API Security Top 10 🔐 — estándar de referencia para vulnerabilidades en APIs REST y GraphQL\nSQLmap Documentation 📖 — referencia oficial de la herramienta de automatización de inyección SQL\nOWASP Juice Shop 🔬 — aplicación intencionalmente vulnerable para practicar OWASP Top 10\nHackTheBox: Web Challenges ⚔️ — retos de aplicaciones web de dificultad progresiva",
     "crumbs": [
       "Contenido",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Unidad 3: Explotación Web y APIs 2026 🕷️</span>"
@@ -320,7 +320,7 @@
     "href": "contenido/unidad4.html#laboratorio",
     "title": "5  🔐 Unidad 4: Hacking de Identidad y AD Moderno",
     "section": "5.4 🔬 Laboratorio",
-    "text": "5.4 🔬 Laboratorio\n\nVer labs/lab-unidad4.md para el escenario completo.\n\nEscenario: Comprometer un dominio Windows en entorno TryHackMe “Attacktive Directory” o similar: 1. Enumeración inicial 2. Kerberoasting 3. Pass-the-Hash 4. Escalamiento a Domain Admin\nEntregable: Documentar kill chain completo con screenshots.",
+    "text": "5.4 🔬 Laboratorio\n\nVer labs/lab-unidad4.md para el escenario completo.\n\nEscenario: Comprometer un dominio Windows en entorno de laboratorio con servicios de Active Directory expuestos: 1. Enumeración inicial 2. Kerberoasting 3. Pass-the-Hash 4. Escalamiento a Domain Admin\nEntregable: Documentar kill chain completo con screenshots.",
     "crumbs": [
       "Contenido",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>🔐 Unidad 4: Hacking de Identidad y AD Moderno</span>"
@@ -331,7 +331,7 @@
     "href": "contenido/unidad4.html#recursos-adicionales",
     "title": "5  🔐 Unidad 4: Hacking de Identidad y AD Moderno",
     "section": "5.5 📚 Recursos Adicionales",
-    "text": "5.5 📚 Recursos Adicionales\n\nMicrosoft — Best Practices for Securing Active Directory — documentación oficial de Microsoft sobre hardening de AD\nBloodHound Documentation — guía oficial de la herramienta de análisis de rutas de ataque en AD\nImpacket GitHub — colección de scripts Python para ataques a protocolos Windows (Kerberoasting, PtH, DCSync)\nMITRE ATT&CK — Credential Access (TA0006) — catálogo de técnicas documentadas de robo de credenciales\nTryHackMe: Attacktive Directory — laboratorio guiado de Kerberoasting, AS-REP Roasting y escalamiento en AD\nSpecterops — An ACE Up the Sleeve — whitepaper sobre ACL abuse en Active Directory",
+    "text": "5.5 📚 Recursos Adicionales\n\nMicrosoft — Best Practices for Securing Active Directory — documentación oficial de Microsoft sobre hardening de AD\nBloodHound Documentation — guía oficial de la herramienta de análisis de rutas de ataque en AD\nImpacket GitHub — colección de scripts Python para ataques a protocolos Windows (Kerberoasting, PtH, DCSync)\nMITRE ATT&CK — Credential Access (TA0006) — catálogo de técnicas documentadas de robo de credenciales\nActive Directory Lab Environment — entorno de laboratorio para practicar técnicas de Active Directory\nSpecterops — An ACE Up the Sleeve — whitepaper sobre ACL abuse en Active Directory",
     "crumbs": [
       "Contenido",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>🔐 Unidad 4: Hacking de Identidad y AD Moderno</span>"
@@ -408,7 +408,7 @@
     "href": "contenido/unidad5.html#recursos-adicionales",
     "title": "6  🚀 Unidad 5: Pentesting Autónomo y Red Teaming Agéntico",
     "section": "6.5 📚 Recursos Adicionales",
-    "text": "6.5 📚 Recursos Adicionales\n\nMITRE ATT&CK Navigator — herramienta visual interactiva para mapear TTPs de Red Team contra la matriz ATT&CK\nMetasploit Unleashed — curso gratuito de Offensive Security sobre Metasploit Framework\nCVSS v3.1 Calculator — FIRST — calculadora oficial para puntuar vulnerabilidades\nNuclei Templates Repository — biblioteca de más de 8.000 templates para detección automatizada de vulnerabilidades\nTryHackMe: Red Team Path — ruta de aprendizaje estructurada sobre operaciones de Red Team\nCobalt Strike Threat Intelligence Report — análisis técnico del framework y sus mecanismos de C2",
+    "text": "6.5 📚 Recursos Adicionales\n\nMITRE ATT&CK Navigator — herramienta visual interactiva para mapear TTPs de Red Team contra la matriz ATT&CK\nMetasploit Unleashed — curso gratuito de Offensive Security sobre Metasploit Framework\nCVSS v3.1 Calculator — FIRST — calculadora oficial para puntuar vulnerabilidades\nNuclei Templates Repository — biblioteca de más de 8.000 templates para detección automatizada de vulnerabilidades\nMITRE ATT&CK Evaluations — evaluaciones de productos de seguridad contra el framework ATT&CK\nCobalt Strike Threat Intelligence Report — análisis técnico del framework y sus mecanismos de C2",
     "crumbs": [
       "Contenido",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>🚀 Unidad 5: Pentesting Autónomo y Red Teaming Agéntico</span>"
@@ -485,7 +485,7 @@
     "href": "contenido/unidad6.html#recursos-adicionales",
     "title": "7  🛡️ Unidad 6: Evasión de Defensas",
     "section": "7.5 📚 Recursos Adicionales",
-    "text": "7.5 📚 Recursos Adicionales\n\nLOLBAS Project — catálogo exhaustivo de binarios, scripts y librerías legítimas de Windows abusables por atacantes\nAMSI.fail — generador de bypasses AMSI ofuscados, útil para comprobar la robustez de detección en entornos Windows\nired.team — Process Injection Techniques — referencia técnica detallada con código fuente de DLL injection, hollowing y reflective loading\nMITRE ATT&CK — Defense Evasion (TA0005) — catálogo oficial de técnicas de evasión con mitigaciones y detecciones por técnica\nTryHackMe: Evading Logging and Monitoring — laboratorio práctico sobre evasión de EDR, AMSI y event logging\nMDSec — Bypassing Antivirus with Shellter — whitepaper sobre inyección polimórfica de shellcode en ejecutables PE legítimos",
+    "text": "7.5 📚 Recursos Adicionales\n\nLOLBAS Project — catálogo exhaustivo de binarios, scripts y librerías legítimas de Windows abusables por atacantes\nAMSI.fail — generador de bypasses AMSI ofuscados, útil para comprobar la robustez de detección en entornos Windows\nired.team — Process Injection Techniques — referencia técnica detallada con código fuente de DLL injection, hollowing y reflective loading\nMITRE ATT&CK — Defense Evasion (TA0005) — catálogo oficial de técnicas de evasión con mitigaciones y detecciones por técnica\nWindows Event Logging Security — recursos para entender y evadir mecanismos de logging en Windows\nMDSec — Bypassing Antivirus with Shellter — whitepaper sobre inyección polimórfica de shellcode en ejecutables PE legítimos",
     "crumbs": [
       "Contenido",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>🛡️ Unidad 6: Evasión de Defensas</span>"
@@ -639,7 +639,7 @@
     "href": "contenido/unidad8.html#recursos-adicionales",
     "title": "9  🎯 Unidad 8: Post-Explotación, Reporte y Ética",
     "section": "9.5 📚 Recursos Adicionales",
-    "text": "9.5 📚 Recursos Adicionales\n\nCobalt Strike Documentation — Documentación oficial del framework C2 comercial\nEmpire Framework — Framework C2 post-explotación open source\nMITRE ATT&CK Framework — Base de conocimiento de tácticas y técnicas adversarias\nRed Team Operations Course (SANS SEC564) — Curso avanzado de red teaming\nPTES - Penetration Testing Execution Standard — Metodología estándar de pentesting\nTryHackMe: Post-Exploitation Basics — Laboratorio práctico de post-explotación",
+    "text": "9.5 📚 Recursos Adicionales\n\nCobalt Strike Documentation — Documentación oficial del framework C2 comercial\nEmpire Framework — Framework C2 post-explotación open source\nMITRE ATT&CK Framework — Base de conocimiento de tácticas y técnicas adversarias\nRed Team Operations Course (SANS SEC564) — Curso avanzado de red teaming\nPTES - Penetration Testing Execution Standard — Metodología estándar de pentesting\nLinux Post-Exploitation Guide — guía completa de técnicas de escalada de privilegios en Linux",
     "crumbs": [
       "Contenido",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>🎯 Unidad 8: Post-Explotación, Reporte y Ética</span>"
