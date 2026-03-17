@@ -1385,7 +1385,7 @@
     "href": "labs/lab-unidad7.html#entorno",
     "title": "Lab 7: Hardening y Pentesting de Sistemas OT",
     "section": "Entorno",
-    "text": "Entorno\n# Instalar OpenPLC (simulador PLC)\ndocker run -d -p 8080:8080 -p 502:502 --name openplc openplc/plc\n\n# Instalar OpenClaw\ngit clone https://github.com/OTRF/OpenClaw\ncd OpenClaw && pip install -r requirements.txt",
+    "text": "Entorno\n# Instalar OpenPLC (simulador PLC)\ndocker run -d -p 8080:8080 -p 502:502 --name openplc openplc/plc\n\n# Instalar herramientas OT (alternativas a OpenClaw)\n# ISF - Industrial Exploitation Framework\ngit clone https://github.com/dark-lbp/isf.git\ncd isf\npip install -r requirements.txt\n\n# Instalar pyModbus para interacción con PLC\npip install pyModbus",
     "crumbs": [
       "Laboratorios",
       "<span class='chapter-number'>16</span>  <span class='chapter-title'>Lab 7: Hardening y Pentesting de Sistemas OT</span>"
@@ -1407,7 +1407,7 @@
     "href": "labs/lab-unidad7.html#pasos",
     "title": "Lab 7: Hardening y Pentesting de Sistemas OT",
     "section": "Pasos",
-    "text": "Pasos\n\nPaso 1: Análisis Inicial\n# Escanear puertos del PLC\nnmap -sS -p 502 192.168.56.5\n\n# Identificar servicios\nnmap -sV -p 502 192.168.56.5\n\n\nPaso 2: Hardening con OpenClaw\n# Ejecutar hardening\npython openclaw.py --target 192.168.56.5 --report hardening_report.html\n\n# Revisar recomendaciones\ncat hardening_report.html\n\n\nPaso 3: Pentesting con Pentagi\n# Instalar Pentagi\ndocker build -t pentagi .\ndocker run -d -p 5000:5000 pentagi\n\n# Ejecutar escaneo\n# Acceder a http://localhost:5000\n\n\nPaso 4: Verificación Post-Hardening\n# Comparar resultados antes/después\nnmap -sS -p 502 192.168.56.5",
+    "text": "Pasos\n\nPaso 1: Análisis Inicial\n# Escanear puertos del PLC\nnmap -sS -p 502 192.168.56.5\n\n# Identificar servicios\nnmap -sV -p 502 192.168.56.5\n\n\nPaso 2: Enumeración de Protocolos Industriales\n# Instalar herramientas de enumeración\npip install pyModbus pymodbus\n\n# Script para enumerate registers Modbus\npython3 &lt;&lt; 'EOF'\nfrom pymodbus.client import ModbusTcpClient\nimport sys\n\nclient = ModbusTcpClient('192.168.56.5', port=502)\n\ntry:\n    # Leer coils (discretos)\n    rr = client.read_coils(0, 10)\n    if not rr.isError():\n        print(\"Coils:\", rr.bits)\n    \n    # Leer holding registers\n    rr = client.read_holding_registers(0, 10)\n    if not rr.isError():\n        print(\"Registers:\", rr.registers)\n        \nexcept Exception as e:\n    print(f\"Error: {e}\")\nfinally:\n    client.close()\nEOF\n\n\nPaso 3: Hardening del Sistema OT\n# Aplicar medidas de hardening\n\n# 1. Configurar firewall\nsudo iptables -A INPUT -p tcp --dport 502 -j DROP\nsudo iptables -A INPUT -p tcp --dport 502 -s 192.168.56.0/24 -j ACCEPT\n\n# 2. Deshabilitar servicios innecesarios\nsudo systemctl disable unused_services\n\n# 3. Habilitar logging\nsudo rsyslogd  # Asegurar que está activo\n\n# 4. Actualizar firmware/software\nsudo apt update && sudo apt upgrade\n\n\nPaso 4: Verificación Post-Hardening\n# Comparar resultados antes/después\nnmap -sS -p 502 192.168.56.5\n\n# Verificar que el puerto está filtrado\nnmap -sS -p 502 -vv 192.168.56.5",
     "crumbs": [
       "Laboratorios",
       "<span class='chapter-number'>16</span>  <span class='chapter-title'>Lab 7: Hardening y Pentesting de Sistemas OT</span>"
@@ -1429,7 +1429,7 @@
     "href": "labs/lab-unidad7.html#resultado-esperado",
     "title": "Lab 7: Hardening y Pentesting de Sistemas OT",
     "section": "Resultado Esperado",
-    "text": "Resultado Esperado\nAl completar el lab, el estudiante debe demostrar comprensión de la superficie de ataque OT y las medidas de mitigación:\n\nModbus expuesto identificado: Output de nmap -sS -p 502 192.168.56.5 mostrando 502/tcp open  modbus antes del hardening.\nLectura de registros Modbus: Uso de modbus-cli o script Python con pymodbus que lea al menos un registro del PLC simulado, mostrando el valor leído (ej. Coil 0: True).\nHardening aplicado: Captura del reporte HTML de OpenClaw mostrando el estado inicial vs. final con al menos 5 controles mejorados (ej. firewall, autenticación, cifrado de tráfico).\nComparativa de superficie de ataque: Dos outputs de Nmap (antes y después) mostrando reducción de puertos expuestos o servicios endurecidos.\n\nFlag de completitud: El puerto 502 (Modbus) debe estar filtrado o con autenticación configurada en el escaneo post-hardening, documentado en el reporte final.",
+    "text": "Resultado Esperado\nAl completar el lab, el estudiante debe demostrar comprensión de la superficie de ataque OT y las medidas de mitigación:\n\nModbus expuesto identificado: Output de nmap -sS -p 502 192.168.56.5 mostrando 502/tcp open  modbus antes del hardening.\nLectura de registros Modbus: Uso de pyModbus que lea al menos un registro del PLC simulado, mostrando el valor leído (ej. Coil 0: True).\nHardening aplicado: Captura de iptables mostrando reglas de firewall aplicadas con al menos 5 controles mejorados.\nComparativa de superficie de ataque: dos outputs de Nmap (antes y después) mostrando reducción de puertos expuestos o servicios endurecidos.\n\nFlag de completitud: El puerto 502 (Modbus) debe estar filtrado o con autenticación configurada en el escaneo post-hardening, documentado en el reporte final.",
     "crumbs": [
       "Laboratorios",
       "<span class='chapter-number'>16</span>  <span class='chapter-title'>Lab 7: Hardening y Pentesting de Sistemas OT</span>"
@@ -1440,7 +1440,7 @@
     "href": "labs/lab-unidad7.html#recursos",
     "title": "Lab 7: Hardening y Pentesting de Sistemas OT",
     "section": "Recursos",
-    "text": "Recursos\n\nOpenPLC Runtime Documentation\nICS-CERT Advisories (CISA)\nNIST SP 800-82: Guide to ICS Security\nMITRE ATT&CK for ICS\npyModbus Documentation\nSANS ICS Security Resources",
+    "text": "Recursos\n\nOpenPLC Runtime Documentation\nICS-CERT Advisories (CISA)\nNIST SP 800-82: Guide to ICS Security\nMITRE ATT&CK for ICS\npyModbus Documentation\nSANS ICS Security Resources\nISF - Industrial Exploitation Framework",
     "crumbs": [
       "Laboratorios",
       "<span class='chapter-number'>16</span>  <span class='chapter-title'>Lab 7: Hardening y Pentesting de Sistemas OT</span>"
@@ -1572,7 +1572,7 @@
     "href": "labs/lab-unidad8.html#recursos",
     "title": "Lab 8 — Proyecto Final: Pentest End-to-End",
     "section": "Recursos",
-    "text": "Recursos\n\nDocumentación de Herramientas\n\nMetasploit Framework Docs\nNmap Book\nOWASP Testing Guide v4.2\nsqlmap Wiki\n\n\n\nCVEs Explotados en este Lab\n\nCVE-2011-2523 — vsftpd 2.3.4 Backdoor\nCVE-2007-2447 — Samba Username Map Script\nCVE-2010-2075 — UnrealIRCd 3.2.8.1 Backdoor\n\n\n\nMetasploitable 2\n\nMetasploitable 2 Download (SourceForge)\nMetasploitable 2 Exploitability Guide — Rapid7\nVulnHub — Metasploitable 2 Walkthrough Reference\n\n\n\nMetodologías de Pentest\n\nPTES — Penetration Testing Execution Standard\nOWASP Web Security Testing Guide\nNIST SP 800-115 — Technical Guide to Information Security Testing\n\n\n\nRecursos de Aprendizaje Adicional\n\nHack The Box — Plataforma de práctica\nTryHackMe — Metasploit Room\nOffSec PEN-103 (Kali Linux Revealed)",
+    "text": "Recursos\n\nDocumentación de Herramientas\n\nMetasploit Framework Docs\nNmap Book\nOWASP Testing Guide v4.2\nsqlmap Wiki\n\n\n\nCVEs Explotados en este Lab\n\nCVE-2011-2523 — vsftpd 2.3.4 Backdoor\nCVE-2007-2447 — Samba Username Map Script\nCVE-2010-2075 — UnrealIRCd 3.2.8.1 Backdoor\n\n\n\nMetasploitable 2\n\nMetasploitable 2 Download (SourceForge)\nMetasploitable 2 Exploitability Guide — Rapid7\nVulnHub — Metasploitable 2 Walkthrough Reference\n\n\n\nMetodologías de Pentest\n\nPTES — Penetration Testing Execution Standard\nOWASP Web Security Testing Guide\nNIST SP 800-115 — Technical Guide to Information Security Testing\n\n\n\nRecursos de Aprendizaje Adicional\n\nOffSec PEN-103 (Kali Linux Revealed)\nVulnHub — VMs Vulnerables\nPentesterLab — Web Security",
     "crumbs": [
       "Laboratorios",
       "<span class='chapter-number'>17</span>  <span class='chapter-title'>Lab 8 — Proyecto Final: Pentest End-to-End</span>"
