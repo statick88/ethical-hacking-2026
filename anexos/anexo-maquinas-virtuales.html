@@ -80,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-68056a18e515a5789c5e26a7aeb7ac61.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-e7a9eae8d420f84057ababff31fce67b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-9265db7866925a9d8c3a929a182b61d8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -164,7 +164,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../contenido/unidad1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">🛡️ Unidad 1: Fundamentos y Reconocimiento Agéntico</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Unidad 1: Fundamentos y Reconocimiento Agéntico</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -461,7 +461,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../anexos/anexo-bash-scripting.html">Anexos</a></li><li class="breadcrumb-item"><a href="../anexos/anexo-maquinas-virtuales.html"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span></h1>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -1250,9 +1250,484 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Siguiente paso:</strong> Crea un laboratorio completo con al menos 3 máquinas (atacante, víctima web, víctima Windows) y practica técnicas de enumeración y explotación.</p>
 
 
+<!-- -->
+
 </section>
 
 </main> <!-- /main -->
+/**
+ * Sistema de Progreso para Ethical Hacking 2026
+ * Almacena el progreso del usuario en localStorage
+ */
+
+(function() {
+    'use strict';
+
+    // Clave para localStorage
+    const STORAGE_KEY = 'ethical_hacking_2026_progress';
+
+    // Estructura de datos del progreso
+    const defaultProgress = {
+        completedUnits: [],
+        completedLabs: [],
+        completedQuizzes: [],
+        lastVisited: null,
+        startDate: new Date().toISOString(),
+        totalVisitTime: 0
+    };
+
+    // Inicializar progreso
+    function initProgress() {
+        let progress = localStorage.getItem(STORAGE_KEY);
+        if (!progress) {
+            progress = defaultProgress;
+            saveProgress(progress);
+        } else {
+            progress = JSON.parse(progress);
+        }
+        return progress;
+    }
+
+    // Guardar progreso
+    function saveProgress(progress) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    }
+
+    // Marcar unidad como completada
+    function markUnitCompleted(unitId) {
+        const progress = initProgress();
+        if (!progress.completedUnits.includes(unitId)) {
+            progress.completedUnits.push(unitId);
+            progress.lastVisited = unitId;
+            saveProgress(progress);
+            updateUI();
+            console.log(`Unidad ${unitId} marcada como completada`);
+        }
+    }
+
+    // Marcar lab como completado
+    function markLabCompleted(labId) {
+        const progress = initProgress();
+        if (!progress.completedLabs.includes(labId)) {
+            progress.completedLabs.push(labId);
+            saveProgress(progress);
+            updateUI();
+            console.log(`Lab ${labId} marcado como completado`);
+        }
+    }
+
+    // Marcar quiz como completado
+    function markQuizCompleted(quizId) {
+        const progress = initProgress();
+        if (!progress.completedQuizzes.includes(quizId)) {
+            progress.completedQuizzes.push(quizId);
+            saveProgress(progress);
+            updateUI();
+            console.log(`Quiz ${quizId} marcado como completado`);
+        }
+    }
+
+    // Obtener progreso actual
+    function getProgress() {
+        return initProgress();
+    }
+
+    // Calcular porcentaje de progreso
+    function calculateProgress() {
+        const progress = getProgress();
+        const totalItems = 8 + 8 + 8; // 8 unidades + 8 labs + 8 quizzes
+        const completedItems = progress.completedUnits.length +
+                              progress.completedLabs.length +
+                              progress.completedQuizzes.length;
+        return Math.round((completedItems / totalItems) * 100);
+    }
+
+    // Actualizar UI del progreso
+    function updateUI() {
+        const progress = getProgress();
+        const percentage = calculateProgress();
+
+        // Actualizar barra de progreso si existe
+        const progressBar = document.querySelector('.progress-bar');
+        if (progressBar) {
+            progressBar.style.width = percentage + '%';
+        }
+
+        // Actualizar estadísticas si existen
+        const statsContainer = document.querySelector('.progress-stats');
+        if (statsContainer) {
+            statsContainer.innerHTML = `
+                <div class="stat-item">
+                    <div class="stat-value">${progress.completedUnits.length}/8</div>
+                    <div class="stat-label">Unidades</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${progress.completedLabs.length}/8</div>
+                    <div class="stat-label">Labs</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${progress.completedQuizzes.length}/8</div>
+                    <div class="stat-label">Quizzes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${percentage}%</div>
+                    <div class="stat-label">Completado</div>
+                </div>
+            `;
+        }
+
+        // Actualizar indicadores de completado en la lista de unidades
+        document.querySelectorAll('[data-unit-id]').forEach(element =&gt; {
+            const unitId = element.getAttribute('data-unit-id');
+            if (progress.completedUnits.includes(unitId)) {
+                element.classList.add('completed');
+                if (!element.querySelector('.completed-badge')) {
+                    const badge = document.createElement('span');
+                    badge.className = 'completed-badge';
+                    badge.textContent = '✓';
+                    element.appendChild(badge);
+                }
+            }
+        });
+    }
+
+    // Función para agregar botón de completar a cada sección
+    function addCompleteButtons() {
+        // Buscar contenedores de contenido
+        const contentContainers = document.querySelectorAll('.content, main, article');
+
+        contentContainers.forEach(container =&gt; {
+            // Crear botón de completar
+            const completeBtn = document.createElement('button');
+            completeBtn.className = 'btn-complete';
+            completeBtn.textContent = 'Marcar como completado';
+            completeBtn.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: #27ae60;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                z-index: 1000;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            `;
+
+            // Determinar qué tipo de contenido es
+            const currentPath = window.location.pathname;
+            let contentType = '';
+            let contentId = '';
+
+            if (currentPath.includes('/contenido/unidad')) {
+                contentType = 'unit';
+                contentId = currentPath.match(/unidad(\d+)/)[1];
+            } else if (currentPath.includes('/labs/lab-unidad')) {
+                contentType = 'lab';
+                contentId = currentPath.match(/lab-unidad(\d+)/)[1];
+            } else if (currentPath.includes('/quizzes/unidad')) {
+                contentType = 'quiz';
+                contentId = currentPath.match(/unidad(\d+)/)[1];
+            }
+
+            // Agregar evento al botón
+            completeBtn.addEventListener('click', function() {
+                if (contentType === 'unit') {
+                    markUnitCompleted('unidad' + contentId);
+                    this.textContent = '✓ Completado';
+                    this.style.background = '#27ae60';
+                } else if (contentType === 'lab') {
+                    markLabCompleted('lab-unidad' + contentId);
+                    this.textContent = '✓ Completado';
+                    this.style.background = '#27ae60';
+                } else if (contentType === 'quiz') {
+                    markQuizCompleted('unidad' + contentId);
+                    this.textContent = '✓ Completado';
+                    this.style.background = '#27ae60';
+                }
+            });
+
+            // Solo agregar si no existe ya
+            if (!document.querySelector('.btn-complete')) {
+                document.body.appendChild(completeBtn);
+            }
+        });
+    }
+
+    // Función para crear panel de progreso
+    function createProgressPanel() {
+        const sidebar = document.querySelector('.sidebar');
+        if (!sidebar) return;
+
+        // Crear panel de progreso
+        const progressPanel = document.createElement('div');
+        progressPanel.className = 'course-progress';
+        progressPanel.innerHTML = `
+            <h3>📈 Tu Progreso</h3>
+            <div class="progress-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="units-progress">0/8</div>
+                    <div class="stat-label">Unidades</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="labs-progress">0/8</div>
+                    <div class="stat-label">Labs</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="quizzes-progress">0/8</div>
+                    <div class="stat-label">Quizzes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="total-progress">0%</div>
+                    <div class="stat-label">Completado</div>
+                </div>
+            </div>
+        `;
+
+        // Insertar al inicio de la sidebar
+        sidebar.insertBefore(progressPanel, sidebar.firstChild);
+    }
+
+    // Inicializar cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', function() {
+        initProgress();
+        updateUI();
+        addCompleteButtons();
+        createProgressPanel();
+
+        // Actualizar cada vez que cambie la URL (SPA)
+        window.addEventListener('popstate', function() {
+            setTimeout(updateUI, 100);
+        });
+    });
+
+    // Exponer funciones globalmente para uso en otros scripts
+    window.CourseProgress = {
+        markUnitCompleted,
+        markLabCompleted,
+        markQuizCompleted,
+        getProgress,
+        calculateProgress
+    };
+
+    console.log('Sistema de progreso inicializado');
+})();
+/**
+ * Navegación Móvil para Ethical Hacking 2026
+ * Mejora la experiencia en dispositivos móviles
+ */
+
+(function() {
+    'use strict';
+
+    // Configuración
+    const MOBILE_BREAKPOINT = 768;
+    let isMobile = window.innerWidth &lt;= MOBILE_BREAKPOINT;
+
+    // Inicializar navegación móvil
+    function initMobileNav() {
+        // Crear botón de menú hamburguesa
+        const menuBtn = document.createElement('button');
+        menuBtn.className = 'mobile-menu-btn';
+        menuBtn.innerHTML = `
+            <span></span>
+            <span></span>
+            <span></span>
+        `;
+        menuBtn.setAttribute('aria-label', 'Abrir menú de navegación');
+        menuBtn.setAttribute('aria-expanded', 'false');
+
+        // Estilos del botón
+        menuBtn.style.cssText = `
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+        `;
+
+        // Líneas del botón hamburguesa
+        menuBtn.querySelectorAll('span').forEach(span =&gt; {
+            span.style.cssText = `
+                display: block;
+                height: 3px;
+                width: 100%;
+                background-color: #ecf0f1;
+                border-radius: 2px;
+                transition: all 0.3s ease;
+            `;
+        });
+
+        // Crear overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'sidebar-overlay';
+        overlay.style.cssText = `
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        `;
+
+        // Agregar al DOM
+        document.body.appendChild(menuBtn);
+        document.body.appendChild(overlay);
+
+        // Obtener sidebar
+        const sidebar = document.querySelector('.sidebar');
+
+        // Función para abrir/cerrar menú
+        function toggleMenu() {
+            const isOpen = sidebar.classList.contains('open');
+
+            if (isOpen) {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                menuBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            } else {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+                menuBtn.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Event listeners
+        menuBtn.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        // Cerrar con tecla Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' &amp;&amp; sidebar.classList.contains('open')) {
+                toggleMenu();
+            }
+        });
+
+        // Mostrar/ocultar botón según tamaño de pantalla
+        function updateMenuButton() {
+            isMobile = window.innerWidth &lt;= MOBILE_BREAKPOINT;
+            menuBtn.style.display = isMobile ? 'flex' : 'none';
+
+            if (!isMobile) {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        window.addEventListener('resize', updateMenuButton);
+        updateMenuButton();
+
+        // Agregar swipe gestures para móvil
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+
+            // Swipe izquierdo (cerrar menú)
+            if (diff &gt; swipeThreshold &amp;&amp; sidebar.classList.contains('open')) {
+                toggleMenu();
+            }
+
+            // Swipe derecho (abrir menú)
+            if (diff &lt; -swipeThreshold &amp;&amp; !sidebar.classList.contains('open') &amp;&amp; touchStartX &lt; 50) {
+                toggleMenu();
+            }
+        }
+
+        console.log('Navegación móvil inicializada');
+    }
+
+    // Función para mejorar scroll en móvil
+    function improveMobileScroll() {
+        // Agregar indicador de scroll horizontal para tablas
+        const tables = document.querySelectorAll('table');
+        tables.forEach(table =&gt; {
+            const wrapper = document.createElement('div');
+            wrapper.style.overflowX = 'auto';
+            wrapper.style.webkitOverflowScrolling = 'touch';
+            table.parentNode.insertBefore(wrapper, table);
+            wrapper.appendChild(table);
+        });
+
+        // Suavizar scroll en móvil
+        if ('ontouchstart' in window) {
+            document.documentElement.style.scrollBehavior = 'smooth';
+        }
+    }
+
+    // Función para optimizar tap targets en móvil
+    function optimizeTapTargets() {
+        // Aumentar tamaño de enlaces y botones en móvil
+        const style = document.createElement('style');
+        style.textContent = `
+            @media (max-width: 768px) {
+                a, button {
+                    min-height: 44px;
+                    min-width: 44px;
+                }
+
+                .sidebar a {
+                    padding: 15px 20px;
+                    display: block;
+                }
+
+                .btn-complete {
+                    bottom: 10px !important;
+                    right: 10px !important;
+                    padding: 12px 24px !important;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // Inicializar cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', function() {
+        initMobileNav();
+        improveMobileScroll();
+        optimizeTapTargets();
+    });
+
+    // Exponer funciones globalmente
+    window.MobileNav = {
+        init: initMobileNav,
+        toggle: function() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            if (sidebar &amp;&amp; overlay) {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+            }
+        }
+    };
+
+    console.log('Mejoras móviles inicializadas');
+})();
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -1323,6 +1798,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -1661,7 +2187,860 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   <div class="nav-page nav-page-next">
   </div>
-</nav>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Anexo C: Minicurso de Máquinas Virtuales con Kali Linux"</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Diego Saavedra"</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2026-03-16"</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introducción a Máquinas Virtuales en Seguridad</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>Las máquinas virtuales son esenciales en seguridad informática para crear entornos aislados, reproducibles y portátiles para pruebas de pentesting, análisis de malware y laboratorios de aprendizaje.</span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="fu">### Objetivos del Minicurso</span></span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Configurar VMware Fusion y VirtualBox para laboratorios de seguridad</span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Instalar y configurar Kali Linux como máquina virtual</span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Optimizar el rendimiento y seguridad de las VMs</span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Crear laboratorios de pentesting con VMs</span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Automatizar despliegues de laboratorios</span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Conceptos Fundamentales</span></span>
+<span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1.1 Virtualización</span></span>
+<span id="cb45-25"><a href="#cb45-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-26"><a href="#cb45-26" aria-hidden="true" tabindex="-1"></a>La virtualización permite ejecutar múltiples sistemas operativos en un mismo hardware mediante un hipervisor.</span>
+<span id="cb45-27"><a href="#cb45-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-28"><a href="#cb45-28" aria-hidden="true" tabindex="-1"></a>**Tipos de hipervisores:**</span>
+<span id="cb45-29"><a href="#cb45-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Tipo 1 (Bare-metal):** Ejecuta directamente sobre hardware (VMware ESXi, Hyper-V)</span>
+<span id="cb45-30"><a href="#cb45-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Tipo 2 (Hosted):** Ejecuta sobre sistema operativo host (VMware Fusion, VirtualBox)</span>
+<span id="cb45-31"><a href="#cb45-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-32"><a href="#cb45-32" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1.2 Ventajas en Seguridad Informática</span></span>
+<span id="cb45-33"><a href="#cb45-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-34"><a href="#cb45-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Aislamiento:** Malware no afecta sistema host</span>
+<span id="cb45-35"><a href="#cb45-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Portabilidad:** Laboratorios fácilmente compartibles</span>
+<span id="cb45-36"><a href="#cb45-36" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Snapshots:** Puntos de restauración rápidos</span>
+<span id="cb45-37"><a href="#cb45-37" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Clonación:** Múltiples entornos idénticos</span>
+<span id="cb45-38"><a href="#cb45-38" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Redes aisladas:** Entornos de prueba controlados</span>
+<span id="cb45-39"><a href="#cb45-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-40"><a href="#cb45-40" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-41"><a href="#cb45-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-42"><a href="#cb45-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Configuración de VMware Fusion</span></span>
+<span id="cb45-43"><a href="#cb45-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-44"><a href="#cb45-44" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2.1 Instalación en macOS</span></span>
+<span id="cb45-45"><a href="#cb45-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-46"><a href="#cb45-46" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-47"><a href="#cb45-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Descargar VMware Fusion</span></span>
+<span id="cb45-48"><a href="#cb45-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Visitar: https://www.vmware.com/products/fusion.html</span></span>
+<span id="cb45-49"><a href="#cb45-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-50"><a href="#cb45-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalar desde DMG</span></span>
+<span id="cb45-51"><a href="#cb45-51" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Abrir el archivo .dmg</span></span>
+<span id="cb45-52"><a href="#cb45-52" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Arrastrar VMware Fusion a Applications</span></span>
+<span id="cb45-53"><a href="#cb45-53" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Abrir y aceptar licencia</span></span>
+<span id="cb45-54"><a href="#cb45-54" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-55"><a href="#cb45-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-56"><a href="#cb45-56" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2.2 Configuración Inicial</span></span>
+<span id="cb45-57"><a href="#cb45-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-58"><a href="#cb45-58" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-59"><a href="#cb45-59" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar instalación</span></span>
+<span id="cb45-60"><a href="#cb45-60" aria-hidden="true" tabindex="-1"></a><span class="ex">vmrun</span> list</span>
+<span id="cb45-61"><a href="#cb45-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-62"><a href="#cb45-62" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar preferencias</span></span>
+<span id="cb45-63"><a href="#cb45-63" aria-hidden="true" tabindex="-1"></a><span class="co"># VMware Fusion &gt; Preferences &gt; General</span></span>
+<span id="cb45-64"><a href="#cb45-64" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-65"><a href="#cb45-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-66"><a href="#cb45-66" aria-hidden="true" tabindex="-1"></a>**Configuraciones recomendadas:**</span>
+<span id="cb45-67"><a href="#cb45-67" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**General:**</span>
+<span id="cb45-68"><a href="#cb45-68" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>"Check for updates automatically"</span>
+<span id="cb45-69"><a href="#cb45-69" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>"Share data with VMware"</span>
+<span id="cb45-70"><a href="#cb45-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-71"><a href="#cb45-71" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Network:**</span>
+<span id="cb45-72"><a href="#cb45-72" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>"Share with my Mac" (NAT)</span>
+<span id="cb45-73"><a href="#cb45-73" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>"Private to my Mac" (Host-only)</span>
+<span id="cb45-74"><a href="#cb45-74" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>"Bridged" (Direct access)</span>
+<span id="cb45-75"><a href="#cb45-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-76"><a href="#cb45-76" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Display:**</span>
+<span id="cb45-77"><a href="#cb45-77" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>"Use full resolution for retina displays"</span>
+<span id="cb45-78"><a href="#cb45-78" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>"Accelerate 3D graphics"</span>
+<span id="cb45-79"><a href="#cb45-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-80"><a href="#cb45-80" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2.3 Creación de Redes Personalizadas</span></span>
+<span id="cb45-81"><a href="#cb45-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-82"><a href="#cb45-82" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-83"><a href="#cb45-83" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear red host-only</span></span>
+<span id="cb45-84"><a href="#cb45-84" aria-hidden="true" tabindex="-1"></a><span class="co"># VMware Fusion &gt; Preferences &gt; Network &gt; +</span></span>
+<span id="cb45-85"><a href="#cb45-85" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar subnet: 192.168.56.0/24</span></span>
+<span id="cb45-86"><a href="#cb45-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-87"><a href="#cb45-87" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear red aislada (sin acceso a internet)</span></span>
+<span id="cb45-88"><a href="#cb45-88" aria-hidden="true" tabindex="-1"></a><span class="co"># Network Adapter &gt; Private to my Mac</span></span>
+<span id="cb45-89"><a href="#cb45-89" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-90"><a href="#cb45-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-91"><a href="#cb45-91" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-92"><a href="#cb45-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-93"><a href="#cb45-93" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Configuración de VirtualBox</span></span>
+<span id="cb45-94"><a href="#cb45-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-95"><a href="#cb45-95" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3.1 Instalación en macOS</span></span>
+<span id="cb45-96"><a href="#cb45-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-97"><a href="#cb45-97" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-98"><a href="#cb45-98" aria-hidden="true" tabindex="-1"></a><span class="co"># Descargar VirtualBox</span></span>
+<span id="cb45-99"><a href="#cb45-99" aria-hidden="true" tabindex="-1"></a><span class="co"># Visitar: https://www.virtualbox.org/wiki/Downloads</span></span>
+<span id="cb45-100"><a href="#cb45-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-101"><a href="#cb45-101" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalar</span></span>
+<span id="cb45-102"><a href="#cb45-102" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Abrir .pkg</span></span>
+<span id="cb45-103"><a href="#cb45-103" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Seguir asistente de instalación</span></span>
+<span id="cb45-104"><a href="#cb45-104" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Aceptar extensión de kernel</span></span>
+<span id="cb45-105"><a href="#cb45-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-106"><a href="#cb45-106" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar instalación</span></span>
+<span id="cb45-107"><a href="#cb45-107" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> <span class="at">--version</span></span>
+<span id="cb45-108"><a href="#cb45-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-109"><a href="#cb45-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-110"><a href="#cb45-110" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3.2 Configuración Inicial</span></span>
+<span id="cb45-111"><a href="#cb45-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-112"><a href="#cb45-112" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-113"><a href="#cb45-113" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar configuración</span></span>
+<span id="cb45-114"><a href="#cb45-114" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> list vms</span>
+<span id="cb45-115"><a href="#cb45-115" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> list hostonlyifs</span>
+<span id="cb45-116"><a href="#cb45-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-117"><a href="#cb45-117" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar preferencias</span></span>
+<span id="cb45-118"><a href="#cb45-118" aria-hidden="true" tabindex="-1"></a><span class="co"># VirtualBox &gt; Preferences</span></span>
+<span id="cb45-119"><a href="#cb45-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-120"><a href="#cb45-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-121"><a href="#cb45-121" aria-hidden="true" tabindex="-1"></a>**Configuraciones recomendadas:**</span>
+<span id="cb45-122"><a href="#cb45-122" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**General:**</span>
+<span id="cb45-123"><a href="#cb45-123" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Language: Spanish/English</span>
+<span id="cb45-124"><a href="#cb45-124" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Default VM Folder: ~/VirtualBox VMs</span>
+<span id="cb45-125"><a href="#cb45-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-126"><a href="#cb45-126" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Display:**</span>
+<span id="cb45-127"><a href="#cb45-127" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Maximum Guest Screen Size: Hint</span>
+<span id="cb45-128"><a href="#cb45-128" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Enable 3D Acceleration</span>
+<span id="cb45-129"><a href="#cb45-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-130"><a href="#cb45-130" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Network:**</span>
+<span id="cb45-131"><a href="#cb45-131" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Host-only Networks: Crear redes personalizadas</span>
+<span id="cb45-132"><a href="#cb45-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-133"><a href="#cb45-133" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3.3 Creación de Redes Host-Only</span></span>
+<span id="cb45-134"><a href="#cb45-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-135"><a href="#cb45-135" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-136"><a href="#cb45-136" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear interfaz host-only</span></span>
+<span id="cb45-137"><a href="#cb45-137" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> hostonlyif create</span>
+<span id="cb45-138"><a href="#cb45-138" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> hostonlyif ipconfig vboxnet0 <span class="at">--ip</span> 192.168.56.1 <span class="at">--netmask</span> 255.255.255.0</span>
+<span id="cb45-139"><a href="#cb45-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-140"><a href="#cb45-140" aria-hidden="true" tabindex="-1"></a><span class="co"># Listar redes</span></span>
+<span id="cb45-141"><a href="#cb45-141" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> hostonlyif list</span>
+<span id="cb45-142"><a href="#cb45-142" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-143"><a href="#cb45-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-144"><a href="#cb45-144" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-145"><a href="#cb45-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-146"><a href="#cb45-146" aria-hidden="true" tabindex="-1"></a><span class="fu">## 4. Instalación de Kali Linux</span></span>
+<span id="cb45-147"><a href="#cb45-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-148"><a href="#cb45-148" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4.1 Descarga de Imagen Oficial</span></span>
+<span id="cb45-149"><a href="#cb45-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-150"><a href="#cb45-150" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-151"><a href="#cb45-151" aria-hidden="true" tabindex="-1"></a><span class="co"># Opciones de descarga:</span></span>
+<span id="cb45-152"><a href="#cb45-152" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Image: https://www.kali.org/get-kali/#kali-virtual-machines</span></span>
+<span id="cb45-153"><a href="#cb45-153" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Torrent: Más rápido para descargas grandes</span></span>
+<span id="cb45-154"><a href="#cb45-154" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Mirrors: https://http.kali.org/</span></span>
+<span id="cb45-155"><a href="#cb45-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-156"><a href="#cb45-156" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar integridad (importante para seguridad)</span></span>
+<span id="cb45-157"><a href="#cb45-157" aria-hidden="true" tabindex="-1"></a><span class="fu">sha256sum</span> kali-linux-2026.1-vmware-amd64.7z</span>
+<span id="cb45-158"><a href="#cb45-158" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparar con hash oficial en https://www.kali.org/get-kali/</span></span>
+<span id="cb45-159"><a href="#cb45-159" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-160"><a href="#cb45-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-161"><a href="#cb45-161" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4.2 Instalación en VMware Fusion</span></span>
+<span id="cb45-162"><a href="#cb45-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-163"><a href="#cb45-163" aria-hidden="true" tabindex="-1"></a>**Paso 1: Crear máquina virtual**</span>
+<span id="cb45-164"><a href="#cb45-164" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-165"><a href="#cb45-165" aria-hidden="true" tabindex="-1"></a><span class="co"># VMware Fusion &gt; File &gt; New...</span></span>
+<span id="cb45-166"><a href="#cb45-166" aria-hidden="true" tabindex="-1"></a><span class="co"># Select "Import an existing virtual machine"</span></span>
+<span id="cb45-167"><a href="#cb45-167" aria-hidden="true" tabindex="-1"></a><span class="co"># Seleccionar archivo .vmx o .ovf de Kali</span></span>
+<span id="cb45-168"><a href="#cb45-168" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-169"><a href="#cb45-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-170"><a href="#cb45-170" aria-hidden="true" tabindex="-1"></a>**Paso 2: Configurar hardware**</span>
+<span id="cb45-171"><a href="#cb45-171" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-172"><a href="#cb45-172" aria-hidden="true" tabindex="-1"></a><span class="in">- Procesadores: 2+ núcleos</span></span>
+<span id="cb45-173"><a href="#cb45-173" aria-hidden="true" tabindex="-1"></a><span class="in">- RAM: 2-4 GB (mínimo 2 GB)</span></span>
+<span id="cb45-174"><a href="#cb45-174" aria-hidden="true" tabindex="-1"></a><span class="in">- Disco: 40-60 GB (dinámico)</span></span>
+<span id="cb45-175"><a href="#cb45-175" aria-hidden="true" tabindex="-1"></a><span class="in">- Red: NAT o Host-Only (según necesidad)</span></span>
+<span id="cb45-176"><a href="#cb45-176" aria-hidden="true" tabindex="-1"></a><span class="in">- USB: Habilitar dispositivos USB</span></span>
+<span id="cb45-177"><a href="#cb45-177" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-178"><a href="#cb45-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-179"><a href="#cb45-179" aria-hidden="true" tabindex="-1"></a>**Paso 3: Primer arranque**</span>
+<span id="cb45-180"><a href="#cb45-180" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-181"><a href="#cb45-181" aria-hidden="true" tabindex="-1"></a><span class="co"># Usuario por defecto: kali</span></span>
+<span id="cb45-182"><a href="#cb45-182" aria-hidden="true" tabindex="-1"></a><span class="co"># Contraseña por defecto: kali</span></span>
+<span id="cb45-183"><a href="#cb45-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-184"><a href="#cb45-184" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiar contraseña inmediatamente</span></span>
+<span id="cb45-185"><a href="#cb45-185" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> passwd kali</span>
+<span id="cb45-186"><a href="#cb45-186" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-187"><a href="#cb45-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-188"><a href="#cb45-188" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4.3 Instalación en VirtualBox</span></span>
+<span id="cb45-189"><a href="#cb45-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-190"><a href="#cb45-190" aria-hidden="true" tabindex="-1"></a>**Paso 1: Importar OVA/OVF**</span>
+<span id="cb45-191"><a href="#cb45-191" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-192"><a href="#cb45-192" aria-hidden="true" tabindex="-1"></a><span class="co"># VirtualBox &gt; File &gt; Import Appliance</span></span>
+<span id="cb45-193"><a href="#cb45-193" aria-hidden="true" tabindex="-1"></a><span class="co"># Seleccionar archivo .ova de Kali</span></span>
+<span id="cb45-194"><a href="#cb45-194" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-195"><a href="#cb45-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-196"><a href="#cb45-196" aria-hidden="true" tabindex="-1"></a>**Paso 2: Configurar máquina**</span>
+<span id="cb45-197"><a href="#cb45-197" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-198"><a href="#cb45-198" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuración &gt; Sistema</span></span>
+<span id="cb45-199"><a href="#cb45-199" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> Placa base: Linux 64-bit</span>
+<span id="cb45-200"><a href="#cb45-200" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> RAM: 2048 MB</span>
+<span id="cb45-201"><a href="#cb45-201" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> Procesadores: 2</span>
+<span id="cb45-202"><a href="#cb45-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-203"><a href="#cb45-203" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuración &gt; Pantalla</span></span>
+<span id="cb45-204"><a href="#cb45-204" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> Memoria de video: 128 MB</span>
+<span id="cb45-205"><a href="#cb45-205" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> Aceleración 3D: Habilitar</span>
+<span id="cb45-206"><a href="#cb45-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-207"><a href="#cb45-207" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuración &gt; Red</span></span>
+<span id="cb45-208"><a href="#cb45-208" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> Adapter 1: NAT o Host-Only</span>
+<span id="cb45-209"><a href="#cb45-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-210"><a href="#cb45-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-211"><a href="#cb45-211" aria-hidden="true" tabindex="-1"></a>**Paso 3: Configurar VirtualBox Guest Additions**</span>
+<span id="cb45-212"><a href="#cb45-212" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-213"><a href="#cb45-213" aria-hidden="true" tabindex="-1"></a><span class="co"># Dentro de Kali Linux</span></span>
+<span id="cb45-214"><a href="#cb45-214" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb45-215"><a href="#cb45-215" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="at">-y</span> build-essential dkms linux-headers-<span class="va">$(</span><span class="fu">uname</span> <span class="at">-r</span><span class="va">)</span></span>
+<span id="cb45-216"><a href="#cb45-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-217"><a href="#cb45-217" aria-hidden="true" tabindex="-1"></a><span class="co"># Insertar Guest Additions CD</span></span>
+<span id="cb45-218"><a href="#cb45-218" aria-hidden="true" tabindex="-1"></a><span class="co"># VirtualBox &gt; Devices &gt; Insert Guest Additions CD image</span></span>
+<span id="cb45-219"><a href="#cb45-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-220"><a href="#cb45-220" aria-hidden="true" tabindex="-1"></a><span class="co"># Montar y ejecutar</span></span>
+<span id="cb45-221"><a href="#cb45-221" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mkdir <span class="at">-p</span> /mnt/cdrom</span>
+<span id="cb45-222"><a href="#cb45-222" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mount /dev/cdrom /mnt/cdrom</span>
+<span id="cb45-223"><a href="#cb45-223" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /mnt/cdrom</span>
+<span id="cb45-224"><a href="#cb45-224" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ./VBoxLinuxAdditions.run</span>
+<span id="cb45-225"><a href="#cb45-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-226"><a href="#cb45-226" aria-hidden="true" tabindex="-1"></a><span class="co"># Reiniciar</span></span>
+<span id="cb45-227"><a href="#cb45-227" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> reboot</span>
+<span id="cb45-228"><a href="#cb45-228" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-229"><a href="#cb45-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-230"><a href="#cb45-230" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-231"><a href="#cb45-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-232"><a href="#cb45-232" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5. Configuración Inicial de Kali Linux</span></span>
+<span id="cb45-233"><a href="#cb45-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-234"><a href="#cb45-234" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5.1 Actualización del Sistema</span></span>
+<span id="cb45-235"><a href="#cb45-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-236"><a href="#cb45-236" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-237"><a href="#cb45-237" aria-hidden="true" tabindex="-1"></a><span class="co"># Actualizar repositorios</span></span>
+<span id="cb45-238"><a href="#cb45-238" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb45-239"><a href="#cb45-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-240"><a href="#cb45-240" aria-hidden="true" tabindex="-1"></a><span class="co"># Actualizar sistema completo</span></span>
+<span id="cb45-241"><a href="#cb45-241" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt full-upgrade <span class="at">-y</span></span>
+<span id="cb45-242"><a href="#cb45-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-243"><a href="#cb45-243" aria-hidden="true" tabindex="-1"></a><span class="co"># Limpiar paquetes obsoletos</span></span>
+<span id="cb45-244"><a href="#cb45-244" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt autoremove <span class="at">-y</span></span>
+<span id="cb45-245"><a href="#cb45-245" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt autoclean</span>
+<span id="cb45-246"><a href="#cb45-246" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-247"><a href="#cb45-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-248"><a href="#cb45-248" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5.2 Configuración de Red</span></span>
+<span id="cb45-249"><a href="#cb45-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-250"><a href="#cb45-250" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-251"><a href="#cb45-251" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver interfaces de red</span></span>
+<span id="cb45-252"><a href="#cb45-252" aria-hidden="true" tabindex="-1"></a><span class="ex">ip</span> a</span>
+<span id="cb45-253"><a href="#cb45-253" aria-hidden="true" tabindex="-1"></a><span class="ex">ip</span> link show</span>
+<span id="cb45-254"><a href="#cb45-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-255"><a href="#cb45-255" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar IP estática (ejemplo)</span></span>
+<span id="cb45-256"><a href="#cb45-256" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> nano /etc/netplan/01-netcfg.yaml</span>
+<span id="cb45-257"><a href="#cb45-257" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-258"><a href="#cb45-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-259"><a href="#cb45-259" aria-hidden="true" tabindex="-1"></a>**Ejemplo de configuración estática:**</span>
+<span id="cb45-260"><a href="#cb45-260" aria-hidden="true" tabindex="-1"></a><span class="in">```yaml</span></span>
+<span id="cb45-261"><a href="#cb45-261" aria-hidden="true" tabindex="-1"></a><span class="fu">network</span><span class="kw">:</span></span>
+<span id="cb45-262"><a href="#cb45-262" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="dv">2</span></span>
+<span id="cb45-263"><a href="#cb45-263" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ethernets</span><span class="kw">:</span></span>
+<span id="cb45-264"><a href="#cb45-264" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">eth0</span><span class="kw">:</span></span>
+<span id="cb45-265"><a href="#cb45-265" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">dhcp4</span><span class="kw">:</span><span class="at"> </span><span class="ch">no</span></span>
+<span id="cb45-266"><a href="#cb45-266" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">addresses</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">192.168.56.10/</span><span class="dv">24</span><span class="kw">]</span></span>
+<span id="cb45-267"><a href="#cb45-267" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">gateway4</span><span class="kw">:</span><span class="at"> </span><span class="fl">192.168.56.1</span></span>
+<span id="cb45-268"><a href="#cb45-268" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">nameservers</span><span class="kw">:</span></span>
+<span id="cb45-269"><a href="#cb45-269" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">addresses</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="fl">8.8.8.8</span><span class="kw">,</span><span class="at"> </span><span class="fl">8.8.4.4</span><span class="kw">]</span></span>
+<span id="cb45-270"><a href="#cb45-270" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-271"><a href="#cb45-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-272"><a href="#cb45-272" aria-hidden="true" tabindex="-1"></a>**Aplicar cambios:**</span>
+<span id="cb45-273"><a href="#cb45-273" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-274"><a href="#cb45-274" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> netplan apply</span>
+<span id="cb45-275"><a href="#cb45-275" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-276"><a href="#cb45-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-277"><a href="#cb45-277" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5.3 Configuración de SSH</span></span>
+<span id="cb45-278"><a href="#cb45-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-279"><a href="#cb45-279" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-280"><a href="#cb45-280" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalar SSH server</span></span>
+<span id="cb45-281"><a href="#cb45-281" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="at">-y</span> openssh-server</span>
+<span id="cb45-282"><a href="#cb45-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-283"><a href="#cb45-283" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar SSH</span></span>
+<span id="cb45-284"><a href="#cb45-284" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> nano /etc/ssh/sshd_config</span>
+<span id="cb45-285"><a href="#cb45-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-286"><a href="#cb45-286" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiar configuraciones importantes:</span></span>
+<span id="cb45-287"><a href="#cb45-287" aria-hidden="true" tabindex="-1"></a><span class="ex">PermitRootLogin</span> no</span>
+<span id="cb45-288"><a href="#cb45-288" aria-hidden="true" tabindex="-1"></a><span class="ex">PasswordAuthentication</span> no</span>
+<span id="cb45-289"><a href="#cb45-289" aria-hidden="true" tabindex="-1"></a><span class="ex">PubkeyAuthentication</span> yes</span>
+<span id="cb45-290"><a href="#cb45-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-291"><a href="#cb45-291" aria-hidden="true" tabindex="-1"></a><span class="co"># Reiniciar servicio</span></span>
+<span id="cb45-292"><a href="#cb45-292" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl restart ssh</span>
+<span id="cb45-293"><a href="#cb45-293" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable ssh</span>
+<span id="cb45-294"><a href="#cb45-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-295"><a href="#cb45-295" aria-hidden="true" tabindex="-1"></a><span class="co"># Generar clave SSH (desde host)</span></span>
+<span id="cb45-296"><a href="#cb45-296" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-t</span> ed25519 <span class="at">-C</span> <span class="st">"kali-vm"</span></span>
+<span id="cb45-297"><a href="#cb45-297" aria-hidden="true" tabindex="-1"></a><span class="ex">ssh-copy-id</span> kali@192.168.56.10</span>
+<span id="cb45-298"><a href="#cb45-298" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-299"><a href="#cb45-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-300"><a href="#cb45-300" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5.4 Instalación de Herramientas Esenciales</span></span>
+<span id="cb45-301"><a href="#cb45-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-302"><a href="#cb45-302" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-303"><a href="#cb45-303" aria-hidden="true" tabindex="-1"></a><span class="co"># Herramientas de enumeración</span></span>
+<span id="cb45-304"><a href="#cb45-304" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="at">-y</span> <span class="dt">\</span></span>
+<span id="cb45-305"><a href="#cb45-305" aria-hidden="true" tabindex="-1"></a>    nmap <span class="dt">\</span></span>
+<span id="cb45-306"><a href="#cb45-306" aria-hidden="true" tabindex="-1"></a>    enum4linux <span class="dt">\</span></span>
+<span id="cb45-307"><a href="#cb45-307" aria-hidden="true" tabindex="-1"></a>    ldap-utils <span class="dt">\</span></span>
+<span id="cb45-308"><a href="#cb45-308" aria-hidden="true" tabindex="-1"></a>    smbclient <span class="dt">\</span></span>
+<span id="cb45-309"><a href="#cb45-309" aria-hidden="true" tabindex="-1"></a>    nikto <span class="dt">\</span></span>
+<span id="cb45-310"><a href="#cb45-310" aria-hidden="true" tabindex="-1"></a>    dirb <span class="dt">\</span></span>
+<span id="cb45-311"><a href="#cb45-311" aria-hidden="true" tabindex="-1"></a>    dirbuster <span class="dt">\</span></span>
+<span id="cb45-312"><a href="#cb45-312" aria-hidden="true" tabindex="-1"></a>    gobuster</span>
+<span id="cb45-313"><a href="#cb45-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-314"><a href="#cb45-314" aria-hidden="true" tabindex="-1"></a><span class="co"># Herramientas de explotación</span></span>
+<span id="cb45-315"><a href="#cb45-315" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="at">-y</span> <span class="dt">\</span></span>
+<span id="cb45-316"><a href="#cb45-316" aria-hidden="true" tabindex="-1"></a>    metasploit-framework <span class="dt">\</span></span>
+<span id="cb45-317"><a href="#cb45-317" aria-hidden="true" tabindex="-1"></a>    exploitdb <span class="dt">\</span></span>
+<span id="cb45-318"><a href="#cb45-318" aria-hidden="true" tabindex="-1"></a>    sqlmap <span class="dt">\</span></span>
+<span id="cb45-319"><a href="#cb45-319" aria-hidden="true" tabindex="-1"></a>    nikto</span>
+<span id="cb45-320"><a href="#cb45-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-321"><a href="#cb45-321" aria-hidden="true" tabindex="-1"></a><span class="co"># Herramientas de post-explotación</span></span>
+<span id="cb45-322"><a href="#cb45-322" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="at">-y</span> <span class="dt">\</span></span>
+<span id="cb45-323"><a href="#cb45-323" aria-hidden="true" tabindex="-1"></a>    mimikatz <span class="dt">\</span></span>
+<span id="cb45-324"><a href="#cb45-324" aria-hidden="true" tabindex="-1"></a>    crackmapexec <span class="dt">\</span></span>
+<span id="cb45-325"><a href="#cb45-325" aria-hidden="true" tabindex="-1"></a>    evil-winrm</span>
+<span id="cb45-326"><a href="#cb45-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-327"><a href="#cb45-327" aria-hidden="true" tabindex="-1"></a><span class="co"># Herramientas de red</span></span>
+<span id="cb45-328"><a href="#cb45-328" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="at">-y</span> <span class="dt">\</span></span>
+<span id="cb45-329"><a href="#cb45-329" aria-hidden="true" tabindex="-1"></a>    wireshark <span class="dt">\</span></span>
+<span id="cb45-330"><a href="#cb45-330" aria-hidden="true" tabindex="-1"></a>    tcpdump <span class="dt">\</span></span>
+<span id="cb45-331"><a href="#cb45-331" aria-hidden="true" tabindex="-1"></a>    tshark <span class="dt">\</span></span>
+<span id="cb45-332"><a href="#cb45-332" aria-hidden="true" tabindex="-1"></a>    netcat-traditional <span class="dt">\</span></span>
+<span id="cb45-333"><a href="#cb45-333" aria-hidden="true" tabindex="-1"></a>    netcat-openbsd</span>
+<span id="cb45-334"><a href="#cb45-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-335"><a href="#cb45-335" aria-hidden="true" tabindex="-1"></a><span class="co"># Herramientas de fuerza bruta</span></span>
+<span id="cb45-336"><a href="#cb45-336" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="at">-y</span> <span class="dt">\</span></span>
+<span id="cb45-337"><a href="#cb45-337" aria-hidden="true" tabindex="-1"></a>    hydra <span class="dt">\</span></span>
+<span id="cb45-338"><a href="#cb45-338" aria-hidden="true" tabindex="-1"></a>    john <span class="dt">\</span></span>
+<span id="cb45-339"><a href="#cb45-339" aria-hidden="true" tabindex="-1"></a>    medusa <span class="dt">\</span></span>
+<span id="cb45-340"><a href="#cb45-340" aria-hidden="true" tabindex="-1"></a>    fcrackzip</span>
+<span id="cb45-341"><a href="#cb45-341" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-342"><a href="#cb45-342" aria-hidden="true" tabindex="-1"></a><span class="co"># Herramientas de ofuscación y evasión</span></span>
+<span id="cb45-343"><a href="#cb45-343" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="at">-y</span> <span class="dt">\</span></span>
+<span id="cb45-344"><a href="#cb45-344" aria-hidden="true" tabindex="-1"></a>    veil <span class="dt">\</span></span>
+<span id="cb45-345"><a href="#cb45-345" aria-hidden="true" tabindex="-1"></a>    powersploit <span class="dt">\</span></span>
+<span id="cb45-346"><a href="#cb45-346" aria-hidden="true" tabindex="-1"></a>   nishang</span>
+<span id="cb45-347"><a href="#cb45-347" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-348"><a href="#cb45-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-349"><a href="#cb45-349" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-350"><a href="#cb45-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-351"><a href="#cb45-351" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6. Laboratorios de Pentesting con VMs</span></span>
+<span id="cb45-352"><a href="#cb45-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-353"><a href="#cb45-353" aria-hidden="true" tabindex="-1"></a><span class="fu">### 6.1 Arquitectura de Laboratorio Básico</span></span>
+<span id="cb45-354"><a href="#cb45-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-355"><a href="#cb45-355" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-356"><a href="#cb45-356" aria-hidden="true" tabindex="-1"></a><span class="in">┌─────────────────────────────────────────────────────┐</span></span>
+<span id="cb45-357"><a href="#cb45-357" aria-hidden="true" tabindex="-1"></a><span class="in">│                   Host (macOS)                      │</span></span>
+<span id="cb45-358"><a href="#cb45-358" aria-hidden="true" tabindex="-1"></a><span class="in">│  ┌──────────────────────────────────────────────┐  │</span></span>
+<span id="cb45-359"><a href="#cb45-359" aria-hidden="true" tabindex="-1"></a><span class="in">│  │         VMware Fusion / VirtualBox           │  │</span></span>
+<span id="cb45-360"><a href="#cb45-360" aria-hidden="true" tabindex="-1"></a><span class="in">│  ├──────────────────────────────────────────────┤  │</span></span>
+<span id="cb45-361"><a href="#cb45-361" aria-hidden="true" tabindex="-1"></a><span class="in">│  │  ┌─────────────┐  ┌─────────────┐           │  │</span></span>
+<span id="cb45-362"><a href="#cb45-362" aria-hidden="true" tabindex="-1"></a><span class="in">│  │  │ Kali Linux  │  │   Máquina   │           │  │</span></span>
+<span id="cb45-363"><a href="#cb45-363" aria-hidden="true" tabindex="-1"></a><span class="in">│  │  │ (Atacante)  │  │  Vulnerable │           │  │</span></span>
+<span id="cb45-364"><a href="#cb45-364" aria-hidden="true" tabindex="-1"></a><span class="in">│  │  └─────────────┘  └─────────────┘           │  │</span></span>
+<span id="cb45-365"><a href="#cb45-365" aria-hidden="true" tabindex="-1"></a><span class="in">│  └──────────────────────────────────────────────┘  │</span></span>
+<span id="cb45-366"><a href="#cb45-366" aria-hidden="true" tabindex="-1"></a><span class="in">└─────────────────────────────────────────────────────┘</span></span>
+<span id="cb45-367"><a href="#cb45-367" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-368"><a href="#cb45-368" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-369"><a href="#cb45-369" aria-hidden="true" tabindex="-1"></a><span class="fu">### 6.2 Creación de Redes Aisladas</span></span>
+<span id="cb45-370"><a href="#cb45-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-371"><a href="#cb45-371" aria-hidden="true" tabindex="-1"></a>**En VMware Fusion:**</span>
+<span id="cb45-372"><a href="#cb45-372" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-373"><a href="#cb45-373" aria-hidden="true" tabindex="-1"></a><span class="co"># VMware Fusion &gt; Preferences &gt; Network &gt; +</span></span>
+<span id="cb45-374"><a href="#cb45-374" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear red: 192.168.100.0/24</span></span>
+<span id="cb45-375"><a href="#cb45-375" aria-hidden="true" tabindex="-1"></a><span class="co"># Desactivar "Connect to internet"</span></span>
+<span id="cb45-376"><a href="#cb45-376" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-377"><a href="#cb45-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-378"><a href="#cb45-378" aria-hidden="true" tabindex="-1"></a>**En VirtualBox:**</span>
+<span id="cb45-379"><a href="#cb45-379" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-380"><a href="#cb45-380" aria-hidden="true" tabindex="-1"></a><span class="co"># VirtualBox &gt; File &gt; Preferences &gt; Network</span></span>
+<span id="cb45-381"><a href="#cb45-381" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear red host-only: 192.168.56.0/24</span></span>
+<span id="cb45-382"><a href="#cb45-382" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-383"><a href="#cb45-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-384"><a href="#cb45-384" aria-hidden="true" tabindex="-1"></a><span class="fu">### 6.3 Configuración de Máquinas Vulnerables</span></span>
+<span id="cb45-385"><a href="#cb45-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-386"><a href="#cb45-386" aria-hidden="true" tabindex="-1"></a>**Opción 1: Usar VulnHub**</span>
+<span id="cb45-387"><a href="#cb45-387" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-388"><a href="#cb45-388" aria-hidden="true" tabindex="-1"></a><span class="co"># Descargar máquinas de VulnHub</span></span>
+<span id="cb45-389"><a href="#cb45-389" aria-hidden="true" tabindex="-1"></a><span class="co"># https://www.vulnhub.com/</span></span>
+<span id="cb45-390"><a href="#cb45-390" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-391"><a href="#cb45-391" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejemplo: Kioptrix Level 1</span></span>
+<span id="cb45-392"><a href="#cb45-392" aria-hidden="true" tabindex="-1"></a><span class="co"># Importar .ova en VirtualBox/VMware</span></span>
+<span id="cb45-393"><a href="#cb45-393" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar red: Host-Only</span></span>
+<span id="cb45-394"><a href="#cb45-394" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-395"><a href="#cb45-395" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-396"><a href="#cb45-396" aria-hidden="true" tabindex="-1"></a>**Opción 2: Crear máquina vulnerable propia**</span>
+<span id="cb45-397"><a href="#cb45-397" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-398"><a href="#cb45-398" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalar Ubuntu Server</span></span>
+<span id="cb45-399"><a href="#cb45-399" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalar servicios vulnerables</span></span>
+<span id="cb45-400"><a href="#cb45-400" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="at">-y</span> <span class="dt">\</span></span>
+<span id="cb45-401"><a href="#cb45-401" aria-hidden="true" tabindex="-1"></a>    apache2 <span class="dt">\</span></span>
+<span id="cb45-402"><a href="#cb45-402" aria-hidden="true" tabindex="-1"></a>    php <span class="dt">\</span></span>
+<span id="cb45-403"><a href="#cb45-403" aria-hidden="true" tabindex="-1"></a>    mysql-server <span class="dt">\</span></span>
+<span id="cb45-404"><a href="#cb45-404" aria-hidden="true" tabindex="-1"></a>    vsftpd <span class="dt">\</span></span>
+<span id="cb45-405"><a href="#cb45-405" aria-hidden="true" tabindex="-1"></a>    telnetd</span>
+<span id="cb45-406"><a href="#cb45-406" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-407"><a href="#cb45-407" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar vulnerabilidades intencionales</span></span>
+<span id="cb45-408"><a href="#cb45-408" aria-hidden="true" tabindex="-1"></a><span class="co"># - Contraseñas débiles</span></span>
+<span id="cb45-409"><a href="#cb45-409" aria-hidden="true" tabindex="-1"></a><span class="co"># - Servicios desactualizados</span></span>
+<span id="cb45-410"><a href="#cb45-410" aria-hidden="true" tabindex="-1"></a><span class="co"># - Permisos inadecuados</span></span>
+<span id="cb45-411"><a href="#cb45-411" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-412"><a href="#cb45-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-413"><a href="#cb45-413" aria-hidden="true" tabindex="-1"></a>**Opción 3: Usar máquinas preconfiguradas**</span>
+<span id="cb45-414"><a href="#cb45-414" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-415"><a href="#cb45-415" aria-hidden="true" tabindex="-1"></a><span class="co"># Metasploitable 2</span></span>
+<span id="cb45-416"><a href="#cb45-416" aria-hidden="true" tabindex="-1"></a><span class="co"># Descargar: https://sourceforge.net/projects/metasploitable/</span></span>
+<span id="cb45-417"><a href="#cb45-417" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-418"><a href="#cb45-418" aria-hidden="true" tabindex="-1"></a><span class="co"># DVWA (Damn Vulnerable Web Application)</span></span>
+<span id="cb45-419"><a href="#cb45-419" aria-hidden="true" tabindex="-1"></a><span class="co"># docker run -d -p 80:80 vulnerables/web-dvwa</span></span>
+<span id="cb45-420"><a href="#cb45-420" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-421"><a href="#cb45-421" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-422"><a href="#cb45-422" aria-hidden="true" tabindex="-1"></a><span class="fu">### 6.4 Ejemplo: Laboratorio Completo</span></span>
+<span id="cb45-423"><a href="#cb45-423" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-424"><a href="#cb45-424" aria-hidden="true" tabindex="-1"></a>**Arquitectura:**</span>
+<span id="cb45-425"><a href="#cb45-425" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-426"><a href="#cb45-426" aria-hidden="true" tabindex="-1"></a><span class="in">Red Host-Only: 192.168.56.0/24</span></span>
+<span id="cb45-427"><a href="#cb45-427" aria-hidden="true" tabindex="-1"></a><span class="in">├── Kali Linux (Atacante): 192.168.56.10</span></span>
+<span id="cb45-428"><a href="#cb45-428" aria-hidden="true" tabindex="-1"></a><span class="in">├── Windows 10 (Victim): 192.168.56.20</span></span>
+<span id="cb45-429"><a href="#cb45-429" aria-hidden="true" tabindex="-1"></a><span class="in">├── Ubuntu Server (Web): 192.168.56.30</span></span>
+<span id="cb45-430"><a href="#cb45-430" aria-hidden="true" tabindex="-1"></a><span class="in">└── Router (pfSense/OPNsense): 192.168.56.1</span></span>
+<span id="cb45-431"><a href="#cb45-431" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-432"><a href="#cb45-432" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-433"><a href="#cb45-433" aria-hidden="true" tabindex="-1"></a>**Configuración de Kali:**</span>
+<span id="cb45-434"><a href="#cb45-434" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-435"><a href="#cb45-435" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar IP estática</span></span>
+<span id="cb45-436"><a href="#cb45-436" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> nano /etc/netplan/01-netcfg.yaml</span>
+<span id="cb45-437"><a href="#cb45-437" aria-hidden="true" tabindex="-1"></a><span class="co"># IP: 192.168.56.10/24</span></span>
+<span id="cb45-438"><a href="#cb45-438" aria-hidden="true" tabindex="-1"></a><span class="co"># Gateway: 192.168.56.1</span></span>
+<span id="cb45-439"><a href="#cb45-439" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-440"><a href="#cb45-440" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar conectividad</span></span>
+<span id="cb45-441"><a href="#cb45-441" aria-hidden="true" tabindex="-1"></a><span class="fu">ping</span> 192.168.56.1</span>
+<span id="cb45-442"><a href="#cb45-442" aria-hidden="true" tabindex="-1"></a><span class="fu">ping</span> 192.168.56.20</span>
+<span id="cb45-443"><a href="#cb45-443" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-444"><a href="#cb45-444" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-445"><a href="#cb45-445" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-446"><a href="#cb45-446" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-447"><a href="#cb45-447" aria-hidden="true" tabindex="-1"></a><span class="fu">## 7. Gestión de Snapshots y Clonación</span></span>
+<span id="cb45-448"><a href="#cb45-448" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-449"><a href="#cb45-449" aria-hidden="true" tabindex="-1"></a><span class="fu">### 7.1 Snapshots en VMware Fusion</span></span>
+<span id="cb45-450"><a href="#cb45-450" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-451"><a href="#cb45-451" aria-hidden="true" tabindex="-1"></a>**Crear snapshot:**</span>
+<span id="cb45-452"><a href="#cb45-452" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-453"><a href="#cb45-453" aria-hidden="true" tabindex="-1"></a><span class="co"># Desde interfaz gráfica</span></span>
+<span id="cb45-454"><a href="#cb45-454" aria-hidden="true" tabindex="-1"></a><span class="co"># Virtual Machine &gt; Snapshots &gt; Take Snapshot</span></span>
+<span id="cb45-455"><a href="#cb45-455" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-456"><a href="#cb45-456" aria-hidden="true" tabindex="-1"></a><span class="co"># Desde línea de comandos</span></span>
+<span id="cb45-457"><a href="#cb45-457" aria-hidden="true" tabindex="-1"></a><span class="ex">vmrun</span> snapshot <span class="st">"ruta/vm.vmx"</span> <span class="st">"Snapshot antes de explotación"</span></span>
+<span id="cb45-458"><a href="#cb45-458" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-459"><a href="#cb45-459" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-460"><a href="#cb45-460" aria-hidden="true" tabindex="-1"></a>**Gestionar snapshots:**</span>
+<span id="cb45-461"><a href="#cb45-461" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-462"><a href="#cb45-462" aria-hidden="true" tabindex="-1"></a><span class="co"># Listar snapshots</span></span>
+<span id="cb45-463"><a href="#cb45-463" aria-hidden="true" tabindex="-1"></a><span class="ex">vmrun</span> listSnapshots <span class="st">"ruta/vm.vmx"</span></span>
+<span id="cb45-464"><a href="#cb45-464" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-465"><a href="#cb45-465" aria-hidden="true" tabindex="-1"></a><span class="co"># Revertir a snapshot</span></span>
+<span id="cb45-466"><a href="#cb45-466" aria-hidden="true" tabindex="-1"></a><span class="ex">vmrun</span> revertToSnapshot <span class="st">"ruta/vm.vmx"</span> <span class="st">"Snapshot nombre"</span></span>
+<span id="cb45-467"><a href="#cb45-467" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-468"><a href="#cb45-468" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminar snapshot</span></span>
+<span id="cb45-469"><a href="#cb45-469" aria-hidden="true" tabindex="-1"></a><span class="ex">vmrun</span> deleteSnapshot <span class="st">"ruta/vm.vmx"</span> <span class="st">"Snapshot nombre"</span></span>
+<span id="cb45-470"><a href="#cb45-470" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-471"><a href="#cb45-471" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-472"><a href="#cb45-472" aria-hidden="true" tabindex="-1"></a><span class="fu">### 7.2 Snapshots en VirtualBox</span></span>
+<span id="cb45-473"><a href="#cb45-473" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-474"><a href="#cb45-474" aria-hidden="true" tabindex="-1"></a>**Crear snapshot:**</span>
+<span id="cb45-475"><a href="#cb45-475" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-476"><a href="#cb45-476" aria-hidden="true" tabindex="-1"></a><span class="co"># Desde interfaz gráfica</span></span>
+<span id="cb45-477"><a href="#cb45-477" aria-hidden="true" tabindex="-1"></a><span class="co"># Machine &gt; Take Snapshot</span></span>
+<span id="cb45-478"><a href="#cb45-478" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-479"><a href="#cb45-479" aria-hidden="true" tabindex="-1"></a><span class="co"># Desde línea de comandos</span></span>
+<span id="cb45-480"><a href="#cb45-480" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> snapshot <span class="st">"NombreVM"</span> take <span class="st">"Snapshot1"</span> <span class="at">--description</span> <span class="st">"Estado inicial"</span></span>
+<span id="cb45-481"><a href="#cb45-481" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-482"><a href="#cb45-482" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-483"><a href="#cb45-483" aria-hidden="true" tabindex="-1"></a>**Gestionar snapshots:**</span>
+<span id="cb45-484"><a href="#cb45-484" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-485"><a href="#cb45-485" aria-hidden="true" tabindex="-1"></a><span class="co"># Listar snapshots</span></span>
+<span id="cb45-486"><a href="#cb45-486" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> snapshot <span class="st">"NombreVM"</span> list</span>
+<span id="cb45-487"><a href="#cb45-487" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-488"><a href="#cb45-488" aria-hidden="true" tabindex="-1"></a><span class="co"># Revertir a snapshot</span></span>
+<span id="cb45-489"><a href="#cb45-489" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> snapshot <span class="st">"NombreVM"</span> restore <span class="st">"Snapshot1"</span></span>
+<span id="cb45-490"><a href="#cb45-490" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-491"><a href="#cb45-491" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminar snapshot</span></span>
+<span id="cb45-492"><a href="#cb45-492" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> snapshot <span class="st">"NombreVM"</span> delete <span class="st">"Snapshot1"</span></span>
+<span id="cb45-493"><a href="#cb45-493" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-494"><a href="#cb45-494" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-495"><a href="#cb45-495" aria-hidden="true" tabindex="-1"></a><span class="fu">### 7.3 Clonación de Máquinas</span></span>
+<span id="cb45-496"><a href="#cb45-496" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-497"><a href="#cb45-497" aria-hidden="true" tabindex="-1"></a>**VMware Fusion:**</span>
+<span id="cb45-498"><a href="#cb45-498" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-499"><a href="#cb45-499" aria-hidden="true" tabindex="-1"></a><span class="co"># Interfaz gráfica</span></span>
+<span id="cb45-500"><a href="#cb45-500" aria-hidden="true" tabindex="-1"></a><span class="co"># Virtual Machine &gt; Clone</span></span>
+<span id="cb45-501"><a href="#cb45-501" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-502"><a href="#cb45-502" aria-hidden="true" tabindex="-1"></a><span class="co"># Línea de comandos</span></span>
+<span id="cb45-503"><a href="#cb45-503" aria-hidden="true" tabindex="-1"></a><span class="ex">vmrun</span> clone <span class="st">"original.vmx"</span> <span class="st">"clon.vmx"</span> linked</span>
+<span id="cb45-504"><a href="#cb45-504" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-505"><a href="#cb45-505" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-506"><a href="#cb45-506" aria-hidden="true" tabindex="-1"></a>**VirtualBox:**</span>
+<span id="cb45-507"><a href="#cb45-507" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-508"><a href="#cb45-508" aria-hidden="true" tabindex="-1"></a><span class="co"># Interfaz gráfica</span></span>
+<span id="cb45-509"><a href="#cb45-509" aria-hidden="true" tabindex="-1"></a><span class="co"># Machine &gt; Clone</span></span>
+<span id="cb45-510"><a href="#cb45-510" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-511"><a href="#cb45-511" aria-hidden="true" tabindex="-1"></a><span class="co"># Línea de comandos</span></span>
+<span id="cb45-512"><a href="#cb45-512" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> clonevm <span class="st">"OriginalVM"</span> <span class="at">--name</span> <span class="st">"ClonVM"</span> <span class="at">--register</span></span>
+<span id="cb45-513"><a href="#cb45-513" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-514"><a href="#cb45-514" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-515"><a href="#cb45-515" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-516"><a href="#cb45-516" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-517"><a href="#cb45-517" aria-hidden="true" tabindex="-1"></a><span class="fu">## 8. Automatización con Vagrant</span></span>
+<span id="cb45-518"><a href="#cb45-518" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-519"><a href="#cb45-519" aria-hidden="true" tabindex="-1"></a><span class="fu">### 8.1 Introducción a Vagrant</span></span>
+<span id="cb45-520"><a href="#cb45-520" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-521"><a href="#cb45-521" aria-hidden="true" tabindex="-1"></a>Vagrant permite automatizar la creación y configuración de máquinas virtuales.</span>
+<span id="cb45-522"><a href="#cb45-522" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-523"><a href="#cb45-523" aria-hidden="true" tabindex="-1"></a><span class="fu">### 8.2 Instalación</span></span>
+<span id="cb45-524"><a href="#cb45-524" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-525"><a href="#cb45-525" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-526"><a href="#cb45-526" aria-hidden="true" tabindex="-1"></a><span class="co"># macOS con Homebrew</span></span>
+<span id="cb45-527"><a href="#cb45-527" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install vagrant</span>
+<span id="cb45-528"><a href="#cb45-528" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-529"><a href="#cb45-529" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar instalación</span></span>
+<span id="cb45-530"><a href="#cb45-530" aria-hidden="true" tabindex="-1"></a><span class="ex">vagrant</span> <span class="at">--version</span></span>
+<span id="cb45-531"><a href="#cb45-531" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-532"><a href="#cb45-532" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-533"><a href="#cb45-533" aria-hidden="true" tabindex="-1"></a><span class="fu">### 8.3 Vagrantfile para Kali Linux</span></span>
+<span id="cb45-534"><a href="#cb45-534" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-535"><a href="#cb45-535" aria-hidden="true" tabindex="-1"></a><span class="in">```ruby</span></span>
+<span id="cb45-536"><a href="#cb45-536" aria-hidden="true" tabindex="-1"></a><span class="co"># Vagrantfile</span></span>
+<span id="cb45-537"><a href="#cb45-537" aria-hidden="true" tabindex="-1"></a><span class="fu">Vagrant.configure</span>(<span class="st">"2"</span>) do <span class="sc">|</span>config<span class="sc">|</span></span>
+<span id="cb45-538"><a href="#cb45-538" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb45-539"><a href="#cb45-539" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Kali Linux</span></span>
+<span id="cb45-540"><a href="#cb45-540" aria-hidden="true" tabindex="-1"></a>  config.vm.define <span class="st">"kali"</span> do <span class="sc">|</span>kali<span class="sc">|</span></span>
+<span id="cb45-541"><a href="#cb45-541" aria-hidden="true" tabindex="-1"></a>    kali.vm.box <span class="ot">=</span> <span class="st">"kalilinux/rolling"</span></span>
+<span id="cb45-542"><a href="#cb45-542" aria-hidden="true" tabindex="-1"></a>    kali.vm.hostname <span class="ot">=</span> <span class="st">"kali"</span></span>
+<span id="cb45-543"><a href="#cb45-543" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb45-544"><a href="#cb45-544" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Red host-only</span></span>
+<span id="cb45-545"><a href="#cb45-545" aria-hidden="true" tabindex="-1"></a>    kali.vm.network <span class="st">"private_network"</span>, ip<span class="sc">:</span> <span class="st">"192.168.56.10"</span></span>
+<span id="cb45-546"><a href="#cb45-546" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb45-547"><a href="#cb45-547" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Configuración de recursos</span></span>
+<span id="cb45-548"><a href="#cb45-548" aria-hidden="true" tabindex="-1"></a>    kali.vm.provider <span class="st">"virtualbox"</span> do <span class="sc">|</span>vb<span class="sc">|</span></span>
+<span id="cb45-549"><a href="#cb45-549" aria-hidden="true" tabindex="-1"></a>      vb.name <span class="ot">=</span> <span class="st">"Kali-Linux-Pentest"</span></span>
+<span id="cb45-550"><a href="#cb45-550" aria-hidden="true" tabindex="-1"></a>      vb.memory <span class="ot">=</span> <span class="st">"4096"</span></span>
+<span id="cb45-551"><a href="#cb45-551" aria-hidden="true" tabindex="-1"></a>      vb.cpus <span class="ot">=</span> <span class="dv">2</span></span>
+<span id="cb45-552"><a href="#cb45-552" aria-hidden="true" tabindex="-1"></a>      vb.gui <span class="ot">=</span> true</span>
+<span id="cb45-553"><a href="#cb45-553" aria-hidden="true" tabindex="-1"></a>    end</span>
+<span id="cb45-554"><a href="#cb45-554" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb45-555"><a href="#cb45-555" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Provisionamiento</span></span>
+<span id="cb45-556"><a href="#cb45-556" aria-hidden="true" tabindex="-1"></a>    kali.vm.provision <span class="st">"shell"</span>, inline<span class="sc">:</span> <span class="er">&lt;&lt;</span><span class="sc">-</span>SHELL</span>
+<span id="cb45-557"><a href="#cb45-557" aria-hidden="true" tabindex="-1"></a>      apt update</span>
+<span id="cb45-558"><a href="#cb45-558" aria-hidden="true" tabindex="-1"></a>      apt full<span class="sc">-</span>upgrade <span class="sc">-</span>y</span>
+<span id="cb45-559"><a href="#cb45-559" aria-hidden="true" tabindex="-1"></a>      apt autoremove <span class="sc">-</span>y</span>
+<span id="cb45-560"><a href="#cb45-560" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb45-561"><a href="#cb45-561" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Instalar herramientas adicionales</span></span>
+<span id="cb45-562"><a href="#cb45-562" aria-hidden="true" tabindex="-1"></a>      apt install <span class="sc">-</span>y gobuster impacket<span class="sc">-</span>scripts</span>
+<span id="cb45-563"><a href="#cb45-563" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb45-564"><a href="#cb45-564" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Configurar SSH</span></span>
+<span id="cb45-565"><a href="#cb45-565" aria-hidden="true" tabindex="-1"></a>      systemctl enable ssh</span>
+<span id="cb45-566"><a href="#cb45-566" aria-hidden="true" tabindex="-1"></a>      systemctl start ssh</span>
+<span id="cb45-567"><a href="#cb45-567" aria-hidden="true" tabindex="-1"></a>    SHELL</span>
+<span id="cb45-568"><a href="#cb45-568" aria-hidden="true" tabindex="-1"></a>  end</span>
+<span id="cb45-569"><a href="#cb45-569" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb45-570"><a href="#cb45-570" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Máquina vulnerable (Metasploitable)</span></span>
+<span id="cb45-571"><a href="#cb45-571" aria-hidden="true" tabindex="-1"></a>  config.vm.define <span class="st">"metasploitable"</span> do <span class="sc">|</span>meta<span class="sc">|</span></span>
+<span id="cb45-572"><a href="#cb45-572" aria-hidden="true" tabindex="-1"></a>    meta.vm.box <span class="ot">=</span> <span class="st">"metasploitable2-linux"</span></span>
+<span id="cb45-573"><a href="#cb45-573" aria-hidden="true" tabindex="-1"></a>    meta.vm.hostname <span class="ot">=</span> <span class="st">"metasploitable"</span></span>
+<span id="cb45-574"><a href="#cb45-574" aria-hidden="true" tabindex="-1"></a>    meta.vm.network <span class="st">"private_network"</span>, ip<span class="sc">:</span> <span class="st">"192.168.56.20"</span></span>
+<span id="cb45-575"><a href="#cb45-575" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb45-576"><a href="#cb45-576" aria-hidden="true" tabindex="-1"></a>    meta.vm.provider <span class="st">"virtualbox"</span> do <span class="sc">|</span>vb<span class="sc">|</span></span>
+<span id="cb45-577"><a href="#cb45-577" aria-hidden="true" tabindex="-1"></a>      vb.name <span class="ot">=</span> <span class="st">"Metasploitable2"</span></span>
+<span id="cb45-578"><a href="#cb45-578" aria-hidden="true" tabindex="-1"></a>      vb.memory <span class="ot">=</span> <span class="st">"1024"</span></span>
+<span id="cb45-579"><a href="#cb45-579" aria-hidden="true" tabindex="-1"></a>      vb.cpus <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb45-580"><a href="#cb45-580" aria-hidden="true" tabindex="-1"></a>      vb.gui <span class="ot">=</span> false</span>
+<span id="cb45-581"><a href="#cb45-581" aria-hidden="true" tabindex="-1"></a>    end</span>
+<span id="cb45-582"><a href="#cb45-582" aria-hidden="true" tabindex="-1"></a>  end</span>
+<span id="cb45-583"><a href="#cb45-583" aria-hidden="true" tabindex="-1"></a>end</span>
+<span id="cb45-584"><a href="#cb45-584" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-585"><a href="#cb45-585" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-586"><a href="#cb45-586" aria-hidden="true" tabindex="-1"></a><span class="fu">### 8.4 Comandos de Vagrant</span></span>
+<span id="cb45-587"><a href="#cb45-587" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-588"><a href="#cb45-588" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-589"><a href="#cb45-589" aria-hidden="true" tabindex="-1"></a><span class="co"># Iniciar laboratorio</span></span>
+<span id="cb45-590"><a href="#cb45-590" aria-hidden="true" tabindex="-1"></a><span class="ex">vagrant</span> up</span>
+<span id="cb45-591"><a href="#cb45-591" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-592"><a href="#cb45-592" aria-hidden="true" tabindex="-1"></a><span class="co"># Conectar a máquina específica</span></span>
+<span id="cb45-593"><a href="#cb45-593" aria-hidden="true" tabindex="-1"></a><span class="ex">vagrant</span> ssh kali</span>
+<span id="cb45-594"><a href="#cb45-594" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-595"><a href="#cb45-595" aria-hidden="true" tabindex="-1"></a><span class="co"># Detener laboratorio</span></span>
+<span id="cb45-596"><a href="#cb45-596" aria-hidden="true" tabindex="-1"></a><span class="ex">vagrant</span> halt</span>
+<span id="cb45-597"><a href="#cb45-597" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-598"><a href="#cb45-598" aria-hidden="true" tabindex="-1"></a><span class="co"># Destruir laboratorio</span></span>
+<span id="cb45-599"><a href="#cb45-599" aria-hidden="true" tabindex="-1"></a><span class="ex">vagrant</span> destroy <span class="at">-f</span></span>
+<span id="cb45-600"><a href="#cb45-600" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-601"><a href="#cb45-601" aria-hidden="true" tabindex="-1"></a><span class="co"># Reconfigurar</span></span>
+<span id="cb45-602"><a href="#cb45-602" aria-hidden="true" tabindex="-1"></a><span class="ex">vagrant</span> reload <span class="at">--provision</span></span>
+<span id="cb45-603"><a href="#cb45-603" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-604"><a href="#cb45-604" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-605"><a href="#cb45-605" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-606"><a href="#cb45-606" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-607"><a href="#cb45-607" aria-hidden="true" tabindex="-1"></a><span class="fu">## 9. Optimización de Rendimiento</span></span>
+<span id="cb45-608"><a href="#cb45-608" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-609"><a href="#cb45-609" aria-hidden="true" tabindex="-1"></a><span class="fu">### 9.1 Optimización para VMware Fusion</span></span>
+<span id="cb45-610"><a href="#cb45-610" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-611"><a href="#cb45-611" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-612"><a href="#cb45-612" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar memoria RAM</span></span>
+<span id="cb45-613"><a href="#cb45-613" aria-hidden="true" tabindex="-1"></a><span class="co"># Virtual Machine &gt; Settings &gt; Processors &amp; Memory</span></span>
+<span id="cb45-614"><a href="#cb45-614" aria-hidden="true" tabindex="-1"></a><span class="co"># Asignar 4GB para Kali Linux</span></span>
+<span id="cb45-615"><a href="#cb45-615" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-616"><a href="#cb45-616" aria-hidden="true" tabindex="-1"></a><span class="co"># Habilitar aceleración 3D</span></span>
+<span id="cb45-617"><a href="#cb45-617" aria-hidden="true" tabindex="-1"></a><span class="co"># Virtual Machine &gt; Settings &gt; Display</span></span>
+<span id="cb45-618"><a href="#cb45-618" aria-hidden="true" tabindex="-1"></a><span class="co"># Enable accelerated 3D graphics</span></span>
+<span id="cb45-619"><a href="#cb45-619" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-620"><a href="#cb45-620" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar redes optimizadas</span></span>
+<span id="cb45-621"><a href="#cb45-621" aria-hidden="true" tabindex="-1"></a><span class="co"># Virtual Machine &gt; Settings &gt; Network</span></span>
+<span id="cb45-622"><a href="#cb45-622" aria-hidden="true" tabindex="-1"></a><span class="co"># Adapter type: Ethernet (solo para VMs locales)</span></span>
+<span id="cb45-623"><a href="#cb45-623" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-624"><a href="#cb45-624" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-625"><a href="#cb45-625" aria-hidden="true" tabindex="-1"></a><span class="fu">### 9.2 Optimización para VirtualBox</span></span>
+<span id="cb45-626"><a href="#cb45-626" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-627"><a href="#cb45-627" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-628"><a href="#cb45-628" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar memoria RAM</span></span>
+<span id="cb45-629"><a href="#cb45-629" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> modifyvm <span class="st">"Kali-Linux"</span> <span class="at">--memory</span> 4096</span>
+<span id="cb45-630"><a href="#cb45-630" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-631"><a href="#cb45-631" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar CPUs</span></span>
+<span id="cb45-632"><a href="#cb45-632" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> modifyvm <span class="st">"Kali-Linux"</span> <span class="at">--cpus</span> 2</span>
+<span id="cb45-633"><a href="#cb45-633" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-634"><a href="#cb45-634" aria-hidden="true" tabindex="-1"></a><span class="co"># Habilitar aceleración</span></span>
+<span id="cb45-635"><a href="#cb45-635" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> modifyvm <span class="st">"Kali-Linux"</span> <span class="at">--accelerate3d</span> on</span>
+<span id="cb45-636"><a href="#cb45-636" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> modifyvm <span class="st">"Kali-Linux"</span> <span class="at">--vram</span> 128</span>
+<span id="cb45-637"><a href="#cb45-637" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-638"><a href="#cb45-638" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar storage controller</span></span>
+<span id="cb45-639"><a href="#cb45-639" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> storagectl <span class="st">"Kali-Linux"</span> <span class="at">--name</span> <span class="st">"SATA"</span> <span class="at">--add</span> sata <span class="at">--portcount</span> 2</span>
+<span id="cb45-640"><a href="#cb45-640" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-641"><a href="#cb45-641" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-642"><a href="#cb45-642" aria-hidden="true" tabindex="-1"></a><span class="fu">### 9.3 Optimización de Kali Linux</span></span>
+<span id="cb45-643"><a href="#cb45-643" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-644"><a href="#cb45-644" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-645"><a href="#cb45-645" aria-hidden="true" tabindex="-1"></a><span class="co"># Reducir consumo de recursos</span></span>
+<span id="cb45-646"><a href="#cb45-646" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl disable bluetooth</span>
+<span id="cb45-647"><a href="#cb45-647" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl disable cups</span>
+<span id="cb45-648"><a href="#cb45-648" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-649"><a href="#cb45-649" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar swap adecuado</span></span>
+<span id="cb45-650"><a href="#cb45-650" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> fallocate <span class="at">-l</span> 2G /swapfile</span>
+<span id="cb45-651"><a href="#cb45-651" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chmod 600 /swapfile</span>
+<span id="cb45-652"><a href="#cb45-652" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mkswap /swapfile</span>
+<span id="cb45-653"><a href="#cb45-653" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> swapon /swapfile</span>
+<span id="cb45-654"><a href="#cb45-654" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-655"><a href="#cb45-655" aria-hidden="true" tabindex="-1"></a><span class="co"># Optimizar systemd</span></span>
+<span id="cb45-656"><a href="#cb45-656" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> nano /etc/systemd/journald.conf</span>
+<span id="cb45-657"><a href="#cb45-657" aria-hidden="true" tabindex="-1"></a><span class="co"># SystemMaxUse=100M</span></span>
+<span id="cb45-658"><a href="#cb45-658" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-659"><a href="#cb45-659" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-660"><a href="#cb45-660" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-661"><a href="#cb45-661" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-662"><a href="#cb45-662" aria-hidden="true" tabindex="-1"></a><span class="fu">## 10. Seguridad de Máquinas Virtuales</span></span>
+<span id="cb45-663"><a href="#cb45-663" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-664"><a href="#cb45-664" aria-hidden="true" tabindex="-1"></a><span class="fu">### 10.1 Aislamiento de Red</span></span>
+<span id="cb45-665"><a href="#cb45-665" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-666"><a href="#cb45-666" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-667"><a href="#cb45-667" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar firewalls en VMs</span></span>
+<span id="cb45-668"><a href="#cb45-668" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ufw default deny incoming</span>
+<span id="cb45-669"><a href="#cb45-669" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ufw default allow outgoing</span>
+<span id="cb45-670"><a href="#cb45-670" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ufw allow from 192.168.56.0/24</span>
+<span id="cb45-671"><a href="#cb45-671" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-672"><a href="#cb45-672" aria-hidden="true" tabindex="-1"></a><span class="co"># Desactivar servicios innecesarios</span></span>
+<span id="cb45-673"><a href="#cb45-673" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl stop avahi-daemon</span>
+<span id="cb45-674"><a href="#cb45-674" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl disable avahi-daemon</span>
+<span id="cb45-675"><a href="#cb45-675" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-676"><a href="#cb45-676" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-677"><a href="#cb45-677" aria-hidden="true" tabindex="-1"></a><span class="fu">### 10.2 Protección del Host</span></span>
+<span id="cb45-678"><a href="#cb45-678" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-679"><a href="#cb45-679" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-680"><a href="#cb45-680" aria-hidden="true" tabindex="-1"></a><span class="co"># Limitar acceso a VMs</span></span>
+<span id="cb45-681"><a href="#cb45-681" aria-hidden="true" tabindex="-1"></a><span class="co"># VMware Fusion: Deshabilitar drag-and-drop</span></span>
+<span id="cb45-682"><a href="#cb45-682" aria-hidden="true" tabindex="-1"></a><span class="co"># VirtualBox: Deshabilitar clipboard compartido</span></span>
+<span id="cb45-683"><a href="#cb45-683" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-684"><a href="#cb45-684" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar antivirus en host</span></span>
+<span id="cb45-685"><a href="#cb45-685" aria-hidden="true" tabindex="-1"></a><span class="co"># - Escanear VMs periódicamente</span></span>
+<span id="cb45-686"><a href="#cb45-686" aria-hidden="true" tabindex="-1"></a><span class="co"># - Mantener actualizado</span></span>
+<span id="cb45-687"><a href="#cb45-687" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-688"><a href="#cb45-688" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-689"><a href="#cb45-689" aria-hidden="true" tabindex="-1"></a><span class="fu">### 10.3 Snapshot Seguro</span></span>
+<span id="cb45-690"><a href="#cb45-690" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-691"><a href="#cb45-691" aria-hidden="true" tabindex="-1"></a>**Antes de cada práctica:**</span>
+<span id="cb45-692"><a href="#cb45-692" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-693"><a href="#cb45-693" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Tomar snapshot limpio</span></span>
+<span id="cb45-694"><a href="#cb45-694" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Ejecutar prácticas</span></span>
+<span id="cb45-695"><a href="#cb45-695" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Revertir a snapshot limpio</span></span>
+<span id="cb45-696"><a href="#cb45-696" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Limpiar artefactos</span></span>
+<span id="cb45-697"><a href="#cb45-697" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-698"><a href="#cb45-698" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-699"><a href="#cb45-699" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-700"><a href="#cb45-700" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-701"><a href="#cb45-701" aria-hidden="true" tabindex="-1"></a><span class="fu">## 11. Integración con Docker y VMs</span></span>
+<span id="cb45-702"><a href="#cb45-702" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-703"><a href="#cb45-703" aria-hidden="true" tabindex="-1"></a><span class="fu">### 11.1 Combinar Docker y VMs</span></span>
+<span id="cb45-704"><a href="#cb45-704" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-705"><a href="#cb45-705" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-706"><a href="#cb45-706" aria-hidden="true" tabindex="-1"></a><span class="in">┌─────────────────────────────────────────┐</span></span>
+<span id="cb45-707"><a href="#cb45-707" aria-hidden="true" tabindex="-1"></a><span class="in">│         Host (macOS)                    │</span></span>
+<span id="cb45-708"><a href="#cb45-708" aria-hidden="true" tabindex="-1"></a><span class="in">│  ┌───────────────────────────────────┐  │</span></span>
+<span id="cb45-709"><a href="#cb45-709" aria-hidden="true" tabindex="-1"></a><span class="in">│  │       VMware Fusion / VB          │  │</span></span>
+<span id="cb45-710"><a href="#cb45-710" aria-hidden="true" tabindex="-1"></a><span class="in">│  │  ┌─────────────────────────────┐  │  │</span></span>
+<span id="cb45-711"><a href="#cb45-711" aria-hidden="true" tabindex="-1"></a><span class="in">│  │  │      Kali Linux VM          │  │  │</span></span>
+<span id="cb45-712"><a href="#cb45-712" aria-hidden="true" tabindex="-1"></a><span class="in">│  │  │  ┌───────────────────────┐  │  │  │</span></span>
+<span id="cb45-713"><a href="#cb45-713" aria-hidden="true" tabindex="-1"></a><span class="in">│  │  │  │ Docker (contenedores) │  │  │  │</span></span>
+<span id="cb45-714"><a href="#cb45-714" aria-hidden="true" tabindex="-1"></a><span class="in">│  │  │  └───────────────────────┘  │  │  │</span></span>
+<span id="cb45-715"><a href="#cb45-715" aria-hidden="true" tabindex="-1"></a><span class="in">│  │  └─────────────────────────────┘  │  │</span></span>
+<span id="cb45-716"><a href="#cb45-716" aria-hidden="true" tabindex="-1"></a><span class="in">│  └───────────────────────────────────┘  │</span></span>
+<span id="cb45-717"><a href="#cb45-717" aria-hidden="true" tabindex="-1"></a><span class="in">└─────────────────────────────────────────┘</span></span>
+<span id="cb45-718"><a href="#cb45-718" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-719"><a href="#cb45-719" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-720"><a href="#cb45-720" aria-hidden="true" tabindex="-1"></a><span class="fu">### 11.2 Script de Automatización</span></span>
+<span id="cb45-721"><a href="#cb45-721" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-722"><a href="#cb45-722" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb45-723"><a href="#cb45-723" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb45-724"><a href="#cb45-724" aria-hidden="true" tabindex="-1"></a><span class="co"># setup-pentest-lab.sh</span></span>
+<span id="cb45-725"><a href="#cb45-725" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-726"><a href="#cb45-726" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuración</span></span>
+<span id="cb45-727"><a href="#cb45-727" aria-hidden="true" tabindex="-1"></a><span class="va">VM_NAME</span><span class="op">=</span><span class="st">"Kali-Pentest-Lab"</span></span>
+<span id="cb45-728"><a href="#cb45-728" aria-hidden="true" tabindex="-1"></a><span class="va">VM_MEMORY</span><span class="op">=</span><span class="st">"4096"</span></span>
+<span id="cb45-729"><a href="#cb45-729" aria-hidden="true" tabindex="-1"></a><span class="va">VM_CPUS</span><span class="op">=</span><span class="st">"2"</span></span>
+<span id="cb45-730"><a href="#cb45-730" aria-hidden="true" tabindex="-1"></a><span class="va">NETWORK</span><span class="op">=</span><span class="st">"192.168.56.0/24"</span></span>
+<span id="cb45-731"><a href="#cb45-731" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-732"><a href="#cb45-732" aria-hidden="true" tabindex="-1"></a><span class="co"># Función para crear VM</span></span>
+<span id="cb45-733"><a href="#cb45-733" aria-hidden="true" tabindex="-1"></a><span class="fu">create_vm()</span> <span class="kw">{</span></span>
+<span id="cb45-734"><a href="#cb45-734" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Creando máquina virtual..."</span></span>
+<span id="cb45-735"><a href="#cb45-735" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb45-736"><a href="#cb45-736" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Usar Vagrant para crear VM</span></span>
+<span id="cb45-737"><a href="#cb45-737" aria-hidden="true" tabindex="-1"></a>    <span class="ex">vagrant</span> up</span>
+<span id="cb45-738"><a href="#cb45-738" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb45-739"><a href="#cb45-739" aria-hidden="true" tabindex="-1"></a>    <span class="co"># O alternativamente con VirtualBox</span></span>
+<span id="cb45-740"><a href="#cb45-740" aria-hidden="true" tabindex="-1"></a>    <span class="co"># VBoxManage createvm --name "$VM_NAME" --ostype "Linux_64" --register</span></span>
+<span id="cb45-741"><a href="#cb45-741" aria-hidden="true" tabindex="-1"></a>    <span class="co"># VBoxManage modifyvm "$VM_NAME" --memory "$VM_MEMORY" --cpus "$VM_CPUS"</span></span>
+<span id="cb45-742"><a href="#cb45-742" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb45-743"><a href="#cb45-743" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-744"><a href="#cb45-744" aria-hidden="true" tabindex="-1"></a><span class="co"># Función para configurar red</span></span>
+<span id="cb45-745"><a href="#cb45-745" aria-hidden="true" tabindex="-1"></a><span class="fu">setup_network()</span> <span class="kw">{</span></span>
+<span id="cb45-746"><a href="#cb45-746" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Configurando red..."</span></span>
+<span id="cb45-747"><a href="#cb45-747" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb45-748"><a href="#cb45-748" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Configurar IP estática en Kali</span></span>
+<span id="cb45-749"><a href="#cb45-749" aria-hidden="true" tabindex="-1"></a>    <span class="ex">vagrant</span> ssh kali <span class="at">-c</span> <span class="st">"sudo sed -i 's/dhcp/static/' /etc/netplan/01-netcfg.yaml"</span></span>
+<span id="cb45-750"><a href="#cb45-750" aria-hidden="true" tabindex="-1"></a>    <span class="ex">vagrant</span> ssh kali <span class="at">-c</span> <span class="st">"echo 'addresses: [192.168.56.10/24]' &gt;&gt; /etc/netplan/01-netcfg.yaml"</span></span>
+<span id="cb45-751"><a href="#cb45-751" aria-hidden="true" tabindex="-1"></a>    <span class="ex">vagrant</span> ssh kali <span class="at">-c</span> <span class="st">"sudo netplan apply"</span></span>
+<span id="cb45-752"><a href="#cb45-752" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb45-753"><a href="#cb45-753" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-754"><a href="#cb45-754" aria-hidden="true" tabindex="-1"></a><span class="co"># Función para instalar herramientas</span></span>
+<span id="cb45-755"><a href="#cb45-755" aria-hidden="true" tabindex="-1"></a><span class="fu">install_tools()</span> <span class="kw">{</span></span>
+<span id="cb45-756"><a href="#cb45-756" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Instalando herramientas de pentesting..."</span></span>
+<span id="cb45-757"><a href="#cb45-757" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb45-758"><a href="#cb45-758" aria-hidden="true" tabindex="-1"></a>    <span class="ex">vagrant</span> ssh kali <span class="at">-c</span> <span class="st">"sudo apt update &amp;&amp; sudo apt install -y nmap nikto sqlmap gobuster"</span></span>
+<span id="cb45-759"><a href="#cb45-759" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb45-760"><a href="#cb45-760" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-761"><a href="#cb45-761" aria-hidden="true" tabindex="-1"></a><span class="co"># Función para crear snapshot</span></span>
+<span id="cb45-762"><a href="#cb45-762" aria-hidden="true" tabindex="-1"></a><span class="fu">create_snapshot()</span> <span class="kw">{</span></span>
+<span id="cb45-763"><a href="#cb45-763" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Creando snapshot inicial..."</span></span>
+<span id="cb45-764"><a href="#cb45-764" aria-hidden="true" tabindex="-1"></a>    <span class="ex">VBoxManage</span> snapshot <span class="st">"</span><span class="va">$VM_NAME</span><span class="st">"</span> take <span class="st">"Initial-Setup"</span> <span class="at">--description</span> <span class="st">"Estado inicial del laboratorio"</span></span>
+<span id="cb45-765"><a href="#cb45-765" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb45-766"><a href="#cb45-766" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-767"><a href="#cb45-767" aria-hidden="true" tabindex="-1"></a><span class="co"># Menú principal</span></span>
+<span id="cb45-768"><a href="#cb45-768" aria-hidden="true" tabindex="-1"></a><span class="cf">case</span> <span class="st">"</span><span class="va">$1</span><span class="st">"</span> <span class="kw">in</span></span>
+<span id="cb45-769"><a href="#cb45-769" aria-hidden="true" tabindex="-1"></a>    <span class="ss">create</span><span class="kw">)</span></span>
+<span id="cb45-770"><a href="#cb45-770" aria-hidden="true" tabindex="-1"></a>        <span class="ex">create_vm</span></span>
+<span id="cb45-771"><a href="#cb45-771" aria-hidden="true" tabindex="-1"></a>        <span class="ex">setup_network</span></span>
+<span id="cb45-772"><a href="#cb45-772" aria-hidden="true" tabindex="-1"></a>        <span class="ex">install_tools</span></span>
+<span id="cb45-773"><a href="#cb45-773" aria-hidden="true" tabindex="-1"></a>        <span class="ex">create_snapshot</span></span>
+<span id="cb45-774"><a href="#cb45-774" aria-hidden="true" tabindex="-1"></a>        <span class="cf">;;</span></span>
+<span id="cb45-775"><a href="#cb45-775" aria-hidden="true" tabindex="-1"></a>    <span class="ss">start</span><span class="kw">)</span></span>
+<span id="cb45-776"><a href="#cb45-776" aria-hidden="true" tabindex="-1"></a>        <span class="ex">vagrant</span> up</span>
+<span id="cb45-777"><a href="#cb45-777" aria-hidden="true" tabindex="-1"></a>        <span class="cf">;;</span></span>
+<span id="cb45-778"><a href="#cb45-778" aria-hidden="true" tabindex="-1"></a>    <span class="ss">stop</span><span class="kw">)</span></span>
+<span id="cb45-779"><a href="#cb45-779" aria-hidden="true" tabindex="-1"></a>        <span class="ex">vagrant</span> halt</span>
+<span id="cb45-780"><a href="#cb45-780" aria-hidden="true" tabindex="-1"></a>        <span class="cf">;;</span></span>
+<span id="cb45-781"><a href="#cb45-781" aria-hidden="true" tabindex="-1"></a>    <span class="ss">destroy</span><span class="kw">)</span></span>
+<span id="cb45-782"><a href="#cb45-782" aria-hidden="true" tabindex="-1"></a>        <span class="ex">vagrant</span> destroy <span class="at">-f</span></span>
+<span id="cb45-783"><a href="#cb45-783" aria-hidden="true" tabindex="-1"></a>        <span class="cf">;;</span></span>
+<span id="cb45-784"><a href="#cb45-784" aria-hidden="true" tabindex="-1"></a>    <span class="pp">*</span><span class="kw">)</span></span>
+<span id="cb45-785"><a href="#cb45-785" aria-hidden="true" tabindex="-1"></a>        <span class="bu">echo</span> <span class="st">"Uso: </span><span class="va">$0</span><span class="st"> {create|start|stop|destroy}"</span></span>
+<span id="cb45-786"><a href="#cb45-786" aria-hidden="true" tabindex="-1"></a>        <span class="bu">exit</span> 1</span>
+<span id="cb45-787"><a href="#cb45-787" aria-hidden="true" tabindex="-1"></a>        <span class="cf">;;</span></span>
+<span id="cb45-788"><a href="#cb45-788" aria-hidden="true" tabindex="-1"></a><span class="cf">esac</span></span>
+<span id="cb45-789"><a href="#cb45-789" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span></span>
+<span id="cb45-790"><a href="#cb45-790" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-791"><a href="#cb45-791" aria-hidden="true" tabindex="-1"></a><span class="ex">---</span></span>
+<span id="cb45-792"><a href="#cb45-792" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-793"><a href="#cb45-793" aria-hidden="true" tabindex="-1"></a><span class="co">## 12. Ejercicios Prácticos</span></span>
+<span id="cb45-794"><a href="#cb45-794" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-795"><a href="#cb45-795" aria-hidden="true" tabindex="-1"></a><span class="co">### Ejercicio 1: Configuración Inicial</span></span>
+<span id="cb45-796"><a href="#cb45-796" aria-hidden="true" tabindex="-1"></a><span class="ex">1.</span> Instalar VMware Fusion o VirtualBox</span>
+<span id="cb45-797"><a href="#cb45-797" aria-hidden="true" tabindex="-1"></a><span class="ex">2.</span> Descargar e importar Kali Linux</span>
+<span id="cb45-798"><a href="#cb45-798" aria-hidden="true" tabindex="-1"></a><span class="ex">3.</span> Configurar red host-only</span>
+<span id="cb45-799"><a href="#cb45-799" aria-hidden="true" tabindex="-1"></a><span class="ex">4.</span> Actualizar sistema e instalar herramientas básicas</span>
+<span id="cb45-800"><a href="#cb45-800" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-801"><a href="#cb45-801" aria-hidden="true" tabindex="-1"></a><span class="co">### Ejercicio 2: Laboratorio Básico</span></span>
+<span id="cb45-802"><a href="#cb45-802" aria-hidden="true" tabindex="-1"></a><span class="ex">1.</span> Crear red aislada <span class="er">(</span><span class="ex">192.168.100.0/24</span><span class="kw">)</span></span>
+<span id="cb45-803"><a href="#cb45-803" aria-hidden="true" tabindex="-1"></a><span class="ex">2.</span> Configurar Kali Linux como atacante</span>
+<span id="cb45-804"><a href="#cb45-804" aria-hidden="true" tabindex="-1"></a><span class="ex">3.</span> Instalar Metasploitable 2 como víctima</span>
+<span id="cb45-805"><a href="#cb45-805" aria-hidden="true" tabindex="-1"></a><span class="ex">4.</span> Realizar escaneo básico con nmap</span>
+<span id="cb45-806"><a href="#cb45-806" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-807"><a href="#cb45-807" aria-hidden="true" tabindex="-1"></a><span class="co">### Ejercicio 3: Automatización con Vagrant</span></span>
+<span id="cb45-808"><a href="#cb45-808" aria-hidden="true" tabindex="-1"></a><span class="ex">1.</span> Crear Vagrantfile para laboratorio</span>
+<span id="cb45-809"><a href="#cb45-809" aria-hidden="true" tabindex="-1"></a><span class="ex">2.</span> Implementar múltiples máquinas</span>
+<span id="cb45-810"><a href="#cb45-810" aria-hidden="true" tabindex="-1"></a><span class="ex">3.</span> Automatizar configuración con provisionamiento</span>
+<span id="cb45-811"><a href="#cb45-811" aria-hidden="true" tabindex="-1"></a><span class="ex">4.</span> Crear snapshot inicial</span>
+<span id="cb45-812"><a href="#cb45-812" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-813"><a href="#cb45-813" aria-hidden="true" tabindex="-1"></a><span class="co">### Ejercicio 4: Gestión de Snapshots</span></span>
+<span id="cb45-814"><a href="#cb45-814" aria-hidden="true" tabindex="-1"></a><span class="ex">1.</span> Practicar creación de snapshots</span>
+<span id="cb45-815"><a href="#cb45-815" aria-hidden="true" tabindex="-1"></a><span class="ex">2.</span> Realizar cambios en VM</span>
+<span id="cb45-816"><a href="#cb45-816" aria-hidden="true" tabindex="-1"></a><span class="ex">3.</span> Revertir a snapshot anterior</span>
+<span id="cb45-817"><a href="#cb45-817" aria-hidden="true" tabindex="-1"></a><span class="ex">4.</span> Clonar VM para prácticas individuales</span>
+<span id="cb45-818"><a href="#cb45-818" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-819"><a href="#cb45-819" aria-hidden="true" tabindex="-1"></a><span class="ex">---</span></span>
+<span id="cb45-820"><a href="#cb45-820" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-821"><a href="#cb45-821" aria-hidden="true" tabindex="-1"></a><span class="co">## 13. Recursos Adicionales</span></span>
+<span id="cb45-822"><a href="#cb45-822" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-823"><a href="#cb45-823" aria-hidden="true" tabindex="-1"></a><span class="co">### Documentación</span></span>
+<span id="cb45-824"><a href="#cb45-824" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> [VMware Fusion Documentation]<span class="er">(</span><span class="ex">https://docs.vmware.com/en/VMware-Fusion/</span><span class="kw">)</span></span>
+<span id="cb45-825"><a href="#cb45-825" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> [VirtualBox Manual]<span class="er">(</span><span class="ex">https://www.virtualbox.org/manual/</span><span class="kw">)</span></span>
+<span id="cb45-826"><a href="#cb45-826" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> [Kali Linux Documentation]<span class="er">(</span><span class="ex">https://www.kali.org/docs/</span><span class="kw">)</span></span>
+<span id="cb45-827"><a href="#cb45-827" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> [Vagrant Documentation]<span class="er">(</span><span class="ex">https://www.vagrantup.com/docs/</span><span class="kw">)</span></span>
+<span id="cb45-828"><a href="#cb45-828" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-829"><a href="#cb45-829" aria-hidden="true" tabindex="-1"></a><span class="co">### Máquinas Vulnerables</span></span>
+<span id="cb45-830"><a href="#cb45-830" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> <span class="pp">[</span><span class="ss">VulnHub</span><span class="pp">]</span><span class="er">(</span><span class="ex">https://www.vulnhub.com/</span><span class="kw">)</span></span>
+<span id="cb45-831"><a href="#cb45-831" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> <span class="pp">[</span><span class="ss">Metasploitable</span><span class="pp">]</span><span class="er">(</span><span class="ex">https://sourceforge.net/projects/metasploitable/</span><span class="kw">)</span></span>
+<span id="cb45-832"><a href="#cb45-832" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> <span class="pp">[</span><span class="ss">DVWA</span><span class="pp">]</span><span class="er">(</span><span class="ex">https://github.com/digininja/DVWA</span><span class="kw">)</span></span>
+<span id="cb45-833"><a href="#cb45-833" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> [OWASP WebGoat]<span class="er">(</span><span class="ex">https://owasp.org/www-project-webgoat/</span><span class="kw">)</span></span>
+<span id="cb45-834"><a href="#cb45-834" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-835"><a href="#cb45-835" aria-hidden="true" tabindex="-1"></a><span class="co">### Herramientas Adicionales</span></span>
+<span id="cb45-836"><a href="#cb45-836" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> <span class="kw">`</span>packer<span class="kw">`</span><span class="bu">:</span> Crear imágenes personalizadas</span>
+<span id="cb45-837"><a href="#cb45-837" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> <span class="kw">`</span>vagrant<span class="kw">`</span><span class="bu">:</span> Automatización de VMs</span>
+<span id="cb45-838"><a href="#cb45-838" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> <span class="kw">`</span>docker-machine<span class="kw">`</span><span class="bu">:</span> Gestión de VMs Docker</span>
+<span id="cb45-839"><a href="#cb45-839" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-840"><a href="#cb45-840" aria-hidden="true" tabindex="-1"></a><span class="ex">---</span></span>
+<span id="cb45-841"><a href="#cb45-841" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-842"><a href="#cb45-842" aria-hidden="true" tabindex="-1"></a><span class="co">## Resumen</span></span>
+<span id="cb45-843"><a href="#cb45-843" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-844"><a href="#cb45-844" aria-hidden="true" tabindex="-1"></a><span class="ex">En</span> este minicurso has aprendido:</span>
+<span id="cb45-845"><a href="#cb45-845" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> ✅ Configurar VMware Fusion y VirtualBox</span>
+<span id="cb45-846"><a href="#cb45-846" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> ✅ Instalar y configurar Kali Linux como VM</span>
+<span id="cb45-847"><a href="#cb45-847" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> ✅ Crear laboratorios de pentesting con VMs</span>
+<span id="cb45-848"><a href="#cb45-848" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> ✅ Gestión de snapshots y clonación</span>
+<span id="cb45-849"><a href="#cb45-849" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> ✅ Automatización con Vagrant</span>
+<span id="cb45-850"><a href="#cb45-850" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> ✅ Optimización de rendimiento y seguridad</span>
+<span id="cb45-851"><a href="#cb45-851" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-852"><a href="#cb45-852" aria-hidden="true" tabindex="-1"></a><span class="ex">**Siguiente</span> paso:<span class="pp">**</span> Crea un laboratorio completo con al menos 3 máquinas <span class="er">(</span><span class="ex">atacante,</span> víctima web, víctima Windows<span class="kw">)</span> <span class="ex">y</span> practica técnicas de enumeración y explotación.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 
 

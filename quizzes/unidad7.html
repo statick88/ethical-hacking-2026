@@ -23,6 +23,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -44,7 +79,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-68056a18e515a5789c5e26a7aeb7ac61.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-e7a9eae8d420f84057ababff31fce67b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-9265db7866925a9d8c3a929a182b61d8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -128,7 +163,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../contenido/unidad1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">🛡️ Unidad 1: Fundamentos y Reconocimiento Agéntico</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Unidad 1: Fundamentos y Reconocimiento Agéntico</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -358,7 +393,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../quizzes/unidad1.html">Evaluación</a></li><li class="breadcrumb-item"><a href="../quizzes/unidad7.html"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Quiz Unidad 7: Ciberseguridad Industrial (OT/ICS)</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Quiz Unidad 7: Ciberseguridad Industrial (OT/ICS)</span></h1>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Quiz Unidad 7: Ciberseguridad Industrial (OT/ICS)</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -528,10 +563,485 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>Criterios</strong>: El estudiante debe demostrar conciencia de que en OT el principio “primum non nocere” (primero, no dañar) es fundamental, y que los ejercicios de seguridad industrial requieren coordinación más estrecha con el cliente que en IT.</p>
 
 
+<!-- -->
+
 </section>
 </section>
 
 </main> <!-- /main -->
+/**
+ * Sistema de Progreso para Ethical Hacking 2026
+ * Almacena el progreso del usuario en localStorage
+ */
+
+(function() {
+    'use strict';
+
+    // Clave para localStorage
+    const STORAGE_KEY = 'ethical_hacking_2026_progress';
+
+    // Estructura de datos del progreso
+    const defaultProgress = {
+        completedUnits: [],
+        completedLabs: [],
+        completedQuizzes: [],
+        lastVisited: null,
+        startDate: new Date().toISOString(),
+        totalVisitTime: 0
+    };
+
+    // Inicializar progreso
+    function initProgress() {
+        let progress = localStorage.getItem(STORAGE_KEY);
+        if (!progress) {
+            progress = defaultProgress;
+            saveProgress(progress);
+        } else {
+            progress = JSON.parse(progress);
+        }
+        return progress;
+    }
+
+    // Guardar progreso
+    function saveProgress(progress) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    }
+
+    // Marcar unidad como completada
+    function markUnitCompleted(unitId) {
+        const progress = initProgress();
+        if (!progress.completedUnits.includes(unitId)) {
+            progress.completedUnits.push(unitId);
+            progress.lastVisited = unitId;
+            saveProgress(progress);
+            updateUI();
+            console.log(`Unidad ${unitId} marcada como completada`);
+        }
+    }
+
+    // Marcar lab como completado
+    function markLabCompleted(labId) {
+        const progress = initProgress();
+        if (!progress.completedLabs.includes(labId)) {
+            progress.completedLabs.push(labId);
+            saveProgress(progress);
+            updateUI();
+            console.log(`Lab ${labId} marcado como completado`);
+        }
+    }
+
+    // Marcar quiz como completado
+    function markQuizCompleted(quizId) {
+        const progress = initProgress();
+        if (!progress.completedQuizzes.includes(quizId)) {
+            progress.completedQuizzes.push(quizId);
+            saveProgress(progress);
+            updateUI();
+            console.log(`Quiz ${quizId} marcado como completado`);
+        }
+    }
+
+    // Obtener progreso actual
+    function getProgress() {
+        return initProgress();
+    }
+
+    // Calcular porcentaje de progreso
+    function calculateProgress() {
+        const progress = getProgress();
+        const totalItems = 8 + 8 + 8; // 8 unidades + 8 labs + 8 quizzes
+        const completedItems = progress.completedUnits.length +
+                              progress.completedLabs.length +
+                              progress.completedQuizzes.length;
+        return Math.round((completedItems / totalItems) * 100);
+    }
+
+    // Actualizar UI del progreso
+    function updateUI() {
+        const progress = getProgress();
+        const percentage = calculateProgress();
+
+        // Actualizar barra de progreso si existe
+        const progressBar = document.querySelector('.progress-bar');
+        if (progressBar) {
+            progressBar.style.width = percentage + '%';
+        }
+
+        // Actualizar estadísticas si existen
+        const statsContainer = document.querySelector('.progress-stats');
+        if (statsContainer) {
+            statsContainer.innerHTML = `
+                <div class="stat-item">
+                    <div class="stat-value">${progress.completedUnits.length}/8</div>
+                    <div class="stat-label">Unidades</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${progress.completedLabs.length}/8</div>
+                    <div class="stat-label">Labs</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${progress.completedQuizzes.length}/8</div>
+                    <div class="stat-label">Quizzes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${percentage}%</div>
+                    <div class="stat-label">Completado</div>
+                </div>
+            `;
+        }
+
+        // Actualizar indicadores de completado en la lista de unidades
+        document.querySelectorAll('[data-unit-id]').forEach(element =&gt; {
+            const unitId = element.getAttribute('data-unit-id');
+            if (progress.completedUnits.includes(unitId)) {
+                element.classList.add('completed');
+                if (!element.querySelector('.completed-badge')) {
+                    const badge = document.createElement('span');
+                    badge.className = 'completed-badge';
+                    badge.textContent = '✓';
+                    element.appendChild(badge);
+                }
+            }
+        });
+    }
+
+    // Función para agregar botón de completar a cada sección
+    function addCompleteButtons() {
+        // Buscar contenedores de contenido
+        const contentContainers = document.querySelectorAll('.content, main, article');
+
+        contentContainers.forEach(container =&gt; {
+            // Crear botón de completar
+            const completeBtn = document.createElement('button');
+            completeBtn.className = 'btn-complete';
+            completeBtn.textContent = 'Marcar como completado';
+            completeBtn.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: #27ae60;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                z-index: 1000;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            `;
+
+            // Determinar qué tipo de contenido es
+            const currentPath = window.location.pathname;
+            let contentType = '';
+            let contentId = '';
+
+            if (currentPath.includes('/contenido/unidad')) {
+                contentType = 'unit';
+                contentId = currentPath.match(/unidad(\d+)/)[1];
+            } else if (currentPath.includes('/labs/lab-unidad')) {
+                contentType = 'lab';
+                contentId = currentPath.match(/lab-unidad(\d+)/)[1];
+            } else if (currentPath.includes('/quizzes/unidad')) {
+                contentType = 'quiz';
+                contentId = currentPath.match(/unidad(\d+)/)[1];
+            }
+
+            // Agregar evento al botón
+            completeBtn.addEventListener('click', function() {
+                if (contentType === 'unit') {
+                    markUnitCompleted('unidad' + contentId);
+                    this.textContent = '✓ Completado';
+                    this.style.background = '#27ae60';
+                } else if (contentType === 'lab') {
+                    markLabCompleted('lab-unidad' + contentId);
+                    this.textContent = '✓ Completado';
+                    this.style.background = '#27ae60';
+                } else if (contentType === 'quiz') {
+                    markQuizCompleted('unidad' + contentId);
+                    this.textContent = '✓ Completado';
+                    this.style.background = '#27ae60';
+                }
+            });
+
+            // Solo agregar si no existe ya
+            if (!document.querySelector('.btn-complete')) {
+                document.body.appendChild(completeBtn);
+            }
+        });
+    }
+
+    // Función para crear panel de progreso
+    function createProgressPanel() {
+        const sidebar = document.querySelector('.sidebar');
+        if (!sidebar) return;
+
+        // Crear panel de progreso
+        const progressPanel = document.createElement('div');
+        progressPanel.className = 'course-progress';
+        progressPanel.innerHTML = `
+            <h3>📈 Tu Progreso</h3>
+            <div class="progress-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="units-progress">0/8</div>
+                    <div class="stat-label">Unidades</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="labs-progress">0/8</div>
+                    <div class="stat-label">Labs</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="quizzes-progress">0/8</div>
+                    <div class="stat-label">Quizzes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="total-progress">0%</div>
+                    <div class="stat-label">Completado</div>
+                </div>
+            </div>
+        `;
+
+        // Insertar al inicio de la sidebar
+        sidebar.insertBefore(progressPanel, sidebar.firstChild);
+    }
+
+    // Inicializar cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', function() {
+        initProgress();
+        updateUI();
+        addCompleteButtons();
+        createProgressPanel();
+
+        // Actualizar cada vez que cambie la URL (SPA)
+        window.addEventListener('popstate', function() {
+            setTimeout(updateUI, 100);
+        });
+    });
+
+    // Exponer funciones globalmente para uso en otros scripts
+    window.CourseProgress = {
+        markUnitCompleted,
+        markLabCompleted,
+        markQuizCompleted,
+        getProgress,
+        calculateProgress
+    };
+
+    console.log('Sistema de progreso inicializado');
+})();
+/**
+ * Navegación Móvil para Ethical Hacking 2026
+ * Mejora la experiencia en dispositivos móviles
+ */
+
+(function() {
+    'use strict';
+
+    // Configuración
+    const MOBILE_BREAKPOINT = 768;
+    let isMobile = window.innerWidth &lt;= MOBILE_BREAKPOINT;
+
+    // Inicializar navegación móvil
+    function initMobileNav() {
+        // Crear botón de menú hamburguesa
+        const menuBtn = document.createElement('button');
+        menuBtn.className = 'mobile-menu-btn';
+        menuBtn.innerHTML = `
+            <span></span>
+            <span></span>
+            <span></span>
+        `;
+        menuBtn.setAttribute('aria-label', 'Abrir menú de navegación');
+        menuBtn.setAttribute('aria-expanded', 'false');
+
+        // Estilos del botón
+        menuBtn.style.cssText = `
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+        `;
+
+        // Líneas del botón hamburguesa
+        menuBtn.querySelectorAll('span').forEach(span =&gt; {
+            span.style.cssText = `
+                display: block;
+                height: 3px;
+                width: 100%;
+                background-color: #ecf0f1;
+                border-radius: 2px;
+                transition: all 0.3s ease;
+            `;
+        });
+
+        // Crear overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'sidebar-overlay';
+        overlay.style.cssText = `
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        `;
+
+        // Agregar al DOM
+        document.body.appendChild(menuBtn);
+        document.body.appendChild(overlay);
+
+        // Obtener sidebar
+        const sidebar = document.querySelector('.sidebar');
+
+        // Función para abrir/cerrar menú
+        function toggleMenu() {
+            const isOpen = sidebar.classList.contains('open');
+
+            if (isOpen) {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                menuBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            } else {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+                menuBtn.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Event listeners
+        menuBtn.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        // Cerrar con tecla Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' &amp;&amp; sidebar.classList.contains('open')) {
+                toggleMenu();
+            }
+        });
+
+        // Mostrar/ocultar botón según tamaño de pantalla
+        function updateMenuButton() {
+            isMobile = window.innerWidth &lt;= MOBILE_BREAKPOINT;
+            menuBtn.style.display = isMobile ? 'flex' : 'none';
+
+            if (!isMobile) {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        window.addEventListener('resize', updateMenuButton);
+        updateMenuButton();
+
+        // Agregar swipe gestures para móvil
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+
+            // Swipe izquierdo (cerrar menú)
+            if (diff &gt; swipeThreshold &amp;&amp; sidebar.classList.contains('open')) {
+                toggleMenu();
+            }
+
+            // Swipe derecho (abrir menú)
+            if (diff &lt; -swipeThreshold &amp;&amp; !sidebar.classList.contains('open') &amp;&amp; touchStartX &lt; 50) {
+                toggleMenu();
+            }
+        }
+
+        console.log('Navegación móvil inicializada');
+    }
+
+    // Función para mejorar scroll en móvil
+    function improveMobileScroll() {
+        // Agregar indicador de scroll horizontal para tablas
+        const tables = document.querySelectorAll('table');
+        tables.forEach(table =&gt; {
+            const wrapper = document.createElement('div');
+            wrapper.style.overflowX = 'auto';
+            wrapper.style.webkitOverflowScrolling = 'touch';
+            table.parentNode.insertBefore(wrapper, table);
+            wrapper.appendChild(table);
+        });
+
+        // Suavizar scroll en móvil
+        if ('ontouchstart' in window) {
+            document.documentElement.style.scrollBehavior = 'smooth';
+        }
+    }
+
+    // Función para optimizar tap targets en móvil
+    function optimizeTapTargets() {
+        // Aumentar tamaño de enlaces y botones en móvil
+        const style = document.createElement('style');
+        style.textContent = `
+            @media (max-width: 768px) {
+                a, button {
+                    min-height: 44px;
+                    min-width: 44px;
+                }
+
+                .sidebar a {
+                    padding: 15px 20px;
+                    display: block;
+                }
+
+                .btn-complete {
+                    bottom: 10px !important;
+                    right: 10px !important;
+                    padding: 12px 24px !important;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // Inicializar cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', function() {
+        initMobileNav();
+        improveMobileScroll();
+        optimizeTapTargets();
+    });
+
+    // Exponer funciones globalmente
+    window.MobileNav = {
+        init: initMobileNav,
+        toggle: function() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            if (sidebar &amp;&amp; overlay) {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+            }
+        }
+    };
+
+    console.log('Mejoras móviles inicializadas');
+})();
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -602,6 +1112,57 @@ ul.task-list li input[type="checkbox"] {
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -943,7 +1504,187 @@ ul.task-list li input[type="checkbox"] {
         <span class="nav-page-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Quiz Unidad 8: Post-Explotación, Reporte y Ética</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Quiz Unidad 7: Ciberseguridad Industrial (OT/ICS)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>**Puntaje mínimo**: 7/10 (70%)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">## Preguntas de Opción Múltiple</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pregunta 1 (Básica)</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>¿Qué significa la sigla SCADA?</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>a) Secure Control and Data Architecture</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>b) Supervisory Control and Data Acquisition</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>c) System Control and Data Analysis</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>d) Standard Control and Data Access</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>**Respuesta correcta**: b</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>**Explicación**: SCADA (Supervisory Control and Data Acquisition) son sistemas usados para monitorizar y controlar infraestructuras industriales como plantas eléctricas, redes de agua y oleoductos.</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pregunta 2 (Básica)</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>¿Qué es un PLC?</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>a) Private LAN Controller</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>b) Protocol Layer Component</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>c) Programmable Logic Controller</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>d) Process Logic Computer</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>**Respuesta correcta**: c</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>**Explicación**: Un PLC (Programmable Logic Controller) es un dispositivo industrial de computación especializado que controla procesos físicos como motores, válvulas y sensores en entornos industriales.</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pregunta 3 (Básica)</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>¿Qué protocolo industrial utiliza por defecto el puerto TCP 502?</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>a) DNP3</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>b) EtherNet/IP</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>c) Modbus TCP</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>d) PROFINET</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>**Respuesta correcta**: c</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>**Explicación**: Modbus TCP opera sobre el puerto 502 y es uno de los protocolos de comunicación industrial más antiguos y ampliamente usados, originalmente diseñado sin mecanismos de autenticación o cifrado.</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pregunta 4 (Intermedia)</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>¿Cuál es la principal diferencia entre seguridad IT y seguridad OT?</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>a) OT usa protocolos más modernos y seguros</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>b) En OT, la disponibilidad y seguridad física tienen prioridad sobre la confidencialidad</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>c) IT tiene más restricciones regulatorias que OT</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>d) No hay diferencias significativas en los enfoques de seguridad</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>**Respuesta correcta**: b</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>**Explicación**: En entornos OT, la disponibilidad y la seguridad física (safety) son críticas; un fallo puede causar daños físicos o pérdidas de vidas. Esto invierte la tríada CIA respecto a IT, donde la confidencialidad suele ser la prioridad principal.</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pregunta 5 (Intermedia)</span></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>¿En el Modelo de Purdue (Purdue Reference Model), cuál es el nivel más bajo de la jerarquía?</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>a) Nivel 1 - Control básico</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>b) Nivel 0 - Proceso físico</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>c) Nivel 2 - Supervisión</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>d) Nivel 3 - Operaciones de sitio</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>**Respuesta correcta**: b</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>**Explicación**: El Nivel 0 del Modelo Purdue representa el proceso físico en sí (sensores, actuadores, maquinaria), siendo la capa más cercana al entorno industrial real.</span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pregunta 6 (Intermedia)</span></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>¿Qué protocolo usa Siemens para la comunicación con sus PLCs de la serie S7?</span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>a) Modbus</span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>b) DNP3</span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>c) S7comm</span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>d) EtherNet/IP</span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>**Respuesta correcta**: c</span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>**Explicación**: S7comm es un protocolo propietario de Siemens usado para comunicarse con sus PLCs de la familia S7 (S7-300, S7-400, S7-1200, S7-1500). Fue uno de los protocolos objetivo en el ataque Stuxnet.</span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pregunta 7 (Intermedia)</span></span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>¿Cuál fue el primer ciberataque conocido que causó daño físico a infraestructura industrial crítica?</span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>a) NotPetya</span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a>b) BlackEnergy</span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>c) Stuxnet</span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a>d) Triton/TRISIS</span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a>**Respuesta correcta**: c</span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>**Explicación**: Stuxnet (descubierto en 2010) fue el primer malware conocido diseñado para causar daño físico real, dirigido a las centrifugadoras del programa nuclear iraní mediante la manipulación de PLCs Siemens S7.</span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pregunta 8 (Avanzada)</span></span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>¿Qué herramienta se utiliza específicamente para fuzzing de protocolos industriales como Modbus y DNP3?</span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>a) Nmap</span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a>b) Boofuzz</span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>c) Metasploit básico</span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a>d) Burp Suite</span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>**Respuesta correcta**: b</span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>**Explicación**: Boofuzz es un framework de fuzzing de red que soporta protocolos industriales y permite realizar pruebas de robustez enviando datos malformados a dispositivos como PLCs y RTUs.</span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pregunta 9 (Avanzada)</span></span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a>¿Qué estándar del NIST se enfoca específicamente en la seguridad de Sistemas de Control Industrial (ICS)?</span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a>a) NIST SP 800-53</span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a>b) NIST SP 800-115</span>
+<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a>c) NIST SP 800-82</span>
+<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a>d) NIST CSF 2.0</span>
+<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a>**Respuesta correcta**: c</span>
+<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a>**Explicación**: NIST SP 800-82 "Guide to Industrial Control Systems (ICS) Security" proporciona orientación específica para proteger SCADA, DCS y otros sistemas de control industrial.</span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pregunta 10 (Avanzada)</span></span>
+<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a>¿Qué es un ataque de "air gap jumping"?</span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a>a) Atacar sistemas a través de Internet</span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a>b) Técnicas para comprometer sistemas aislados de redes convencionales usando canales físicos o electromagnéticos</span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>c) Un tipo de ataque de denegación de servicio</span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a>d) Saltar de una VLAN a otra</span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a>**Respuesta correcta**: b</span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a>**Explicación**: Los ataques de air gap jumping utilizan canales no convencionales como USB infectados (Stuxnet), emisiones electromagnéticas, acústicas, de temperatura o de luz para exfiltrar datos o comprometer sistemas físicamente aislados de cualquier red.</span>
+<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a><span class="fu">## Escenarios Prácticos</span></span>
+<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a><span class="fu">### Escenario 1</span></span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>**Situación**: Una empresa del sector energético te contrata para evaluar la seguridad de su planta. Durante el reconocimiento, descubres con Shodan dispositivos industriales expuestos a Internet respondiendo en el puerto 502. Al conectarte, el dispositivo acepta comandos Modbus sin ningún tipo de autenticación y permite leer y escribir registros que controlan válvulas críticas.</span>
+<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a>**Preguntas de análisis**:</span>
+<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>¿Qué riesgos específicos representa esta exposición y cómo los clasificarías según impacto?</span>
+<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>¿Cómo presentarías este hallazgo al cliente sin comprometer los sistemas de producción durante el pentest?</span>
+<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>¿Qué controles recomendarías para remediar esta exposición siguiendo el Modelo de Purdue?</span>
+<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a>**Respuesta esperada**: El estudiante debe identificar: riesgo crítico de disponibilidad y safety (no solo confidencialidad), la posibilidad de manipulación de procesos físicos. Para el reporte: documentar el hallazgo sin ejecutar comandos de escritura en producción (solo lectura para evidenciar), coordinar con el cliente antes de cualquier prueba activa. Para remediación: eliminar exposición directa a Internet, segmentar según Purdue, implementar Firewall industrial/DMZ OT, considerar protocolo con autenticación (DNP3 SAv5 o IPsec).</span>
+<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a>**Criterios**: El estudiante debe mostrar comprensión del contexto OT donde las pruebas activas pueden tener consecuencias físicas graves, y adaptar su metodología en consecuencia.</span>
+<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a><span class="fu">### Escenario 2</span></span>
+<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a>**Situación**: Durante un ejercicio de red team contra una planta de tratamiento de agua, logras acceso a la red corporativa IT. Descubres que existe conexión entre la red IT y la red OT a través de un servidor SCADA que tiene dos interfaces de red. El sistema usa Windows Server 2008 R2 sin parches y tiene una HMI (Human-Machine Interface) accesible.</span>
+<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a>**Preguntas de análisis**:</span>
+<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>¿Cómo pivotarías desde la red IT hacia la red OT de forma controlada?</span>
+<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>¿Qué consideraciones éticas y de safety debes tener antes de intentar cualquier acción sobre la HMI?</span>
+<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>¿Qué recomendarías para eliminar este punto de cruce IT/OT o hacerlo más seguro?</span>
+<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a>**Respuesta esperada**: Para el pivoting: el servidor SCADA con doble interfaz es el pivote natural; usar técnicas de port forwarding o proxy SOCKS. Para consideraciones éticas: en plantas de agua/energía NUNCA ejecutar acciones que puedan afectar el proceso físico; toda acción sobre HMI debe acordarse previamente con el cliente y tener un plan de rollback; idealmente realizar el ejercicio sobre un entorno de staging o con ingenieros del cliente supervisando. Para remediación: implementar DMZ industrial con firewall entre IT y OT, usar unidirectional security gateways (data diodes), actualizar el servidor SCADA.</span>
+<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a>**Criterios**: El estudiante debe demostrar conciencia de que en OT el principio "primum non nocere" (primero, no dañar) es fundamental, y que los ejercicios de seguridad industrial requieren coordinación más estrecha con el cliente que en IT.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 
 
