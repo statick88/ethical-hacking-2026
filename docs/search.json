@@ -1876,5 +1876,445 @@
       "Evaluación",
       "<span class='chapter-number'>25</span>  <span class='chapter-title'>Quiz Unidad 8: Post-Explotación, Reporte y Ética</span>"
     ]
+  },
+  {
+    "objectID": "anexos/anexo-bash-scripting.html",
+    "href": "anexos/anexo-bash-scripting.html",
+    "title": "26  Anexo A: Minicurso de Bash Scripting",
+    "section": "",
+    "text": "26.1 Introducción a Bash Scripting\nBash (Bourne Again SHell) es el shell por defecto en la mayoría de distribuciones Linux y es una herramienta esencial para cualquier profesional de seguridad informática. Este minicurso te proporcionará las bases necesarias para automatizar tareas, analizar sistemas y crear herramientas personalizadas.",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>Anexo A: Minicurso de Bash Scripting</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-bash-scripting.html#introducción-a-bash-scripting",
+    "href": "anexos/anexo-bash-scripting.html#introducción-a-bash-scripting",
+    "title": "26  Anexo A: Minicurso de Bash Scripting",
+    "section": "",
+    "text": "26.1.1 Objetivos del Minicurso\n\nComprender la estructura básica de un script Bash\nAprender a manipular archivos y directorios\nAutomatizar tareas repetitivas\nCrear herramientas de análisis y monitoreo\nIntegrar scripts en flujos de trabajo de seguridad",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>Anexo A: Minicurso de Bash Scripting</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-bash-scripting.html#fundamentos-de-bash",
+    "href": "anexos/anexo-bash-scripting.html#fundamentos-de-bash",
+    "title": "26  Anexo A: Minicurso de Bash Scripting",
+    "section": "26.2 1. Fundamentos de Bash",
+    "text": "26.2 1. Fundamentos de Bash\n\n26.2.1 1.1 Estructura de un Script Bash\nUn script Bash básico tiene la siguiente estructura:\n#!/bin/bash\n# Comentario explicativo\n\necho \"Hola Mundo\"\nExplicación: - #!/bin/bash: Shebang que indica al sistema qué intérprete usar - #: Comentario (línea ignorada por el intérprete) - echo: Comando para imprimir en pantalla\n\n\n26.2.2 1.2 Variables\n#!/bin/bash\n\n# Declaración de variables\nnombre=\"Juan\"\nedad=25\n\n# Uso de variables (con $)\necho \"Mi nombre es $nombre\"\necho \"Tengo $edad años\"\n\n# Variables de sistema\necho \"Usuario actual: $USER\"\necho \"Directorio home: $HOME\"\necho \"Script actual: $0\"\n\n\n26.2.3 1.3 Entrada y Salida\n#!/bin/bash\n\n# Leer entrada del usuario\necho \"¿Cuál es tu nombre?\"\nread nombre\n\n# Mostrar mensaje de bienvenida\necho \"¡Hola, $nombre!\"\n\n# Redirección de salida\necho \"Este mensaje va a un archivo\" &gt; salida.txt\necho \"Este mensaje se añade al archivo\" &gt;&gt; salida.txt",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>Anexo A: Minicurso de Bash Scripting</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-bash-scripting.html#control-de-flujo",
+    "href": "anexos/anexo-bash-scripting.html#control-de-flujo",
+    "title": "26  Anexo A: Minicurso de Bash Scripting",
+    "section": "26.3 2. Control de Flujo",
+    "text": "26.3 2. Control de Flujo\n\n26.3.1 2.1 Condicionales if-else\n#!/bin/bash\n\nedad=18\n\nif [ $edad -ge 18 ]; then\n    echo \"Eres mayor de edad\"\nelse\n    echo \"Eres menor de edad\"\nfi\n\n# Condicional con archivos\nif [ -f \"/etc/passwd\"; then\n    echo \"El archivo /etc/passwd existe\"\nelse\n    echo \"El archivo no existe\"\nfi\n\n# Múltiples condiciones\nif [ \"$1\" = \"start\" ]; then\n    echo \"Iniciando servicio...\"\nelif [ \"$1\" = \"stop\" ]; then\n    echo \"Deteniendo servicio...\"\nelse\n    echo \"Uso: $0 {start|stop}\"\nfi\n\n\n26.3.2 2.2 Bucles\n\n26.3.2.1 Bucle for\n#!/bin/bash\n\n# Bucle for básico\nfor i in {1..10}; do\n    echo \"Número: $i\"\ndone\n\n# Bucle for con archivos\nfor archivo in /etc/*.conf; do\n    echo \"Archivo: $archivo\"\ndone\n\n# Bucle for con array\ncolores=(\"rojo\" \"verde\" \"azul\")\nfor color in \"${colores[@]}\"; do\n    echo \"Color: $color\"\ndone\n\n\n26.3.2.2 Bucle while\n#!/bin/bash\n\ncontador=1\n\nwhile [ $contador -le 5 ]; do\n    echo \"Contador: $contador\"\n    ((contador++))\ndone\n\n# Leer archivo línea por línea\nwhile IFS= read -r linea; do\n    echo \"Línea: $linea\"\ndone &lt; /etc/passwd\n\n\n26.3.2.3 Bucle until\n#!/bin/bash\n\ncontador=1\n\nuntil [ $contador -gt 5 ]; do\n    echo \"Contador: $contador\"\n    ((contador++))\ndone",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>Anexo A: Minicurso de Bash Scripting</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-bash-scripting.html#funciones",
+    "href": "anexos/anexo-bash-scripting.html#funciones",
+    "title": "26  Anexo A: Minicurso de Bash Scripting",
+    "section": "26.4 3. Funciones",
+    "text": "26.4 3. Funciones\n\n26.4.1 3.1 Definición y Uso de Funciones\n#!/bin/bash\n\n# Definir función\nsaludar() {\n    echo \"¡Hola, $1!\"\n}\n\n# Llamar a la función\nsaludar \"Usuario\"\nsaludar \"Administrador\"\n\n# Función con retorno\nsumar() {\n    local suma=$(($1 + $2))\n    return $suma\n}\n\nsumar 5 3\nresultado=$?\necho \"Resultado: $resultado\"\n\n\n26.4.2 3.2 Funciones Útiles para Seguridad\n#!/bin/bash\n\n# Función para verificar si un puerto está abierto\ncheck_port() {\n    local host=$1\n    local port=$2\n    \n    if nc -z $host $port 2&gt;/dev/null; then\n        echo \"Puerto $port en $host está ABIERTO\"\n        return 0\n    else\n        echo \"Puerto $port en $host está CERRADO\"\n        return 1\n    fi\n}\n\n# Función para escanear puertos comunes\nscan_common_ports() {\n    local host=$1\n    echo \"Escaneando puertos comunes en $host...\"\n    \n    for port in 21 22 23 25 53 80 110 143 443 445 3389; do\n        check_port $host $port\n    done\n}\n\n# Uso\nscan_common_ports \"127.0.0.1\"",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>Anexo A: Minicurso de Bash Scripting</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-bash-scripting.html#procesamiento-de-texto",
+    "href": "anexos/anexo-bash-scripting.html#procesamiento-de-texto",
+    "title": "26  Anexo A: Minicurso de Bash Scripting",
+    "section": "26.5 4. Procesamiento de Texto",
+    "text": "26.5 4. Procesamiento de Texto\n\n26.5.1 4.1 Comandos Esenciales\n#!/bin/bash\n\n# grep: Buscar patrones\ngrep \"root\" /etc/passwd\ngrep -i \"error\" /var/log/syslog\n\n# awk: Procesamiento de columnas\nawk -F: '{print $1}' /etc/passwd  # Mostrar solo el usuario\nawk -F: '{print $1, $3}' /etc/passwd  # Mostrar usuario y UID\n\n# sed: Sustitución de texto\nsed 's/root/admin/g' /etc/passwd\nsed -i 's/root/admin/g' /etc/passwd  # Editar archivo in-place\n\n# cut: Extraer columnas\ncut -d: -f1 /etc/passwd\n\n# sort: Ordenar líneas\nsort /etc/passwd\n\n# uniq: Eliminar líneas duplicadas\nsort /etc/passwd | uniq\n\n\n26.5.2 4.2 Ejemplo Práctico: Análisis de Logs\n#!/bin/bash\n\n# Script para analizar intentos de login fallidos\nLOG_FILE=\"/var/log/auth.log\"\n\necho \"=== Análisis de Intentos de Login Fallidos ===\"\necho\n\n# Contar intentos fallidos por usuario\necho \"Intentos fallidos por usuario:\"\ngrep \"Failed password\" $LOG_FILE | awk '{print $9}' | sort | uniq -c | sort -rn\n\necho\n\n# IPs más frecuentes con intentos fallidos\necho \"IPs con más intentos fallidos:\"\ngrep \"Failed password\" $LOG_FILE | awk '{print $11}' | sort | uniq -c | sort -rn | head -10\n\necho\n\n# Intentos recientes (última hora)\necho \"Intentos fallidos en la última hora:\"\ngrep \"Failed password\" $LOG_FILE | grep \"$(date '+%b %d %H')\" | wc -l",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>Anexo A: Minicurso de Bash Scripting</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-bash-scripting.html#automatización-de-tareas-de-seguridad",
+    "href": "anexos/anexo-bash-scripting.html#automatización-de-tareas-de-seguridad",
+    "title": "26  Anexo A: Minicurso de Bash Scripting",
+    "section": "26.6 5. Automatización de Tareas de Seguridad",
+    "text": "26.6 5. Automatización de Tareas de Seguridad\n\n26.6.1 5.1 Script de Monitoreo de Sistema\n#!/bin/bash\n\n# Script de monitoreo básico\nMONITOR_DIR=\"/tmp/monitor\"\nmkdir -p $MONITOR_DIR\n\n# Función para monitorear uso de CPU\nmonitor_cpu() {\n    echo \"=== Monitoreo de CPU ===\"\n    echo \"Uso actual: $(top -bn1 | grep \"Cpu(s)\" | awk '{print $2}' | cut -d'%' -f1)%\"\n    echo \"Procesos más consumidores:\"\n    ps aux --sort=-%cpu | head -6\n    echo\n}\n\n# Función para monitorear memoria\nmonitor_mem() {\n    echo \"=== Monitoreo de Memoria ===\"\n    free -h\n    echo\n}\n\n# Función para monitorear disco\nmonitor_disk() {\n    echo \"=== Monitoreo de Disco ===\"\n    df -h\n    echo\n}\n\n# Función para monitorear conexiones de red\nmonitor_network() {\n    echo \"=== Monitoreo de Red ===\"\n    echo \"Conexiones activas:\"\n    netstat -tuln | grep LISTEN\n    echo\n}\n\n# Ejecutar monitoreo\nmonitor_cpu\nmonitor_mem\nmonitor_disk\nmonitor_network\n\n# Guardar registro\ntimestamp=$(date '+%Y-%m-%d %H:%M:%S')\necho \"Monitoreo completado: $timestamp\" &gt;&gt; $MONITOR_DIR/monitor.log\n\n\n26.6.2 5.2 Script de Hardening Básico\n#!/bin/bash\n\n# Script de hardening básico para Linux\necho \"=== Hardening Básico de Sistema ===\"\n\n# 1. Actualizar sistema\necho \"1. Actualizando sistema...\"\napt update && apt upgrade -y\n\n# 2. Configurar firewall (UFW)\necho \"2. Configurando firewall...\"\nufw default deny incoming\nufw default allow outgoing\nufw allow ssh\nufw allow 22/tcp\nufw --force enable\n\n# 3. Desactivar servicios innecesarios\necho \"3. Desactivando servicios innecesarios...\"\nsystemctl disable bluetooth 2&gt;/dev/null\nsystemctl disable cups 2&gt;/dev/null\n\n# 4. Configurar SSH seguro\necho \"4. Configurando SSH seguro...\"\nsed -i 's/#PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config\nsed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config\nsystemctl restart ssh\n\n# 5. Configurar límites de recursos\necho \"5. Configurando límites de recursos...\"\necho \"* soft nproc 100\" &gt;&gt; /etc/security/limits.conf\necho \"* hard nproc 200\" &gt;&gt; /etc/security/limits.conf\n\necho \"Hardening completado. Reinicia el sistema para aplicar cambios.\"",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>Anexo A: Minicurso de Bash Scripting</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-bash-scripting.html#ejercicios-prácticos",
+    "href": "anexos/anexo-bash-scripting.html#ejercicios-prácticos",
+    "title": "26  Anexo A: Minicurso de Bash Scripting",
+    "section": "26.7 6. Ejercicios Prácticos",
+    "text": "26.7 6. Ejercicios Prácticos\n\n26.7.1 Ejercicio 1: Script de Backup\nCrea un script que: 1. Cree un backup de un directorio especificado 2. Comprima el backup con tar 3. Agregue fecha al nombre del archivo 4. Mantenga solo los últimos 7 backups\n\n\n26.7.2 Ejercicio 2: Monitor de Procesos\nCrea un script que: 1. Monitoree un proceso específico por nombre 2. Reinicie el proceso si se detiene 3. Envíe notificación si hay problemas\n\n\n26.7.3 Ejercicio 3: Escaner de Puertos\nCrea un script que: 1. Escanee un rango de IPs 2. Verifique puertos específicos 3. Genere un reporte de servicios encontrados",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>Anexo A: Minicurso de Bash Scripting</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-bash-scripting.html#recursos-adicionales",
+    "href": "anexos/anexo-bash-scripting.html#recursos-adicionales",
+    "title": "26  Anexo A: Minicurso de Bash Scripting",
+    "section": "26.8 7. Recursos Adicionales",
+    "text": "26.8 7. Recursos Adicionales\n\n26.8.1 Documentación\n\nBash Guide for Beginners\nAdvanced Bash-Scripting Guide\nBash Manual\n\n\n\n26.8.2 Herramientas Útiles\n\nshellcheck: Verificador de sintaxis para scripts Bash\nbashdb: Depurador para Bash\nshfmt: Formateador de código Bash\n\n\n\n26.8.3 Práctica Recomendada\n\nSiempre usar #!/bin/bash al inicio del script\nUtilizar set -e para salir ante errores\nCitar variables: \"$variable\" en lugar de $variable\nUsar local para variables de función\nDocumentar cada función con comentarios",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>Anexo A: Minicurso de Bash Scripting</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-bash-scripting.html#resumen",
+    "href": "anexos/anexo-bash-scripting.html#resumen",
+    "title": "26  Anexo A: Minicurso de Bash Scripting",
+    "section": "26.9 Resumen",
+    "text": "26.9 Resumen\nEn este minicurso has aprendido: - ✅ Estructura básica de scripts Bash - ✅ Manipulación de variables y entrada/salida - ✅ Control de flujo con condicionales y bucles - ✅ Creación y uso de funciones - ✅ Procesamiento de texto con comandos Unix - ✅ Automatización de tareas de seguridad\nSiguiente paso: Práctica constante. Crea scripts para automatizar tus tareas diarias y análisis de seguridad.",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>Anexo A: Minicurso de Bash Scripting</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-docker.html",
+    "href": "anexos/anexo-docker.html",
+    "title": "27  Anexo B: Minicurso de Docker",
+    "section": "",
+    "text": "27.1 Introducción a Docker\nDocker es una plataforma de contenerización que permite empaquetar aplicaciones y sus dependencias en contenedores portables. En seguridad informática, Docker es esencial para crear entornos aislados para pruebas, laboratorios y herramientas de pentesting.",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Anexo B: Minicurso de Docker</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-docker.html#introducción-a-docker",
+    "href": "anexos/anexo-docker.html#introducción-a-docker",
+    "title": "27  Anexo B: Minicurso de Docker",
+    "section": "",
+    "text": "27.1.1 Objetivos del Minicurso\n\nComprender los conceptos fundamentales de contenerización\nAprender a usar Docker para laboratorios de seguridad\nCrear y gestionar contenedores personalizados\nAutomatizar despliegues con Docker Compose\nIntegrar Docker en flujos de trabajo de pentesting",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Anexo B: Minicurso de Docker</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-docker.html#conceptos-fundamentales",
+    "href": "anexos/anexo-docker.html#conceptos-fundamentales",
+    "title": "27  Anexo B: Minicurso de Docker",
+    "section": "27.2 1. Conceptos Fundamentales",
+    "text": "27.2 1. Conceptos Fundamentales\n\n27.2.1 1.1 ¿Qué es un Contenedor?\nUn contenedor es una instancia aislada de un sistema operativo que comparte el kernel del sistema anfitrión pero tiene su propio sistema de archivos, procesos y red.\nDiferencias clave: - Máquina Virtual: Incluye todo el sistema operativo guest (pesado) - Contenedor: Solo incluye la aplicación y sus dependencias (ligero)\n\n\n27.2.2 1.2 Arquitectura Docker\n┌─────────────────────────────────────┐\n│         Aplicación                  │\n├─────────────────────────────────────┤\n│      Librerías / Binarios           │\n├─────────────────────────────────────┤\n│        Contenedor                   │\n├─────────────────────────────────────┤\n│      Kernel del Host                │\n└─────────────────────────────────────┘",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Anexo B: Minicurso de Docker</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-docker.html#instalación-y-configuración",
+    "href": "anexos/anexo-docker.html#instalación-y-configuración",
+    "title": "27  Anexo B: Minicurso de Docker",
+    "section": "27.3 2. Instalación y Configuración",
+    "text": "27.3 2. Instalación y Configuración\n\n27.3.1 2.1 Instalación en Linux (Kali/Debian/Ubuntu)\n# Actualizar repositorios\nsudo apt update\n\n# Instalar dependencias\nsudo apt install -y apt-transport-https ca-certificates curl gnupg lsb-release\n\n# Añadir clave GPG de Docker\ncurl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg\n\n# Añadir repositorio\necho \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable\" | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null\n\n# Instalar Docker\nsudo apt update\nsudo apt install -y docker-ce docker-ce-cli containerd.io\n\n# Añadir usuario al grupo docker\nsudo usermod -aG docker $USER\n\n# Probar instalación\ndocker --version\ndocker run hello-world\n\n\n27.3.2 2.2 Configuración Básica\n# Verificar estado de Docker\nsudo systemctl status docker\n\n# Iniciar Docker al arrancar\nsudo systemctl enable docker\n\n# Configurar daemon (opcional)\nsudo nano /etc/docker/daemon.json\nEjemplo de configuración:\n{\n  \"log-driver\": \"json-file\",\n  \"log-opts\": {\n    \"max-size\": \"10m\",\n    \"max-file\": \"3\"\n  },\n  \"storage-driver\": \"overlay2\"\n}",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Anexo B: Minicurso de Docker</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-docker.html#comandos-básicos-de-docker",
+    "href": "anexos/anexo-docker.html#comandos-básicos-de-docker",
+    "title": "27  Anexo B: Minicurso de Docker",
+    "section": "27.4 3. Comandos Básicos de Docker",
+    "text": "27.4 3. Comandos Básicos de Docker\n\n27.4.1 3.1 Gestión de Imágenes\n# Listar imágenes locales\ndocker images\ndocker image ls\n\n# Buscar imágenes en Docker Hub\ndocker search kali-linux\ndocker search pentest\n\n# Descargar una imagen\ndocker pull kalilinux/kali-rolling\ndocker pull ubuntu:22.04\n\n# Eliminar una imagen\ndocker rmi &lt;imagen_id&gt;\ndocker image rm &lt;imagen_id&gt;\n\n# Etiquetar una imagen\ndocker tag mi-imagen:latest usuario/mi-imagen:v1.0\n\n\n27.4.2 3.2 Gestión de Contenedores\n# Ejecutar contenedor interactivo\ndocker run -it kalilinux/kali-rolling /bin/bash\n\n# Ejecutar contenedor en segundo plano\ndocker run -d --name mi-contenedor ubuntu:22.04 sleep 3600\n\n# Listar contenedores activos\ndocker ps\n\n# Listar todos los contenedores (incluyendo detenidos)\ndocker ps -a\n\n# Detener contenedor\ndocker stop &lt;container_id&gt;\n\n# Iniciar contenedor detenido\ndocker start &lt;container_id&gt;\n\n# Reiniciar contenedor\ndocker restart &lt;container_id&gt;\n\n# Eliminar contenedor\ndocker rm &lt;container_id&gt;\ndocker rm -f &lt;container_id&gt;  # Forzar eliminación\n\n# Ver logs de contenedor\ndocker logs &lt;container_id&gt;\ndocker logs -f &lt;container_id&gt;  # Seguir logs en tiempo real\n\n# Ejecutar comando en contenedor activo\ndocker exec -it &lt;container_id&gt; /bin/bash",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Anexo B: Minicurso de Docker</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-docker.html#opciones-de-red-y-almacenamiento",
+    "href": "anexos/anexo-docker.html#opciones-de-red-y-almacenamiento",
+    "title": "27  Anexo B: Minicurso de Docker",
+    "section": "27.5 4. Opciones de Red y Almacenamiento",
+    "text": "27.5 4. Opciones de Red y Almacenamiento\n\n27.5.1 4.1 Redes Docker\n# Listar redes\ndocker network ls\n\n# Crear red personalizada\ndocker network create mi-red\n\n# Conectar contenedor a red\ndocker run -d --name contenedor1 --network mi-red ubuntu:22.04\ndocker run -d --name contenedor2 --network mi-red ubuntu:22.04\n\n# Conectar contenedor existente a red\ndocker network connect mi-red contenedor_existente\n\n# Desconectar contenedor de red\ndocker network disconnect mi-red contenedor_existente\n\n# Ver detalles de red\ndocker network inspect mi-red\nTipos de redes: - bridge: Red por defecto (aislada) - host: Usa red del host - none: Sin red - overlay: Para clústeres (Swarm) - macvlan: Asigna MAC address al contenedor\n\n\n27.5.2 4.2 Volúmenes y Directorios Montados\n# Montar directorio del host en contenedor\ndocker run -it -v /ruta/host:/ruta/contenedor ubuntu:22.04\n\n# Montar volumen con nombre\ndocker volume create mi-volumen\ndocker run -it -v mi-volumen:/ruta/contenedor ubuntu:22.04\n\n# Montar como solo lectura\ndocker run -it -v /ruta/host:/ruta/contenedor:ro ubuntu:22.04\n\n# Copiar archivos entre host y contenedor\ndocker cp /ruta/host/archivo.txt &lt;container_id&gt;:/ruta/contenedor/\ndocker cp &lt;container_id&gt;:/ruta/contenedor/archivo.txt /ruta/host/",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Anexo B: Minicurso de Docker</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-docker.html#dockerfile-creación-de-imágenes-personalizadas",
+    "href": "anexos/anexo-docker.html#dockerfile-creación-de-imágenes-personalizadas",
+    "title": "27  Anexo B: Minicurso de Docker",
+    "section": "27.6 5. Dockerfile: Creación de Imágenes Personalizadas",
+    "text": "27.6 5. Dockerfile: Creación de Imágenes Personalizadas\n\n27.6.1 5.1 Estructura Básica de Dockerfile\n# Imagen base\nFROM kalilinux/kali-rolling:latest\n\n# Maintainer (obsoleto, usar LABEL)\nLABEL maintainer=\"diego@ejemplo.com\"\n\n# Variables de entorno\nENV DEBIAN_FRONTEND=noninteractive\n\n# Actualizar e instalar paquetes\nRUN apt update && apt install -y \\\n    nmap \\\n    nikto \\\n    sqlmap \\\n    && rm -rf /var/lib/apt/lists/*\n\n# Directorio de trabajo\nWORKDIR /app\n\n# Copiar archivos locales al contenedor\nCOPY . /app\n\n# Exponer puertos\nEXPOSE 80 443 22\n\n# Comando por defecto al iniciar\nCMD [\"/bin/bash\"]\n\n\n27.6.2 5.2 Ejemplo: Imagen de Pentesting\n# Dockerfile para entorno de pentesting\nFROM kalilinux/kali-rolling:latest\n\n# Configurar entorno\nENV DEBIAN_FRONTEND=noninteractive\nENV LANG=C.UTF-8\n\n# Actualizar sistema\nRUN apt update && apt upgrade -y\n\n# Instalar herramientas de pentesting\nRUN apt install -y \\\n    # Herramientas de enumeración\n    nmap \\\n    enum4linux \\\n    ldap-utils \\\n    # Herramientas web\n    nikto \\\n    dirb \\\n    dirbuster \\\n    wfuzz \\\n    sqlmap \\\n    # Herramientas de explotación\n    metasploit-framework \\\n    exploitdb \\\n    # Herramientas de post-explotación \\\n    mimikatz \\\n    # Herramientas de red \\\n    wireshark \\\n    tcpdump \\\n    netcat-traditional \\\n    # Herramientas de fuerza bruta \\\n    hydra \\\n    john \\\n    # Limpieza \\\n    && rm -rf /var/lib/apt/lists/*\n\n# Crear usuario no root\nRUN useradd -m -s /bin/bash pentester\nUSER pentester\nWORKDIR /home/pentester\n\n# Configurar herramientas específicas\nRUN mkdir -p /home/pentester/tools\n\n# Comando por defecto\nCMD [\"/bin/bash\"]\n\n\n27.6.3 5.3 Construir Imagen\n# Construir imagen desde Dockerfile\ndocker build -t pentesting-tools:latest .\n\n# Construir con tag específico\ndocker build -t usuario/pentesting-tools:v1.0 .\n\n# Construir con contexto diferente\ndocker build -t mi-imagen -f /ruta/Dockerfile /ruta/contexto\n\n# Ver historial de build\ndocker history mi-imagen",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Anexo B: Minicurso de Docker</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-docker.html#docker-compose",
+    "href": "anexos/anexo-docker.html#docker-compose",
+    "title": "27  Anexo B: Minicurso de Docker",
+    "section": "27.7 6. Docker Compose",
+    "text": "27.7 6. Docker Compose\n\n27.7.1 6.1 Introducción a Docker Compose\nDocker Compose permite definir y ejecutar aplicaciones multi-contenedor con un solo archivo YAML.\n\n\n27.7.2 6.2 Estructura Básica de docker-compose.yml\nversion: '3.8'\n\nservices:\n  web:\n    image: nginx:latest\n    ports:\n      - \"80:80\"\n    volumes:\n      - ./html:/usr/share/nginx/html\n    networks:\n      - app-network\n\n  db:\n    image: mysql:8.0\n    environment:\n      MYSQL_ROOT_PASSWORD: rootpass\n      MYSQL_DATABASE: appdb\n    volumes:\n      - db-data:/var/lib/mysql\n    networks:\n      - app-network\n\nvolumes:\n  db-data:\n\nnetworks:\n  app-network:\n    driver: bridge\n\n\n27.7.3 6.3 Ejemplo: Laboratorio de Pentesting con Docker Compose\nversion: '3.8'\n\nservices:\n  # Servidor web vulnerable\n  web-vulnerable:\n    image: vulhub/webgoat:latest\n    ports:\n      - \"8080:8080\"\n    networks:\n      - pentest-network\n\n  # Base de datos vulnerable\n  db-vulnerable:\n    image: vulnerables/cve-2017-9805\n    ports:\n      - \"8081:8080\"\n    networks:\n      - pentest-network\n\n  # Herramientas de ataque\n  attacker:\n    image: kalilinux/kali-rolling:latest\n    command: sleep infinity\n    networks:\n      - pentest-network\n    volumes:\n      - ./tools:/tools\n\n  # Monitor de red\n  wireshark:\n    image: lscr.io/linuxserver/wireshark:latest\n    container_name: wireshark\n    environment:\n      - PUID=1000\n      - PGID=1000\n    volumes:\n      - /tmp/.X11-unix:/tmp/.X11-unix\n    cap_add:\n      - NET_ADMIN\n      - SYS_ADMIN\n    network_mode: host\n    devices:\n      - /dev/dri\n    privileged: true\n\nnetworks:\n  pentest-network:\n    driver: bridge\n\n\n27.7.4 6.4 Comandos Docker Compose\n# Iniciar servicios\ndocker-compose up -d\n\n# Detener servicios\ndocker-compose down\n\n# Ver logs\ndocker-compose logs -f\n\n# Escalar servicios\ndocker-compose up -d --scale web=3\n\n# Ejecutar comando en servicio específico\ndocker-compose exec web /bin/bash",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Anexo B: Minicurso de Docker</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-docker.html#seguridad-en-contenedores",
+    "href": "anexos/anexo-docker.html#seguridad-en-contenedores",
+    "title": "27  Anexo B: Minicurso de Docker",
+    "section": "27.8 7. Seguridad en Contenedores",
+    "text": "27.8 7. Seguridad en Contenedores\n\n27.8.1 7.1 Buenas Prácticas de Seguridad\n# 1. No ejecutar como root\ndocker run -u 1000:1000 -it ubuntu:22.04\n\n# 2. Limitar recursos\ndocker run --memory=512m --cpus=1.0 ubuntu:22.04\n\n# 3. Usar red aislada\ndocker network create --internal pentest-net\ndocker run --network=pentest-net ubuntu:22.04\n\n# 4. Escanear vulnerabilidades\ndocker scan mi-imagen\n\n# 5. Actualizar contenedores regularmente\ndocker pull mi-imagen:latest\ndocker stop contenedor && docker rm contenedor\ndocker run -d --name contenedor mi-imagen:latest\n\n\n27.8.2 7.2 Auditoría de Contenedores\n# Ver detalles de contenedor\ndocker inspect &lt;container_id&gt;\n\n# Ver procesos en contenedor\ndocker top &lt;container_id&gt;\n\n# Ver uso de recursos\ndocker stats &lt;container_id&gt;\n\n# Analizar capas de imagen\ndocker history mi-imagen",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Anexo B: Minicurso de Docker</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-docker.html#ejemplos-prácticos-para-seguridad",
+    "href": "anexos/anexo-docker.html#ejemplos-prácticos-para-seguridad",
+    "title": "27  Anexo B: Minicurso de Docker",
+    "section": "27.9 8. Ejemplos Prácticos para Seguridad",
+    "text": "27.9 8. Ejemplos Prácticos para Seguridad\n\n27.9.1 8.1 Laboratorio de SQL Injection\n# docker-compose-sqli.yml\nversion: '3.8'\n\nservices:\n  dvwa:\n    image: vulnerables/web-dvwa\n    ports:\n      - \"80:80\"\n    environment:\n      - MYSQL_PASSWORD=p@ssw0rd\n    networks:\n      - pentest-network\n\n  attacker:\n    image: kalilinux/kali-rolling:latest\n    command: sleep infinity\n    networks:\n      - pentest-network\n    volumes:\n      - ./scripts:/scripts\n\nnetworks:\n  pentest-network:\n    driver: bridge\n\n\n27.9.2 8.2 Contenedor de Enumeración\n# Dockerfile-enumeration\nFROM kalilinux/kali-rolling:latest\n\nRUN apt update && apt install -y \\\n    nmap \\\n    enum4linux \\\n    ldap-utils \\\n    smbclient \\\n    nikto \\\n    && rm -rf /var/lib/apt/lists/*\n\nWORKDIR /scans\nCOPY enumeration-scripts/ /scans/\n\nCMD [\"/bin/bash\"]\n\n\n27.9.3 8.3 Script de Automatización\n#!/bin/bash\n# deploy-lab.sh\n\n# Variables\nLAB_NAME=\"pentest-lab\"\nCOMPOSE_FILE=\"docker-compose-pentest.yml\"\n\n# Función para iniciar laboratorio\nstart_lab() {\n    echo \"Iniciando laboratorio de pentesting...\"\n    docker-compose -f $COMPOSE_FILE up -d\n    echo \"Laboratorio iniciado. Accede a:\"\n    echo \"  - WebGoat: http://localhost:8080\"\n    echo \"  - Attacker: docker exec -it ${LAB_NAME}_attacker_1 /bin/bash\"\n}\n\n# Función para detener laboratorio\nstop_lab() {\n    echo \"Deteniendo laboratorio...\"\n    docker-compose -f $COMPOSE_FILE down\n    echo \"Laboratorio detenido.\"\n}\n\n# Función para reiniciar laboratorio\nrestart_lab() {\n    stop_lab\n    start_lab\n}\n\n# Menú principal\ncase \"$1\" in\n    start)\n        start_lab\n        ;;\n    stop)\n        stop_lab\n        ;;\n    restart)\n        restart_lab\n        ;;\n    *)\n        echo \"Uso: $0 {start|stop|restart}\"\n        exit 1\n        ;;\nesac",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Anexo B: Minicurso de Docker</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-docker.html#integración-con-herramientas-de-pentesting",
+    "href": "anexos/anexo-docker.html#integración-con-herramientas-de-pentesting",
+    "title": "27  Anexo B: Minicurso de Docker",
+    "section": "27.10 9. Integración con Herramientas de Pentesting",
+    "text": "27.10 9. Integración con Herramientas de Pentesting\n\n27.10.1 9.1 Contenedor de Nmap\n# Ejecutar nmap en contenedor\ndocker run -it --rm kalilinux/kali-rolling nmap -sV 192.168.1.1\n\n# Escaneo de red local desde contenedor\ndocker run -it --rm --network host kalilinux/kali-rolling nmap -sn 192.168.1.0/24\n\n\n27.10.2 9.2 Contenedor de Metasploit\n# Usar imagen oficial de Metasploit\ndocker run -it --rm \\\n  -v ~/.msf4:/root/.msf4 \\\n  -v /tmp/msf:/tmp/msf \\\n  metasploitframework/metasploit-framework\n\n\n27.10.3 9.3 Contenedor de OWASP ZAP\n# Ejecutar ZAP en contenedor\ndocker run -u zap -p 8080:8080 -p 8090:8090 \\\n  -v $(pwd)/zap-data:/zap/wrk:rw \\\n  owasp/zap2docker-stable zap.sh -daemon \\\n  -host 0.0.0.0 -port 8080 \\\n  -config api.key=secret",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Anexo B: Minicurso de Docker</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-docker.html#ejercicios-prácticos",
+    "href": "anexos/anexo-docker.html#ejercicios-prácticos",
+    "title": "27  Anexo B: Minicurso de Docker",
+    "section": "27.11 10. Ejercicios Prácticos",
+    "text": "27.11 10. Ejercicios Prácticos\n\n27.11.1 Ejercicio 1: Crear Imagen Personalizada\n\nCrea un Dockerfile para una herramienta de pentesting específica\nConstruye la imagen y prueba el contenedor\nPublica la imagen en Docker Hub\n\n\n\n27.11.2 Ejercicio 2: Laboratorio Multi-Contenedor\n\nDiseña un laboratorio con 3 servicios vulnerables\nConfigura Docker Compose con redes y volúmenes\nCrea scripts para iniciar/detener el laboratorio\n\n\n\n27.11.3 Ejercicio 3: Automatización de Escaneos\n\nCrea un script que use contenedores para escanear una red\nGenera reportes automáticos\nConfigura alertas por vulnerabilidades críticas",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Anexo B: Minicurso de Docker</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-docker.html#recursos-adicionales",
+    "href": "anexos/anexo-docker.html#recursos-adicionales",
+    "title": "27  Anexo B: Minicurso de Docker",
+    "section": "27.12 11. Recursos Adicionales",
+    "text": "27.12 11. Recursos Adicionales\n\n27.12.1 Documentación\n\nDocker Documentation\nDocker Compose Reference\nDockerfile Best Practices\n\n\n\n27.12.2 Imágenes Útiles para Seguridad\n\nkalilinux/kali-rolling: Kali Linux oficial\nmetasploitframework/metasploit-framework: Metasploit\nowasp/zap2docker-stable: OWASP ZAP\nvulhub/*: Vulnerabilidades organizadas por CVE\n\n\n\n27.12.3 Herramientas Adicionales\n\ndocker-compose: Orchestration multi-contenedor\ndocker-machine: Gestión de máquinas Docker\ndocker-swarm: Orchestration clustering\nportainer: Interfaz web para gestión de Docker",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Anexo B: Minicurso de Docker</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-docker.html#resumen",
+    "href": "anexos/anexo-docker.html#resumen",
+    "title": "27  Anexo B: Minicurso de Docker",
+    "section": "27.13 Resumen",
+    "text": "27.13 Resumen\nEn este minicurso has aprendido: - ✅ Conceptos fundamentales de contenerización - ✅ Comandos básicos de gestión de contenedores e imágenes - ✅ Creación de imágenes personalizadas con Dockerfile - ✅ Orchestration multi-contenedor con Docker Compose - ✅ Seguridad en contenedores y buenas prácticas - ✅ Integración con herramientas de pentesting\nSiguiente paso: Crea un laboratorio completo de pentesting usando Docker Compose y practica con vulnerabilidades reales.",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Anexo B: Minicurso de Docker</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-maquinas-virtuales.html",
+    "href": "anexos/anexo-maquinas-virtuales.html",
+    "title": "28  Anexo C: Minicurso de Máquinas Virtuales con Kali Linux",
+    "section": "",
+    "text": "28.1 Introducción a Máquinas Virtuales en Seguridad\nLas máquinas virtuales son esenciales en seguridad informática para crear entornos aislados, reproducibles y portátiles para pruebas de pentesting, análisis de malware y laboratorios de aprendizaje.",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-maquinas-virtuales.html#introducción-a-máquinas-virtuales-en-seguridad",
+    "href": "anexos/anexo-maquinas-virtuales.html#introducción-a-máquinas-virtuales-en-seguridad",
+    "title": "28  Anexo C: Minicurso de Máquinas Virtuales con Kali Linux",
+    "section": "",
+    "text": "28.1.1 Objetivos del Minicurso\n\nConfigurar VMware Fusion y VirtualBox para laboratorios de seguridad\nInstalar y configurar Kali Linux como máquina virtual\nOptimizar el rendimiento y seguridad de las VMs\nCrear laboratorios de pentesting con VMs\nAutomatizar despliegues de laboratorios",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-maquinas-virtuales.html#conceptos-fundamentales",
+    "href": "anexos/anexo-maquinas-virtuales.html#conceptos-fundamentales",
+    "title": "28  Anexo C: Minicurso de Máquinas Virtuales con Kali Linux",
+    "section": "28.2 1. Conceptos Fundamentales",
+    "text": "28.2 1. Conceptos Fundamentales\n\n28.2.1 1.1 Virtualización\nLa virtualización permite ejecutar múltiples sistemas operativos en un mismo hardware mediante un hipervisor.\nTipos de hipervisores: - Tipo 1 (Bare-metal): Ejecuta directamente sobre hardware (VMware ESXi, Hyper-V) - Tipo 2 (Hosted): Ejecuta sobre sistema operativo host (VMware Fusion, VirtualBox)\n\n\n28.2.2 1.2 Ventajas en Seguridad Informática\n\nAislamiento: Malware no afecta sistema host\nPortabilidad: Laboratorios fácilmente compartibles\nSnapshots: Puntos de restauración rápidos\nClonación: Múltiples entornos idénticos\nRedes aisladas: Entornos de prueba controlados",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-maquinas-virtuales.html#configuración-de-vmware-fusion",
+    "href": "anexos/anexo-maquinas-virtuales.html#configuración-de-vmware-fusion",
+    "title": "28  Anexo C: Minicurso de Máquinas Virtuales con Kali Linux",
+    "section": "28.3 2. Configuración de VMware Fusion",
+    "text": "28.3 2. Configuración de VMware Fusion\n\n28.3.1 2.1 Instalación en macOS\n# Descargar VMware Fusion\n# Visitar: https://www.vmware.com/products/fusion.html\n\n# Instalar desde DMG\n# 1. Abrir el archivo .dmg\n# 2. Arrastrar VMware Fusion a Applications\n# 3. Abrir y aceptar licencia\n\n\n28.3.2 2.2 Configuración Inicial\n# Verificar instalación\nvmrun list\n\n# Configurar preferencias\n# VMware Fusion &gt; Preferences &gt; General\nConfiguraciones recomendadas: - General: - “Check for updates automatically” - “Share data with VMware”\n\nNetwork:\n\n“Share with my Mac” (NAT)\n“Private to my Mac” (Host-only)\n“Bridged” (Direct access)\n\nDisplay:\n\n“Use full resolution for retina displays”\n“Accelerate 3D graphics”\n\n\n\n\n28.3.3 2.3 Creación de Redes Personalizadas\n# Crear red host-only\n# VMware Fusion &gt; Preferences &gt; Network &gt; +\n# Configurar subnet: 192.168.56.0/24\n\n# Crear red aislada (sin acceso a internet)\n# Network Adapter &gt; Private to my Mac",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-maquinas-virtuales.html#configuración-de-virtualbox",
+    "href": "anexos/anexo-maquinas-virtuales.html#configuración-de-virtualbox",
+    "title": "28  Anexo C: Minicurso de Máquinas Virtuales con Kali Linux",
+    "section": "28.4 3. Configuración de VirtualBox",
+    "text": "28.4 3. Configuración de VirtualBox\n\n28.4.1 3.1 Instalación en macOS\n# Descargar VirtualBox\n# Visitar: https://www.virtualbox.org/wiki/Downloads\n\n# Instalar\n# 1. Abrir .pkg\n# 2. Seguir asistente de instalación\n# 3. Aceptar extensión de kernel\n\n# Verificar instalación\nVBoxManage --version\n\n\n28.4.2 3.2 Configuración Inicial\n# Verificar configuración\nVBoxManage list vms\nVBoxManage list hostonlyifs\n\n# Configurar preferencias\n# VirtualBox &gt; Preferences\nConfiguraciones recomendadas: - General: - Language: Spanish/English - Default VM Folder: ~/VirtualBox VMs\n\nDisplay:\n\nMaximum Guest Screen Size: Hint\nEnable 3D Acceleration\n\nNetwork:\n\nHost-only Networks: Crear redes personalizadas\n\n\n\n\n28.4.3 3.3 Creación de Redes Host-Only\n# Crear interfaz host-only\nVBoxManage hostonlyif create\nVBoxManage hostonlyif ipconfig vboxnet0 --ip 192.168.56.1 --netmask 255.255.255.0\n\n# Listar redes\nVBoxManage hostonlyif list",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-maquinas-virtuales.html#instalación-de-kali-linux",
+    "href": "anexos/anexo-maquinas-virtuales.html#instalación-de-kali-linux",
+    "title": "28  Anexo C: Minicurso de Máquinas Virtuales con Kali Linux",
+    "section": "28.5 4. Instalación de Kali Linux",
+    "text": "28.5 4. Instalación de Kali Linux\n\n28.5.1 4.1 Descarga de Imagen Oficial\n# Opciones de descarga:\n# 1. Image: https://www.kali.org/get-kali/#kali-virtual-machines\n# 2. Torrent: Más rápido para descargas grandes\n# 3. Mirrors: https://http.kali.org/\n\n# Verificar integridad (importante para seguridad)\nsha256sum kali-linux-2026.1-vmware-amd64.7z\n# Comparar con hash oficial en https://www.kali.org/get-kali/\n\n\n28.5.2 4.2 Instalación en VMware Fusion\nPaso 1: Crear máquina virtual\n# VMware Fusion &gt; File &gt; New...\n# Select \"Import an existing virtual machine\"\n# Seleccionar archivo .vmx o .ovf de Kali\nPaso 2: Configurar hardware\n- Procesadores: 2+ núcleos\n- RAM: 2-4 GB (mínimo 2 GB)\n- Disco: 40-60 GB (dinámico)\n- Red: NAT o Host-Only (según necesidad)\n- USB: Habilitar dispositivos USB\nPaso 3: Primer arranque\n# Usuario por defecto: kali\n# Contraseña por defecto: kali\n\n# Cambiar contraseña inmediatamente\nsudo passwd kali\n\n\n28.5.3 4.3 Instalación en VirtualBox\nPaso 1: Importar OVA/OVF\n# VirtualBox &gt; File &gt; Import Appliance\n# Seleccionar archivo .ova de Kali\nPaso 2: Configurar máquina\n# Configuración &gt; Sistema\n- Placa base: Linux 64-bit\n- RAM: 2048 MB\n- Procesadores: 2\n\n# Configuración &gt; Pantalla\n- Memoria de video: 128 MB\n- Aceleración 3D: Habilitar\n\n# Configuración &gt; Red\n- Adapter 1: NAT o Host-Only\nPaso 3: Configurar VirtualBox Guest Additions\n# Dentro de Kali Linux\nsudo apt update\nsudo apt install -y build-essential dkms linux-headers-$(uname -r)\n\n# Insertar Guest Additions CD\n# VirtualBox &gt; Devices &gt; Insert Guest Additions CD image\n\n# Montar y ejecutar\nsudo mkdir -p /mnt/cdrom\nsudo mount /dev/cdrom /mnt/cdrom\ncd /mnt/cdrom\nsudo ./VBoxLinuxAdditions.run\n\n# Reiniciar\nsudo reboot",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-maquinas-virtuales.html#configuración-inicial-de-kali-linux",
+    "href": "anexos/anexo-maquinas-virtuales.html#configuración-inicial-de-kali-linux",
+    "title": "28  Anexo C: Minicurso de Máquinas Virtuales con Kali Linux",
+    "section": "28.6 5. Configuración Inicial de Kali Linux",
+    "text": "28.6 5. Configuración Inicial de Kali Linux\n\n28.6.1 5.1 Actualización del Sistema\n# Actualizar repositorios\nsudo apt update\n\n# Actualizar sistema completo\nsudo apt full-upgrade -y\n\n# Limpiar paquetes obsoletos\nsudo apt autoremove -y\nsudo apt autoclean\n\n\n28.6.2 5.2 Configuración de Red\n# Ver interfaces de red\nip a\nip link show\n\n# Configurar IP estática (ejemplo)\nsudo nano /etc/netplan/01-netcfg.yaml\nEjemplo de configuración estática:\nnetwork:\n  version: 2\n  ethernets:\n    eth0:\n      dhcp4: no\n      addresses: [192.168.56.10/24]\n      gateway4: 192.168.56.1\n      nameservers:\n        addresses: [8.8.8.8, 8.8.4.4]\nAplicar cambios:\nsudo netplan apply\n\n\n28.6.3 5.3 Configuración de SSH\n# Instalar SSH server\nsudo apt install -y openssh-server\n\n# Configurar SSH\nsudo nano /etc/ssh/sshd_config\n\n# Cambiar configuraciones importantes:\nPermitRootLogin no\nPasswordAuthentication no\nPubkeyAuthentication yes\n\n# Reiniciar servicio\nsudo systemctl restart ssh\nsudo systemctl enable ssh\n\n# Generar clave SSH (desde host)\nssh-keygen -t ed25519 -C \"kali-vm\"\nssh-copy-id kali@192.168.56.10\n\n\n28.6.4 5.4 Instalación de Herramientas Esenciales\n# Herramientas de enumeración\nsudo apt install -y \\\n    nmap \\\n    enum4linux \\\n    ldap-utils \\\n    smbclient \\\n    nikto \\\n    dirb \\\n    dirbuster \\\n    gobuster\n\n# Herramientas de explotación\nsudo apt install -y \\\n    metasploit-framework \\\n    exploitdb \\\n    sqlmap \\\n    nikto\n\n# Herramientas de post-explotación\nsudo apt install -y \\\n    mimikatz \\\n    crackmapexec \\\n    evil-winrm\n\n# Herramientas de red\nsudo apt install -y \\\n    wireshark \\\n    tcpdump \\\n    tshark \\\n    netcat-traditional \\\n    netcat-openbsd\n\n# Herramientas de fuerza bruta\nsudo apt install -y \\\n    hydra \\\n    john \\\n    medusa \\\n    fcrackzip\n\n# Herramientas de ofuscación y evasión\nsudo apt install -y \\\n    veil \\\n    powersploit \\\n   nishang",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-maquinas-virtuales.html#laboratorios-de-pentesting-con-vms",
+    "href": "anexos/anexo-maquinas-virtuales.html#laboratorios-de-pentesting-con-vms",
+    "title": "28  Anexo C: Minicurso de Máquinas Virtuales con Kali Linux",
+    "section": "28.7 6. Laboratorios de Pentesting con VMs",
+    "text": "28.7 6. Laboratorios de Pentesting con VMs\n\n28.7.1 6.1 Arquitectura de Laboratorio Básico\n┌─────────────────────────────────────────────────────┐\n│                   Host (macOS)                      │\n│  ┌──────────────────────────────────────────────┐  │\n│  │         VMware Fusion / VirtualBox           │  │\n│  ├──────────────────────────────────────────────┤  │\n│  │  ┌─────────────┐  ┌─────────────┐           │  │\n│  │  │ Kali Linux  │  │   Máquina   │           │  │\n│  │  │ (Atacante)  │  │  Vulnerable │           │  │\n│  │  └─────────────┘  └─────────────┘           │  │\n│  └──────────────────────────────────────────────┘  │\n└─────────────────────────────────────────────────────┘\n\n\n28.7.2 6.2 Creación de Redes Aisladas\nEn VMware Fusion:\n# VMware Fusion &gt; Preferences &gt; Network &gt; +\n# Crear red: 192.168.100.0/24\n# Desactivar \"Connect to internet\"\nEn VirtualBox:\n# VirtualBox &gt; File &gt; Preferences &gt; Network\n# Crear red host-only: 192.168.56.0/24\n\n\n28.7.3 6.3 Configuración de Máquinas Vulnerables\nOpción 1: Usar VulnHub\n# Descargar máquinas de VulnHub\n# https://www.vulnhub.com/\n\n# Ejemplo: Kioptrix Level 1\n# Importar .ova en VirtualBox/VMware\n# Configurar red: Host-Only\nOpción 2: Crear máquina vulnerable propia\n# Instalar Ubuntu Server\n# Instalar servicios vulnerables\nsudo apt install -y \\\n    apache2 \\\n    php \\\n    mysql-server \\\n    vsftpd \\\n    telnetd\n\n# Configurar vulnerabilidades intencionales\n# - Contraseñas débiles\n# - Servicios desactualizados\n# - Permisos inadecuados\nOpción 3: Usar máquinas preconfiguradas\n# Metasploitable 2\n# Descargar: https://sourceforge.net/projects/metasploitable/\n\n# DVWA (Damn Vulnerable Web Application)\n# docker run -d -p 80:80 vulnerables/web-dvwa\n\n\n28.7.4 6.4 Ejemplo: Laboratorio Completo\nArquitectura:\nRed Host-Only: 192.168.56.0/24\n├── Kali Linux (Atacante): 192.168.56.10\n├── Windows 10 (Victim): 192.168.56.20\n├── Ubuntu Server (Web): 192.168.56.30\n└── Router (pfSense/OPNsense): 192.168.56.1\nConfiguración de Kali:\n# Configurar IP estática\nsudo nano /etc/netplan/01-netcfg.yaml\n# IP: 192.168.56.10/24\n# Gateway: 192.168.56.1\n\n# Verificar conectividad\nping 192.168.56.1\nping 192.168.56.20",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-maquinas-virtuales.html#gestión-de-snapshots-y-clonación",
+    "href": "anexos/anexo-maquinas-virtuales.html#gestión-de-snapshots-y-clonación",
+    "title": "28  Anexo C: Minicurso de Máquinas Virtuales con Kali Linux",
+    "section": "28.8 7. Gestión de Snapshots y Clonación",
+    "text": "28.8 7. Gestión de Snapshots y Clonación\n\n28.8.1 7.1 Snapshots en VMware Fusion\nCrear snapshot:\n# Desde interfaz gráfica\n# Virtual Machine &gt; Snapshots &gt; Take Snapshot\n\n# Desde línea de comandos\nvmrun snapshot \"ruta/vm.vmx\" \"Snapshot antes de explotación\"\nGestionar snapshots:\n# Listar snapshots\nvmrun listSnapshots \"ruta/vm.vmx\"\n\n# Revertir a snapshot\nvmrun revertToSnapshot \"ruta/vm.vmx\" \"Snapshot nombre\"\n\n# Eliminar snapshot\nvmrun deleteSnapshot \"ruta/vm.vmx\" \"Snapshot nombre\"\n\n\n28.8.2 7.2 Snapshots en VirtualBox\nCrear snapshot:\n# Desde interfaz gráfica\n# Machine &gt; Take Snapshot\n\n# Desde línea de comandos\nVBoxManage snapshot \"NombreVM\" take \"Snapshot1\" --description \"Estado inicial\"\nGestionar snapshots:\n# Listar snapshots\nVBoxManage snapshot \"NombreVM\" list\n\n# Revertir a snapshot\nVBoxManage snapshot \"NombreVM\" restore \"Snapshot1\"\n\n# Eliminar snapshot\nVBoxManage snapshot \"NombreVM\" delete \"Snapshot1\"\n\n\n28.8.3 7.3 Clonación de Máquinas\nVMware Fusion:\n# Interfaz gráfica\n# Virtual Machine &gt; Clone\n\n# Línea de comandos\nvmrun clone \"original.vmx\" \"clon.vmx\" linked\nVirtualBox:\n# Interfaz gráfica\n# Machine &gt; Clone\n\n# Línea de comandos\nVBoxManage clonevm \"OriginalVM\" --name \"ClonVM\" --register",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-maquinas-virtuales.html#automatización-con-vagrant",
+    "href": "anexos/anexo-maquinas-virtuales.html#automatización-con-vagrant",
+    "title": "28  Anexo C: Minicurso de Máquinas Virtuales con Kali Linux",
+    "section": "28.9 8. Automatización con Vagrant",
+    "text": "28.9 8. Automatización con Vagrant\n\n28.9.1 8.1 Introducción a Vagrant\nVagrant permite automatizar la creación y configuración de máquinas virtuales.\n\n\n28.9.2 8.2 Instalación\n# macOS con Homebrew\nbrew install vagrant\n\n# Verificar instalación\nvagrant --version\n\n\n28.9.3 8.3 Vagrantfile para Kali Linux\n# Vagrantfile\nVagrant.configure(\"2\") do |config|\n  \n  # Kali Linux\n  config.vm.define \"kali\" do |kali|\n    kali.vm.box = \"kalilinux/rolling\"\n    kali.vm.hostname = \"kali\"\n    \n    # Red host-only\n    kali.vm.network \"private_network\", ip: \"192.168.56.10\"\n    \n    # Configuración de recursos\n    kali.vm.provider \"virtualbox\" do |vb|\n      vb.name = \"Kali-Linux-Pentest\"\n      vb.memory = \"4096\"\n      vb.cpus = 2\n      vb.gui = true\n    end\n    \n    # Provisionamiento\n    kali.vm.provision \"shell\", inline: &lt;&lt;-SHELL\n      apt update\n      apt full-upgrade -y\n      apt autoremove -y\n      \n      # Instalar herramientas adicionales\n      apt install -y gobuster impacket-scripts\n      \n      # Configurar SSH\n      systemctl enable ssh\n      systemctl start ssh\n    SHELL\n  end\n  \n  # Máquina vulnerable (Metasploitable)\n  config.vm.define \"metasploitable\" do |meta|\n    meta.vm.box = \"metasploitable2-linux\"\n    meta.vm.hostname = \"metasploitable\"\n    meta.vm.network \"private_network\", ip: \"192.168.56.20\"\n    \n    meta.vm.provider \"virtualbox\" do |vb|\n      vb.name = \"Metasploitable2\"\n      vb.memory = \"1024\"\n      vb.cpus = 1\n      vb.gui = false\n    end\n  end\nend\n\n\n28.9.4 8.4 Comandos de Vagrant\n# Iniciar laboratorio\nvagrant up\n\n# Conectar a máquina específica\nvagrant ssh kali\n\n# Detener laboratorio\nvagrant halt\n\n# Destruir laboratorio\nvagrant destroy -f\n\n# Reconfigurar\nvagrant reload --provision",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-maquinas-virtuales.html#optimización-de-rendimiento",
+    "href": "anexos/anexo-maquinas-virtuales.html#optimización-de-rendimiento",
+    "title": "28  Anexo C: Minicurso de Máquinas Virtuales con Kali Linux",
+    "section": "28.10 9. Optimización de Rendimiento",
+    "text": "28.10 9. Optimización de Rendimiento\n\n28.10.1 9.1 Optimización para VMware Fusion\n# Configurar memoria RAM\n# Virtual Machine &gt; Settings &gt; Processors & Memory\n# Asignar 4GB para Kali Linux\n\n# Habilitar aceleración 3D\n# Virtual Machine &gt; Settings &gt; Display\n# Enable accelerated 3D graphics\n\n# Configurar redes optimizadas\n# Virtual Machine &gt; Settings &gt; Network\n# Adapter type: Ethernet (solo para VMs locales)\n\n\n28.10.2 9.2 Optimización para VirtualBox\n# Configurar memoria RAM\nVBoxManage modifyvm \"Kali-Linux\" --memory 4096\n\n# Configurar CPUs\nVBoxManage modifyvm \"Kali-Linux\" --cpus 2\n\n# Habilitar aceleración\nVBoxManage modifyvm \"Kali-Linux\" --accelerate3d on\nVBoxManage modifyvm \"Kali-Linux\" --vram 128\n\n# Configurar storage controller\nVBoxManage storagectl \"Kali-Linux\" --name \"SATA\" --add sata --portcount 2\n\n\n28.10.3 9.3 Optimización de Kali Linux\n# Reducir consumo de recursos\nsudo systemctl disable bluetooth\nsudo systemctl disable cups\n\n# Configurar swap adecuado\nsudo fallocate -l 2G /swapfile\nsudo chmod 600 /swapfile\nsudo mkswap /swapfile\nsudo swapon /swapfile\n\n# Optimizar systemd\nsudo nano /etc/systemd/journald.conf\n# SystemMaxUse=100M",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-maquinas-virtuales.html#seguridad-de-máquinas-virtuales",
+    "href": "anexos/anexo-maquinas-virtuales.html#seguridad-de-máquinas-virtuales",
+    "title": "28  Anexo C: Minicurso de Máquinas Virtuales con Kali Linux",
+    "section": "28.11 10. Seguridad de Máquinas Virtuales",
+    "text": "28.11 10. Seguridad de Máquinas Virtuales\n\n28.11.1 10.1 Aislamiento de Red\n# Configurar firewalls en VMs\nsudo ufw default deny incoming\nsudo ufw default allow outgoing\nsudo ufw allow from 192.168.56.0/24\n\n# Desactivar servicios innecesarios\nsudo systemctl stop avahi-daemon\nsudo systemctl disable avahi-daemon\n\n\n28.11.2 10.2 Protección del Host\n# Limitar acceso a VMs\n# VMware Fusion: Deshabilitar drag-and-drop\n# VirtualBox: Deshabilitar clipboard compartido\n\n# Configurar antivirus en host\n# - Escanear VMs periódicamente\n# - Mantener actualizado\n\n\n28.11.3 10.3 Snapshot Seguro\nAntes de cada práctica:\n# 1. Tomar snapshot limpio\n# 2. Ejecutar prácticas\n# 3. Revertir a snapshot limpio\n# 4. Limpiar artefactos",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-maquinas-virtuales.html#integración-con-docker-y-vms",
+    "href": "anexos/anexo-maquinas-virtuales.html#integración-con-docker-y-vms",
+    "title": "28  Anexo C: Minicurso de Máquinas Virtuales con Kali Linux",
+    "section": "28.12 11. Integración con Docker y VMs",
+    "text": "28.12 11. Integración con Docker y VMs\n\n28.12.1 11.1 Combinar Docker y VMs\n┌─────────────────────────────────────────┐\n│         Host (macOS)                    │\n│  ┌───────────────────────────────────┐  │\n│  │       VMware Fusion / VB          │  │\n│  │  ┌─────────────────────────────┐  │  │\n│  │  │      Kali Linux VM          │  │  │\n│  │  │  ┌───────────────────────┐  │  │  │\n│  │  │  │ Docker (contenedores) │  │  │  │\n│  │  │  └───────────────────────┘  │  │  │\n│  │  └─────────────────────────────┘  │  │\n│  └───────────────────────────────────┘  │\n└─────────────────────────────────────────┘\n\n\n28.12.2 11.2 Script de Automatización\n#!/bin/bash\n# setup-pentest-lab.sh\n\n# Configuración\nVM_NAME=\"Kali-Pentest-Lab\"\nVM_MEMORY=\"4096\"\nVM_CPUS=\"2\"\nNETWORK=\"192.168.56.0/24\"\n\n# Función para crear VM\ncreate_vm() {\n    echo \"Creando máquina virtual...\"\n    \n    # Usar Vagrant para crear VM\n    vagrant up\n    \n    # O alternativamente con VirtualBox\n    # VBoxManage createvm --name \"$VM_NAME\" --ostype \"Linux_64\" --register\n    # VBoxManage modifyvm \"$VM_NAME\" --memory \"$VM_MEMORY\" --cpus \"$VM_CPUS\"\n}\n\n# Función para configurar red\nsetup_network() {\n    echo \"Configurando red...\"\n    \n    # Configurar IP estática en Kali\n    vagrant ssh kali -c \"sudo sed -i 's/dhcp/static/' /etc/netplan/01-netcfg.yaml\"\n    vagrant ssh kali -c \"echo 'addresses: [192.168.56.10/24]' &gt;&gt; /etc/netplan/01-netcfg.yaml\"\n    vagrant ssh kali -c \"sudo netplan apply\"\n}\n\n# Función para instalar herramientas\ninstall_tools() {\n    echo \"Instalando herramientas de pentesting...\"\n    \n    vagrant ssh kali -c \"sudo apt update && sudo apt install -y nmap nikto sqlmap gobuster\"\n}\n\n# Función para crear snapshot\ncreate_snapshot() {\n    echo \"Creando snapshot inicial...\"\n    VBoxManage snapshot \"$VM_NAME\" take \"Initial-Setup\" --description \"Estado inicial del laboratorio\"\n}\n\n# Menú principal\ncase \"$1\" in\n    create)\n        create_vm\n        setup_network\n        install_tools\n        create_snapshot\n        ;;\n    start)\n        vagrant up\n        ;;\n    stop)\n        vagrant halt\n        ;;\n    destroy)\n        vagrant destroy -f\n        ;;\n    *)\n        echo \"Uso: $0 {create|start|stop|destroy}\"\n        exit 1\n        ;;\nesac",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-maquinas-virtuales.html#ejercicios-prácticos",
+    "href": "anexos/anexo-maquinas-virtuales.html#ejercicios-prácticos",
+    "title": "28  Anexo C: Minicurso de Máquinas Virtuales con Kali Linux",
+    "section": "28.13 12. Ejercicios Prácticos",
+    "text": "28.13 12. Ejercicios Prácticos\n\n28.13.1 Ejercicio 1: Configuración Inicial\n\nInstalar VMware Fusion o VirtualBox\nDescargar e importar Kali Linux\nConfigurar red host-only\nActualizar sistema e instalar herramientas básicas\n\n\n\n28.13.2 Ejercicio 2: Laboratorio Básico\n\nCrear red aislada (192.168.100.0/24)\nConfigurar Kali Linux como atacante\nInstalar Metasploitable 2 como víctima\nRealizar escaneo básico con nmap\n\n\n\n28.13.3 Ejercicio 3: Automatización con Vagrant\n\nCrear Vagrantfile para laboratorio\nImplementar múltiples máquinas\nAutomatizar configuración con provisionamiento\nCrear snapshot inicial\n\n\n\n28.13.4 Ejercicio 4: Gestión de Snapshots\n\nPracticar creación de snapshots\nRealizar cambios en VM\nRevertir a snapshot anterior\nClonar VM para prácticas individuales",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-maquinas-virtuales.html#recursos-adicionales",
+    "href": "anexos/anexo-maquinas-virtuales.html#recursos-adicionales",
+    "title": "28  Anexo C: Minicurso de Máquinas Virtuales con Kali Linux",
+    "section": "28.14 13. Recursos Adicionales",
+    "text": "28.14 13. Recursos Adicionales\n\n28.14.1 Documentación\n\nVMware Fusion Documentation\nVirtualBox Manual\nKali Linux Documentation\nVagrant Documentation\n\n\n\n28.14.2 Máquinas Vulnerables\n\nVulnHub\nMetasploitable\nDVWA\nOWASP WebGoat\n\n\n\n28.14.3 Herramientas Adicionales\n\npacker: Crear imágenes personalizadas\nvagrant: Automatización de VMs\ndocker-machine: Gestión de VMs Docker",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span>"
+    ]
+  },
+  {
+    "objectID": "anexos/anexo-maquinas-virtuales.html#resumen",
+    "href": "anexos/anexo-maquinas-virtuales.html#resumen",
+    "title": "28  Anexo C: Minicurso de Máquinas Virtuales con Kali Linux",
+    "section": "28.15 Resumen",
+    "text": "28.15 Resumen\nEn este minicurso has aprendido: - ✅ Configurar VMware Fusion y VirtualBox - ✅ Instalar y configurar Kali Linux como VM - ✅ Crear laboratorios de pentesting con VMs - ✅ Gestión de snapshots y clonación - ✅ Automatización con Vagrant - ✅ Optimización de rendimiento y seguridad\nSiguiente paso: Crea un laboratorio completo con al menos 3 máquinas (atacante, víctima web, víctima Windows) y practica técnicas de enumeración y explotación.",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span>"
+    ]
   }
 ]

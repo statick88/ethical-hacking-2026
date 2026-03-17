@@ -38,6 +38,11 @@ book:
         - quizzes/unidad6.md
         - quizzes/unidad7.md
         - quizzes/unidad8.md
+    - part: "Anexos"
+      chapters:
+        - anexos/anexo-bash-scripting.qmd
+        - anexos/anexo-docker.qmd
+        - anexos/anexo-maquinas-virtuales.qmd
 
 format:
   html:

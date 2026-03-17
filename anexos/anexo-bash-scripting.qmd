@@ -1,0 +1,433 @@
+---
+title: "Anexo A: Minicurso de Bash Scripting"
+author: "Diego Saavedra"
+date: "2026-03-16"
+format: html
+---
+
+## Introducción a Bash Scripting
+
+Bash (Bourne Again SHell) es el shell por defecto en la mayoría de distribuciones Linux y es una herramienta esencial para cualquier profesional de seguridad informática. Este minicurso te proporcionará las bases necesarias para automatizar tareas, analizar sistemas y crear herramientas personalizadas.
+
+### Objetivos del Minicurso
+
+- Comprender la estructura básica de un script Bash
+- Aprender a manipular archivos y directorios
+- Automatizar tareas repetitivas
+- Crear herramientas de análisis y monitoreo
+- Integrar scripts en flujos de trabajo de seguridad
+
+---
+
+## 1. Fundamentos de Bash
+
+### 1.1 Estructura de un Script Bash
+
+Un script Bash básico tiene la siguiente estructura:
+
+```bash
+#!/bin/bash
+# Comentario explicativo
+
+echo "Hola Mundo"
+```
+
+**Explicación:**
+- `#!/bin/bash`: Shebang que indica al sistema qué intérprete usar
+- `#`: Comentario (línea ignorada por el intérprete)
+- `echo`: Comando para imprimir en pantalla
+
+### 1.2 Variables
+
+```bash
+#!/bin/bash
+
+# Declaración de variables
+nombre="Juan"
+edad=25
+
+# Uso de variables (con $)
+echo "Mi nombre es $nombre"
+echo "Tengo $edad años"
+
+# Variables de sistema
+echo "Usuario actual: $USER"
+echo "Directorio home: $HOME"
+echo "Script actual: $0"
+```
+
+### 1.3 Entrada y Salida
+
+```bash
+#!/bin/bash
+
+# Leer entrada del usuario
+echo "¿Cuál es tu nombre?"
+read nombre
+
+# Mostrar mensaje de bienvenida
+echo "¡Hola, $nombre!"
+
+# Redirección de salida
+echo "Este mensaje va a un archivo" > salida.txt
+echo "Este mensaje se añade al archivo" >> salida.txt
+```
+
+---
+
+## 2. Control de Flujo
+
+### 2.1 Condicionales if-else
+
+```bash
+#!/bin/bash
+
+edad=18
+
+if [ $edad -ge 18 ]; then
+    echo "Eres mayor de edad"
+else
+    echo "Eres menor de edad"
+fi
+
+# Condicional con archivos
+if [ -f "/etc/passwd"; then
+    echo "El archivo /etc/passwd existe"
+else
+    echo "El archivo no existe"
+fi
+
+# Múltiples condiciones
+if [ "$1" = "start" ]; then
+    echo "Iniciando servicio..."
+elif [ "$1" = "stop" ]; then
+    echo "Deteniendo servicio..."
+else
+    echo "Uso: $0 {start|stop}"
+fi
+```
+
+### 2.2 Bucles
+
+#### Bucle for
+```bash
+#!/bin/bash
+
+# Bucle for básico
+for i in {1..10}; do
+    echo "Número: $i"
+done
+
+# Bucle for con archivos
+for archivo in /etc/*.conf; do
+    echo "Archivo: $archivo"
+done
+
+# Bucle for con array
+colores=("rojo" "verde" "azul")
+for color in "${colores[@]}"; do
+    echo "Color: $color"
+done
+```
+
+#### Bucle while
+```bash
+#!/bin/bash
+
+contador=1
+
+while [ $contador -le 5 ]; do
+    echo "Contador: $contador"
+    ((contador++))
+done
+
+# Leer archivo línea por línea
+while IFS= read -r linea; do
+    echo "Línea: $linea"
+done < /etc/passwd
+```
+
+#### Bucle until
+```bash
+#!/bin/bash
+
+contador=1
+
+until [ $contador -gt 5 ]; do
+    echo "Contador: $contador"
+    ((contador++))
+done
+```
+
+---
+
+## 3. Funciones
+
+### 3.1 Definición y Uso de Funciones
+
+```bash
+#!/bin/bash
+
+# Definir función
+saludar() {
+    echo "¡Hola, $1!"
+}
+
+# Llamar a la función
+saludar "Usuario"
+saludar "Administrador"
+
+# Función con retorno
+sumar() {
+    local suma=$(($1 + $2))
+    return $suma
+}
+
+sumar 5 3
+resultado=$?
+echo "Resultado: $resultado"
+```
+
+### 3.2 Funciones Útiles para Seguridad
+
+```bash
+#!/bin/bash
+
+# Función para verificar si un puerto está abierto
+check_port() {
+    local host=$1
+    local port=$2
+    
+    if nc -z $host $port 2>/dev/null; then
+        echo "Puerto $port en $host está ABIERTO"
+        return 0
+    else
+        echo "Puerto $port en $host está CERRADO"
+        return 1
+    fi
+}
+
+# Función para escanear puertos comunes
+scan_common_ports() {
+    local host=$1
+    echo "Escaneando puertos comunes en $host..."
+    
+    for port in 21 22 23 25 53 80 110 143 443 445 3389; do
+        check_port $host $port
+    done
+}
+
+# Uso
+scan_common_ports "127.0.0.1"
+```
+
+---
+
+## 4. Procesamiento de Texto
+
+### 4.1 Comandos Esenciales
+
+```bash
+#!/bin/bash
+
+# grep: Buscar patrones
+grep "root" /etc/passwd
+grep -i "error" /var/log/syslog
+
+# awk: Procesamiento de columnas
+awk -F: '{print $1}' /etc/passwd  # Mostrar solo el usuario
+awk -F: '{print $1, $3}' /etc/passwd  # Mostrar usuario y UID
+
+# sed: Sustitución de texto
+sed 's/root/admin/g' /etc/passwd
+sed -i 's/root/admin/g' /etc/passwd  # Editar archivo in-place
+
+# cut: Extraer columnas
+cut -d: -f1 /etc/passwd
+
+# sort: Ordenar líneas
+sort /etc/passwd
+
+# uniq: Eliminar líneas duplicadas
+sort /etc/passwd | uniq
+```
+
+### 4.2 Ejemplo Práctico: Análisis de Logs
+
+```bash
+#!/bin/bash
+
+# Script para analizar intentos de login fallidos
+LOG_FILE="/var/log/auth.log"
+
+echo "=== Análisis de Intentos de Login Fallidos ==="
+echo
+
+# Contar intentos fallidos por usuario
+echo "Intentos fallidos por usuario:"
+grep "Failed password" $LOG_FILE | awk '{print $9}' | sort | uniq -c | sort -rn
+
+echo
+
+# IPs más frecuentes con intentos fallidos
+echo "IPs con más intentos fallidos:"
+grep "Failed password" $LOG_FILE | awk '{print $11}' | sort | uniq -c | sort -rn | head -10
+
+echo
+
+# Intentos recientes (última hora)
+echo "Intentos fallidos en la última hora:"
+grep "Failed password" $LOG_FILE | grep "$(date '+%b %d %H')" | wc -l
+```
+
+---
+
+## 5. Automatización de Tareas de Seguridad
+
+### 5.1 Script de Monitoreo de Sistema
+
+```bash
+#!/bin/bash
+
+# Script de monitoreo básico
+MONITOR_DIR="/tmp/monitor"
+mkdir -p $MONITOR_DIR
+
+# Función para monitorear uso de CPU
+monitor_cpu() {
+    echo "=== Monitoreo de CPU ==="
+    echo "Uso actual: $(top -bn1 | grep "Cpu(s)" | awk '{print $2}' | cut -d'%' -f1)%"
+    echo "Procesos más consumidores:"
+    ps aux --sort=-%cpu | head -6
+    echo
+}
+
+# Función para monitorear memoria
+monitor_mem() {
+    echo "=== Monitoreo de Memoria ==="
+    free -h
+    echo
+}
+
+# Función para monitorear disco
+monitor_disk() {
+    echo "=== Monitoreo de Disco ==="
+    df -h
+    echo
+}
+
+# Función para monitorear conexiones de red
+monitor_network() {
+    echo "=== Monitoreo de Red ==="
+    echo "Conexiones activas:"
+    netstat -tuln | grep LISTEN
+    echo
+}
+
+# Ejecutar monitoreo
+monitor_cpu
+monitor_mem
+monitor_disk
+monitor_network
+
+# Guardar registro
+timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+echo "Monitoreo completado: $timestamp" >> $MONITOR_DIR/monitor.log
+```
+
+### 5.2 Script de Hardening Básico
+
+```bash
+#!/bin/bash
+
+# Script de hardening básico para Linux
+echo "=== Hardening Básico de Sistema ==="
+
+# 1. Actualizar sistema
+echo "1. Actualizando sistema..."
+apt update && apt upgrade -y
+
+# 2. Configurar firewall (UFW)
+echo "2. Configurando firewall..."
+ufw default deny incoming
+ufw default allow outgoing
+ufw allow ssh
+ufw allow 22/tcp
+ufw --force enable
+
+# 3. Desactivar servicios innecesarios
+echo "3. Desactivando servicios innecesarios..."
+systemctl disable bluetooth 2>/dev/null
+systemctl disable cups 2>/dev/null
+
+# 4. Configurar SSH seguro
+echo "4. Configurando SSH seguro..."
+sed -i 's/#PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config
+sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+systemctl restart ssh
+
+# 5. Configurar límites de recursos
+echo "5. Configurando límites de recursos..."
+echo "* soft nproc 100" >> /etc/security/limits.conf
+echo "* hard nproc 200" >> /etc/security/limits.conf
+
+echo "Hardening completado. Reinicia el sistema para aplicar cambios."
+```
+
+---
+
+## 6. Ejercicios Prácticos
+
+### Ejercicio 1: Script de Backup
+Crea un script que:
+1. Cree un backup de un directorio especificado
+2. Comprima el backup con tar
+3. Agregue fecha al nombre del archivo
+4. Mantenga solo los últimos 7 backups
+
+### Ejercicio 2: Monitor de Procesos
+Crea un script que:
+1. Monitoree un proceso específico por nombre
+2. Reinicie el proceso si se detiene
+3. Envíe notificación si hay problemas
+
+### Ejercicio 3: Escaner de Puertos
+Crea un script que:
+1. Escanee un rango de IPs
+2. Verifique puertos específicos
+3. Genere un reporte de servicios encontrados
+
+---
+
+## 7. Recursos Adicionales
+
+### Documentación
+- [Bash Guide for Beginners](https://tldp.org/LDP/Bash-Beginners-Guide/html/)
+- [Advanced Bash-Scripting Guide](https://tldp.org/LDP/abs/html/)
+- [Bash Manual](https://www.gnu.org/software/bash/manual/)
+
+### Herramientas Útiles
+- `shellcheck`: Verificador de sintaxis para scripts Bash
+- `bashdb`: Depurador para Bash
+- `shfmt`: Formateador de código Bash
+
+### Práctica Recomendada
+1. Siempre usar `#!/bin/bash` al inicio del script
+2. Utilizar `set -e` para salir ante errores
+3. Citar variables: `"$variable"` en lugar de `$variable`
+4. Usar `local` para variables de función
+5. Documentar cada función con comentarios
+
+---
+
+## Resumen
+
+En este minicurso has aprendido:
+- ✅ Estructura básica de scripts Bash
+- ✅ Manipulación de variables y entrada/salida
+- ✅ Control de flujo con condicionales y bucles
+- ✅ Creación y uso de funciones
+- ✅ Procesamiento de texto con comandos Unix
+- ✅ Automatización de tareas de seguridad
+
+**Siguiente paso:** Práctica constante. Crea scripts para automatizar tus tareas diarias y análisis de seguridad.
