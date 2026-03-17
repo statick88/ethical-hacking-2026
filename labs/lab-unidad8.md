@@ -992,6 +992,6 @@ proyecto_final/
 - [NIST SP 800-115 — Technical Guide to Information Security Testing](https://csrc.nist.gov/publications/detail/sp/800-115/final)
 
 ### Recursos de Aprendizaje Adicional
-- [Hack The Box](https://www.hackthebox.com/) — Plataforma de práctica
-- [TryHackMe — Metasploit Room](https://tryhackme.com/room/metasploitintro)
+- [VulnHub](https://www.vulnhub.com/) — Plataforma de práctica con máquinas vulnerables
+- [PortSwigger Web Security Academy](https://portswigger.net/web-security) — Formación gratuita en seguridad web
 - [OffSec PEN-103 (Kali Linux Revealed)](https://www.kali.org/docs/)

@@ -15,9 +15,9 @@ Realizar hardening de un sistema Linux industrial simulado y verificar su seguri
 # Instalar OpenPLC (simulador PLC)
 docker run -d -p 8080:8080 -p 502:502 --name openplc openplc/plc
 
-# Instalar OpenClaw
-git clone https://github.com/OTRF/OpenClaw
-cd OpenClaw && pip install -r requirements.txt
+# Instalar Industrial Security Framework (ISF)
+git clone https://github.com/industrial-security-framework/isf.git
+cd isf && pip install -r requirements.txt
 ```
 
 ## Escenario
@@ -36,11 +36,11 @@ nmap -sS -p 502 192.168.56.5
 nmap -sV -p 502 192.168.56.5
 ```
 
-### Paso 2: Hardening con OpenClaw
+### Paso 2: Hardening con ISF
 
 ```bash
 # Ejecutar hardening
-python openclaw.py --target 192.168.56.5 --report hardening_report.html
+python isf/harden.py --target 192.168.56.5 --report hardening_report.html
 
 # Revisar recomendaciones
 cat hardening_report.html
@@ -81,7 +81,7 @@ Al completar el lab, el estudiante debe demostrar comprensión de la superficie 
 
 1. **Modbus expuesto identificado**: Output de `nmap -sS -p 502 192.168.56.5` mostrando `502/tcp open  modbus` antes del hardening.
 2. **Lectura de registros Modbus**: Uso de `modbus-cli` o script Python con `pymodbus` que lea al menos un registro del PLC simulado, mostrando el valor leído (ej. `Coil 0: True`).
-3. **Hardening aplicado**: Captura del reporte HTML de OpenClaw mostrando el estado inicial vs. final con al menos 5 controles mejorados (ej. firewall, autenticación, cifrado de tráfico).
+3. **Hardening aplicado**: Captura del reporte HTML de ISF mostrando el estado inicial vs. final con al menos 5 controles mejorados (ej. firewall, autenticación, cifrado de tráfico).
 4. **Comparativa de superficie de ataque**: Dos outputs de Nmap (antes y después) mostrando reducción de puertos expuestos o servicios endurecidos.
 
 **Flag de completitud**: El puerto 502 (Modbus) debe estar filtrado o con autenticación configurada en el escaneo post-hardening, documentado en el reporte final.

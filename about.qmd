@@ -1,0 +1,35 @@
+---
+title: "Acerca de"
+---
+
+# Acerca del Curso
+
+Este curso de **Ethical Hacking 2026** ha sido diseñado por Diego Saavedra, profesor universitario con más de 15 años de experiencia en ciberseguridad ofensiva y enseñanza técnica.
+
+## Sobre el Instructor
+
+Diego Saavedra es:
+- Profesor de ESPE, UIDE, Abacom, Codings Academy, IST Juan Montalvo y Universidad de Zulia
+- Especialista en Ethical Hacking, Pentesting y Seguridad Ofensiva
+- Desarrollador FullStack con experiencia en múltiples tecnologías
+- Estudiante de Máster en Ciberseguridad en UCM
+- Creador de contenidos técnicos y laboratorios prácticos
+
+## Metodología
+
+El curso sigue la filosofía "Aprender haciendo":
+- **70% práctica**: Labs reales con entornos vulnerables
+- **30% teoría**: Conceptos esenciales explicados con analogías
+- **Enfoque Socrático**: Preguntas que guían el descubrimiento
+- **Challenges progresivos**: Desde básico hasta avanzado
+
+## Contacto
+
+Para consultas sobre el curso, materiales o colaboraciones:
+- **Email**: diego.saavedra@statick.dev
+- **GitHub**: [@statick88](https://github.com/statick88)
+- **LinkedIn**: [Diego Saavedra](https://linkedin.com/in/dmsaavedra)
+
+---
+
+*Última actualización: Marzo 2026*

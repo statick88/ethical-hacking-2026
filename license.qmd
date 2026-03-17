@@ -1,0 +1,42 @@
+---
+title: "Licencia"
+---
+
+# Licencia del Curso
+
+Este material educativo se distribuye bajo los siguientes términos:
+
+## © 2026 Diego Saavedra. Todos los derechos reservados.
+
+Queda prohibida la reproducción, distribución, comunicación pública y transformación de esta obra salvo con la autorización explícita y por escrito del titular de los derechos.
+
+### Permisos otorgados
+
+Se autoriza el uso personal y educativo de este material bajo las siguientes condiciones:
+
+1. **Uso exclusivamente educativo**: El material solo puede utilizarse para fines de aprendizaje y enseñanza no comercial.
+2. **Atribución requerida**: En cualquier uso derivado, debe acreditarse claramente a Diego Saavedra como autor original.
+3. **No modificación**: El contenido no puede modificarse sin autorización previa.
+4. **No comercialización**: Queda prohibida la venta, licenciamiento o cualquier forma de explotación económica del material.
+
+### Excepciones
+
+Se permite:
+- Citas breves con atribución adecuada para fines académicos o de investigación.
+- Uso en entornos educativos regulados (escuelas, universidades, bootcamps) con fines exclusivamente pedagógicos.
+- Compartir enlaces de acceso al repositorio original en GitHub.
+
+### Descargo de responsabilidad
+
+El autor no se hace responsable por:
+- El mal uso de las técnicas descritas en este material.
+- Daños ocasionados por la aplicación de los conocimientos adquiridos.
+- La obsolescencia técnica del contenido debido al rápido avance de la tecnología.
+
+Las técnicas descritas deben aplicarse únicamente en entornos autorizados y legales, respetando las leyes de cada jurisdicción.
+
+Para solicitar permisos de uso específicos, contactar a: diego.saavedra@statick.dev
+
+---
+
+*Esta licencia entró en vigor el 1 de marzo de 2026*

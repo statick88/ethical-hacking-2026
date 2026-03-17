@@ -7,6 +7,16 @@ book:
   title: "Ethical Hacking 2026"
   author: "Diego Saavedra"
   site-url: "https://statick88.github.io/ethical-hacking-2026/"
+  favicon: images/hacking.png
+  downloads: [pdf, epub]
+  sidebar:
+    style: docked
+    search: true
+  page-footer:
+    left: |
+      Ethical Hacking 2026 por Diego Saavedra
+    right: |
+      [Acerca de](about.qmd) | [Licencia](license.qmd)
   chapters:
     - index.qmd
     - part: "Contenido"
@@ -44,12 +54,23 @@ book:
         - anexos/anexo-bash-scripting.qmd
         - anexos/anexo-docker.qmd
         - anexos/anexo-maquinas-virtuales.qmd
+    - part: "Información"
+      chapters:
+        - about.qmd
+        - license.qmd
 
 format:
   html:
     theme:
       - solar
       - custom.scss
+    css:
+      - css/styles.css
+      - custom.css
+  pdf:
+    documentclass: scrbook
+  epub:
+    cover-image: images/hacking.png
 
 execute:
   echo: false

@@ -1,4 +1,6 @@
-# Ethical Hacking 2026 - ABACOM
+# Ethical Hacking 2026
+
+**Duración**: 120 horas | **Modalidad**: Presencial/Online | **Nivel**: Intermedio-Avanzado
 
 ## Módulos del Curso
 
@@ -11,31 +13,28 @@
 7. Ciberseguridad Industrial
 8. Post-Explotación, Reporte y Ética
 
-## 🎓 Certificaciones y Roadmap HTB Academy 2026
+## 🎓 Certificaciones Relacionadas
 
-Este curso está diseñado para prepararte para las certificaciones más exigentes de la industria. Cada unidad tiene un camino directo en **Hack The Box Academy**:
+Este curso está diseñado para prepararte para las certificaciones más exigentes de la industria:
 
-### 🤖 AI Red Teamer (HCAIRT)
+### 🤖 AI Red Teamer
 **Relacionado con: Unidad 2 y Unidad 5**
 - **Fundamentos de IA**: Conceptos core de ML y Deep Learning.
 - **Prompt Injection Attacks**: Ataques avanzados de manipulación.
 - **AI Privacy**: Inversión de modelos e inferencia de pertenencia.
 - **AI Defense**: Hardening de sistemas de IA (Google SAIF).
 
-### 🕷️ Web Penetration Tester (HBBH)
+### 🕷️ Web Penetration Tester
 **Relacionado con: Unidad 3**
 - **Server-Side Attacks**: SSRF, XXE, Inyecciones.
 - **API Penetration Testing**: REST y GraphQL.
 
-### 🔐 Active Directory Pentester (CPTS)
+### 🔐 Active Directory Pentester
 **Relacionado con: Unidad 4**
 - **Windows PrivEsc**: Escalamiento local.
 - **AD Security Assessment**: Kerberoasting, BloodHound.
 
-### 🛡️ SOC Analyst (CDSA)
+### 🛡️ SOC Analyst
 **Relacionado con: Unidad 6 y Unidad 8**
 - **Security Monitoring**: Análisis de logs y detección.
 - **Incident Response**: Forense básico y remediación.
-
----
-*Perfil recomendado para el alumno: Luis Jaramillo (HTB Pro)*

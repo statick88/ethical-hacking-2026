@@ -105,16 +105,16 @@ El scraping automatizado permite extraer información de sitios web:
 **Ejemplo: theHarvester** 🛠️
 
 ```bash
-# Instalación
+# Instalación con uv (recomendado 2026)
 git clone https://github.com/laramies/theHarvester.git
 cd theHarvester
-pip install -r requirements.txt
+uv sync
 
 # Uso básico
-python theHarvester.py -d example.com -b all
+uv run theHarvester -d example.com -b all
 
 # Uso avanzado con fuentes específicas
-python theHarvester.py -d empresa.com -b google,bing,linkedin -s -v -n
+uv run theHarvester -d empresa.com -b google,bing,linkedin -s -v -n
 ```
 
 #### 🐍 Automatización con Python
@@ -318,7 +318,7 @@ Módulos por categoría:
 - [Nmap Scripting Engine Documentation](https://nmap.org/book/nse.html) 🛠️
 - [Recon-ng Wiki](https://github.com/lanmaster53/recon-ng/wiki) 🔧
 - [SpiderFoot Documentation](https://spiderfoot.net/documentation/) 🕷️
-- [TryHackMe: Intro to Reconnaissance](https://tryhackme.com/room/reconlearn) 🎮
+- [OSINT Framework](https://osintframework.com/) 🎮
 - [OWASP Testing Guide v4.2](https://owasp.org/www-project-web-security-testing-guide/) 🛡️
 
 ---
