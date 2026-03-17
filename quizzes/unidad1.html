@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Diego Saavedra">
+<meta name="description" content="Curso de Ethical Hacking 2026">
 
-<title>18&nbsp; Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico – Ethical Hacking 2026</title>
+<title>Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico – Ethical Hacking 2026</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -71,16 +72,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../">
 <link href="../quizzes/unidad2.html" rel="next">
 <link href="../labs/lab-unidad8.html" rel="prev">
+<link href="../images/hacking.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-68056a18e515a5789c5e26a7aeb7ac61.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-61780a260fdcf47536a34fde95582725.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-68056a18e515a5789c5e26a7aeb7ac61.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-61780a260fdcf47536a34fde95582725.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-9265db7866925a9d8c3a929a182b61d8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-87aed0b8589e23e45aa8556edf37a91b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-d475e4ab3b4fd243dd6ecd26d4f0399c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-87aed0b8589e23e45aa8556edf37a91b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -110,9 +116,171 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../custom.css">
 </head>
 
-<body class="nav-sidebar floating quarto-light">
+<body class="nav-sidebar floating quarto-dark"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = true;
+    const darkModeDefault = authorPrefersDark;
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -121,7 +289,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../quizzes/unidad1.html">Evaluación</a></li><li class="breadcrumb-item"><a href="../quizzes/unidad1.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../quizzes/unidad1.html">Evaluación</a></li><li class="breadcrumb-item"><a href="../quizzes/unidad1.html"><span class="chapter-title">Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -134,9 +302,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../images/hacking.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../images/hacking.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Ethical Hacking 2026</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="../ethical_hacking_2026.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="../ethical_hacking_2026.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -148,124 +357,107 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ethical Hacking 2026 - ABACOM</span></span></a>
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Ethical Hacking 2026 - ABACOM</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
  <span class="menu-text">Contenido</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Unidad 1: Fundamentos y Reconocimiento Agéntico</span></span></a>
+  <a href="../contenido/unidad1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Unidad 1: Fundamentos y Reconocimiento Agéntico</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">🤖 Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje</span></span></a>
+  <a href="../contenido/unidad2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🤖 Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Unidad 3: Explotación Web y APIs 2026 🕷️</span></span></a>
+  <a href="../contenido/unidad3.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Unidad 3: Explotación Web y APIs 2026 🕷️</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">🔐 Unidad 4: Hacking de Identidad y AD Moderno</span></span></a>
+  <a href="../contenido/unidad4.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🔐 Unidad 4: Hacking de Identidad y AD Moderno</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">🚀 Unidad 5: Pentesting Autónomo y Red Teaming Agéntico</span></span></a>
+  <a href="../contenido/unidad5.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🚀 Unidad 5: Pentesting Autónomo y Red Teaming Agéntico</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">🛡️ Unidad 6: Evasión de Defensas</span></span></a>
+  <a href="../contenido/unidad6.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🛡️ Unidad 6: Evasión de Defensas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">🏭 Unidad 7: Ciberseguridad Industrial</span></span></a>
+  <a href="../contenido/unidad7.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🏭 Unidad 7: Ciberseguridad Industrial</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad8.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">🎯 Unidad 8: Post-Explotación, Reporte y Ética</span></span></a>
+  <a href="../contenido/unidad8.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🎯 Unidad 8: Post-Explotación, Reporte y Ética</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
  <span class="menu-text">Laboratorios</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lab 1: Reconocimiento y Enumeración</span></span></a>
+  <a href="../labs/lab-unidad1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 1: Reconocimiento y Enumeración</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Lab 2: Prompt Injection y Jailbreaking en LLMs</span></span></a>
+  <a href="../labs/lab-unidad2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 2: Prompt Injection y Jailbreaking en LLMs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lab 3: Auditoría Web con OWASP WebGoat</span></span></a>
+  <a href="../labs/lab-unidad3.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 3: Auditoría Web con OWASP WebGoat</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Lab 4: Active Directory - Kerberoasting y Pass-the-Hash</span></span></a>
+  <a href="../labs/lab-unidad4.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 4: Active Directory - Kerberoasting y Pass-the-Hash</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Lab 5: Pentesting Autónomo con AutoRecon y Metasploit</span></span></a>
+  <a href="../labs/lab-unidad5.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 5: Pentesting Autónomo con AutoRecon y Metasploit</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Lab 6: Desarrollo de Payload Indetectable</span></span></a>
+  <a href="../labs/lab-unidad6.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 6: Desarrollo de Payload Indetectable</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Lab 7: Hardening y Pentesting de Sistemas OT</span></span></a>
+  <a href="../labs/lab-unidad7.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 7: Hardening y Pentesting de Sistemas OT</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad8.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Lab 8 — Proyecto Final: Pentest End-to-End</span></span></a>
+  <a href="../labs/lab-unidad8.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 8 — Proyecto Final: Pentest End-to-End</span></a>
   </div>
 </li>
       </ul>
@@ -281,89 +473,87 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad1.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico</span></span></a>
+  <a href="../quizzes/unidad1.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Quiz Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje</span></span></a>
+  <a href="../quizzes/unidad2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Quiz Unidad 3: Explotación Web y APIs</span></span></a>
+  <a href="../quizzes/unidad3.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 3: Explotación Web y APIs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Quiz Unidad 4: Hacking de Identidad y AD</span></span></a>
+  <a href="../quizzes/unidad4.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 4: Hacking de Identidad y AD</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Quiz Unidad 5: Pentesting Autónomo y Red Teaming</span></span></a>
+  <a href="../quizzes/unidad5.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 5: Pentesting Autónomo y Red Teaming</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Quiz Unidad 6: Evasión de Defensas</span></span></a>
+  <a href="../quizzes/unidad6.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 6: Evasión de Defensas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Quiz Unidad 7: Ciberseguridad Industrial (OT/ICS)</span></span></a>
+  <a href="../quizzes/unidad7.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 7: Ciberseguridad Industrial (OT/ICS)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad8.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Quiz Unidad 8: Post-Explotación, Reporte y Ética</span></span></a>
+  <a href="../quizzes/unidad8.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 8: Post-Explotación, Reporte y Ética</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
  <span class="menu-text">Anexos</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../anexos/anexo-bash-scripting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Anexo A: Minicurso de Bash Scripting</span></span></a>
+  <a href="../anexos/anexo-bash-scripting.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Anexo A: Minicurso de Bash Scripting</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../anexos/anexo-docker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Anexo B: Minicurso de Docker</span></span></a>
+  <a href="../anexos/anexo-docker.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Anexo B: Minicurso de Docker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../anexos/anexo-maquinas-virtuales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span></span></a>
+  <a href="../anexos/anexo-maquinas-virtuales.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../anexos/anexo-opencv-seguro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Configuración Segura de OpenCV</span></span></a>
+  <a href="../anexos/anexo-opencv-seguro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Configuración Segura de OpenCV</span></a>
   </div>
 </li>
       </ul>
   </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../about.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Acerca del Curso</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../license.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Licencia</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -374,33 +564,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#aviso-anti-ia" id="toc-aviso-anti-ia" class="nav-link active" data-scroll-target="#aviso-anti-ia"><span class="header-section-number">19</span> ⚠️ AVISO ANTI-IA</a>
+  <li><a href="#aviso-anti-ia" id="toc-aviso-anti-ia" class="nav-link active" data-scroll-target="#aviso-anti-ia">⚠️ AVISO ANTI-IA</a>
   <ul class="collapse">
-  <li><a href="#sección-a-análisis-de-escenarios-40" id="toc-sección-a-análisis-de-escenarios-40" class="nav-link" data-scroll-target="#sección-a-análisis-de-escenarios-40"><span class="header-section-number">19.1</span> Sección A: Análisis de Escenarios (40%)</a>
+  <li><a href="#sección-a-análisis-de-escenarios-40" id="toc-sección-a-análisis-de-escenarios-40" class="nav-link" data-scroll-target="#sección-a-análisis-de-escenarios-40">Sección A: Análisis de Escenarios (40%)</a>
   <ul class="collapse">
-  <li><a href="#escenario-1-reconocimiento-inicial" id="toc-escenario-1-reconocimiento-inicial" class="nav-link" data-scroll-target="#escenario-1-reconocimiento-inicial"><span class="header-section-number">19.1.1</span> Escenario 1: Reconocimiento Inicial</a></li>
-  <li><a href="#escenario-2-análisis-de-output" id="toc-escenario-2-análisis-de-output" class="nav-link" data-scroll-target="#escenario-2-análisis-de-output"><span class="header-section-number">19.1.2</span> Escenario 2: Análisis de Output</a></li>
-  <li><a href="#escenario-3-comando-incompleto" id="toc-escenario-3-comando-incompleto" class="nav-link" data-scroll-target="#escenario-3-comando-incompleto"><span class="header-section-number">19.1.3</span> Escenario 3: Comando Incompleto</a></li>
+  <li><a href="#escenario-1-reconocimiento-inicial" id="toc-escenario-1-reconocimiento-inicial" class="nav-link" data-scroll-target="#escenario-1-reconocimiento-inicial">Escenario 1: Reconocimiento Inicial</a></li>
+  <li><a href="#escenario-2-análisis-de-output" id="toc-escenario-2-análisis-de-output" class="nav-link" data-scroll-target="#escenario-2-análisis-de-output">Escenario 2: Análisis de Output</a></li>
+  <li><a href="#escenario-3-comando-incompleto" id="toc-escenario-3-comando-incompleto" class="nav-link" data-scroll-target="#escenario-3-comando-incompleto">Escenario 3: Comando Incompleto</a></li>
   </ul></li>
-  <li><a href="#sección-b-razonamiento-técnico-30" id="toc-sección-b-razonamiento-técnico-30" class="nav-link" data-scroll-target="#sección-b-razonamiento-técnico-30"><span class="header-section-number">19.2</span> Sección B: Razonamiento Técnico (30%)</a>
+  <li><a href="#sección-b-razonamiento-técnico-30" id="toc-sección-b-razonamiento-técnico-30" class="nav-link" data-scroll-target="#sección-b-razonamiento-técnico-30">Sección B: Razonamiento Técnico (30%)</a>
   <ul class="collapse">
-  <li><a href="#pregunta-4-comparación-de-herramientas" id="toc-pregunta-4-comparación-de-herramientas" class="nav-link" data-scroll-target="#pregunta-4-comparación-de-herramientas"><span class="header-section-number">19.2.1</span> Pregunta 4: Comparación de Herramientas</a></li>
-  <li><a href="#pregunta-5-debugging-de-comandos" id="toc-pregunta-5-debugging-de-comandos" class="nav-link" data-scroll-target="#pregunta-5-debugging-de-comandos"><span class="header-section-number">19.2.2</span> Pregunta 5: Debugging de Comandos</a></li>
+  <li><a href="#pregunta-4-comparación-de-herramientas" id="toc-pregunta-4-comparación-de-herramientas" class="nav-link" data-scroll-target="#pregunta-4-comparación-de-herramientas">Pregunta 4: Comparación de Herramientas</a></li>
+  <li><a href="#pregunta-5-debugging-de-comandos" id="toc-pregunta-5-debugging-de-comandos" class="nav-link" data-scroll-target="#pregunta-5-debugging-de-comandos">Pregunta 5: Debugging de Comandos</a></li>
   </ul></li>
-  <li><a href="#sección-c-aplicación-práctica-30" id="toc-sección-c-aplicación-práctica-30" class="nav-link" data-scroll-target="#sección-c-aplicación-práctica-30"><span class="header-section-number">19.3</span> Sección C: Aplicación Práctica (30%)</a>
+  <li><a href="#sección-c-aplicación-práctica-30" id="toc-sección-c-aplicación-práctica-30" class="nav-link" data-scroll-target="#sección-c-aplicación-práctica-30">Sección C: Aplicación Práctica (30%)</a>
   <ul class="collapse">
-  <li><a href="#reto-1-construcción-de-comando" id="toc-reto-1-construcción-de-comando" class="nav-link" data-scroll-target="#reto-1-construcción-de-comando"><span class="header-section-number">19.3.1</span> Reto 1: Construcción de Comando</a></li>
-  <li><a href="#reto-2-análisis-de-escenario-real" id="toc-reto-2-análisis-de-escenario-real" class="nav-link" data-scroll-target="#reto-2-análisis-de-escenario-real"><span class="header-section-number">19.3.2</span> Reto 2: Análisis de Escenario Real</a></li>
+  <li><a href="#reto-1-construcción-de-comando" id="toc-reto-1-construcción-de-comando" class="nav-link" data-scroll-target="#reto-1-construcción-de-comando">Reto 1: Construcción de Comando</a></li>
+  <li><a href="#reto-2-análisis-de-escenario-real" id="toc-reto-2-análisis-de-escenario-real" class="nav-link" data-scroll-target="#reto-2-análisis-de-escenario-real">Reto 2: Análisis de Escenario Real</a></li>
   </ul></li>
-  <li><a href="#verificación-de-autoría" id="toc-verificación-de-autoría" class="nav-link" data-scroll-target="#verificación-de-autoría"><span class="header-section-number">19.4</span> Verificación de Autoría</a>
+  <li><a href="#verificación-de-autoría" id="toc-verificación-de-autoría" class="nav-link" data-scroll-target="#verificación-de-autoría">Verificación de Autoría</a>
   <ul class="collapse">
-  <li><a href="#declaración-personal-obligatoria" id="toc-declaración-personal-obligatoria" class="nav-link" data-scroll-target="#declaración-personal-obligatoria"><span class="header-section-number">19.4.1</span> Declaración Personal (Obligatoria)</a></li>
-  <li><a href="#checklist-de-autoría" id="toc-checklist-de-autoría" class="nav-link" data-scroll-target="#checklist-de-autoría"><span class="header-section-number">19.4.2</span> Checklist de Autoría</a></li>
+  <li><a href="#declaración-personal-obligatoria" id="toc-declaración-personal-obligatoria" class="nav-link" data-scroll-target="#declaración-personal-obligatoria">Declaración Personal (Obligatoria)</a></li>
+  <li><a href="#checklist-de-autoría" id="toc-checklist-de-autoría" class="nav-link" data-scroll-target="#checklist-de-autoría">Checklist de Autoría</a></li>
   </ul></li>
-  <li><a href="#escenarios-prácticos" id="toc-escenarios-prácticos" class="nav-link" data-scroll-target="#escenarios-prácticos"><span class="header-section-number">19.5</span> Escenarios Prácticos</a>
+  <li><a href="#escenarios-prácticos" id="toc-escenarios-prácticos" class="nav-link" data-scroll-target="#escenarios-prácticos">Escenarios Prácticos</a>
   <ul class="collapse">
-  <li><a href="#escenario-1" id="toc-escenario-1" class="nav-link" data-scroll-target="#escenario-1"><span class="header-section-number">19.5.1</span> Escenario 1</a></li>
-  <li><a href="#escenario-2" id="toc-escenario-2" class="nav-link" data-scroll-target="#escenario-2"><span class="header-section-number">19.5.2</span> Escenario 2</a></li>
+  <li><a href="#escenario-1" id="toc-escenario-1" class="nav-link" data-scroll-target="#escenario-1">Escenario 1</a></li>
+  <li><a href="#escenario-2" id="toc-escenario-2" class="nav-link" data-scroll-target="#escenario-2">Escenario 2</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -409,9 +599,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../quizzes/unidad1.html">Evaluación</a></li><li class="breadcrumb-item"><a href="../quizzes/unidad1.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico</span></a></li></ol></nav>
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../quizzes/unidad1.html">Evaluación</a></li><li class="breadcrumb-item"><a href="../quizzes/unidad1.html"><span class="chapter-title">Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-title">Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -434,18 +625,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="aviso-anti-ia" class="level1" data-number="19">
-<h1 data-number="19"><span class="header-section-number">19</span> ⚠️ AVISO ANTI-IA</h1>
+<section id="aviso-anti-ia" class="level1">
+<h1>⚠️ AVISO ANTI-IA</h1>
 <p><strong>Esta evaluación está diseñada para medir TU comprensión, no la capacidad de una IA.</strong></p>
 <p><strong>Si detectamos uso de IA:</strong> - La respuesta será marcada como inválida - Se te pedirá explicar cada paso verbalmente - Podrás perder puntos por copia no autorizada</p>
 <p><strong>Mi recomendación:</strong> Responde basándote en tu comprensión real del tema.</p>
 <hr>
 <p><strong>Puntaje mínimo</strong>: 7/10 (70%)</p>
 <hr>
-<section id="sección-a-análisis-de-escenarios-40" class="level2" data-number="19.1">
-<h2 data-number="19.1" class="anchored" data-anchor-id="sección-a-análisis-de-escenarios-40"><span class="header-section-number">19.1</span> Sección A: Análisis de Escenarios (40%)</h2>
-<section id="escenario-1-reconocimiento-inicial" class="level3" data-number="19.1.1">
-<h3 data-number="19.1.1" class="anchored" data-anchor-id="escenario-1-reconocimiento-inicial"><span class="header-section-number">19.1.1</span> Escenario 1: Reconocimiento Inicial</h3>
+<section id="sección-a-análisis-de-escenarios-40" class="level2">
+<h2 class="anchored" data-anchor-id="sección-a-análisis-de-escenarios-40">Sección A: Análisis de Escenarios (40%)</h2>
+<section id="escenario-1-reconocimiento-inicial" class="level3">
+<h3 class="anchored" data-anchor-id="escenario-1-reconocimiento-inicial">Escenario 1: Reconocimiento Inicial</h3>
 <p><strong>Situación</strong>: Eres pentester y recibes el objetivo <code>intranet.empresa.local</code>. No tienes acceso directo a la red, pero necesitas información inicial.</p>
 <p><strong>Comando parcial para completar:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">whois</span> ___</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -453,8 +644,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Tu respuesta debe incluir:</strong> - Al menos 3 tipos de datos que whois proporciona - Cómo usarías cada uno en tu reconocimiento</p>
 <hr>
 </section>
-<section id="escenario-2-análisis-de-output" class="level3" data-number="19.1.2">
-<h3 data-number="19.1.2" class="anchored" data-anchor-id="escenario-2-análisis-de-output"><span class="header-section-number">19.1.2</span> Escenario 2: Análisis de Output</h3>
+<section id="escenario-2-análisis-de-output" class="level3">
+<h3 class="anchored" data-anchor-id="escenario-2-análisis-de-output">Escenario 2: Análisis de Output</h3>
 <p><strong>Output de Nmap:</strong></p>
 <pre><code>PORT   STATE    SERVICE
 22/tcp open     ssh
@@ -463,8 +654,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Pregunta 2:</strong> Analiza este output y responde: 1. ¿Qué significa que el puerto 80 esté “filtered”? 2. ¿Qué enfoque de ataque podrías intentar considerando este estado? 3. ¿Qué comando parcial usarías para investigar más a fondo? - <code>nmap -sV -p ___ [IP]</code></p>
 <hr>
 </section>
-<section id="escenario-3-comando-incompleto" class="level3" data-number="19.1.3">
-<h3 data-number="19.1.3" class="anchored" data-anchor-id="escenario-3-comando-incompleto"><span class="header-section-number">19.1.3</span> Escenario 3: Comando Incompleto</h3>
+<section id="escenario-3-comando-incompleto" class="level3">
+<h3 class="anchored" data-anchor-id="escenario-3-comando-incompleto">Escenario 3: Comando Incompleto</h3>
 <p><strong>Situación</strong>: Necesitas escanear todos los puertos de una IP específica, pero solo recuerdas parte del comando.</p>
 <p><strong>Comando parcial:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nmap</span> <span class="at">-p-</span> ___</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -472,10 +663,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="sección-b-razonamiento-técnico-30" class="level2" data-number="19.2">
-<h2 data-number="19.2" class="anchored" data-anchor-id="sección-b-razonamiento-técnico-30"><span class="header-section-number">19.2</span> Sección B: Razonamiento Técnico (30%)</h2>
-<section id="pregunta-4-comparación-de-herramientas" class="level3" data-number="19.2.1">
-<h3 data-number="19.2.1" class="anchored" data-anchor-id="pregunta-4-comparación-de-herramientas"><span class="header-section-number">19.2.1</span> Pregunta 4: Comparación de Herramientas</h3>
+<section id="sección-b-razonamiento-técnico-30" class="level2">
+<h2 class="anchored" data-anchor-id="sección-b-razonamiento-técnico-30">Sección B: Razonamiento Técnico (30%)</h2>
+<section id="pregunta-4-comparación-de-herramientas" class="level3">
+<h3 class="anchored" data-anchor-id="pregunta-4-comparación-de-herramientas">Pregunta 4: Comparación de Herramientas</h3>
 <p><strong>Instrucción:</strong> No copies respuestas. Explica con tus propias palabras.</p>
 <p><strong>Comando parcial 1:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nmap</span> <span class="at">-sS</span> <span class="at">-F</span> ___</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -484,18 +675,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Pregunta:</strong> 1. ¿En qué escenario usarías nmap vs masscan? 2. ¿Qué ventajas tiene cada uno? 3. Completa ambos comandos con una IP de ejemplo y explica el resultado esperado</p>
 <hr>
 </section>
-<section id="pregunta-5-debugging-de-comandos" class="level3" data-number="19.2.2">
-<h3 data-number="19.2.2" class="anchored" data-anchor-id="pregunta-5-debugging-de-comandos"><span class="header-section-number">19.2.2</span> Pregunta 5: Debugging de Comandos</h3>
+<section id="pregunta-5-debugging-de-comandos" class="level3">
+<h3 class="anchored" data-anchor-id="pregunta-5-debugging-de-comandos">Pregunta 5: Debugging de Comandos</h3>
 <p><strong>Situación:</strong> Un compañero te envía este comando para enumerar subdominios, pero tiene errores:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">subfinder</span> <span class="at">-d</span> ___ <span class="at">-o</span> output.txt <span class="at">-v</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Pregunta:</strong> 1. ¿Qué parámetro falta en el comando? 2. ¿Cómo verificarías que el comando funciona correctamente? 3. ¿Qué alternativa usarías si subfinder no estuviera disponible?</p>
 <hr>
 </section>
 </section>
-<section id="sección-c-aplicación-práctica-30" class="level2" data-number="19.3">
-<h2 data-number="19.3" class="anchored" data-anchor-id="sección-c-aplicación-práctica-30"><span class="header-section-number">19.3</span> Sección C: Aplicación Práctica (30%)</h2>
-<section id="reto-1-construcción-de-comando" class="level3" data-number="19.3.1">
-<h3 data-number="19.3.1" class="anchored" data-anchor-id="reto-1-construcción-de-comando"><span class="header-section-number">19.3.1</span> Reto 1: Construcción de Comando</h3>
+<section id="sección-c-aplicación-práctica-30" class="level2">
+<h2 class="anchored" data-anchor-id="sección-c-aplicación-práctica-30">Sección C: Aplicación Práctica (30%)</h2>
+<section id="reto-1-construcción-de-comando" class="level3">
+<h3 class="anchored" data-anchor-id="reto-1-construcción-de-comando">Reto 1: Construcción de Comando</h3>
 <p><strong>Objetivo:</strong> Construye un comando de reconocimiento completo usando solo partes proporcionadas.</p>
 <p><strong>Partes disponibles:</strong> - Herramienta: <code>nmap</code> - Flags: <code>-sS</code>, <code>-sV</code>, <code>-p-</code>, <code>--open</code> - IP objetivo: <code>192.168.1.50</code></p>
 <p><strong>Tu tarea:</strong> 1. Ordena las partes en un comando funcional 2. Explica qué hace cada flag 3. ¿Qué output esperas obtener?</p>
@@ -503,17 +694,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">___</span> ___ ___ ___ ___</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
-<section id="reto-2-análisis-de-escenario-real" class="level3" data-number="19.3.2">
-<h3 data-number="19.3.2" class="anchored" data-anchor-id="reto-2-análisis-de-escenario-real"><span class="header-section-number">19.3.2</span> Reto 2: Análisis de Escenario Real</h3>
+<section id="reto-2-análisis-de-escenario-real" class="level3">
+<h3 class="anchored" data-anchor-id="reto-2-análisis-de-escenario-real">Reto 2: Análisis de Escenario Real</h3>
 <p><strong>Escenario:</strong> Estás realizando reconocimiento pasivo y encuentras que la empresa objetivo usa WordPress en su sitio principal.</p>
 <p><strong>Pregunta:</strong> 1. ¿Qué comandos parciales usarías para investigar vulnerabilidades específicas de WordPress? - <code>wpscan --url ___ --enumerate ___</code> 2. ¿Qué información buscarías específicamente? 3. ¿Cómo integrarías esto en tu reporte de pentesting?</p>
 <hr>
 </section>
 </section>
-<section id="verificación-de-autoría" class="level2" data-number="19.4">
-<h2 data-number="19.4" class="anchored" data-anchor-id="verificación-de-autoría"><span class="header-section-number">19.4</span> Verificación de Autoría</h2>
-<section id="declaración-personal-obligatoria" class="level3" data-number="19.4.1">
-<h3 data-number="19.4.1" class="anchored" data-anchor-id="declaración-personal-obligatoria"><span class="header-section-number">19.4.1</span> Declaración Personal (Obligatoria)</h3>
+<section id="verificación-de-autoría" class="level2">
+<h2 class="anchored" data-anchor-id="verificación-de-autoría">Verificación de Autoría</h2>
+<section id="declaración-personal-obligatoria" class="level3">
+<h3 class="anchored" data-anchor-id="declaración-personal-obligatoria">Declaración Personal (Obligatoria)</h3>
 <p><strong>Antes de entregar, responde:</strong></p>
 <blockquote class="blockquote">
 <p><strong>¿Qué objeto está frente a tu cámara web o en tu escritorio en este momento?</strong></p>
@@ -523,8 +714,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Ejemplo de respuesta NO aceptada:</strong> “Una computadora” o “Un escritorio”</p>
 <hr>
 </section>
-<section id="checklist-de-autoría" class="level3" data-number="19.4.2">
-<h3 data-number="19.4.2" class="anchored" data-anchor-id="checklist-de-autoría"><span class="header-section-number">19.4.2</span> Checklist de Autoría</h3>
+<section id="checklist-de-autoría" class="level3">
+<h3 class="anchored" data-anchor-id="checklist-de-autoría">Checklist de Autoría</h3>
 <ul class="task-list">
 <li><label><input type="checkbox">Escribí cada respuesta basándome en mi comprensión</label></li>
 <li><label><input type="checkbox">Completo los comandos parciales sin copiar de fuentes externas</label></li>
@@ -536,10 +727,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="escenarios-prácticos" class="level2" data-number="19.5">
-<h2 data-number="19.5" class="anchored" data-anchor-id="escenarios-prácticos"><span class="header-section-number">19.5</span> Escenarios Prácticos</h2>
-<section id="escenario-1" class="level3" data-number="19.5.1">
-<h3 data-number="19.5.1" class="anchored" data-anchor-id="escenario-1"><span class="header-section-number">19.5.1</span> Escenario 1</h3>
+<section id="escenarios-prácticos" class="level2">
+<h2 class="anchored" data-anchor-id="escenarios-prácticos">Escenarios Prácticos</h2>
+<section id="escenario-1" class="level3">
+<h3 class="anchored" data-anchor-id="escenario-1">Escenario 1</h3>
 <p><strong>Situación</strong>: Un pentester recibe un objetivo: <code>empresa.com</code>. Necesita identificar todos los subdominios posibles.</p>
 <p><strong>Pregunta</strong>: ¿Cuál es el mejor enfoque inicial?</p>
 <ol type="a">
@@ -552,8 +743,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Criterios</strong>: El estudiante debe identificar que OSINT es la primera opción antes de escaneo activo.</p>
 <hr>
 </section>
-<section id="escenario-2" class="level3" data-number="19.5.2">
-<h3 data-number="19.5.2" class="anchored" data-anchor-id="escenario-2"><span class="header-section-number">19.5.2</span> Escenario 2</h3>
+<section id="escenario-2" class="level3">
+<h3 class="anchored" data-anchor-id="escenario-2">Escenario 2</h3>
 <p><strong>Situación</strong>: Durante un escaneo con Nmap, el resultado muestra “filtered” en varios puertos.</p>
 <p><strong>Pregunta</strong>: ¿Qué significa el estado “filtered”?</p>
 <ol type="a">
@@ -573,28 +764,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 
 </main> <!-- /main -->
-<!-- Sistema de Progreso -->
-<script src="assets/js/progress.js"></script>
-
-<!-- Navegación Móvil -->
-<script src="assets/js/mobile-nav.js"></script>
-
-<!-- Inicialización de componentes UX -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Inicializar sistema de progreso
-    if (window.CourseProgress) {
-        console.log('Sistema de progreso inicializado');
-    }
-    
-    // Inicializar navegación móvil
-    if (window.MobileNav) {
-        console.log('Navegación móvil inicializada');
-    }
-});
-</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -717,7 +901,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/statick88\.github\.io\/ethical-hacking-2026\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -731,6 +915,13 @@ document.addEventListener('DOMContentLoaded', function() {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -1047,12 +1238,12 @@ document.addEventListener('DOMContentLoaded', function() {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../labs/lab-unidad8.html" class="pagination-link" aria-label="Lab 8 — Proyecto Final: Pentest End-to-End">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Lab 8 — Proyecto Final: Pentest End-to-End</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Lab 8 — Proyecto Final: Pentest End-to-End</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../quizzes/unidad2.html" class="pagination-link" aria-label="Quiz Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje">
-        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Quiz Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-title">Quiz Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
@@ -1274,6 +1465,30 @@ document.addEventListener('DOMContentLoaded', function() {
 <span id="cb8-216"><a href="#cb8-216" aria-hidden="true" tabindex="-1"></a>**Criterios**: El estudiante debe entender la diferencia entre estados: open, closed, filtered.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link active" href="../about.html" aria-current="page">
+<p>About</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../license.html">
+<p>License</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
 
 
 

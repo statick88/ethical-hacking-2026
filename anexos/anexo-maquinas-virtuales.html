@@ -8,8 +8,9 @@
 
 <meta name="author" content="Diego Saavedra">
 <meta name="dcterms.date" content="2026-03-16">
+<meta name="description" content="Curso de Ethical Hacking 2026">
 
-<title>28&nbsp; Anexo C: Minicurso de Máquinas Virtuales con Kali Linux – Ethical Hacking 2026</title>
+<title>Anexo C: Minicurso de Máquinas Virtuales con Kali Linux – Ethical Hacking 2026</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -72,16 +73,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../">
 <link href="../anexos/anexo-opencv-seguro.html" rel="next">
 <link href="../anexos/anexo-docker.html" rel="prev">
+<link href="../images/hacking.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-68056a18e515a5789c5e26a7aeb7ac61.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-61780a260fdcf47536a34fde95582725.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-68056a18e515a5789c5e26a7aeb7ac61.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-61780a260fdcf47536a34fde95582725.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-9265db7866925a9d8c3a929a182b61d8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-87aed0b8589e23e45aa8556edf37a91b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-d475e4ab3b4fd243dd6ecd26d4f0399c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-87aed0b8589e23e45aa8556edf37a91b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -111,9 +117,171 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../custom.css">
 </head>
 
-<body class="nav-sidebar floating quarto-light">
+<body class="nav-sidebar floating quarto-dark"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = true;
+    const darkModeDefault = authorPrefersDark;
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -122,7 +290,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../anexos/anexo-bash-scripting.html">Anexos</a></li><li class="breadcrumb-item"><a href="../anexos/anexo-maquinas-virtuales.html"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../anexos/anexo-bash-scripting.html">Anexos</a></li><li class="breadcrumb-item"><a href="../anexos/anexo-maquinas-virtuales.html"><span class="chapter-title">Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -135,9 +303,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../images/hacking.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../images/hacking.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Ethical Hacking 2026</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="../ethical_hacking_2026.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="../ethical_hacking_2026.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -149,183 +358,158 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ethical Hacking 2026 - ABACOM</span></span></a>
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Ethical Hacking 2026 - ABACOM</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
  <span class="menu-text">Contenido</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Unidad 1: Fundamentos y Reconocimiento Agéntico</span></span></a>
+  <a href="../contenido/unidad1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Unidad 1: Fundamentos y Reconocimiento Agéntico</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">🤖 Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje</span></span></a>
+  <a href="../contenido/unidad2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🤖 Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Unidad 3: Explotación Web y APIs 2026 🕷️</span></span></a>
+  <a href="../contenido/unidad3.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Unidad 3: Explotación Web y APIs 2026 🕷️</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">🔐 Unidad 4: Hacking de Identidad y AD Moderno</span></span></a>
+  <a href="../contenido/unidad4.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🔐 Unidad 4: Hacking de Identidad y AD Moderno</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">🚀 Unidad 5: Pentesting Autónomo y Red Teaming Agéntico</span></span></a>
+  <a href="../contenido/unidad5.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🚀 Unidad 5: Pentesting Autónomo y Red Teaming Agéntico</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">🛡️ Unidad 6: Evasión de Defensas</span></span></a>
+  <a href="../contenido/unidad6.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🛡️ Unidad 6: Evasión de Defensas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">🏭 Unidad 7: Ciberseguridad Industrial</span></span></a>
+  <a href="../contenido/unidad7.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🏭 Unidad 7: Ciberseguridad Industrial</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad8.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">🎯 Unidad 8: Post-Explotación, Reporte y Ética</span></span></a>
+  <a href="../contenido/unidad8.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🎯 Unidad 8: Post-Explotación, Reporte y Ética</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
  <span class="menu-text">Laboratorios</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lab 1: Reconocimiento y Enumeración</span></span></a>
+  <a href="../labs/lab-unidad1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 1: Reconocimiento y Enumeración</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Lab 2: Prompt Injection y Jailbreaking en LLMs</span></span></a>
+  <a href="../labs/lab-unidad2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 2: Prompt Injection y Jailbreaking en LLMs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lab 3: Auditoría Web con OWASP WebGoat</span></span></a>
+  <a href="../labs/lab-unidad3.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 3: Auditoría Web con OWASP WebGoat</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Lab 4: Active Directory - Kerberoasting y Pass-the-Hash</span></span></a>
+  <a href="../labs/lab-unidad4.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 4: Active Directory - Kerberoasting y Pass-the-Hash</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Lab 5: Pentesting Autónomo con AutoRecon y Metasploit</span></span></a>
+  <a href="../labs/lab-unidad5.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 5: Pentesting Autónomo con AutoRecon y Metasploit</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Lab 6: Desarrollo de Payload Indetectable</span></span></a>
+  <a href="../labs/lab-unidad6.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 6: Desarrollo de Payload Indetectable</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Lab 7: Hardening y Pentesting de Sistemas OT</span></span></a>
+  <a href="../labs/lab-unidad7.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 7: Hardening y Pentesting de Sistemas OT</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad8.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Lab 8 — Proyecto Final: Pentest End-to-End</span></span></a>
+  <a href="../labs/lab-unidad8.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 8 — Proyecto Final: Pentest End-to-End</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
  <span class="menu-text">Evaluación</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico</span></span></a>
+  <a href="../quizzes/unidad1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Quiz Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje</span></span></a>
+  <a href="../quizzes/unidad2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Quiz Unidad 3: Explotación Web y APIs</span></span></a>
+  <a href="../quizzes/unidad3.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 3: Explotación Web y APIs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Quiz Unidad 4: Hacking de Identidad y AD</span></span></a>
+  <a href="../quizzes/unidad4.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 4: Hacking de Identidad y AD</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Quiz Unidad 5: Pentesting Autónomo y Red Teaming</span></span></a>
+  <a href="../quizzes/unidad5.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 5: Pentesting Autónomo y Red Teaming</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Quiz Unidad 6: Evasión de Defensas</span></span></a>
+  <a href="../quizzes/unidad6.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 6: Evasión de Defensas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Quiz Unidad 7: Ciberseguridad Industrial (OT/ICS)</span></span></a>
+  <a href="../quizzes/unidad7.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 7: Ciberseguridad Industrial (OT/ICS)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad8.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Quiz Unidad 8: Post-Explotación, Reporte y Ética</span></span></a>
+  <a href="../quizzes/unidad8.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 8: Post-Explotación, Reporte y Ética</span></a>
   </div>
 </li>
       </ul>
@@ -341,30 +525,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../anexos/anexo-bash-scripting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Anexo A: Minicurso de Bash Scripting</span></span></a>
+  <a href="../anexos/anexo-bash-scripting.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Anexo A: Minicurso de Bash Scripting</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../anexos/anexo-docker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Anexo B: Minicurso de Docker</span></span></a>
+  <a href="../anexos/anexo-docker.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Anexo B: Minicurso de Docker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../anexos/anexo-maquinas-virtuales.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span></span></a>
+  <a href="../anexos/anexo-maquinas-virtuales.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../anexos/anexo-opencv-seguro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Configuración Segura de OpenCV</span></span></a>
+  <a href="../anexos/anexo-opencv-seguro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Configuración Segura de OpenCV</span></a>
   </div>
 </li>
       </ul>
   </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../about.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Acerca del Curso</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../license.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Licencia</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -375,100 +565,101 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introducción-a-máquinas-virtuales-en-seguridad" id="toc-introducción-a-máquinas-virtuales-en-seguridad" class="nav-link active" data-scroll-target="#introducción-a-máquinas-virtuales-en-seguridad"><span class="header-section-number">28.1</span> Introducción a Máquinas Virtuales en Seguridad</a>
+  <li><a href="#introducción-a-máquinas-virtuales-en-seguridad" id="toc-introducción-a-máquinas-virtuales-en-seguridad" class="nav-link active" data-scroll-target="#introducción-a-máquinas-virtuales-en-seguridad">Introducción a Máquinas Virtuales en Seguridad</a>
   <ul class="collapse">
-  <li><a href="#objetivos-del-minicurso" id="toc-objetivos-del-minicurso" class="nav-link" data-scroll-target="#objetivos-del-minicurso"><span class="header-section-number">28.1.1</span> Objetivos del Minicurso</a></li>
+  <li><a href="#objetivos-del-minicurso" id="toc-objetivos-del-minicurso" class="nav-link" data-scroll-target="#objetivos-del-minicurso">Objetivos del Minicurso</a></li>
   </ul></li>
-  <li><a href="#conceptos-fundamentales" id="toc-conceptos-fundamentales" class="nav-link" data-scroll-target="#conceptos-fundamentales"><span class="header-section-number">28.2</span> 1. Conceptos Fundamentales</a>
+  <li><a href="#conceptos-fundamentales" id="toc-conceptos-fundamentales" class="nav-link" data-scroll-target="#conceptos-fundamentales">1. Conceptos Fundamentales</a>
   <ul class="collapse">
-  <li><a href="#virtualización" id="toc-virtualización" class="nav-link" data-scroll-target="#virtualización"><span class="header-section-number">28.2.1</span> 1.1 Virtualización</a></li>
-  <li><a href="#ventajas-en-seguridad-informática" id="toc-ventajas-en-seguridad-informática" class="nav-link" data-scroll-target="#ventajas-en-seguridad-informática"><span class="header-section-number">28.2.2</span> 1.2 Ventajas en Seguridad Informática</a></li>
+  <li><a href="#virtualización" id="toc-virtualización" class="nav-link" data-scroll-target="#virtualización">1.1 Virtualización</a></li>
+  <li><a href="#ventajas-en-seguridad-informática" id="toc-ventajas-en-seguridad-informática" class="nav-link" data-scroll-target="#ventajas-en-seguridad-informática">1.2 Ventajas en Seguridad Informática</a></li>
   </ul></li>
-  <li><a href="#configuración-de-vmware-fusion" id="toc-configuración-de-vmware-fusion" class="nav-link" data-scroll-target="#configuración-de-vmware-fusion"><span class="header-section-number">28.3</span> 2. Configuración de VMware Fusion</a>
+  <li><a href="#configuración-de-vmware-fusion" id="toc-configuración-de-vmware-fusion" class="nav-link" data-scroll-target="#configuración-de-vmware-fusion">2. Configuración de VMware Fusion</a>
   <ul class="collapse">
-  <li><a href="#instalación-en-macos" id="toc-instalación-en-macos" class="nav-link" data-scroll-target="#instalación-en-macos"><span class="header-section-number">28.3.1</span> 2.1 Instalación en macOS</a></li>
-  <li><a href="#configuración-inicial" id="toc-configuración-inicial" class="nav-link" data-scroll-target="#configuración-inicial"><span class="header-section-number">28.3.2</span> 2.2 Configuración Inicial</a></li>
-  <li><a href="#creación-de-redes-personalizadas" id="toc-creación-de-redes-personalizadas" class="nav-link" data-scroll-target="#creación-de-redes-personalizadas"><span class="header-section-number">28.3.3</span> 2.3 Creación de Redes Personalizadas</a></li>
+  <li><a href="#instalación-en-macos" id="toc-instalación-en-macos" class="nav-link" data-scroll-target="#instalación-en-macos">2.1 Instalación en macOS</a></li>
+  <li><a href="#configuración-inicial" id="toc-configuración-inicial" class="nav-link" data-scroll-target="#configuración-inicial">2.2 Configuración Inicial</a></li>
+  <li><a href="#creación-de-redes-personalizadas" id="toc-creación-de-redes-personalizadas" class="nav-link" data-scroll-target="#creación-de-redes-personalizadas">2.3 Creación de Redes Personalizadas</a></li>
   </ul></li>
-  <li><a href="#configuración-de-virtualbox" id="toc-configuración-de-virtualbox" class="nav-link" data-scroll-target="#configuración-de-virtualbox"><span class="header-section-number">28.4</span> 3. Configuración de VirtualBox</a>
+  <li><a href="#configuración-de-virtualbox" id="toc-configuración-de-virtualbox" class="nav-link" data-scroll-target="#configuración-de-virtualbox">3. Configuración de VirtualBox</a>
   <ul class="collapse">
-  <li><a href="#instalación-en-macos-1" id="toc-instalación-en-macos-1" class="nav-link" data-scroll-target="#instalación-en-macos-1"><span class="header-section-number">28.4.1</span> 3.1 Instalación en macOS</a></li>
-  <li><a href="#configuración-inicial-1" id="toc-configuración-inicial-1" class="nav-link" data-scroll-target="#configuración-inicial-1"><span class="header-section-number">28.4.2</span> 3.2 Configuración Inicial</a></li>
-  <li><a href="#creación-de-redes-host-only" id="toc-creación-de-redes-host-only" class="nav-link" data-scroll-target="#creación-de-redes-host-only"><span class="header-section-number">28.4.3</span> 3.3 Creación de Redes Host-Only</a></li>
+  <li><a href="#instalación-en-macos-1" id="toc-instalación-en-macos-1" class="nav-link" data-scroll-target="#instalación-en-macos-1">3.1 Instalación en macOS</a></li>
+  <li><a href="#configuración-inicial-1" id="toc-configuración-inicial-1" class="nav-link" data-scroll-target="#configuración-inicial-1">3.2 Configuración Inicial</a></li>
+  <li><a href="#creación-de-redes-host-only" id="toc-creación-de-redes-host-only" class="nav-link" data-scroll-target="#creación-de-redes-host-only">3.3 Creación de Redes Host-Only</a></li>
   </ul></li>
-  <li><a href="#instalación-de-kali-linux" id="toc-instalación-de-kali-linux" class="nav-link" data-scroll-target="#instalación-de-kali-linux"><span class="header-section-number">28.5</span> 4. Instalación de Kali Linux</a>
+  <li><a href="#instalación-de-kali-linux" id="toc-instalación-de-kali-linux" class="nav-link" data-scroll-target="#instalación-de-kali-linux">4. Instalación de Kali Linux</a>
   <ul class="collapse">
-  <li><a href="#descarga-de-imagen-oficial" id="toc-descarga-de-imagen-oficial" class="nav-link" data-scroll-target="#descarga-de-imagen-oficial"><span class="header-section-number">28.5.1</span> 4.1 Descarga de Imagen Oficial</a></li>
-  <li><a href="#instalación-en-vmware-fusion" id="toc-instalación-en-vmware-fusion" class="nav-link" data-scroll-target="#instalación-en-vmware-fusion"><span class="header-section-number">28.5.2</span> 4.2 Instalación en VMware Fusion</a></li>
-  <li><a href="#instalación-en-virtualbox" id="toc-instalación-en-virtualbox" class="nav-link" data-scroll-target="#instalación-en-virtualbox"><span class="header-section-number">28.5.3</span> 4.3 Instalación en VirtualBox</a></li>
+  <li><a href="#descarga-de-imagen-oficial" id="toc-descarga-de-imagen-oficial" class="nav-link" data-scroll-target="#descarga-de-imagen-oficial">4.1 Descarga de Imagen Oficial</a></li>
+  <li><a href="#instalación-en-vmware-fusion" id="toc-instalación-en-vmware-fusion" class="nav-link" data-scroll-target="#instalación-en-vmware-fusion">4.2 Instalación en VMware Fusion</a></li>
+  <li><a href="#instalación-en-virtualbox" id="toc-instalación-en-virtualbox" class="nav-link" data-scroll-target="#instalación-en-virtualbox">4.3 Instalación en VirtualBox</a></li>
   </ul></li>
-  <li><a href="#configuración-inicial-de-kali-linux" id="toc-configuración-inicial-de-kali-linux" class="nav-link" data-scroll-target="#configuración-inicial-de-kali-linux"><span class="header-section-number">28.6</span> 5. Configuración Inicial de Kali Linux</a>
+  <li><a href="#configuración-inicial-de-kali-linux" id="toc-configuración-inicial-de-kali-linux" class="nav-link" data-scroll-target="#configuración-inicial-de-kali-linux">5. Configuración Inicial de Kali Linux</a>
   <ul class="collapse">
-  <li><a href="#actualización-del-sistema" id="toc-actualización-del-sistema" class="nav-link" data-scroll-target="#actualización-del-sistema"><span class="header-section-number">28.6.1</span> 5.1 Actualización del Sistema</a></li>
-  <li><a href="#configuración-de-red" id="toc-configuración-de-red" class="nav-link" data-scroll-target="#configuración-de-red"><span class="header-section-number">28.6.2</span> 5.2 Configuración de Red</a></li>
-  <li><a href="#configuración-de-ssh" id="toc-configuración-de-ssh" class="nav-link" data-scroll-target="#configuración-de-ssh"><span class="header-section-number">28.6.3</span> 5.3 Configuración de SSH</a></li>
-  <li><a href="#instalación-de-herramientas-esenciales" id="toc-instalación-de-herramientas-esenciales" class="nav-link" data-scroll-target="#instalación-de-herramientas-esenciales"><span class="header-section-number">28.6.4</span> 5.4 Instalación de Herramientas Esenciales</a></li>
+  <li><a href="#actualización-del-sistema" id="toc-actualización-del-sistema" class="nav-link" data-scroll-target="#actualización-del-sistema">5.1 Actualización del Sistema</a></li>
+  <li><a href="#configuración-de-red" id="toc-configuración-de-red" class="nav-link" data-scroll-target="#configuración-de-red">5.2 Configuración de Red</a></li>
+  <li><a href="#configuración-de-ssh" id="toc-configuración-de-ssh" class="nav-link" data-scroll-target="#configuración-de-ssh">5.3 Configuración de SSH</a></li>
+  <li><a href="#instalación-de-herramientas-esenciales" id="toc-instalación-de-herramientas-esenciales" class="nav-link" data-scroll-target="#instalación-de-herramientas-esenciales">5.4 Instalación de Herramientas Esenciales</a></li>
   </ul></li>
-  <li><a href="#laboratorios-de-pentesting-con-vms" id="toc-laboratorios-de-pentesting-con-vms" class="nav-link" data-scroll-target="#laboratorios-de-pentesting-con-vms"><span class="header-section-number">28.7</span> 6. Laboratorios de Pentesting con VMs</a>
+  <li><a href="#laboratorios-de-pentesting-con-vms" id="toc-laboratorios-de-pentesting-con-vms" class="nav-link" data-scroll-target="#laboratorios-de-pentesting-con-vms">6. Laboratorios de Pentesting con VMs</a>
   <ul class="collapse">
-  <li><a href="#arquitectura-de-laboratorio-básico" id="toc-arquitectura-de-laboratorio-básico" class="nav-link" data-scroll-target="#arquitectura-de-laboratorio-básico"><span class="header-section-number">28.7.1</span> 6.1 Arquitectura de Laboratorio Básico</a></li>
-  <li><a href="#creación-de-redes-aisladas" id="toc-creación-de-redes-aisladas" class="nav-link" data-scroll-target="#creación-de-redes-aisladas"><span class="header-section-number">28.7.2</span> 6.2 Creación de Redes Aisladas</a></li>
-  <li><a href="#configuración-de-máquinas-vulnerables" id="toc-configuración-de-máquinas-vulnerables" class="nav-link" data-scroll-target="#configuración-de-máquinas-vulnerables"><span class="header-section-number">28.7.3</span> 6.3 Configuración de Máquinas Vulnerables</a></li>
-  <li><a href="#ejemplo-laboratorio-completo" id="toc-ejemplo-laboratorio-completo" class="nav-link" data-scroll-target="#ejemplo-laboratorio-completo"><span class="header-section-number">28.7.4</span> 6.4 Ejemplo: Laboratorio Completo</a></li>
+  <li><a href="#arquitectura-de-laboratorio-básico" id="toc-arquitectura-de-laboratorio-básico" class="nav-link" data-scroll-target="#arquitectura-de-laboratorio-básico">6.1 Arquitectura de Laboratorio Básico</a></li>
+  <li><a href="#creación-de-redes-aisladas" id="toc-creación-de-redes-aisladas" class="nav-link" data-scroll-target="#creación-de-redes-aisladas">6.2 Creación de Redes Aisladas</a></li>
+  <li><a href="#configuración-de-máquinas-vulnerables" id="toc-configuración-de-máquinas-vulnerables" class="nav-link" data-scroll-target="#configuración-de-máquinas-vulnerables">6.3 Configuración de Máquinas Vulnerables</a></li>
+  <li><a href="#ejemplo-laboratorio-completo" id="toc-ejemplo-laboratorio-completo" class="nav-link" data-scroll-target="#ejemplo-laboratorio-completo">6.4 Ejemplo: Laboratorio Completo</a></li>
   </ul></li>
-  <li><a href="#gestión-de-snapshots-y-clonación" id="toc-gestión-de-snapshots-y-clonación" class="nav-link" data-scroll-target="#gestión-de-snapshots-y-clonación"><span class="header-section-number">28.8</span> 7. Gestión de Snapshots y Clonación</a>
+  <li><a href="#gestión-de-snapshots-y-clonación" id="toc-gestión-de-snapshots-y-clonación" class="nav-link" data-scroll-target="#gestión-de-snapshots-y-clonación">7. Gestión de Snapshots y Clonación</a>
   <ul class="collapse">
-  <li><a href="#snapshots-en-vmware-fusion" id="toc-snapshots-en-vmware-fusion" class="nav-link" data-scroll-target="#snapshots-en-vmware-fusion"><span class="header-section-number">28.8.1</span> 7.1 Snapshots en VMware Fusion</a></li>
-  <li><a href="#snapshots-en-virtualbox" id="toc-snapshots-en-virtualbox" class="nav-link" data-scroll-target="#snapshots-en-virtualbox"><span class="header-section-number">28.8.2</span> 7.2 Snapshots en VirtualBox</a></li>
-  <li><a href="#clonación-de-máquinas" id="toc-clonación-de-máquinas" class="nav-link" data-scroll-target="#clonación-de-máquinas"><span class="header-section-number">28.8.3</span> 7.3 Clonación de Máquinas</a></li>
+  <li><a href="#snapshots-en-vmware-fusion" id="toc-snapshots-en-vmware-fusion" class="nav-link" data-scroll-target="#snapshots-en-vmware-fusion">7.1 Snapshots en VMware Fusion</a></li>
+  <li><a href="#snapshots-en-virtualbox" id="toc-snapshots-en-virtualbox" class="nav-link" data-scroll-target="#snapshots-en-virtualbox">7.2 Snapshots en VirtualBox</a></li>
+  <li><a href="#clonación-de-máquinas" id="toc-clonación-de-máquinas" class="nav-link" data-scroll-target="#clonación-de-máquinas">7.3 Clonación de Máquinas</a></li>
   </ul></li>
-  <li><a href="#automatización-con-vagrant" id="toc-automatización-con-vagrant" class="nav-link" data-scroll-target="#automatización-con-vagrant"><span class="header-section-number">28.9</span> 8. Automatización con Vagrant</a>
+  <li><a href="#automatización-con-vagrant" id="toc-automatización-con-vagrant" class="nav-link" data-scroll-target="#automatización-con-vagrant">8. Automatización con Vagrant</a>
   <ul class="collapse">
-  <li><a href="#introducción-a-vagrant" id="toc-introducción-a-vagrant" class="nav-link" data-scroll-target="#introducción-a-vagrant"><span class="header-section-number">28.9.1</span> 8.1 Introducción a Vagrant</a></li>
-  <li><a href="#instalación" id="toc-instalación" class="nav-link" data-scroll-target="#instalación"><span class="header-section-number">28.9.2</span> 8.2 Instalación</a></li>
-  <li><a href="#vagrantfile-para-kali-linux" id="toc-vagrantfile-para-kali-linux" class="nav-link" data-scroll-target="#vagrantfile-para-kali-linux"><span class="header-section-number">28.9.3</span> 8.3 Vagrantfile para Kali Linux</a></li>
-  <li><a href="#comandos-de-vagrant" id="toc-comandos-de-vagrant" class="nav-link" data-scroll-target="#comandos-de-vagrant"><span class="header-section-number">28.9.4</span> 8.4 Comandos de Vagrant</a></li>
+  <li><a href="#introducción-a-vagrant" id="toc-introducción-a-vagrant" class="nav-link" data-scroll-target="#introducción-a-vagrant">8.1 Introducción a Vagrant</a></li>
+  <li><a href="#instalación" id="toc-instalación" class="nav-link" data-scroll-target="#instalación">8.2 Instalación</a></li>
+  <li><a href="#vagrantfile-para-kali-linux" id="toc-vagrantfile-para-kali-linux" class="nav-link" data-scroll-target="#vagrantfile-para-kali-linux">8.3 Vagrantfile para Kali Linux</a></li>
+  <li><a href="#comandos-de-vagrant" id="toc-comandos-de-vagrant" class="nav-link" data-scroll-target="#comandos-de-vagrant">8.4 Comandos de Vagrant</a></li>
   </ul></li>
-  <li><a href="#optimización-de-rendimiento" id="toc-optimización-de-rendimiento" class="nav-link" data-scroll-target="#optimización-de-rendimiento"><span class="header-section-number">28.10</span> 9. Optimización de Rendimiento</a>
+  <li><a href="#optimización-de-rendimiento" id="toc-optimización-de-rendimiento" class="nav-link" data-scroll-target="#optimización-de-rendimiento">9. Optimización de Rendimiento</a>
   <ul class="collapse">
-  <li><a href="#optimización-para-vmware-fusion" id="toc-optimización-para-vmware-fusion" class="nav-link" data-scroll-target="#optimización-para-vmware-fusion"><span class="header-section-number">28.10.1</span> 9.1 Optimización para VMware Fusion</a></li>
-  <li><a href="#optimización-para-virtualbox" id="toc-optimización-para-virtualbox" class="nav-link" data-scroll-target="#optimización-para-virtualbox"><span class="header-section-number">28.10.2</span> 9.2 Optimización para VirtualBox</a></li>
-  <li><a href="#optimización-de-kali-linux" id="toc-optimización-de-kali-linux" class="nav-link" data-scroll-target="#optimización-de-kali-linux"><span class="header-section-number">28.10.3</span> 9.3 Optimización de Kali Linux</a></li>
+  <li><a href="#optimización-para-vmware-fusion" id="toc-optimización-para-vmware-fusion" class="nav-link" data-scroll-target="#optimización-para-vmware-fusion">9.1 Optimización para VMware Fusion</a></li>
+  <li><a href="#optimización-para-virtualbox" id="toc-optimización-para-virtualbox" class="nav-link" data-scroll-target="#optimización-para-virtualbox">9.2 Optimización para VirtualBox</a></li>
+  <li><a href="#optimización-de-kali-linux" id="toc-optimización-de-kali-linux" class="nav-link" data-scroll-target="#optimización-de-kali-linux">9.3 Optimización de Kali Linux</a></li>
   </ul></li>
-  <li><a href="#seguridad-de-máquinas-virtuales" id="toc-seguridad-de-máquinas-virtuales" class="nav-link" data-scroll-target="#seguridad-de-máquinas-virtuales"><span class="header-section-number">28.11</span> 10. Seguridad de Máquinas Virtuales</a>
+  <li><a href="#seguridad-de-máquinas-virtuales" id="toc-seguridad-de-máquinas-virtuales" class="nav-link" data-scroll-target="#seguridad-de-máquinas-virtuales">10. Seguridad de Máquinas Virtuales</a>
   <ul class="collapse">
-  <li><a href="#aislamiento-de-red" id="toc-aislamiento-de-red" class="nav-link" data-scroll-target="#aislamiento-de-red"><span class="header-section-number">28.11.1</span> 10.1 Aislamiento de Red</a></li>
-  <li><a href="#protección-del-host" id="toc-protección-del-host" class="nav-link" data-scroll-target="#protección-del-host"><span class="header-section-number">28.11.2</span> 10.2 Protección del Host</a></li>
-  <li><a href="#snapshot-seguro" id="toc-snapshot-seguro" class="nav-link" data-scroll-target="#snapshot-seguro"><span class="header-section-number">28.11.3</span> 10.3 Snapshot Seguro</a></li>
+  <li><a href="#aislamiento-de-red" id="toc-aislamiento-de-red" class="nav-link" data-scroll-target="#aislamiento-de-red">10.1 Aislamiento de Red</a></li>
+  <li><a href="#protección-del-host" id="toc-protección-del-host" class="nav-link" data-scroll-target="#protección-del-host">10.2 Protección del Host</a></li>
+  <li><a href="#snapshot-seguro" id="toc-snapshot-seguro" class="nav-link" data-scroll-target="#snapshot-seguro">10.3 Snapshot Seguro</a></li>
   </ul></li>
-  <li><a href="#integración-con-docker-y-vms" id="toc-integración-con-docker-y-vms" class="nav-link" data-scroll-target="#integración-con-docker-y-vms"><span class="header-section-number">28.12</span> 11. Integración con Docker y VMs</a>
+  <li><a href="#integración-con-docker-y-vms" id="toc-integración-con-docker-y-vms" class="nav-link" data-scroll-target="#integración-con-docker-y-vms">11. Integración con Docker y VMs</a>
   <ul class="collapse">
-  <li><a href="#combinar-docker-y-vms" id="toc-combinar-docker-y-vms" class="nav-link" data-scroll-target="#combinar-docker-y-vms"><span class="header-section-number">28.12.1</span> 11.1 Combinar Docker y VMs</a></li>
-  <li><a href="#script-de-automatización" id="toc-script-de-automatización" class="nav-link" data-scroll-target="#script-de-automatización"><span class="header-section-number">28.12.2</span> 11.2 Script de Automatización</a></li>
+  <li><a href="#combinar-docker-y-vms" id="toc-combinar-docker-y-vms" class="nav-link" data-scroll-target="#combinar-docker-y-vms">11.1 Combinar Docker y VMs</a></li>
+  <li><a href="#script-de-automatización" id="toc-script-de-automatización" class="nav-link" data-scroll-target="#script-de-automatización">11.2 Script de Automatización</a></li>
   </ul></li>
-  <li><a href="#ejercicios-prácticos" id="toc-ejercicios-prácticos" class="nav-link" data-scroll-target="#ejercicios-prácticos"><span class="header-section-number">28.13</span> 12. Ejercicios Prácticos</a>
+  <li><a href="#ejercicios-prácticos" id="toc-ejercicios-prácticos" class="nav-link" data-scroll-target="#ejercicios-prácticos">12. Ejercicios Prácticos</a>
   <ul class="collapse">
-  <li><a href="#ejercicio-1-configuración-inicial" id="toc-ejercicio-1-configuración-inicial" class="nav-link" data-scroll-target="#ejercicio-1-configuración-inicial"><span class="header-section-number">28.13.1</span> Ejercicio 1: Configuración Inicial</a></li>
-  <li><a href="#ejercicio-2-laboratorio-básico" id="toc-ejercicio-2-laboratorio-básico" class="nav-link" data-scroll-target="#ejercicio-2-laboratorio-básico"><span class="header-section-number">28.13.2</span> Ejercicio 2: Laboratorio Básico</a></li>
-  <li><a href="#ejercicio-3-automatización-con-vagrant" id="toc-ejercicio-3-automatización-con-vagrant" class="nav-link" data-scroll-target="#ejercicio-3-automatización-con-vagrant"><span class="header-section-number">28.13.3</span> Ejercicio 3: Automatización con Vagrant</a></li>
-  <li><a href="#ejercicio-4-gestión-de-snapshots" id="toc-ejercicio-4-gestión-de-snapshots" class="nav-link" data-scroll-target="#ejercicio-4-gestión-de-snapshots"><span class="header-section-number">28.13.4</span> Ejercicio 4: Gestión de Snapshots</a></li>
+  <li><a href="#ejercicio-1-configuración-inicial" id="toc-ejercicio-1-configuración-inicial" class="nav-link" data-scroll-target="#ejercicio-1-configuración-inicial">Ejercicio 1: Configuración Inicial</a></li>
+  <li><a href="#ejercicio-2-laboratorio-básico" id="toc-ejercicio-2-laboratorio-básico" class="nav-link" data-scroll-target="#ejercicio-2-laboratorio-básico">Ejercicio 2: Laboratorio Básico</a></li>
+  <li><a href="#ejercicio-3-automatización-con-vagrant" id="toc-ejercicio-3-automatización-con-vagrant" class="nav-link" data-scroll-target="#ejercicio-3-automatización-con-vagrant">Ejercicio 3: Automatización con Vagrant</a></li>
+  <li><a href="#ejercicio-4-gestión-de-snapshots" id="toc-ejercicio-4-gestión-de-snapshots" class="nav-link" data-scroll-target="#ejercicio-4-gestión-de-snapshots">Ejercicio 4: Gestión de Snapshots</a></li>
   </ul></li>
-  <li><a href="#recursos-adicionales" id="toc-recursos-adicionales" class="nav-link" data-scroll-target="#recursos-adicionales"><span class="header-section-number">28.14</span> 13. Recursos Adicionales</a>
+  <li><a href="#recursos-adicionales" id="toc-recursos-adicionales" class="nav-link" data-scroll-target="#recursos-adicionales">13. Recursos Adicionales</a>
   <ul class="collapse">
-  <li><a href="#documentación" id="toc-documentación" class="nav-link" data-scroll-target="#documentación"><span class="header-section-number">28.14.1</span> Documentación</a></li>
-  <li><a href="#máquinas-vulnerables" id="toc-máquinas-vulnerables" class="nav-link" data-scroll-target="#máquinas-vulnerables"><span class="header-section-number">28.14.2</span> Máquinas Vulnerables</a></li>
-  <li><a href="#herramientas-adicionales" id="toc-herramientas-adicionales" class="nav-link" data-scroll-target="#herramientas-adicionales"><span class="header-section-number">28.14.3</span> Herramientas Adicionales</a></li>
+  <li><a href="#documentación" id="toc-documentación" class="nav-link" data-scroll-target="#documentación">Documentación</a></li>
+  <li><a href="#máquinas-vulnerables" id="toc-máquinas-vulnerables" class="nav-link" data-scroll-target="#máquinas-vulnerables">Máquinas Vulnerables</a></li>
+  <li><a href="#herramientas-adicionales" id="toc-herramientas-adicionales" class="nav-link" data-scroll-target="#herramientas-adicionales">Herramientas Adicionales</a></li>
   </ul></li>
-  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">28.15</span> Resumen</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen">Resumen</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../anexos/anexo-bash-scripting.html">Anexos</a></li><li class="breadcrumb-item"><a href="../anexos/anexo-maquinas-virtuales.html"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span></a></li></ol></nav>
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../anexos/anexo-bash-scripting.html">Anexos</a></li><li class="breadcrumb-item"><a href="../anexos/anexo-maquinas-virtuales.html"><span class="chapter-title">Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-title">Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -497,11 +688,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="introducción-a-máquinas-virtuales-en-seguridad" class="level2" data-number="28.1">
-<h2 data-number="28.1" class="anchored" data-anchor-id="introducción-a-máquinas-virtuales-en-seguridad"><span class="header-section-number">28.1</span> Introducción a Máquinas Virtuales en Seguridad</h2>
+<section id="introducción-a-máquinas-virtuales-en-seguridad" class="level2">
+<h2 class="anchored" data-anchor-id="introducción-a-máquinas-virtuales-en-seguridad">Introducción a Máquinas Virtuales en Seguridad</h2>
 <p>Las máquinas virtuales son esenciales en seguridad informática para crear entornos aislados, reproducibles y portátiles para pruebas de pentesting, análisis de malware y laboratorios de aprendizaje.</p>
-<section id="objetivos-del-minicurso" class="level3" data-number="28.1.1">
-<h3 data-number="28.1.1" class="anchored" data-anchor-id="objetivos-del-minicurso"><span class="header-section-number">28.1.1</span> Objetivos del Minicurso</h3>
+<section id="objetivos-del-minicurso" class="level3">
+<h3 class="anchored" data-anchor-id="objetivos-del-minicurso">Objetivos del Minicurso</h3>
 <ul>
 <li>Configurar VMware Fusion y VirtualBox para laboratorios de seguridad</li>
 <li>Instalar y configurar Kali Linux como máquina virtual</li>
@@ -512,15 +703,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="conceptos-fundamentales" class="level2" data-number="28.2">
-<h2 data-number="28.2" class="anchored" data-anchor-id="conceptos-fundamentales"><span class="header-section-number">28.2</span> 1. Conceptos Fundamentales</h2>
-<section id="virtualización" class="level3" data-number="28.2.1">
-<h3 data-number="28.2.1" class="anchored" data-anchor-id="virtualización"><span class="header-section-number">28.2.1</span> 1.1 Virtualización</h3>
+<section id="conceptos-fundamentales" class="level2">
+<h2 class="anchored" data-anchor-id="conceptos-fundamentales">1. Conceptos Fundamentales</h2>
+<section id="virtualización" class="level3">
+<h3 class="anchored" data-anchor-id="virtualización">1.1 Virtualización</h3>
 <p>La virtualización permite ejecutar múltiples sistemas operativos en un mismo hardware mediante un hipervisor.</p>
 <p><strong>Tipos de hipervisores:</strong> - <strong>Tipo 1 (Bare-metal):</strong> Ejecuta directamente sobre hardware (VMware ESXi, Hyper-V) - <strong>Tipo 2 (Hosted):</strong> Ejecuta sobre sistema operativo host (VMware Fusion, VirtualBox)</p>
 </section>
-<section id="ventajas-en-seguridad-informática" class="level3" data-number="28.2.2">
-<h3 data-number="28.2.2" class="anchored" data-anchor-id="ventajas-en-seguridad-informática"><span class="header-section-number">28.2.2</span> 1.2 Ventajas en Seguridad Informática</h3>
+<section id="ventajas-en-seguridad-informática" class="level3">
+<h3 class="anchored" data-anchor-id="ventajas-en-seguridad-informática">1.2 Ventajas en Seguridad Informática</h3>
 <ul>
 <li><strong>Aislamiento:</strong> Malware no afecta sistema host</li>
 <li><strong>Portabilidad:</strong> Laboratorios fácilmente compartibles</li>
@@ -531,10 +722,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="configuración-de-vmware-fusion" class="level2" data-number="28.3">
-<h2 data-number="28.3" class="anchored" data-anchor-id="configuración-de-vmware-fusion"><span class="header-section-number">28.3</span> 2. Configuración de VMware Fusion</h2>
-<section id="instalación-en-macos" class="level3" data-number="28.3.1">
-<h3 data-number="28.3.1" class="anchored" data-anchor-id="instalación-en-macos"><span class="header-section-number">28.3.1</span> 2.1 Instalación en macOS</h3>
+<section id="configuración-de-vmware-fusion" class="level2">
+<h2 class="anchored" data-anchor-id="configuración-de-vmware-fusion">2. Configuración de VMware Fusion</h2>
+<section id="instalación-en-macos" class="level3">
+<h3 class="anchored" data-anchor-id="instalación-en-macos">2.1 Instalación en macOS</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Descargar VMware Fusion</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Visitar: https://www.vmware.com/products/fusion.html</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -543,8 +734,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Arrastrar VMware Fusion a Applications</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Abrir y aceptar licencia</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="configuración-inicial" class="level3" data-number="28.3.2">
-<h3 data-number="28.3.2" class="anchored" data-anchor-id="configuración-inicial"><span class="header-section-number">28.3.2</span> 2.2 Configuración Inicial</h3>
+<section id="configuración-inicial" class="level3">
+<h3 class="anchored" data-anchor-id="configuración-inicial">2.2 Configuración Inicial</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar instalación</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">vmrun</span> list</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -565,8 +756,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 </ul>
 </section>
-<section id="creación-de-redes-personalizadas" class="level3" data-number="28.3.3">
-<h3 data-number="28.3.3" class="anchored" data-anchor-id="creación-de-redes-personalizadas"><span class="header-section-number">28.3.3</span> 2.3 Creación de Redes Personalizadas</h3>
+<section id="creación-de-redes-personalizadas" class="level3">
+<h3 class="anchored" data-anchor-id="creación-de-redes-personalizadas">2.3 Creación de Redes Personalizadas</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear red host-only</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># VMware Fusion &gt; Preferences &gt; Network &gt; +</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar subnet: 192.168.56.0/24</span></span>
@@ -576,10 +767,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="configuración-de-virtualbox" class="level2" data-number="28.4">
-<h2 data-number="28.4" class="anchored" data-anchor-id="configuración-de-virtualbox"><span class="header-section-number">28.4</span> 3. Configuración de VirtualBox</h2>
-<section id="instalación-en-macos-1" class="level3" data-number="28.4.1">
-<h3 data-number="28.4.1" class="anchored" data-anchor-id="instalación-en-macos-1"><span class="header-section-number">28.4.1</span> 3.1 Instalación en macOS</h3>
+<section id="configuración-de-virtualbox" class="level2">
+<h2 class="anchored" data-anchor-id="configuración-de-virtualbox">3. Configuración de VirtualBox</h2>
+<section id="instalación-en-macos-1" class="level3">
+<h3 class="anchored" data-anchor-id="instalación-en-macos-1">3.1 Instalación en macOS</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Descargar VirtualBox</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Visitar: https://www.virtualbox.org/wiki/Downloads</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -591,8 +782,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar instalación</span></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="configuración-inicial-1" class="level3" data-number="28.4.2">
-<h3 data-number="28.4.2" class="anchored" data-anchor-id="configuración-inicial-1"><span class="header-section-number">28.4.2</span> 3.2 Configuración Inicial</h3>
+<section id="configuración-inicial-1" class="level3">
+<h3 class="anchored" data-anchor-id="configuración-inicial-1">3.2 Configuración Inicial</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar configuración</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> list vms</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> list hostonlyifs</span>
@@ -612,8 +803,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 </ul>
 </section>
-<section id="creación-de-redes-host-only" class="level3" data-number="28.4.3">
-<h3 data-number="28.4.3" class="anchored" data-anchor-id="creación-de-redes-host-only"><span class="header-section-number">28.4.3</span> 3.3 Creación de Redes Host-Only</h3>
+<section id="creación-de-redes-host-only" class="level3">
+<h3 class="anchored" data-anchor-id="creación-de-redes-host-only">3.3 Creación de Redes Host-Only</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear interfaz host-only</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> hostonlyif create</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> hostonlyif ipconfig vboxnet0 <span class="at">--ip</span> 192.168.56.1 <span class="at">--netmask</span> 255.255.255.0</span>
@@ -623,10 +814,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="instalación-de-kali-linux" class="level2" data-number="28.5">
-<h2 data-number="28.5" class="anchored" data-anchor-id="instalación-de-kali-linux"><span class="header-section-number">28.5</span> 4. Instalación de Kali Linux</h2>
-<section id="descarga-de-imagen-oficial" class="level3" data-number="28.5.1">
-<h3 data-number="28.5.1" class="anchored" data-anchor-id="descarga-de-imagen-oficial"><span class="header-section-number">28.5.1</span> 4.1 Descarga de Imagen Oficial</h3>
+<section id="instalación-de-kali-linux" class="level2">
+<h2 class="anchored" data-anchor-id="instalación-de-kali-linux">4. Instalación de Kali Linux</h2>
+<section id="descarga-de-imagen-oficial" class="level3">
+<h3 class="anchored" data-anchor-id="descarga-de-imagen-oficial">4.1 Descarga de Imagen Oficial</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Opciones de descarga:</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Image: https://www.kali.org/get-kali/#kali-virtual-machines</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Torrent: Más rápido para descargas grandes</span></span>
@@ -636,8 +827,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">sha256sum</span> kali-linux-2026.1-vmware-amd64.7z</span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparar con hash oficial en https://www.kali.org/get-kali/</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="instalación-en-vmware-fusion" class="level3" data-number="28.5.2">
-<h3 data-number="28.5.2" class="anchored" data-anchor-id="instalación-en-vmware-fusion"><span class="header-section-number">28.5.2</span> 4.2 Instalación en VMware Fusion</h3>
+<section id="instalación-en-vmware-fusion" class="level3">
+<h3 class="anchored" data-anchor-id="instalación-en-vmware-fusion">4.2 Instalación en VMware Fusion</h3>
 <p><strong>Paso 1: Crear máquina virtual</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># VMware Fusion &gt; File &gt; New...</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Select "Import an existing virtual machine"</span></span>
@@ -655,8 +846,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiar contraseña inmediatamente</span></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> passwd kali</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="instalación-en-virtualbox" class="level3" data-number="28.5.3">
-<h3 data-number="28.5.3" class="anchored" data-anchor-id="instalación-en-virtualbox"><span class="header-section-number">28.5.3</span> 4.3 Instalación en VirtualBox</h3>
+<section id="instalación-en-virtualbox" class="level3">
+<h3 class="anchored" data-anchor-id="instalación-en-virtualbox">4.3 Instalación en VirtualBox</h3>
 <p><strong>Paso 1: Importar OVA/OVF</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># VirtualBox &gt; File &gt; Import Appliance</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Seleccionar archivo .ova de Kali</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -691,10 +882,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="configuración-inicial-de-kali-linux" class="level2" data-number="28.6">
-<h2 data-number="28.6" class="anchored" data-anchor-id="configuración-inicial-de-kali-linux"><span class="header-section-number">28.6</span> 5. Configuración Inicial de Kali Linux</h2>
-<section id="actualización-del-sistema" class="level3" data-number="28.6.1">
-<h3 data-number="28.6.1" class="anchored" data-anchor-id="actualización-del-sistema"><span class="header-section-number">28.6.1</span> 5.1 Actualización del Sistema</h3>
+<section id="configuración-inicial-de-kali-linux" class="level2">
+<h2 class="anchored" data-anchor-id="configuración-inicial-de-kali-linux">5. Configuración Inicial de Kali Linux</h2>
+<section id="actualización-del-sistema" class="level3">
+<h3 class="anchored" data-anchor-id="actualización-del-sistema">5.1 Actualización del Sistema</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Actualizar repositorios</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -705,8 +896,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt autoremove <span class="at">-y</span></span>
 <span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt autoclean</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="configuración-de-red" class="level3" data-number="28.6.2">
-<h3 data-number="28.6.2" class="anchored" data-anchor-id="configuración-de-red"><span class="header-section-number">28.6.2</span> 5.2 Configuración de Red</h3>
+<section id="configuración-de-red" class="level3">
+<h3 class="anchored" data-anchor-id="configuración-de-red">5.2 Configuración de Red</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver interfaces de red</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ip</span> a</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ex">ip</span> link show</span>
@@ -726,8 +917,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Aplicar cambios:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> netplan apply</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="configuración-de-ssh" class="level3" data-number="28.6.3">
-<h3 data-number="28.6.3" class="anchored" data-anchor-id="configuración-de-ssh"><span class="header-section-number">28.6.3</span> 5.3 Configuración de SSH</h3>
+<section id="configuración-de-ssh" class="level3">
+<h3 class="anchored" data-anchor-id="configuración-de-ssh">5.3 Configuración de SSH</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalar SSH server</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="at">-y</span> openssh-server</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -747,8 +938,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-t</span> ed25519 <span class="at">-C</span> <span class="st">"kali-vm"</span></span>
 <span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="ex">ssh-copy-id</span> kali@192.168.56.10</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="instalación-de-herramientas-esenciales" class="level3" data-number="28.6.4">
-<h3 data-number="28.6.4" class="anchored" data-anchor-id="instalación-de-herramientas-esenciales"><span class="header-section-number">28.6.4</span> 5.4 Instalación de Herramientas Esenciales</h3>
+<section id="instalación-de-herramientas-esenciales" class="level3">
+<h3 class="anchored" data-anchor-id="instalación-de-herramientas-esenciales">5.4 Instalación de Herramientas Esenciales</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Herramientas de enumeración</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="at">-y</span> <span class="dt">\</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    nmap <span class="dt">\</span></span>
@@ -796,10 +987,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="laboratorios-de-pentesting-con-vms" class="level2" data-number="28.7">
-<h2 data-number="28.7" class="anchored" data-anchor-id="laboratorios-de-pentesting-con-vms"><span class="header-section-number">28.7</span> 6. Laboratorios de Pentesting con VMs</h2>
-<section id="arquitectura-de-laboratorio-básico" class="level3" data-number="28.7.1">
-<h3 data-number="28.7.1" class="anchored" data-anchor-id="arquitectura-de-laboratorio-básico"><span class="header-section-number">28.7.1</span> 6.1 Arquitectura de Laboratorio Básico</h3>
+<section id="laboratorios-de-pentesting-con-vms" class="level2">
+<h2 class="anchored" data-anchor-id="laboratorios-de-pentesting-con-vms">6. Laboratorios de Pentesting con VMs</h2>
+<section id="arquitectura-de-laboratorio-básico" class="level3">
+<h3 class="anchored" data-anchor-id="arquitectura-de-laboratorio-básico">6.1 Arquitectura de Laboratorio Básico</h3>
 <pre><code>┌─────────────────────────────────────────────────────┐
 │                   Host (macOS)                      │
 │  ┌──────────────────────────────────────────────┐  │
@@ -812,8 +1003,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 │  └──────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────┘</code></pre>
 </section>
-<section id="creación-de-redes-aisladas" class="level3" data-number="28.7.2">
-<h3 data-number="28.7.2" class="anchored" data-anchor-id="creación-de-redes-aisladas"><span class="header-section-number">28.7.2</span> 6.2 Creación de Redes Aisladas</h3>
+<section id="creación-de-redes-aisladas" class="level3">
+<h3 class="anchored" data-anchor-id="creación-de-redes-aisladas">6.2 Creación de Redes Aisladas</h3>
 <p><strong>En VMware Fusion:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># VMware Fusion &gt; Preferences &gt; Network &gt; +</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear red: 192.168.100.0/24</span></span>
@@ -822,8 +1013,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># VirtualBox &gt; File &gt; Preferences &gt; Network</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear red host-only: 192.168.56.0/24</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="configuración-de-máquinas-vulnerables" class="level3" data-number="28.7.3">
-<h3 data-number="28.7.3" class="anchored" data-anchor-id="configuración-de-máquinas-vulnerables"><span class="header-section-number">28.7.3</span> 6.3 Configuración de Máquinas Vulnerables</h3>
+<section id="configuración-de-máquinas-vulnerables" class="level3">
+<h3 class="anchored" data-anchor-id="configuración-de-máquinas-vulnerables">6.3 Configuración de Máquinas Vulnerables</h3>
 <p><strong>Opción 1: Usar VulnHub</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Descargar máquinas de VulnHub</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># https://www.vulnhub.com/</span></span>
@@ -852,8 +1043,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># DVWA (Damn Vulnerable Web Application)</span></span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># docker run -d -p 80:80 vulnerables/web-dvwa</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="ejemplo-laboratorio-completo" class="level3" data-number="28.7.4">
-<h3 data-number="28.7.4" class="anchored" data-anchor-id="ejemplo-laboratorio-completo"><span class="header-section-number">28.7.4</span> 6.4 Ejemplo: Laboratorio Completo</h3>
+<section id="ejemplo-laboratorio-completo" class="level3">
+<h3 class="anchored" data-anchor-id="ejemplo-laboratorio-completo">6.4 Ejemplo: Laboratorio Completo</h3>
 <p><strong>Arquitectura:</strong></p>
 <pre><code>Red Host-Only: 192.168.56.0/24
 ├── Kali Linux (Atacante): 192.168.56.10
@@ -872,10 +1063,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="gestión-de-snapshots-y-clonación" class="level2" data-number="28.8">
-<h2 data-number="28.8" class="anchored" data-anchor-id="gestión-de-snapshots-y-clonación"><span class="header-section-number">28.8</span> 7. Gestión de Snapshots y Clonación</h2>
-<section id="snapshots-en-vmware-fusion" class="level3" data-number="28.8.1">
-<h3 data-number="28.8.1" class="anchored" data-anchor-id="snapshots-en-vmware-fusion"><span class="header-section-number">28.8.1</span> 7.1 Snapshots en VMware Fusion</h3>
+<section id="gestión-de-snapshots-y-clonación" class="level2">
+<h2 class="anchored" data-anchor-id="gestión-de-snapshots-y-clonación">7. Gestión de Snapshots y Clonación</h2>
+<section id="snapshots-en-vmware-fusion" class="level3">
+<h3 class="anchored" data-anchor-id="snapshots-en-vmware-fusion">7.1 Snapshots en VMware Fusion</h3>
 <p><strong>Crear snapshot:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Desde interfaz gráfica</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Virtual Machine &gt; Snapshots &gt; Take Snapshot</span></span>
@@ -892,8 +1083,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminar snapshot</span></span>
 <span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="ex">vmrun</span> deleteSnapshot <span class="st">"ruta/vm.vmx"</span> <span class="st">"Snapshot nombre"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="snapshots-en-virtualbox" class="level3" data-number="28.8.2">
-<h3 data-number="28.8.2" class="anchored" data-anchor-id="snapshots-en-virtualbox"><span class="header-section-number">28.8.2</span> 7.2 Snapshots en VirtualBox</h3>
+<section id="snapshots-en-virtualbox" class="level3">
+<h3 class="anchored" data-anchor-id="snapshots-en-virtualbox">7.2 Snapshots en VirtualBox</h3>
 <p><strong>Crear snapshot:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Desde interfaz gráfica</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Machine &gt; Take Snapshot</span></span>
@@ -910,8 +1101,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminar snapshot</span></span>
 <span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> snapshot <span class="st">"NombreVM"</span> delete <span class="st">"Snapshot1"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="clonación-de-máquinas" class="level3" data-number="28.8.3">
-<h3 data-number="28.8.3" class="anchored" data-anchor-id="clonación-de-máquinas"><span class="header-section-number">28.8.3</span> 7.3 Clonación de Máquinas</h3>
+<section id="clonación-de-máquinas" class="level3">
+<h3 class="anchored" data-anchor-id="clonación-de-máquinas">7.3 Clonación de Máquinas</h3>
 <p><strong>VMware Fusion:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Interfaz gráfica</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Virtual Machine &gt; Clone</span></span>
@@ -927,22 +1118,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="automatización-con-vagrant" class="level2" data-number="28.9">
-<h2 data-number="28.9" class="anchored" data-anchor-id="automatización-con-vagrant"><span class="header-section-number">28.9</span> 8. Automatización con Vagrant</h2>
-<section id="introducción-a-vagrant" class="level3" data-number="28.9.1">
-<h3 data-number="28.9.1" class="anchored" data-anchor-id="introducción-a-vagrant"><span class="header-section-number">28.9.1</span> 8.1 Introducción a Vagrant</h3>
+<section id="automatización-con-vagrant" class="level2">
+<h2 class="anchored" data-anchor-id="automatización-con-vagrant">8. Automatización con Vagrant</h2>
+<section id="introducción-a-vagrant" class="level3">
+<h3 class="anchored" data-anchor-id="introducción-a-vagrant">8.1 Introducción a Vagrant</h3>
 <p>Vagrant permite automatizar la creación y configuración de máquinas virtuales.</p>
 </section>
-<section id="instalación" class="level3" data-number="28.9.2">
-<h3 data-number="28.9.2" class="anchored" data-anchor-id="instalación"><span class="header-section-number">28.9.2</span> 8.2 Instalación</h3>
+<section id="instalación" class="level3">
+<h3 class="anchored" data-anchor-id="instalación">8.2 Instalación</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># macOS con Homebrew</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install vagrant</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar instalación</span></span>
 <span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="ex">vagrant</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="vagrantfile-para-kali-linux" class="level3" data-number="28.9.3">
-<h3 data-number="28.9.3" class="anchored" data-anchor-id="vagrantfile-para-kali-linux"><span class="header-section-number">28.9.3</span> 8.3 Vagrantfile para Kali Linux</h3>
+<section id="vagrantfile-para-kali-linux" class="level3">
+<h3 class="anchored" data-anchor-id="vagrantfile-para-kali-linux">8.3 Vagrantfile para Kali Linux</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode ruby code-with-copy"><code class="sourceCode ruby"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vagrantfile</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="dt">Vagrant</span><span class="at">.configure</span>(<span class="st">"2"</span>) <span class="cf">do</span> <span class="op">|</span>config<span class="op">|</span></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  </span>
@@ -992,8 +1183,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb35-47"><a href="#cb35-47" aria-hidden="true" tabindex="-1"></a>  <span class="cf">end</span></span>
 <span id="cb35-48"><a href="#cb35-48" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="comandos-de-vagrant" class="level3" data-number="28.9.4">
-<h3 data-number="28.9.4" class="anchored" data-anchor-id="comandos-de-vagrant"><span class="header-section-number">28.9.4</span> 8.4 Comandos de Vagrant</h3>
+<section id="comandos-de-vagrant" class="level3">
+<h3 class="anchored" data-anchor-id="comandos-de-vagrant">8.4 Comandos de Vagrant</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Iniciar laboratorio</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="ex">vagrant</span> up</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1011,10 +1202,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="optimización-de-rendimiento" class="level2" data-number="28.10">
-<h2 data-number="28.10" class="anchored" data-anchor-id="optimización-de-rendimiento"><span class="header-section-number">28.10</span> 9. Optimización de Rendimiento</h2>
-<section id="optimización-para-vmware-fusion" class="level3" data-number="28.10.1">
-<h3 data-number="28.10.1" class="anchored" data-anchor-id="optimización-para-vmware-fusion"><span class="header-section-number">28.10.1</span> 9.1 Optimización para VMware Fusion</h3>
+<section id="optimización-de-rendimiento" class="level2">
+<h2 class="anchored" data-anchor-id="optimización-de-rendimiento">9. Optimización de Rendimiento</h2>
+<section id="optimización-para-vmware-fusion" class="level3">
+<h3 class="anchored" data-anchor-id="optimización-para-vmware-fusion">9.1 Optimización para VMware Fusion</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar memoria RAM</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Virtual Machine &gt; Settings &gt; Processors &amp; Memory</span></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Asignar 4GB para Kali Linux</span></span>
@@ -1027,8 +1218,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Virtual Machine &gt; Settings &gt; Network</span></span>
 <span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Adapter type: Ethernet (solo para VMs locales)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="optimización-para-virtualbox" class="level3" data-number="28.10.2">
-<h3 data-number="28.10.2" class="anchored" data-anchor-id="optimización-para-virtualbox"><span class="header-section-number">28.10.2</span> 9.2 Optimización para VirtualBox</h3>
+<section id="optimización-para-virtualbox" class="level3">
+<h3 class="anchored" data-anchor-id="optimización-para-virtualbox">9.2 Optimización para VirtualBox</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar memoria RAM</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> modifyvm <span class="st">"Kali-Linux"</span> <span class="at">--memory</span> 4096</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1042,8 +1233,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar storage controller</span></span>
 <span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="ex">VBoxManage</span> storagectl <span class="st">"Kali-Linux"</span> <span class="at">--name</span> <span class="st">"SATA"</span> <span class="at">--add</span> sata <span class="at">--portcount</span> 2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="optimización-de-kali-linux" class="level3" data-number="28.10.3">
-<h3 data-number="28.10.3" class="anchored" data-anchor-id="optimización-de-kali-linux"><span class="header-section-number">28.10.3</span> 9.3 Optimización de Kali Linux</h3>
+<section id="optimización-de-kali-linux" class="level3">
+<h3 class="anchored" data-anchor-id="optimización-de-kali-linux">9.3 Optimización de Kali Linux</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reducir consumo de recursos</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl disable bluetooth</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl disable cups</span>
@@ -1060,10 +1251,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="seguridad-de-máquinas-virtuales" class="level2" data-number="28.11">
-<h2 data-number="28.11" class="anchored" data-anchor-id="seguridad-de-máquinas-virtuales"><span class="header-section-number">28.11</span> 10. Seguridad de Máquinas Virtuales</h2>
-<section id="aislamiento-de-red" class="level3" data-number="28.11.1">
-<h3 data-number="28.11.1" class="anchored" data-anchor-id="aislamiento-de-red"><span class="header-section-number">28.11.1</span> 10.1 Aislamiento de Red</h3>
+<section id="seguridad-de-máquinas-virtuales" class="level2">
+<h2 class="anchored" data-anchor-id="seguridad-de-máquinas-virtuales">10. Seguridad de Máquinas Virtuales</h2>
+<section id="aislamiento-de-red" class="level3">
+<h3 class="anchored" data-anchor-id="aislamiento-de-red">10.1 Aislamiento de Red</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar firewalls en VMs</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ufw default deny incoming</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ufw default allow outgoing</span>
@@ -1073,8 +1264,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl stop avahi-daemon</span>
 <span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl disable avahi-daemon</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="protección-del-host" class="level3" data-number="28.11.2">
-<h3 data-number="28.11.2" class="anchored" data-anchor-id="protección-del-host"><span class="header-section-number">28.11.2</span> 10.2 Protección del Host</h3>
+<section id="protección-del-host" class="level3">
+<h3 class="anchored" data-anchor-id="protección-del-host">10.2 Protección del Host</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Limitar acceso a VMs</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co"># VMware Fusion: Deshabilitar drag-and-drop</span></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="co"># VirtualBox: Deshabilitar clipboard compartido</span></span>
@@ -1083,8 +1274,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="co"># - Escanear VMs periódicamente</span></span>
 <span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="co"># - Mantener actualizado</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="snapshot-seguro" class="level3" data-number="28.11.3">
-<h3 data-number="28.11.3" class="anchored" data-anchor-id="snapshot-seguro"><span class="header-section-number">28.11.3</span> 10.3 Snapshot Seguro</h3>
+<section id="snapshot-seguro" class="level3">
+<h3 class="anchored" data-anchor-id="snapshot-seguro">10.3 Snapshot Seguro</h3>
 <p><strong>Antes de cada práctica:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Tomar snapshot limpio</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Ejecutar prácticas</span></span>
@@ -1093,10 +1284,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="integración-con-docker-y-vms" class="level2" data-number="28.12">
-<h2 data-number="28.12" class="anchored" data-anchor-id="integración-con-docker-y-vms"><span class="header-section-number">28.12</span> 11. Integración con Docker y VMs</h2>
-<section id="combinar-docker-y-vms" class="level3" data-number="28.12.1">
-<h3 data-number="28.12.1" class="anchored" data-anchor-id="combinar-docker-y-vms"><span class="header-section-number">28.12.1</span> 11.1 Combinar Docker y VMs</h3>
+<section id="integración-con-docker-y-vms" class="level2">
+<h2 class="anchored" data-anchor-id="integración-con-docker-y-vms">11. Integración con Docker y VMs</h2>
+<section id="combinar-docker-y-vms" class="level3">
+<h3 class="anchored" data-anchor-id="combinar-docker-y-vms">11.1 Combinar Docker y VMs</h3>
 <pre><code>┌─────────────────────────────────────────┐
 │         Host (macOS)                    │
 │  ┌───────────────────────────────────┐  │
@@ -1110,8 +1301,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 │  └───────────────────────────────────┘  │
 └─────────────────────────────────────────┘</code></pre>
 </section>
-<section id="script-de-automatización" class="level3" data-number="28.12.2">
-<h3 data-number="28.12.2" class="anchored" data-anchor-id="script-de-automatización"><span class="header-section-number">28.12.2</span> 11.2 Script de Automatización</h3>
+<section id="script-de-automatización" class="level3">
+<h3 class="anchored" data-anchor-id="script-de-automatización">11.2 Script de Automatización</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="co"># setup-pentest-lab.sh</span></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1181,10 +1372,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="ejercicios-prácticos" class="level2" data-number="28.13">
-<h2 data-number="28.13" class="anchored" data-anchor-id="ejercicios-prácticos"><span class="header-section-number">28.13</span> 12. Ejercicios Prácticos</h2>
-<section id="ejercicio-1-configuración-inicial" class="level3" data-number="28.13.1">
-<h3 data-number="28.13.1" class="anchored" data-anchor-id="ejercicio-1-configuración-inicial"><span class="header-section-number">28.13.1</span> Ejercicio 1: Configuración Inicial</h3>
+<section id="ejercicios-prácticos" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicios-prácticos">12. Ejercicios Prácticos</h2>
+<section id="ejercicio-1-configuración-inicial" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-1-configuración-inicial">Ejercicio 1: Configuración Inicial</h3>
 <ol type="1">
 <li>Instalar VMware Fusion o VirtualBox</li>
 <li>Descargar e importar Kali Linux</li>
@@ -1192,8 +1383,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Actualizar sistema e instalar herramientas básicas</li>
 </ol>
 </section>
-<section id="ejercicio-2-laboratorio-básico" class="level3" data-number="28.13.2">
-<h3 data-number="28.13.2" class="anchored" data-anchor-id="ejercicio-2-laboratorio-básico"><span class="header-section-number">28.13.2</span> Ejercicio 2: Laboratorio Básico</h3>
+<section id="ejercicio-2-laboratorio-básico" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-2-laboratorio-básico">Ejercicio 2: Laboratorio Básico</h3>
 <ol type="1">
 <li>Crear red aislada (192.168.100.0/24)</li>
 <li>Configurar Kali Linux como atacante</li>
@@ -1201,8 +1392,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Realizar escaneo básico con nmap</li>
 </ol>
 </section>
-<section id="ejercicio-3-automatización-con-vagrant" class="level3" data-number="28.13.3">
-<h3 data-number="28.13.3" class="anchored" data-anchor-id="ejercicio-3-automatización-con-vagrant"><span class="header-section-number">28.13.3</span> Ejercicio 3: Automatización con Vagrant</h3>
+<section id="ejercicio-3-automatización-con-vagrant" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-3-automatización-con-vagrant">Ejercicio 3: Automatización con Vagrant</h3>
 <ol type="1">
 <li>Crear Vagrantfile para laboratorio</li>
 <li>Implementar múltiples máquinas</li>
@@ -1210,8 +1401,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Crear snapshot inicial</li>
 </ol>
 </section>
-<section id="ejercicio-4-gestión-de-snapshots" class="level3" data-number="28.13.4">
-<h3 data-number="28.13.4" class="anchored" data-anchor-id="ejercicio-4-gestión-de-snapshots"><span class="header-section-number">28.13.4</span> Ejercicio 4: Gestión de Snapshots</h3>
+<section id="ejercicio-4-gestión-de-snapshots" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-4-gestión-de-snapshots">Ejercicio 4: Gestión de Snapshots</h3>
 <ol type="1">
 <li>Practicar creación de snapshots</li>
 <li>Realizar cambios en VM</li>
@@ -1221,10 +1412,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="recursos-adicionales" class="level2" data-number="28.14">
-<h2 data-number="28.14" class="anchored" data-anchor-id="recursos-adicionales"><span class="header-section-number">28.14</span> 13. Recursos Adicionales</h2>
-<section id="documentación" class="level3" data-number="28.14.1">
-<h3 data-number="28.14.1" class="anchored" data-anchor-id="documentación"><span class="header-section-number">28.14.1</span> Documentación</h3>
+<section id="recursos-adicionales" class="level2">
+<h2 class="anchored" data-anchor-id="recursos-adicionales">13. Recursos Adicionales</h2>
+<section id="documentación" class="level3">
+<h3 class="anchored" data-anchor-id="documentación">Documentación</h3>
 <ul>
 <li><a href="https://docs.vmware.com/en/VMware-Fusion/">VMware Fusion Documentation</a></li>
 <li><a href="https://www.virtualbox.org/manual/">VirtualBox Manual</a></li>
@@ -1232,8 +1423,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><a href="https://www.vagrantup.com/docs/">Vagrant Documentation</a></li>
 </ul>
 </section>
-<section id="máquinas-vulnerables" class="level3" data-number="28.14.2">
-<h3 data-number="28.14.2" class="anchored" data-anchor-id="máquinas-vulnerables"><span class="header-section-number">28.14.2</span> Máquinas Vulnerables</h3>
+<section id="máquinas-vulnerables" class="level3">
+<h3 class="anchored" data-anchor-id="máquinas-vulnerables">Máquinas Vulnerables</h3>
 <ul>
 <li><a href="https://www.vulnhub.com/">VulnHub</a></li>
 <li><a href="https://sourceforge.net/projects/metasploitable/">Metasploitable</a></li>
@@ -1241,8 +1432,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><a href="https://owasp.org/www-project-webgoat/">OWASP WebGoat</a></li>
 </ul>
 </section>
-<section id="herramientas-adicionales" class="level3" data-number="28.14.3">
-<h3 data-number="28.14.3" class="anchored" data-anchor-id="herramientas-adicionales"><span class="header-section-number">28.14.3</span> Herramientas Adicionales</h3>
+<section id="herramientas-adicionales" class="level3">
+<h3 class="anchored" data-anchor-id="herramientas-adicionales">Herramientas Adicionales</h3>
 <ul>
 <li><code>packer</code>: Crear imágenes personalizadas</li>
 <li><code>vagrant</code>: Automatización de VMs</li>
@@ -1251,8 +1442,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="resumen" class="level2" data-number="28.15">
-<h2 data-number="28.15" class="anchored" data-anchor-id="resumen"><span class="header-section-number">28.15</span> Resumen</h2>
+<section id="resumen" class="level2">
+<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
 <p>En este minicurso has aprendido: - ✅ Configurar VMware Fusion y VirtualBox - ✅ Instalar y configurar Kali Linux como VM - ✅ Crear laboratorios de pentesting con VMs - ✅ Gestión de snapshots y clonación - ✅ Automatización con Vagrant - ✅ Optimización de rendimiento y seguridad</p>
 <p><strong>Siguiente paso:</strong> Crea un laboratorio completo con al menos 3 máquinas (atacante, víctima web, víctima Windows) y practica técnicas de enumeración y explotación.</p>
 
@@ -1262,28 +1453,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 
 </main> <!-- /main -->
-<!-- Sistema de Progreso -->
-<script src="assets/js/progress.js"></script>
-
-<!-- Navegación Móvil -->
-<script src="assets/js/mobile-nav.js"></script>
-
-<!-- Inicialización de componentes UX -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Inicializar sistema de progreso
-    if (window.CourseProgress) {
-        console.log('Sistema de progreso inicializado');
-    }
-    
-    // Inicializar navegación móvil
-    if (window.MobileNav) {
-        console.log('Navegación móvil inicializada');
-    }
-});
-</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -1406,7 +1590,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/statick88\.github\.io\/ethical-hacking-2026\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -1420,6 +1604,13 @@ document.addEventListener('DOMContentLoaded', function() {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -1736,12 +1927,12 @@ document.addEventListener('DOMContentLoaded', function() {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../anexos/anexo-docker.html" class="pagination-link" aria-label="Anexo B: Minicurso de Docker">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Anexo B: Minicurso de Docker</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Anexo B: Minicurso de Docker</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../anexos/anexo-opencv-seguro.html" class="pagination-link" aria-label="Configuración Segura de OpenCV">
-        <span class="nav-page-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Configuración Segura de OpenCV</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-title">Configuración Segura de OpenCV</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
@@ -2599,6 +2790,30 @@ document.addEventListener('DOMContentLoaded', function() {
 <span id="cb45-852"><a href="#cb45-852" aria-hidden="true" tabindex="-1"></a><span class="ex">**Siguiente</span> paso:<span class="pp">**</span> Crea un laboratorio completo con al menos 3 máquinas <span class="er">(</span><span class="ex">atacante,</span> víctima web, víctima Windows<span class="kw">)</span> <span class="ex">y</span> practica técnicas de enumeración y explotación.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link active" href="../about.html" aria-current="page">
+<p>About</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../license.html">
+<p>License</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
 
 
 

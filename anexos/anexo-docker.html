@@ -8,8 +8,9 @@
 
 <meta name="author" content="Diego Saavedra">
 <meta name="dcterms.date" content="2026-03-16">
+<meta name="description" content="Curso de Ethical Hacking 2026">
 
-<title>27&nbsp; Anexo B: Minicurso de Docker – Ethical Hacking 2026</title>
+<title>Anexo B: Minicurso de Docker – Ethical Hacking 2026</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -72,16 +73,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../">
 <link href="../anexos/anexo-maquinas-virtuales.html" rel="next">
 <link href="../anexos/anexo-bash-scripting.html" rel="prev">
+<link href="../images/hacking.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-68056a18e515a5789c5e26a7aeb7ac61.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-61780a260fdcf47536a34fde95582725.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-68056a18e515a5789c5e26a7aeb7ac61.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-61780a260fdcf47536a34fde95582725.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-9265db7866925a9d8c3a929a182b61d8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-87aed0b8589e23e45aa8556edf37a91b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-d475e4ab3b4fd243dd6ecd26d4f0399c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-87aed0b8589e23e45aa8556edf37a91b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -114,9 +120,171 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../custom.css">
 </head>
 
-<body class="nav-sidebar floating quarto-light">
+<body class="nav-sidebar floating quarto-dark"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = true;
+    const darkModeDefault = authorPrefersDark;
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -125,7 +293,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../anexos/anexo-bash-scripting.html">Anexos</a></li><li class="breadcrumb-item"><a href="../anexos/anexo-docker.html"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Anexo B: Minicurso de Docker</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../anexos/anexo-bash-scripting.html">Anexos</a></li><li class="breadcrumb-item"><a href="../anexos/anexo-docker.html"><span class="chapter-title">Anexo B: Minicurso de Docker</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -138,9 +306,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../images/hacking.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../images/hacking.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Ethical Hacking 2026</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="../ethical_hacking_2026.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="../ethical_hacking_2026.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -152,183 +361,158 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ethical Hacking 2026 - ABACOM</span></span></a>
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Ethical Hacking 2026 - ABACOM</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
  <span class="menu-text">Contenido</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Unidad 1: Fundamentos y Reconocimiento Agéntico</span></span></a>
+  <a href="../contenido/unidad1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Unidad 1: Fundamentos y Reconocimiento Agéntico</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">🤖 Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje</span></span></a>
+  <a href="../contenido/unidad2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🤖 Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Unidad 3: Explotación Web y APIs 2026 🕷️</span></span></a>
+  <a href="../contenido/unidad3.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Unidad 3: Explotación Web y APIs 2026 🕷️</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">🔐 Unidad 4: Hacking de Identidad y AD Moderno</span></span></a>
+  <a href="../contenido/unidad4.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🔐 Unidad 4: Hacking de Identidad y AD Moderno</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">🚀 Unidad 5: Pentesting Autónomo y Red Teaming Agéntico</span></span></a>
+  <a href="../contenido/unidad5.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🚀 Unidad 5: Pentesting Autónomo y Red Teaming Agéntico</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">🛡️ Unidad 6: Evasión de Defensas</span></span></a>
+  <a href="../contenido/unidad6.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🛡️ Unidad 6: Evasión de Defensas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">🏭 Unidad 7: Ciberseguridad Industrial</span></span></a>
+  <a href="../contenido/unidad7.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🏭 Unidad 7: Ciberseguridad Industrial</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad8.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">🎯 Unidad 8: Post-Explotación, Reporte y Ética</span></span></a>
+  <a href="../contenido/unidad8.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🎯 Unidad 8: Post-Explotación, Reporte y Ética</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
  <span class="menu-text">Laboratorios</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lab 1: Reconocimiento y Enumeración</span></span></a>
+  <a href="../labs/lab-unidad1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 1: Reconocimiento y Enumeración</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Lab 2: Prompt Injection y Jailbreaking en LLMs</span></span></a>
+  <a href="../labs/lab-unidad2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 2: Prompt Injection y Jailbreaking en LLMs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lab 3: Auditoría Web con OWASP WebGoat</span></span></a>
+  <a href="../labs/lab-unidad3.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 3: Auditoría Web con OWASP WebGoat</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Lab 4: Active Directory - Kerberoasting y Pass-the-Hash</span></span></a>
+  <a href="../labs/lab-unidad4.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 4: Active Directory - Kerberoasting y Pass-the-Hash</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Lab 5: Pentesting Autónomo con AutoRecon y Metasploit</span></span></a>
+  <a href="../labs/lab-unidad5.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 5: Pentesting Autónomo con AutoRecon y Metasploit</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Lab 6: Desarrollo de Payload Indetectable</span></span></a>
+  <a href="../labs/lab-unidad6.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 6: Desarrollo de Payload Indetectable</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Lab 7: Hardening y Pentesting de Sistemas OT</span></span></a>
+  <a href="../labs/lab-unidad7.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 7: Hardening y Pentesting de Sistemas OT</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad8.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Lab 8 — Proyecto Final: Pentest End-to-End</span></span></a>
+  <a href="../labs/lab-unidad8.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 8 — Proyecto Final: Pentest End-to-End</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
  <span class="menu-text">Evaluación</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico</span></span></a>
+  <a href="../quizzes/unidad1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Quiz Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje</span></span></a>
+  <a href="../quizzes/unidad2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Quiz Unidad 3: Explotación Web y APIs</span></span></a>
+  <a href="../quizzes/unidad3.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 3: Explotación Web y APIs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Quiz Unidad 4: Hacking de Identidad y AD</span></span></a>
+  <a href="../quizzes/unidad4.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 4: Hacking de Identidad y AD</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Quiz Unidad 5: Pentesting Autónomo y Red Teaming</span></span></a>
+  <a href="../quizzes/unidad5.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 5: Pentesting Autónomo y Red Teaming</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Quiz Unidad 6: Evasión de Defensas</span></span></a>
+  <a href="../quizzes/unidad6.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 6: Evasión de Defensas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Quiz Unidad 7: Ciberseguridad Industrial (OT/ICS)</span></span></a>
+  <a href="../quizzes/unidad7.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 7: Ciberseguridad Industrial (OT/ICS)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad8.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Quiz Unidad 8: Post-Explotación, Reporte y Ética</span></span></a>
+  <a href="../quizzes/unidad8.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 8: Post-Explotación, Reporte y Ética</span></a>
   </div>
 </li>
       </ul>
@@ -344,30 +528,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../anexos/anexo-bash-scripting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Anexo A: Minicurso de Bash Scripting</span></span></a>
+  <a href="../anexos/anexo-bash-scripting.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Anexo A: Minicurso de Bash Scripting</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../anexos/anexo-docker.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Anexo B: Minicurso de Docker</span></span></a>
+  <a href="../anexos/anexo-docker.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Anexo B: Minicurso de Docker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../anexos/anexo-maquinas-virtuales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span></span></a>
+  <a href="../anexos/anexo-maquinas-virtuales.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../anexos/anexo-opencv-seguro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Configuración Segura de OpenCV</span></span></a>
+  <a href="../anexos/anexo-opencv-seguro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Configuración Segura de OpenCV</span></a>
   </div>
 </li>
       </ul>
   </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../about.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Acerca del Curso</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../license.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Licencia</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -378,82 +568,83 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introducción-a-docker" id="toc-introducción-a-docker" class="nav-link active" data-scroll-target="#introducción-a-docker"><span class="header-section-number">27.1</span> Introducción a Docker</a>
+  <li><a href="#introducción-a-docker" id="toc-introducción-a-docker" class="nav-link active" data-scroll-target="#introducción-a-docker">Introducción a Docker</a>
   <ul class="collapse">
-  <li><a href="#objetivos-del-minicurso" id="toc-objetivos-del-minicurso" class="nav-link" data-scroll-target="#objetivos-del-minicurso"><span class="header-section-number">27.1.1</span> Objetivos del Minicurso</a></li>
+  <li><a href="#objetivos-del-minicurso" id="toc-objetivos-del-minicurso" class="nav-link" data-scroll-target="#objetivos-del-minicurso">Objetivos del Minicurso</a></li>
   </ul></li>
-  <li><a href="#conceptos-fundamentales" id="toc-conceptos-fundamentales" class="nav-link" data-scroll-target="#conceptos-fundamentales"><span class="header-section-number">27.2</span> 1. Conceptos Fundamentales</a>
+  <li><a href="#conceptos-fundamentales" id="toc-conceptos-fundamentales" class="nav-link" data-scroll-target="#conceptos-fundamentales">1. Conceptos Fundamentales</a>
   <ul class="collapse">
-  <li><a href="#qué-es-un-contenedor" id="toc-qué-es-un-contenedor" class="nav-link" data-scroll-target="#qué-es-un-contenedor"><span class="header-section-number">27.2.1</span> 1.1 ¿Qué es un Contenedor?</a></li>
-  <li><a href="#arquitectura-docker" id="toc-arquitectura-docker" class="nav-link" data-scroll-target="#arquitectura-docker"><span class="header-section-number">27.2.2</span> 1.2 Arquitectura Docker</a></li>
+  <li><a href="#qué-es-un-contenedor" id="toc-qué-es-un-contenedor" class="nav-link" data-scroll-target="#qué-es-un-contenedor">1.1 ¿Qué es un Contenedor?</a></li>
+  <li><a href="#arquitectura-docker" id="toc-arquitectura-docker" class="nav-link" data-scroll-target="#arquitectura-docker">1.2 Arquitectura Docker</a></li>
   </ul></li>
-  <li><a href="#instalación-y-configuración" id="toc-instalación-y-configuración" class="nav-link" data-scroll-target="#instalación-y-configuración"><span class="header-section-number">27.3</span> 2. Instalación y Configuración</a>
+  <li><a href="#instalación-y-configuración" id="toc-instalación-y-configuración" class="nav-link" data-scroll-target="#instalación-y-configuración">2. Instalación y Configuración</a>
   <ul class="collapse">
-  <li><a href="#instalación-en-linux-kalidebianubuntu" id="toc-instalación-en-linux-kalidebianubuntu" class="nav-link" data-scroll-target="#instalación-en-linux-kalidebianubuntu"><span class="header-section-number">27.3.1</span> 2.1 Instalación en Linux (Kali/Debian/Ubuntu)</a></li>
-  <li><a href="#configuración-básica" id="toc-configuración-básica" class="nav-link" data-scroll-target="#configuración-básica"><span class="header-section-number">27.3.2</span> 2.2 Configuración Básica</a></li>
+  <li><a href="#instalación-en-linux-kalidebianubuntu" id="toc-instalación-en-linux-kalidebianubuntu" class="nav-link" data-scroll-target="#instalación-en-linux-kalidebianubuntu">2.1 Instalación en Linux (Kali/Debian/Ubuntu)</a></li>
+  <li><a href="#configuración-básica" id="toc-configuración-básica" class="nav-link" data-scroll-target="#configuración-básica">2.2 Configuración Básica</a></li>
   </ul></li>
-  <li><a href="#comandos-básicos-de-docker" id="toc-comandos-básicos-de-docker" class="nav-link" data-scroll-target="#comandos-básicos-de-docker"><span class="header-section-number">27.4</span> 3. Comandos Básicos de Docker</a>
+  <li><a href="#comandos-básicos-de-docker" id="toc-comandos-básicos-de-docker" class="nav-link" data-scroll-target="#comandos-básicos-de-docker">3. Comandos Básicos de Docker</a>
   <ul class="collapse">
-  <li><a href="#gestión-de-imágenes" id="toc-gestión-de-imágenes" class="nav-link" data-scroll-target="#gestión-de-imágenes"><span class="header-section-number">27.4.1</span> 3.1 Gestión de Imágenes</a></li>
-  <li><a href="#gestión-de-contenedores" id="toc-gestión-de-contenedores" class="nav-link" data-scroll-target="#gestión-de-contenedores"><span class="header-section-number">27.4.2</span> 3.2 Gestión de Contenedores</a></li>
+  <li><a href="#gestión-de-imágenes" id="toc-gestión-de-imágenes" class="nav-link" data-scroll-target="#gestión-de-imágenes">3.1 Gestión de Imágenes</a></li>
+  <li><a href="#gestión-de-contenedores" id="toc-gestión-de-contenedores" class="nav-link" data-scroll-target="#gestión-de-contenedores">3.2 Gestión de Contenedores</a></li>
   </ul></li>
-  <li><a href="#opciones-de-red-y-almacenamiento" id="toc-opciones-de-red-y-almacenamiento" class="nav-link" data-scroll-target="#opciones-de-red-y-almacenamiento"><span class="header-section-number">27.5</span> 4. Opciones de Red y Almacenamiento</a>
+  <li><a href="#opciones-de-red-y-almacenamiento" id="toc-opciones-de-red-y-almacenamiento" class="nav-link" data-scroll-target="#opciones-de-red-y-almacenamiento">4. Opciones de Red y Almacenamiento</a>
   <ul class="collapse">
-  <li><a href="#redes-docker" id="toc-redes-docker" class="nav-link" data-scroll-target="#redes-docker"><span class="header-section-number">27.5.1</span> 4.1 Redes Docker</a></li>
-  <li><a href="#volúmenes-y-directorios-montados" id="toc-volúmenes-y-directorios-montados" class="nav-link" data-scroll-target="#volúmenes-y-directorios-montados"><span class="header-section-number">27.5.2</span> 4.2 Volúmenes y Directorios Montados</a></li>
+  <li><a href="#redes-docker" id="toc-redes-docker" class="nav-link" data-scroll-target="#redes-docker">4.1 Redes Docker</a></li>
+  <li><a href="#volúmenes-y-directorios-montados" id="toc-volúmenes-y-directorios-montados" class="nav-link" data-scroll-target="#volúmenes-y-directorios-montados">4.2 Volúmenes y Directorios Montados</a></li>
   </ul></li>
-  <li><a href="#dockerfile-creación-de-imágenes-personalizadas" id="toc-dockerfile-creación-de-imágenes-personalizadas" class="nav-link" data-scroll-target="#dockerfile-creación-de-imágenes-personalizadas"><span class="header-section-number">27.6</span> 5. Dockerfile: Creación de Imágenes Personalizadas</a>
+  <li><a href="#dockerfile-creación-de-imágenes-personalizadas" id="toc-dockerfile-creación-de-imágenes-personalizadas" class="nav-link" data-scroll-target="#dockerfile-creación-de-imágenes-personalizadas">5. Dockerfile: Creación de Imágenes Personalizadas</a>
   <ul class="collapse">
-  <li><a href="#estructura-básica-de-dockerfile" id="toc-estructura-básica-de-dockerfile" class="nav-link" data-scroll-target="#estructura-básica-de-dockerfile"><span class="header-section-number">27.6.1</span> 5.1 Estructura Básica de Dockerfile</a></li>
-  <li><a href="#ejemplo-imagen-de-pentesting" id="toc-ejemplo-imagen-de-pentesting" class="nav-link" data-scroll-target="#ejemplo-imagen-de-pentesting"><span class="header-section-number">27.6.2</span> 5.2 Ejemplo: Imagen de Pentesting</a></li>
-  <li><a href="#construir-imagen" id="toc-construir-imagen" class="nav-link" data-scroll-target="#construir-imagen"><span class="header-section-number">27.6.3</span> 5.3 Construir Imagen</a></li>
+  <li><a href="#estructura-básica-de-dockerfile" id="toc-estructura-básica-de-dockerfile" class="nav-link" data-scroll-target="#estructura-básica-de-dockerfile">5.1 Estructura Básica de Dockerfile</a></li>
+  <li><a href="#ejemplo-imagen-de-pentesting" id="toc-ejemplo-imagen-de-pentesting" class="nav-link" data-scroll-target="#ejemplo-imagen-de-pentesting">5.2 Ejemplo: Imagen de Pentesting</a></li>
+  <li><a href="#construir-imagen" id="toc-construir-imagen" class="nav-link" data-scroll-target="#construir-imagen">5.3 Construir Imagen</a></li>
   </ul></li>
-  <li><a href="#docker-compose" id="toc-docker-compose" class="nav-link" data-scroll-target="#docker-compose"><span class="header-section-number">27.7</span> 6. Docker Compose</a>
+  <li><a href="#docker-compose" id="toc-docker-compose" class="nav-link" data-scroll-target="#docker-compose">6. Docker Compose</a>
   <ul class="collapse">
-  <li><a href="#introducción-a-docker-compose" id="toc-introducción-a-docker-compose" class="nav-link" data-scroll-target="#introducción-a-docker-compose"><span class="header-section-number">27.7.1</span> 6.1 Introducción a Docker Compose</a></li>
-  <li><a href="#estructura-básica-de-docker-compose.yml" id="toc-estructura-básica-de-docker-compose.yml" class="nav-link" data-scroll-target="#estructura-básica-de-docker-compose.yml"><span class="header-section-number">27.7.2</span> 6.2 Estructura Básica de docker-compose.yml</a></li>
-  <li><a href="#ejemplo-laboratorio-de-pentesting-con-docker-compose" id="toc-ejemplo-laboratorio-de-pentesting-con-docker-compose" class="nav-link" data-scroll-target="#ejemplo-laboratorio-de-pentesting-con-docker-compose"><span class="header-section-number">27.7.3</span> 6.3 Ejemplo: Laboratorio de Pentesting con Docker Compose</a></li>
-  <li><a href="#comandos-docker-compose" id="toc-comandos-docker-compose" class="nav-link" data-scroll-target="#comandos-docker-compose"><span class="header-section-number">27.7.4</span> 6.4 Comandos Docker Compose</a></li>
+  <li><a href="#introducción-a-docker-compose" id="toc-introducción-a-docker-compose" class="nav-link" data-scroll-target="#introducción-a-docker-compose">6.1 Introducción a Docker Compose</a></li>
+  <li><a href="#estructura-básica-de-docker-compose.yml" id="toc-estructura-básica-de-docker-compose.yml" class="nav-link" data-scroll-target="#estructura-básica-de-docker-compose.yml">6.2 Estructura Básica de docker-compose.yml</a></li>
+  <li><a href="#ejemplo-laboratorio-de-pentesting-con-docker-compose" id="toc-ejemplo-laboratorio-de-pentesting-con-docker-compose" class="nav-link" data-scroll-target="#ejemplo-laboratorio-de-pentesting-con-docker-compose">6.3 Ejemplo: Laboratorio de Pentesting con Docker Compose</a></li>
+  <li><a href="#comandos-docker-compose" id="toc-comandos-docker-compose" class="nav-link" data-scroll-target="#comandos-docker-compose">6.4 Comandos Docker Compose</a></li>
   </ul></li>
-  <li><a href="#seguridad-en-contenedores" id="toc-seguridad-en-contenedores" class="nav-link" data-scroll-target="#seguridad-en-contenedores"><span class="header-section-number">27.8</span> 7. Seguridad en Contenedores</a>
+  <li><a href="#seguridad-en-contenedores" id="toc-seguridad-en-contenedores" class="nav-link" data-scroll-target="#seguridad-en-contenedores">7. Seguridad en Contenedores</a>
   <ul class="collapse">
-  <li><a href="#buenas-prácticas-de-seguridad" id="toc-buenas-prácticas-de-seguridad" class="nav-link" data-scroll-target="#buenas-prácticas-de-seguridad"><span class="header-section-number">27.8.1</span> 7.1 Buenas Prácticas de Seguridad</a></li>
-  <li><a href="#auditoría-de-contenedores" id="toc-auditoría-de-contenedores" class="nav-link" data-scroll-target="#auditoría-de-contenedores"><span class="header-section-number">27.8.2</span> 7.2 Auditoría de Contenedores</a></li>
+  <li><a href="#buenas-prácticas-de-seguridad" id="toc-buenas-prácticas-de-seguridad" class="nav-link" data-scroll-target="#buenas-prácticas-de-seguridad">7.1 Buenas Prácticas de Seguridad</a></li>
+  <li><a href="#auditoría-de-contenedores" id="toc-auditoría-de-contenedores" class="nav-link" data-scroll-target="#auditoría-de-contenedores">7.2 Auditoría de Contenedores</a></li>
   </ul></li>
-  <li><a href="#ejemplos-prácticos-para-seguridad" id="toc-ejemplos-prácticos-para-seguridad" class="nav-link" data-scroll-target="#ejemplos-prácticos-para-seguridad"><span class="header-section-number">27.9</span> 8. Ejemplos Prácticos para Seguridad</a>
+  <li><a href="#ejemplos-prácticos-para-seguridad" id="toc-ejemplos-prácticos-para-seguridad" class="nav-link" data-scroll-target="#ejemplos-prácticos-para-seguridad">8. Ejemplos Prácticos para Seguridad</a>
   <ul class="collapse">
-  <li><a href="#laboratorio-de-sql-injection" id="toc-laboratorio-de-sql-injection" class="nav-link" data-scroll-target="#laboratorio-de-sql-injection"><span class="header-section-number">27.9.1</span> 8.1 Laboratorio de SQL Injection</a></li>
-  <li><a href="#contenedor-de-enumeración" id="toc-contenedor-de-enumeración" class="nav-link" data-scroll-target="#contenedor-de-enumeración"><span class="header-section-number">27.9.2</span> 8.2 Contenedor de Enumeración</a></li>
-  <li><a href="#script-de-automatización" id="toc-script-de-automatización" class="nav-link" data-scroll-target="#script-de-automatización"><span class="header-section-number">27.9.3</span> 8.3 Script de Automatización</a></li>
+  <li><a href="#laboratorio-de-sql-injection" id="toc-laboratorio-de-sql-injection" class="nav-link" data-scroll-target="#laboratorio-de-sql-injection">8.1 Laboratorio de SQL Injection</a></li>
+  <li><a href="#contenedor-de-enumeración" id="toc-contenedor-de-enumeración" class="nav-link" data-scroll-target="#contenedor-de-enumeración">8.2 Contenedor de Enumeración</a></li>
+  <li><a href="#script-de-automatización" id="toc-script-de-automatización" class="nav-link" data-scroll-target="#script-de-automatización">8.3 Script de Automatización</a></li>
   </ul></li>
-  <li><a href="#integración-con-herramientas-de-pentesting" id="toc-integración-con-herramientas-de-pentesting" class="nav-link" data-scroll-target="#integración-con-herramientas-de-pentesting"><span class="header-section-number">27.10</span> 9. Integración con Herramientas de Pentesting</a>
+  <li><a href="#integración-con-herramientas-de-pentesting" id="toc-integración-con-herramientas-de-pentesting" class="nav-link" data-scroll-target="#integración-con-herramientas-de-pentesting">9. Integración con Herramientas de Pentesting</a>
   <ul class="collapse">
-  <li><a href="#contenedor-de-nmap" id="toc-contenedor-de-nmap" class="nav-link" data-scroll-target="#contenedor-de-nmap"><span class="header-section-number">27.10.1</span> 9.1 Contenedor de Nmap</a></li>
-  <li><a href="#contenedor-de-metasploit" id="toc-contenedor-de-metasploit" class="nav-link" data-scroll-target="#contenedor-de-metasploit"><span class="header-section-number">27.10.2</span> 9.2 Contenedor de Metasploit</a></li>
-  <li><a href="#contenedor-de-owasp-zap" id="toc-contenedor-de-owasp-zap" class="nav-link" data-scroll-target="#contenedor-de-owasp-zap"><span class="header-section-number">27.10.3</span> 9.3 Contenedor de OWASP ZAP</a></li>
+  <li><a href="#contenedor-de-nmap" id="toc-contenedor-de-nmap" class="nav-link" data-scroll-target="#contenedor-de-nmap">9.1 Contenedor de Nmap</a></li>
+  <li><a href="#contenedor-de-metasploit" id="toc-contenedor-de-metasploit" class="nav-link" data-scroll-target="#contenedor-de-metasploit">9.2 Contenedor de Metasploit</a></li>
+  <li><a href="#contenedor-de-owasp-zap" id="toc-contenedor-de-owasp-zap" class="nav-link" data-scroll-target="#contenedor-de-owasp-zap">9.3 Contenedor de OWASP ZAP</a></li>
   </ul></li>
-  <li><a href="#ejercicios-prácticos" id="toc-ejercicios-prácticos" class="nav-link" data-scroll-target="#ejercicios-prácticos"><span class="header-section-number">27.11</span> 10. Ejercicios Prácticos</a>
+  <li><a href="#ejercicios-prácticos" id="toc-ejercicios-prácticos" class="nav-link" data-scroll-target="#ejercicios-prácticos">10. Ejercicios Prácticos</a>
   <ul class="collapse">
-  <li><a href="#ejercicio-1-crear-imagen-personalizada" id="toc-ejercicio-1-crear-imagen-personalizada" class="nav-link" data-scroll-target="#ejercicio-1-crear-imagen-personalizada"><span class="header-section-number">27.11.1</span> Ejercicio 1: Crear Imagen Personalizada</a></li>
-  <li><a href="#ejercicio-2-laboratorio-multi-contenedor" id="toc-ejercicio-2-laboratorio-multi-contenedor" class="nav-link" data-scroll-target="#ejercicio-2-laboratorio-multi-contenedor"><span class="header-section-number">27.11.2</span> Ejercicio 2: Laboratorio Multi-Contenedor</a></li>
-  <li><a href="#ejercicio-3-automatización-de-escaneos" id="toc-ejercicio-3-automatización-de-escaneos" class="nav-link" data-scroll-target="#ejercicio-3-automatización-de-escaneos"><span class="header-section-number">27.11.3</span> Ejercicio 3: Automatización de Escaneos</a></li>
+  <li><a href="#ejercicio-1-crear-imagen-personalizada" id="toc-ejercicio-1-crear-imagen-personalizada" class="nav-link" data-scroll-target="#ejercicio-1-crear-imagen-personalizada">Ejercicio 1: Crear Imagen Personalizada</a></li>
+  <li><a href="#ejercicio-2-laboratorio-multi-contenedor" id="toc-ejercicio-2-laboratorio-multi-contenedor" class="nav-link" data-scroll-target="#ejercicio-2-laboratorio-multi-contenedor">Ejercicio 2: Laboratorio Multi-Contenedor</a></li>
+  <li><a href="#ejercicio-3-automatización-de-escaneos" id="toc-ejercicio-3-automatización-de-escaneos" class="nav-link" data-scroll-target="#ejercicio-3-automatización-de-escaneos">Ejercicio 3: Automatización de Escaneos</a></li>
   </ul></li>
-  <li><a href="#recursos-adicionales" id="toc-recursos-adicionales" class="nav-link" data-scroll-target="#recursos-adicionales"><span class="header-section-number">27.12</span> 11. Recursos Adicionales</a>
+  <li><a href="#recursos-adicionales" id="toc-recursos-adicionales" class="nav-link" data-scroll-target="#recursos-adicionales">11. Recursos Adicionales</a>
   <ul class="collapse">
-  <li><a href="#documentación" id="toc-documentación" class="nav-link" data-scroll-target="#documentación"><span class="header-section-number">27.12.1</span> Documentación</a></li>
-  <li><a href="#imágenes-útiles-para-seguridad" id="toc-imágenes-útiles-para-seguridad" class="nav-link" data-scroll-target="#imágenes-útiles-para-seguridad"><span class="header-section-number">27.12.2</span> Imágenes Útiles para Seguridad</a></li>
-  <li><a href="#herramientas-adicionales" id="toc-herramientas-adicionales" class="nav-link" data-scroll-target="#herramientas-adicionales"><span class="header-section-number">27.12.3</span> Herramientas Adicionales</a></li>
+  <li><a href="#documentación" id="toc-documentación" class="nav-link" data-scroll-target="#documentación">Documentación</a></li>
+  <li><a href="#imágenes-útiles-para-seguridad" id="toc-imágenes-útiles-para-seguridad" class="nav-link" data-scroll-target="#imágenes-útiles-para-seguridad">Imágenes Útiles para Seguridad</a></li>
+  <li><a href="#herramientas-adicionales" id="toc-herramientas-adicionales" class="nav-link" data-scroll-target="#herramientas-adicionales">Herramientas Adicionales</a></li>
   </ul></li>
-  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">27.13</span> Resumen</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen">Resumen</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../anexos/anexo-bash-scripting.html">Anexos</a></li><li class="breadcrumb-item"><a href="../anexos/anexo-docker.html"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Anexo B: Minicurso de Docker</span></a></li></ol></nav>
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../anexos/anexo-bash-scripting.html">Anexos</a></li><li class="breadcrumb-item"><a href="../anexos/anexo-docker.html"><span class="chapter-title">Anexo B: Minicurso de Docker</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Anexo B: Minicurso de Docker</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-title">Anexo B: Minicurso de Docker</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -482,11 +673,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="introducción-a-docker" class="level2" data-number="27.1">
-<h2 data-number="27.1" class="anchored" data-anchor-id="introducción-a-docker"><span class="header-section-number">27.1</span> Introducción a Docker</h2>
+<section id="introducción-a-docker" class="level2">
+<h2 class="anchored" data-anchor-id="introducción-a-docker">Introducción a Docker</h2>
 <p>Docker es una plataforma de contenerización que permite empaquetar aplicaciones y sus dependencias en contenedores portables. En seguridad informática, Docker es esencial para crear entornos aislados para pruebas, laboratorios y herramientas de pentesting.</p>
-<section id="objetivos-del-minicurso" class="level3" data-number="27.1.1">
-<h3 data-number="27.1.1" class="anchored" data-anchor-id="objetivos-del-minicurso"><span class="header-section-number">27.1.1</span> Objetivos del Minicurso</h3>
+<section id="objetivos-del-minicurso" class="level3">
+<h3 class="anchored" data-anchor-id="objetivos-del-minicurso">Objetivos del Minicurso</h3>
 <ul>
 <li>Comprender los conceptos fundamentales de contenerización</li>
 <li>Aprender a usar Docker para laboratorios de seguridad</li>
@@ -497,15 +688,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="conceptos-fundamentales" class="level2" data-number="27.2">
-<h2 data-number="27.2" class="anchored" data-anchor-id="conceptos-fundamentales"><span class="header-section-number">27.2</span> 1. Conceptos Fundamentales</h2>
-<section id="qué-es-un-contenedor" class="level3" data-number="27.2.1">
-<h3 data-number="27.2.1" class="anchored" data-anchor-id="qué-es-un-contenedor"><span class="header-section-number">27.2.1</span> 1.1 ¿Qué es un Contenedor?</h3>
+<section id="conceptos-fundamentales" class="level2">
+<h2 class="anchored" data-anchor-id="conceptos-fundamentales">1. Conceptos Fundamentales</h2>
+<section id="qué-es-un-contenedor" class="level3">
+<h3 class="anchored" data-anchor-id="qué-es-un-contenedor">1.1 ¿Qué es un Contenedor?</h3>
 <p>Un contenedor es una instancia aislada de un sistema operativo que comparte el kernel del sistema anfitrión pero tiene su propio sistema de archivos, procesos y red.</p>
 <p><strong>Diferencias clave:</strong> - <strong>Máquina Virtual:</strong> Incluye todo el sistema operativo guest (pesado) - <strong>Contenedor:</strong> Solo incluye la aplicación y sus dependencias (ligero)</p>
 </section>
-<section id="arquitectura-docker" class="level3" data-number="27.2.2">
-<h3 data-number="27.2.2" class="anchored" data-anchor-id="arquitectura-docker"><span class="header-section-number">27.2.2</span> 1.2 Arquitectura Docker</h3>
+<section id="arquitectura-docker" class="level3">
+<h3 class="anchored" data-anchor-id="arquitectura-docker">1.2 Arquitectura Docker</h3>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -534,10 +725,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="instalación-y-configuración" class="level2" data-number="27.3">
-<h2 data-number="27.3" class="anchored" data-anchor-id="instalación-y-configuración"><span class="header-section-number">27.3</span> 2. Instalación y Configuración</h2>
-<section id="instalación-en-linux-kalidebianubuntu" class="level3" data-number="27.3.1">
-<h3 data-number="27.3.1" class="anchored" data-anchor-id="instalación-en-linux-kalidebianubuntu"><span class="header-section-number">27.3.1</span> 2.1 Instalación en Linux (Kali/Debian/Ubuntu)</h3>
+<section id="instalación-y-configuración" class="level2">
+<h2 class="anchored" data-anchor-id="instalación-y-configuración">2. Instalación y Configuración</h2>
+<section id="instalación-en-linux-kalidebianubuntu" class="level3">
+<h3 class="anchored" data-anchor-id="instalación-en-linux-kalidebianubuntu">2.1 Instalación en Linux (Kali/Debian/Ubuntu)</h3>
 <pre class="{bash}"><code>#| label: fig-install-docker
 #| fig-cap: "Comandos para instalar Docker en Kali/Debian"
 #| echo: true
@@ -565,8 +756,8 @@ sudo usermod -aG docker $USER
 docker --version
 docker run hello-world</code></pre>
 </section>
-<section id="configuración-básica" class="level3" data-number="27.3.2">
-<h3 data-number="27.3.2" class="anchored" data-anchor-id="configuración-básica"><span class="header-section-number">27.3.2</span> 2.2 Configuración Básica</h3>
+<section id="configuración-básica" class="level3">
+<h3 class="anchored" data-anchor-id="configuración-básica">2.2 Configuración Básica</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar estado de Docker</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl status docker</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -587,10 +778,10 @@ docker run hello-world</code></pre>
 <hr>
 </section>
 </section>
-<section id="comandos-básicos-de-docker" class="level2" data-number="27.4">
-<h2 data-number="27.4" class="anchored" data-anchor-id="comandos-básicos-de-docker"><span class="header-section-number">27.4</span> 3. Comandos Básicos de Docker</h2>
-<section id="gestión-de-imágenes" class="level3" data-number="27.4.1">
-<h3 data-number="27.4.1" class="anchored" data-anchor-id="gestión-de-imágenes"><span class="header-section-number">27.4.1</span> 3.1 Gestión de Imágenes</h3>
+<section id="comandos-básicos-de-docker" class="level2">
+<h2 class="anchored" data-anchor-id="comandos-básicos-de-docker">3. Comandos Básicos de Docker</h2>
+<section id="gestión-de-imágenes" class="level3">
+<h3 class="anchored" data-anchor-id="gestión-de-imágenes">3.1 Gestión de Imágenes</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Listar imágenes locales</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> images</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> image ls</span>
@@ -610,8 +801,8 @@ docker run hello-world</code></pre>
 <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Etiquetar una imagen</span></span>
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> tag mi-imagen:latest usuario/mi-imagen:v1.0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="gestión-de-contenedores" class="level3" data-number="27.4.2">
-<h3 data-number="27.4.2" class="anchored" data-anchor-id="gestión-de-contenedores"><span class="header-section-number">27.4.2</span> 3.2 Gestión de Contenedores</h3>
+<section id="gestión-de-contenedores" class="level3">
+<h3 class="anchored" data-anchor-id="gestión-de-contenedores">3.2 Gestión de Contenedores</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejecutar contenedor interactivo</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-it</span> kalilinux/kali-rolling /bin/bash</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -646,10 +837,10 @@ docker run hello-world</code></pre>
 <hr>
 </section>
 </section>
-<section id="opciones-de-red-y-almacenamiento" class="level2" data-number="27.5">
-<h2 data-number="27.5" class="anchored" data-anchor-id="opciones-de-red-y-almacenamiento"><span class="header-section-number">27.5</span> 4. Opciones de Red y Almacenamiento</h2>
-<section id="redes-docker" class="level3" data-number="27.5.1">
-<h3 data-number="27.5.1" class="anchored" data-anchor-id="redes-docker"><span class="header-section-number">27.5.1</span> 4.1 Redes Docker</h3>
+<section id="opciones-de-red-y-almacenamiento" class="level2">
+<h2 class="anchored" data-anchor-id="opciones-de-red-y-almacenamiento">4. Opciones de Red y Almacenamiento</h2>
+<section id="redes-docker" class="level3">
+<h3 class="anchored" data-anchor-id="redes-docker">4.1 Redes Docker</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Listar redes</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> network ls</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -670,8 +861,8 @@ docker run hello-world</code></pre>
 <span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> network inspect mi-red</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Tipos de redes:</strong> - <code>bridge</code>: Red por defecto (aislada) - <code>host</code>: Usa red del host - <code>none</code>: Sin red - <code>overlay</code>: Para clústeres (Swarm) - <code>macvlan</code>: Asigna MAC address al contenedor</p>
 </section>
-<section id="volúmenes-y-directorios-montados" class="level3" data-number="27.5.2">
-<h3 data-number="27.5.2" class="anchored" data-anchor-id="volúmenes-y-directorios-montados"><span class="header-section-number">27.5.2</span> 4.2 Volúmenes y Directorios Montados</h3>
+<section id="volúmenes-y-directorios-montados" class="level3">
+<h3 class="anchored" data-anchor-id="volúmenes-y-directorios-montados">4.2 Volúmenes y Directorios Montados</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Montar directorio del host en contenedor</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-it</span> <span class="at">-v</span> /ruta/host:/ruta/contenedor ubuntu:22.04</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -688,10 +879,10 @@ docker run hello-world</code></pre>
 <hr>
 </section>
 </section>
-<section id="dockerfile-creación-de-imágenes-personalizadas" class="level2" data-number="27.6">
-<h2 data-number="27.6" class="anchored" data-anchor-id="dockerfile-creación-de-imágenes-personalizadas"><span class="header-section-number">27.6</span> 5. Dockerfile: Creación de Imágenes Personalizadas</h2>
-<section id="estructura-básica-de-dockerfile" class="level3" data-number="27.6.1">
-<h3 data-number="27.6.1" class="anchored" data-anchor-id="estructura-básica-de-dockerfile"><span class="header-section-number">27.6.1</span> 5.1 Estructura Básica de Dockerfile</h3>
+<section id="dockerfile-creación-de-imágenes-personalizadas" class="level2">
+<h2 class="anchored" data-anchor-id="dockerfile-creación-de-imágenes-personalizadas">5. Dockerfile: Creación de Imágenes Personalizadas</h2>
+<section id="estructura-básica-de-dockerfile" class="level3">
+<h3 class="anchored" data-anchor-id="estructura-básica-de-dockerfile">5.1 Estructura Básica de Dockerfile</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode dockerfile code-with-copy"><code class="sourceCode dockerfile"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imagen base</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> kalilinux/kali-rolling:latest</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -720,8 +911,8 @@ docker run hello-world</code></pre>
 <span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Comando por defecto al iniciar</span></span>
 <span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">"/bin/bash"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="ejemplo-imagen-de-pentesting" class="level3" data-number="27.6.2">
-<h3 data-number="27.6.2" class="anchored" data-anchor-id="ejemplo-imagen-de-pentesting"><span class="header-section-number">27.6.2</span> 5.2 Ejemplo: Imagen de Pentesting</h3>
+<section id="ejemplo-imagen-de-pentesting" class="level3">
+<h3 class="anchored" data-anchor-id="ejemplo-imagen-de-pentesting">5.2 Ejemplo: Imagen de Pentesting</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode dockerfile code-with-copy"><code class="sourceCode dockerfile"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dockerfile para entorno de pentesting</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> kalilinux/kali-rolling:latest</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -770,8 +961,8 @@ docker run hello-world</code></pre>
 <span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Comando por defecto</span></span>
 <span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">"/bin/bash"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="construir-imagen" class="level3" data-number="27.6.3">
-<h3 data-number="27.6.3" class="anchored" data-anchor-id="construir-imagen"><span class="header-section-number">27.6.3</span> 5.3 Construir Imagen</h3>
+<section id="construir-imagen" class="level3">
+<h3 class="anchored" data-anchor-id="construir-imagen">5.3 Construir Imagen</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Construir imagen desde Dockerfile</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> pentesting-tools:latest .</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -786,14 +977,14 @@ docker run hello-world</code></pre>
 <hr>
 </section>
 </section>
-<section id="docker-compose" class="level2" data-number="27.7">
-<h2 data-number="27.7" class="anchored" data-anchor-id="docker-compose"><span class="header-section-number">27.7</span> 6. Docker Compose</h2>
-<section id="introducción-a-docker-compose" class="level3" data-number="27.7.1">
-<h3 data-number="27.7.1" class="anchored" data-anchor-id="introducción-a-docker-compose"><span class="header-section-number">27.7.1</span> 6.1 Introducción a Docker Compose</h3>
+<section id="docker-compose" class="level2">
+<h2 class="anchored" data-anchor-id="docker-compose">6. Docker Compose</h2>
+<section id="introducción-a-docker-compose" class="level3">
+<h3 class="anchored" data-anchor-id="introducción-a-docker-compose">6.1 Introducción a Docker Compose</h3>
 <p>Docker Compose permite definir y ejecutar aplicaciones multi-contenedor con un solo archivo YAML.</p>
 </section>
-<section id="estructura-básica-de-docker-compose.yml" class="level3" data-number="27.7.2">
-<h3 data-number="27.7.2" class="anchored" data-anchor-id="estructura-básica-de-docker-compose.yml"><span class="header-section-number">27.7.2</span> 6.2 Estructura Básica de docker-compose.yml</h3>
+<section id="estructura-básica-de-docker-compose.yml" class="level3">
+<h3 class="anchored" data-anchor-id="estructura-básica-de-docker-compose.yml">6.2 Estructura Básica de docker-compose.yml</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">'3.8'</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
@@ -823,8 +1014,8 @@ docker run hello-world</code></pre>
 <span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">app-network</span><span class="kw">:</span></span>
 <span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">driver</span><span class="kw">:</span><span class="at"> bridge</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="ejemplo-laboratorio-de-pentesting-con-docker-compose" class="level3" data-number="27.7.3">
-<h3 data-number="27.7.3" class="anchored" data-anchor-id="ejemplo-laboratorio-de-pentesting-con-docker-compose"><span class="header-section-number">27.7.3</span> 6.3 Ejemplo: Laboratorio de Pentesting con Docker Compose</h3>
+<section id="ejemplo-laboratorio-de-pentesting-con-docker-compose" class="level3">
+<h3 class="anchored" data-anchor-id="ejemplo-laboratorio-de-pentesting-con-docker-compose">6.3 Ejemplo: Laboratorio de Pentesting con Docker Compose</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">'3.8'</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
@@ -874,8 +1065,8 @@ docker run hello-world</code></pre>
 <span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pentest-network</span><span class="kw">:</span></span>
 <span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">driver</span><span class="kw">:</span><span class="at"> bridge</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="comandos-docker-compose" class="level3" data-number="27.7.4">
-<h3 data-number="27.7.4" class="anchored" data-anchor-id="comandos-docker-compose"><span class="header-section-number">27.7.4</span> 6.4 Comandos Docker Compose</h3>
+<section id="comandos-docker-compose" class="level3">
+<h3 class="anchored" data-anchor-id="comandos-docker-compose">6.4 Comandos Docker Compose</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Iniciar servicios</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker-compose</span> up <span class="at">-d</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -893,10 +1084,10 @@ docker run hello-world</code></pre>
 <hr>
 </section>
 </section>
-<section id="seguridad-en-contenedores" class="level2" data-number="27.8">
-<h2 data-number="27.8" class="anchored" data-anchor-id="seguridad-en-contenedores"><span class="header-section-number">27.8</span> 7. Seguridad en Contenedores</h2>
-<section id="buenas-prácticas-de-seguridad" class="level3" data-number="27.8.1">
-<h3 data-number="27.8.1" class="anchored" data-anchor-id="buenas-prácticas-de-seguridad"><span class="header-section-number">27.8.1</span> 7.1 Buenas Prácticas de Seguridad</h3>
+<section id="seguridad-en-contenedores" class="level2">
+<h2 class="anchored" data-anchor-id="seguridad-en-contenedores">7. Seguridad en Contenedores</h2>
+<section id="buenas-prácticas-de-seguridad" class="level3">
+<h3 class="anchored" data-anchor-id="buenas-prácticas-de-seguridad">7.1 Buenas Prácticas de Seguridad</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. No ejecutar como root</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-u</span> 1000:1000 <span class="at">-it</span> ubuntu:22.04</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -915,8 +1106,8 @@ docker run hello-world</code></pre>
 <span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> stop contenedor <span class="kw">&amp;&amp;</span> <span class="ex">docker</span> rm contenedor</span>
 <span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">--name</span> contenedor mi-imagen:latest</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="auditoría-de-contenedores" class="level3" data-number="27.8.2">
-<h3 data-number="27.8.2" class="anchored" data-anchor-id="auditoría-de-contenedores"><span class="header-section-number">27.8.2</span> 7.2 Auditoría de Contenedores</h3>
+<section id="auditoría-de-contenedores" class="level3">
+<h3 class="anchored" data-anchor-id="auditoría-de-contenedores">7.2 Auditoría de Contenedores</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver detalles de contenedor</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> inspect <span class="op">&lt;</span>container_id<span class="op">&gt;</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -931,10 +1122,10 @@ docker run hello-world</code></pre>
 <hr>
 </section>
 </section>
-<section id="ejemplos-prácticos-para-seguridad" class="level2" data-number="27.9">
-<h2 data-number="27.9" class="anchored" data-anchor-id="ejemplos-prácticos-para-seguridad"><span class="header-section-number">27.9</span> 8. Ejemplos Prácticos para Seguridad</h2>
-<section id="laboratorio-de-sql-injection" class="level3" data-number="27.9.1">
-<h3 data-number="27.9.1" class="anchored" data-anchor-id="laboratorio-de-sql-injection"><span class="header-section-number">27.9.1</span> 8.1 Laboratorio de SQL Injection</h3>
+<section id="ejemplos-prácticos-para-seguridad" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplos-prácticos-para-seguridad">8. Ejemplos Prácticos para Seguridad</h2>
+<section id="laboratorio-de-sql-injection" class="level3">
+<h3 class="anchored" data-anchor-id="laboratorio-de-sql-injection">8.1 Laboratorio de SQL Injection</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># docker-compose-sqli.yml</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">'3.8'</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -960,8 +1151,8 @@ docker run hello-world</code></pre>
 <span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pentest-network</span><span class="kw">:</span></span>
 <span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">driver</span><span class="kw">:</span><span class="at"> bridge</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="contenedor-de-enumeración" class="level3" data-number="27.9.2">
-<h3 data-number="27.9.2" class="anchored" data-anchor-id="contenedor-de-enumeración"><span class="header-section-number">27.9.2</span> 8.2 Contenedor de Enumeración</h3>
+<section id="contenedor-de-enumeración" class="level3">
+<h3 class="anchored" data-anchor-id="contenedor-de-enumeración">8.2 Contenedor de Enumeración</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode dockerfile code-with-copy"><code class="sourceCode dockerfile"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dockerfile-enumeration</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> kalilinux/kali-rolling:latest</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -978,8 +1169,8 @@ docker run hello-world</code></pre>
 <span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">"/bin/bash"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="script-de-automatización" class="level3" data-number="27.9.3">
-<h3 data-number="27.9.3" class="anchored" data-anchor-id="script-de-automatización"><span class="header-section-number">27.9.3</span> 8.3 Script de Automatización</h3>
+<section id="script-de-automatización" class="level3">
+<h3 class="anchored" data-anchor-id="script-de-automatización">8.3 Script de Automatización</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># deploy-lab.sh</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1028,26 +1219,26 @@ docker run hello-world</code></pre>
 <hr>
 </section>
 </section>
-<section id="integración-con-herramientas-de-pentesting" class="level2" data-number="27.10">
-<h2 data-number="27.10" class="anchored" data-anchor-id="integración-con-herramientas-de-pentesting"><span class="header-section-number">27.10</span> 9. Integración con Herramientas de Pentesting</h2>
-<section id="contenedor-de-nmap" class="level3" data-number="27.10.1">
-<h3 data-number="27.10.1" class="anchored" data-anchor-id="contenedor-de-nmap"><span class="header-section-number">27.10.1</span> 9.1 Contenedor de Nmap</h3>
+<section id="integración-con-herramientas-de-pentesting" class="level2">
+<h2 class="anchored" data-anchor-id="integración-con-herramientas-de-pentesting">9. Integración con Herramientas de Pentesting</h2>
+<section id="contenedor-de-nmap" class="level3">
+<h3 class="anchored" data-anchor-id="contenedor-de-nmap">9.1 Contenedor de Nmap</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejecutar nmap en contenedor</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-it</span> <span class="at">--rm</span> kalilinux/kali-rolling nmap <span class="at">-sV</span> 192.168.1.1</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Escaneo de red local desde contenedor</span></span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-it</span> <span class="at">--rm</span> <span class="at">--network</span> host kalilinux/kali-rolling nmap <span class="at">-sn</span> 192.168.1.0/24</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="contenedor-de-metasploit" class="level3" data-number="27.10.2">
-<h3 data-number="27.10.2" class="anchored" data-anchor-id="contenedor-de-metasploit"><span class="header-section-number">27.10.2</span> 9.2 Contenedor de Metasploit</h3>
+<section id="contenedor-de-metasploit" class="level3">
+<h3 class="anchored" data-anchor-id="contenedor-de-metasploit">9.2 Contenedor de Metasploit</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Usar imagen oficial de Metasploit</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-it</span> <span class="at">--rm</span> <span class="dt">\</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-v</span> ~/.msf4:/root/.msf4 <span class="dt">\</span></span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-v</span> /tmp/msf:/tmp/msf <span class="dt">\</span></span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  metasploitframework/metasploit-framework</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="contenedor-de-owasp-zap" class="level3" data-number="27.10.3">
-<h3 data-number="27.10.3" class="anchored" data-anchor-id="contenedor-de-owasp-zap"><span class="header-section-number">27.10.3</span> 9.3 Contenedor de OWASP ZAP</h3>
+<section id="contenedor-de-owasp-zap" class="level3">
+<h3 class="anchored" data-anchor-id="contenedor-de-owasp-zap">9.3 Contenedor de OWASP ZAP</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejecutar ZAP en contenedor</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-u</span> zap <span class="at">-p</span> 8080:8080 <span class="at">-p</span> 8090:8090 <span class="dt">\</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-v</span> <span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span>/zap-data:/zap/wrk:rw <span class="dt">\</span></span>
@@ -1057,26 +1248,26 @@ docker run hello-world</code></pre>
 <hr>
 </section>
 </section>
-<section id="ejercicios-prácticos" class="level2" data-number="27.11">
-<h2 data-number="27.11" class="anchored" data-anchor-id="ejercicios-prácticos"><span class="header-section-number">27.11</span> 10. Ejercicios Prácticos</h2>
-<section id="ejercicio-1-crear-imagen-personalizada" class="level3" data-number="27.11.1">
-<h3 data-number="27.11.1" class="anchored" data-anchor-id="ejercicio-1-crear-imagen-personalizada"><span class="header-section-number">27.11.1</span> Ejercicio 1: Crear Imagen Personalizada</h3>
+<section id="ejercicios-prácticos" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicios-prácticos">10. Ejercicios Prácticos</h2>
+<section id="ejercicio-1-crear-imagen-personalizada" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-1-crear-imagen-personalizada">Ejercicio 1: Crear Imagen Personalizada</h3>
 <ol type="1">
 <li>Crea un Dockerfile para una herramienta de pentesting específica</li>
 <li>Construye la imagen y prueba el contenedor</li>
 <li>Publica la imagen en Docker Hub</li>
 </ol>
 </section>
-<section id="ejercicio-2-laboratorio-multi-contenedor" class="level3" data-number="27.11.2">
-<h3 data-number="27.11.2" class="anchored" data-anchor-id="ejercicio-2-laboratorio-multi-contenedor"><span class="header-section-number">27.11.2</span> Ejercicio 2: Laboratorio Multi-Contenedor</h3>
+<section id="ejercicio-2-laboratorio-multi-contenedor" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-2-laboratorio-multi-contenedor">Ejercicio 2: Laboratorio Multi-Contenedor</h3>
 <ol type="1">
 <li>Diseña un laboratorio con 3 servicios vulnerables</li>
 <li>Configura Docker Compose con redes y volúmenes</li>
 <li>Crea scripts para iniciar/detener el laboratorio</li>
 </ol>
 </section>
-<section id="ejercicio-3-automatización-de-escaneos" class="level3" data-number="27.11.3">
-<h3 data-number="27.11.3" class="anchored" data-anchor-id="ejercicio-3-automatización-de-escaneos"><span class="header-section-number">27.11.3</span> Ejercicio 3: Automatización de Escaneos</h3>
+<section id="ejercicio-3-automatización-de-escaneos" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-3-automatización-de-escaneos">Ejercicio 3: Automatización de Escaneos</h3>
 <ol type="1">
 <li>Crea un script que use contenedores para escanear una red</li>
 <li>Genera reportes automáticos</li>
@@ -1085,18 +1276,18 @@ docker run hello-world</code></pre>
 <hr>
 </section>
 </section>
-<section id="recursos-adicionales" class="level2" data-number="27.12">
-<h2 data-number="27.12" class="anchored" data-anchor-id="recursos-adicionales"><span class="header-section-number">27.12</span> 11. Recursos Adicionales</h2>
-<section id="documentación" class="level3" data-number="27.12.1">
-<h3 data-number="27.12.1" class="anchored" data-anchor-id="documentación"><span class="header-section-number">27.12.1</span> Documentación</h3>
+<section id="recursos-adicionales" class="level2">
+<h2 class="anchored" data-anchor-id="recursos-adicionales">11. Recursos Adicionales</h2>
+<section id="documentación" class="level3">
+<h3 class="anchored" data-anchor-id="documentación">Documentación</h3>
 <ul>
 <li><a href="https://docs.docker.com/">Docker Documentation</a></li>
 <li><a href="https://docs.docker.com/compose/reference/">Docker Compose Reference</a></li>
 <li><a href="https://docs.docker.com/develop/develop-images/dockerfile_best-practices/">Dockerfile Best Practices</a></li>
 </ul>
 </section>
-<section id="imágenes-útiles-para-seguridad" class="level3" data-number="27.12.2">
-<h3 data-number="27.12.2" class="anchored" data-anchor-id="imágenes-útiles-para-seguridad"><span class="header-section-number">27.12.2</span> Imágenes Útiles para Seguridad</h3>
+<section id="imágenes-útiles-para-seguridad" class="level3">
+<h3 class="anchored" data-anchor-id="imágenes-útiles-para-seguridad">Imágenes Útiles para Seguridad</h3>
 <ul>
 <li><code>kalilinux/kali-rolling</code>: Kali Linux oficial</li>
 <li><code>metasploitframework/metasploit-framework</code>: Metasploit</li>
@@ -1104,8 +1295,8 @@ docker run hello-world</code></pre>
 <li><code>vulhub/*</code>: Vulnerabilidades organizadas por CVE</li>
 </ul>
 </section>
-<section id="herramientas-adicionales" class="level3" data-number="27.12.3">
-<h3 data-number="27.12.3" class="anchored" data-anchor-id="herramientas-adicionales"><span class="header-section-number">27.12.3</span> Herramientas Adicionales</h3>
+<section id="herramientas-adicionales" class="level3">
+<h3 class="anchored" data-anchor-id="herramientas-adicionales">Herramientas Adicionales</h3>
 <ul>
 <li><code>docker-compose</code>: Orchestration multi-contenedor</li>
 <li><code>docker-machine</code>: Gestión de máquinas Docker</li>
@@ -1115,8 +1306,8 @@ docker run hello-world</code></pre>
 <hr>
 </section>
 </section>
-<section id="resumen" class="level2" data-number="27.13">
-<h2 data-number="27.13" class="anchored" data-anchor-id="resumen"><span class="header-section-number">27.13</span> Resumen</h2>
+<section id="resumen" class="level2">
+<h2 class="anchored" data-anchor-id="resumen">Resumen</h2>
 <p>En este minicurso has aprendido: - ✅ Conceptos fundamentales de contenerización - ✅ Comandos básicos de gestión de contenedores e imágenes - ✅ Creación de imágenes personalizadas con Dockerfile - ✅ Orchestration multi-contenedor con Docker Compose - ✅ Seguridad en contenedores y buenas prácticas - ✅ Integración con herramientas de pentesting</p>
 <p><strong>Siguiente paso:</strong> Crea un laboratorio completo de pentesting usando Docker Compose y practica con vulnerabilidades reales.</p>
 
@@ -1126,28 +1317,21 @@ docker run hello-world</code></pre>
 </section>
 
 </main> <!-- /main -->
-<!-- Sistema de Progreso -->
-<script src="assets/js/progress.js"></script>
-
-<!-- Navegación Móvil -->
-<script src="assets/js/mobile-nav.js"></script>
-
-<!-- Inicialización de componentes UX -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Inicializar sistema de progreso
-    if (window.CourseProgress) {
-        console.log('Sistema de progreso inicializado');
-    }
-    
-    // Inicializar navegación móvil
-    if (window.MobileNav) {
-        console.log('Navegación móvil inicializada');
-    }
-});
-</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -1270,7 +1454,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/statick88\.github\.io\/ethical-hacking-2026\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -1284,6 +1468,13 @@ document.addEventListener('DOMContentLoaded', function() {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -1600,12 +1791,12 @@ document.addEventListener('DOMContentLoaded', function() {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../anexos/anexo-bash-scripting.html" class="pagination-link" aria-label="Anexo A: Minicurso de Bash Scripting">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Anexo A: Minicurso de Bash Scripting</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Anexo A: Minicurso de Bash Scripting</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../anexos/anexo-maquinas-virtuales.html" class="pagination-link" aria-label="Anexo C: Minicurso de Máquinas Virtuales con Kali Linux">
-        <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-title">Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
@@ -2291,6 +2482,30 @@ document.addEventListener('DOMContentLoaded', function() {
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link active" href="../about.html" aria-current="page">
+<p>About</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../license.html">
+<p>License</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
 
 
 

