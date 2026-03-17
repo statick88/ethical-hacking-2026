@@ -4,9 +4,9 @@
     "href": "index.html",
     "title": "Ethical Hacking 2026",
     "section": "",
-    "text": "Ethical Hacking 2026 - ABACOM\nDuración: 120 horas",
+    "text": "Ethical Hacking 2026\nDuración: 120 horas",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Ethical Hacking 2026 - ABACOM</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Ethical Hacking 2026</span>"
     ]
   },
   {
@@ -16,7 +16,7 @@
     "section": "Módulos del Curso",
     "text": "Módulos del Curso\n\nFundamentos y Reconocimiento Agéntico\nVulnerabilidades en IA y Modelos de Lenguaje\nExplotación Web y APIs 2026\nHacking de Identidad y AD Moderno\nPentesting Autónomo y Red Teaming Agéntico\nEvasión de Defensas\nCiberseguridad Industrial\nPost-Explotación, Reporte y Ética",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Ethical Hacking 2026 - ABACOM</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Ethical Hacking 2026</span>"
     ]
   },
   {
@@ -26,7 +26,7 @@
     "section": "🎓 Certificaciones y Roadmap HTB Academy 2026",
     "text": "🎓 Certificaciones y Roadmap HTB Academy 2026\nEste curso está diseñado para prepararte para las certificaciones más exigentes de la industria. Cada unidad tiene un camino directo en Hack The Box Academy:\n\n🤖 AI Red Teamer (HCAIRT)\nRelacionado con: Unidad 2 y Unidad 5 - Fundamentos de IA: Conceptos core de ML y Deep Learning. - Prompt Injection Attacks: Ataques avanzados de manipulación. - AI Privacy: Inversión de modelos e inferencia de pertenencia. - AI Defense: Hardening de sistemas de IA (Google SAIF).\n\n\n🕷️ Web Penetration Tester (HBBH)\nRelacionado con: Unidad 3 - Server-Side Attacks: SSRF, XXE, Inyecciones. - API Penetration Testing: REST y GraphQL.\n\n\n🔐 Active Directory Pentester (CPTS)\nRelacionado con: Unidad 4 - Windows PrivEsc: Escalamiento local. - AD Security Assessment: Kerberoasting, BloodHound.\n\n\n🛡️ SOC Analyst (CDSA)\nRelacionado con: Unidad 6 y Unidad 8 - Security Monitoring: Análisis de logs y detección. - Incident Response: Forense básico y remediación.\n\nPerfil recomendado para el alumno: (HTB Pro)",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Ethical Hacking 2026 - ABACOM</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Ethical Hacking 2026</span>"
     ]
   },
   {
