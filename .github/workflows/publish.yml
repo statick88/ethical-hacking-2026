@@ -14,11 +14,20 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
       
-      - uses: actions/upload-pages-artifact@v3
+      - name: Install Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+      
+      - name: Render book with Quarto
+        run: quarto render --output-dir docs
+      
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: ./docs
       
-      - id: deployment
+      - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
