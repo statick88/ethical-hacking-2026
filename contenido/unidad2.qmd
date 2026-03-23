@@ -48,7 +48,9 @@ El proyecto OWASP LLM Top 10 categoriza las vulnerabilidades más críticas:
 **Temperatura y Top-p** 🌡️
 
 Parámetros que controlan la "creatividad" del modelo:
+
 - **Temperatura 0** 🎯: Respuestas determinísticas, siempre la misma respuesta
+
 - **Temperatura alta (0.7-1.0)** 🎨: Más diversidad, mayor riesgo de outputs inesperados
 
 **Few-shot Learning** 📝

