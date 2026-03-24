@@ -20,8 +20,8 @@ author: "Diego Saavedra"
 ---
 
 ## 🎯 Objetivo
-
-Seremos capaces de identificar y explotar vulnerabilidades web en una aplicación vulnerable, aplicando técnicas del OWASP Top 10.
+ 
+ Seremos capaces de identificar y explotar vulnerabilidades web en una aplicación vulnerable, aplicando técnicas del OWASP Top 10 2025.
 
 ---
 
@@ -52,20 +52,20 @@ Seremos capaces de identificar y explotar vulnerabilidades web en una aplicació
 ## 2. Configuración del Entorno
 
 ### 2.1. Iniciar WebGoat
-
-Haremos uso de Docker para levantar la aplicación vulnerable.
-
-**Comando para iniciar:**
-```bash
-docker run -d -p 8080:8080 --name webgoat owasp/webgoat
-```
-
-**Verificación:**
-```bash
-docker ps | grep webgoat
-```
-
-**Resultado esperado**: Deberías ver el contenedor `webgoat` corriendo.
+ 
+ Haremos uso de Docker para levantar la aplicación vulnerable.
+ 
+ **Comando para iniciar:**
+ ```bash
+ docker run -d -p 8080:8080 --name webgoat webgoat/webgoat-8.0:2025.1
+ ```
+ 
+ **Verificación:**
+ ```bash
+ docker ps | grep webgoat
+ ```
+ 
+ **Resultado esperado**: Deberías ver el contenedor `webgoat` corriendo.
 
 ### 2.2. Acceder a la Aplicación
 
@@ -102,6 +102,7 @@ http://localhost:8080/WebGoat
 **Pista**: El payload básico usa comillas simples para cerrar la consulta SQL. El número de columnas debe coincidir con la consulta original.
 
 **Resultado esperado**: Deberías ver un bypass de autenticación o datos extraídos de la base de datos.
+**Pista para capturar la flag**: Intenta extraer la versión de la base de datos con: ' UNION SELECT 1,version(),3-- o busca información en la tabla de usuarios con: ' UNION SELECT 1,user,3 FROM users--
 
 #### Paso 2: Determinar número de columnas
 
@@ -272,17 +273,17 @@ Hemos completado el laboratorio cuando:
 ## 6. Troubleshooting
 
 ### Problema 1: "No se puede conectar a WebGoat"
-
-**Solución**:
-```bash
-# Verificar contenedor
-docker ps | grep webgoat
-
-# Si no está corriendo, reiniciar
-docker stop webgoat
-docker rm webgoat
-docker run -d -p 8080:8080 --name webgoat owasp/webgoat
-```
+ 
+ **Solución**:
+ ```bash
+ # Verificar contenedor
+ docker ps | grep webgoat
+ 
+ # Si no está corriendo, reiniciar
+ docker stop webgoat
+ docker rm webgoat
+ docker run -d -p 8080:8080 --name webgoat webgoat/webgoat-8.0:2025.1
+ ```
 
 ### Problema 2: "SQL Injection no funciona"
 

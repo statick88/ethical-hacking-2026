@@ -489,12 +489,10 @@ Table: users
 +---------+---------+----------------------------------+----------+
 ```
 
-```bash
-# Crackear hashes MD5 con john
-echo "admin:5f4dcc3b5aa765d61d8327deb882cf99" > dvwa_hashes.txt
-john dvwa_hashes.txt --format=Raw-MD5 --wordlist=/usr/share/wordlists/rockyou.txt
-# Resultado: password => password
-```
+**Pista para capturar flags**: 
+- Busca la tabla 'flags' o información en información_schema para flags de base de datos
+- Revisa /var/www/dvwa/hackable/uploads/ o busca archivos con extensiones .flag, .txt para flags de archivo
+- Revisa variables de entorno del servidor con phpinfo() o busca en configuración para flags de entorno
 
 **Entregable Fase 3**: Para cada vector documentar: módulo MSF utilizado, opciones configuradas, output de `id`/`whoami`, captura de pantalla o archivo de log guardado.
 

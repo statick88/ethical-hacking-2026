@@ -63,6 +63,7 @@ Al completar este laboratorio, serás capaz de:
 ```
 
 **Resultado esperado**: Deberías ver resultados de búsqueda que muestran todos los productos en lugar de solo los que coinciden con tu término de búsqueda.
+**Pista para capturar flags**: Busca tablas inusuales como 'flags', 'secrets' o 'keys' en información_schema.tables. También busca columnas como 'flag', 'secret', 'key' o 'token' en tablas de usuarios.
 
 #### Paso 2: Extraer información de la base de datos
 **Tu tarea**: Utilizar técnicas avanzadas de SQLi para extraer datos sensibles.
@@ -100,6 +101,7 @@ Al completar este laboratorio, serás capaz de:
 **Pista**: Busca campos donde tu entrada aparezca exactamente como la ingresaste en la respuesta HTML.
 
 **Resultado esperado**: Alerta de JavaScript ejecutada en el navegador que muestra 'XSS'.
+**Pista para capturar flags**: Busca campos donde puedas almacenar XSS que luego se muestre en páginas administrativas o de otros usuarios. Las flags podrían estar ocultas en atributos como data-flag o en comentarios HTML.
 
 #### Paso 2: XSS Almacenado (Persistente)
 **Tu tarea**: Encontrar puntos donde el XSS se guarde y se ejecute para otros usuarios.
