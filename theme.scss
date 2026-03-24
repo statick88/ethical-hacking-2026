@@ -1,0 +1,162 @@
+/* 
+ * Ethical Hacking 2026 - Custom Theme
+ * Mantiene Solar dark theme con mejoras visuales
+ */
+
+/*-- scss:defaults --*/
+
+$primary: #859900;  /* Solar: green */
+$link-color: #268bd2;  /* Solar: blue */
+
+/*-- scss:rules --*/
+
+/* Portada/Cover image shadow */
+img.quarto-cover-image {
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+}
+
+/* Sidebar improvements */
+.sidebar-title {
+  color: #93a1a1;
+  font-weight: 600;
+}
+
+div.sidebar-item-container .active {
+  font-weight: bold;
+  color: #859900 !important;
+}
+
+.sidebar nav[role=doc-toc] ul>li>a.active {
+  font-weight: bold;
+  border-left: 3px solid #859900;
+  padding-left: 10px;
+}
+
+/* Navigation improvements */
+.nav-link.active {
+  background-color: #073642 !important;
+  border-left: 3px solid #859900;
+}
+
+.nav-link:hover {
+  background-color: #002b36 !important;
+}
+
+/* Code blocks - improve readability */
+pre {
+  background-color: #002b36 !important;
+  border-radius: 6px;
+  border: 1px solid #073642;
+}
+
+code {
+  font-family: 'Fira Code', 'JetBrains Mono', 'Source Code Pro', monospace;
+}
+
+/* Tables - cleaner look */
+table {
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+table thead {
+  background-color: #073642;
+}
+
+table tbody tr:nth-child(odd) {
+  background-color: #002b36;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #073642;
+}
+
+/* Blockquotes - solar style */
+blockquote {
+  border-left: 4px solid #859900;
+  background-color: #002b36;
+  padding: 1rem;
+  border-radius: 0 8px 8px 0;
+}
+
+/* Callouts - improve visibility */
+.callout {
+  border-radius: 8px;
+  border-left-width: 4px;
+}
+
+.callout-tip {
+  border-left-color: #859900;
+}
+
+.callout-warning {
+  border-left-color: #cb4b16;
+}
+
+.callout-important {
+  border-left-color: #dc322f;
+}
+
+.callout-note {
+  border-left-color: #268bd2;
+}
+
+/* Links */
+a {
+  color: #268bd2;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #2aa198;
+  text-decoration: underline;
+}
+
+/* Page footer - professional look */
+footer {
+  border-top: 1px solid #073642;
+  padding-top: 1rem;
+}
+
+/* Images in content */
+.figure-caption {
+  color: #93a1a1;
+  font-style: italic;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+/* Scrollbar styling for web */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #002b36;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #073642;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #586e75;
+}
+
+/* Print-friendly adjustments */
+@media print {
+  pre {
+    background-color: #f5f5f5 !important;
+    color: #333 !important;
+    border: 1px solid #ccc;
+  }
+  
+  code {
+    color: #333 !important;
+  }
+}

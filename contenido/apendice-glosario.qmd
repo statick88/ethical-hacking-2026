@@ -1,0 +1,157 @@
+# 📖 Apéndice C: Glosario de Términos
+
+## A
+
+- **ACL (Access Control List)**: Lista de control de acceso que define permisos sobre recursos.
+- **AD (Active Directory)**: Servicio de directorio de Microsoft para gestión de identidades.
+- **APT (Advanced Persistent Threat)**: Amenaza persistente avanzada - grupo de atacantes sofisticados.
+- **Asset**: Activo de información - cualquier dato o sistema con valor para la organización.
+
+## B
+
+- **Backdoor**: Código malicioso que permite acceso no autorizado a un sistema.
+- **Beacon**: Señal de comunicación de un payload C2 hacia el servidor de comando y control.
+- **Bug Bounty**: Programa de recompensas por encontrar vulnerabilidades.
+- **Bypass**: Técnica para evadir restricciones de seguridad.
+
+## C
+
+- **C2 (Command & Control)**: Infraestructura usada por atacantes para controlar sistemas comprometidos.
+- **CVE (Common Vulnerabilities and Exposures)**: Identificador público de vulnerabilidades.
+- **CVSS (Common Vulnerability Scoring System)**: Sistema de puntuación de severidad de vulnerabilidades.
+- **CWE (Common Weakness Enumeration)**: Lista de debilidades comunes en software.
+
+## D
+
+- **DDoS (Distributed Denial of Service)**: Ataque de denegación de servicio distribuido.
+- **DLL (Dynamic Link Library)**: Biblioteca de vínculos dinámicos en Windows.
+- **DNS (Domain Name System)**: Sistema de nombres de dominio.
+- **Domain Fronting**: Técnica para ocultar tráfico malicioso usando dominios legítimos.
+
+## E
+
+- **EDR (Endpoint Detection and Response)**: Solución de seguridad en endpoints.
+- **Exploit**: Código o técnica que aprovecha una vulnerabilidad.
+- **Exfiltration**: Extracción no autorizada de datos.
+
+## F
+
+- **Footprinting**: Recolección de información sobre un objetivo.
+- **Fuzzing**: Técnica de prueba automática que introduce datos inválidos.
+
+## G
+
+- **Golden Ticket**: Ticket Kerberos falso con privilegios de Domain Admin.
+
+## H
+
+- **Hash**: Función criptográfica que produce un resumen de datos.
+- **Honeypot**: Sistema señuelo para detectar atacantes.
+
+## I
+
+- **IDOR (Insecure Direct Object Reference)**: Acceso no autorizado a objetos por ID.
+- **IOC (Indicator of Compromise)**: Indicador de compromiso - evidencia de ataque.
+- **IPS/IDS**: Sistema de prevención/detección de intrusiones.
+
+## J
+
+- **Jailbreak**: Técnica para evadir restricciones en sistemas.
+
+## K
+
+- **Kerberoasting**: Ataque contra tickets de servicio Kerberos.
+- **Keylogger**: Software que registra teclas pulsadas.
+
+## L
+
+- **Lateral Movement**: Movimiento lateral - técnica para moverse entre sistemas.
+- **LOLBAS (Living Off the Land Binaries)**: Binarios legítimos usados para ejecutar acciones maliciosas.
+- **LSASS**: Proceso de autenticación de Windows.
+
+## M
+
+- **Malware**: Software malicioso.
+- **Man-in-the-Middle (MITM)**: Ataque de hombre en el medio.
+- **Metasploit**: Framework de explotación.
+- **Meterpreter**: Payload de Metasploit en memoria.
+
+## O
+
+- **OSINT**: Inteligencia de fuentes abiertas.
+- **OWASP**: Open Web Application Security Project.
+
+## P
+
+- **Pass-the-Hash (PtH)**: Técnica de autenticación usando hashes en lugar de contraseñas.
+- **Payload**: Código ejecutable entregado a un objetivo.
+- **Pivoting**: Técnica para usar un sistema comprometido para atacar otros.
+- **Post-exploitation**: Acciones después de obtener acceso inicial.
+- **Privilege Escalation**: Elevación de privilegios.
+
+## R
+
+- **RCE (Remote Code Execution)**: Ejecución remota de código.
+- **Red Team**: Equipo que simula atacantes reales.
+- **Reversing**: Ingeniería inversa de software.
+
+## S
+
+- **Shellcode**: Código shell - payload que proporciona acceso a shell.
+- **SIEM**: Security Information and Event Management.
+- **SMB (Server Message Block)**: Protocolo de compartición de archivos Windows.
+- **Social Engineering**: Ingeniería social - manipulación psicológica.
+- **SQL Injection**: Inyección SQL.
+- **SSH**: Secure Shell.
+- **SSRF**: Server-Side Request Forgery.
+
+## T
+
+- **Threat Hunting**: Caza de amenazas.
+- **Ticket Granting Ticket (TGT)**: Ticket de concesión de tickets Kerberos.
+
+## V
+
+- **Vulnerability**: Debilidad que puede ser explotada.
+- **VPN**: Virtual Private Network.
+
+## W
+
+- **Webshell**: Script web que proporciona acceso remoto al servidor.
+- **WAF (Web Application Firewall)**: Firewall de aplicación web.
+- **WMI (Windows Management Instrumentation)**: Infraestructura de gestión de Windows.
+
+## X
+
+- **XSS (Cross-Site Scripting)**: Cross-site scripting.
+
+## Z
+
+- **Zero-day**: Vulnerabilidad desconocida sin parche.
+
+---
+
+## Acrónimos Comunes
+
+| Acrónimo | Significado |
+|----------|-------------|
+| APT | Advanced Persistent Threat |
+| CVE | Common Vulnerabilities and Exposures |
+| CVSS | Common Vulnerability Scoring System |
+| EDR | Endpoint Detection and Response |
+| IOC | Indicator of Compromise |
+| OSINT | Open Source Intelligence |
+| PTES | Penetration Testing Execution Standard |
+| RCE | Remote Code Execution |
+| SIEM | Security Information and Event Management |
+| VPN | Virtual Private Network |
+| WAF | Web Application Firewall |
+
+---
+
+## Referencias
+
+- OWASP Glossary
+- MITRE ATT&CK
+- PTES Technical Guidelines
+- EC-Council CEH Courseware

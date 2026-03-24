@@ -26,7 +26,7 @@ El curso sigue la filosofía "Aprender haciendo":
 ## Contacto
 
 Para consultas sobre el curso, materiales o colaboraciones:
-- **Email**: diego.saavedra@statick.dev
+- **Email**: dsaavedra88@gmail.com
 - **GitHub**: [@statick88](https://github.com/statick88)
 - **LinkedIn**: [Diego Saavedra](https://linkedin.com/in/dmsaavedra)
 

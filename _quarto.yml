@@ -1,24 +1,81 @@
 # Ethical Hacking 2026
+# Licensed under CC BY-NC-ND 4.0 - Diego Saavedra 2026
 project:
   type: book
   output-dir: docs
+  resources: 
+    - "images/*.png"
+    - "images/*.jpg"
+    - "images/*.svg"
 
 book:
   title: "Ethical Hacking 2026"
+  subtitle: "Curso Completo de Pentesting y Ciberseguridad"
   author: "Diego Saavedra"
-  site-url: "https://statick88.github.io/ethical-hacking-2026/"
+  output-file: "ethical_hacking_2026"
+  date: today
+  date-format: medium
   favicon: images/hacking.png
-  downloads: [pdf, epub]
-  sidebar:
-    style: docked
+  description: "Curso completo de Ethical Hacking 2026 - Pentesting, Ciberseguridad y Seguridad Ofensiva"
+  keyword: "Ethical Hacking, Pentesting, Ciberseguridad, Seguridad Informatica, Hacking, OWASP"
+  url: https://github.com/statick88/ethical-hacking-2026
+  
+  # Professional navigation features
+  reader-mode: true
+  back-to-top-navigation: true
+  page-navigation: true
+  search: true
+  
+  # Sidebar config
+  sidebar: 
+    logo: images/hacking.png
     search: true
+    collapse-level: 1
+  
+  # Repository info
+  repo-url: https://github.com/statick88/ethical-hacking-2026
+  repo-branch: main
+  repo-subdir: docs
+  
+  # Sharing and downloads
+  sharing: [twitter, linkedin]
+  downloads: [pdf, epub]
+  
+  # Cover and social metadata
+  image: images/portada.png
+  image-alt: "Ethical Hacking 2026 - Curso de Pentesting y Ciberseguridad"
+  
+  # Open Graph / Social Media
+  open-graph: 
+    image: images/portada.png
+    image-alt: "Ethical Hacking 2026 - Curso de Pentesting y Ciberseguridad"
+    title: "Ethical Hacking 2026"
+    description: "Curso completo de pentesting, ciberseguridad y seguridad ofensiva"
+  
+  twitter-card: 
+    image: images/portada.png
+    image-alt: "Ethical Hacking 2026"
+    title: "Ethical Hacking 2026"
+    description: "Curso completo de pentesting y ciberseguridad"
+    card-style: summary_large_image
+  
+  # Cover image for PDF/EPUB
+  cover-image: images/portada.png
+  
+  # Professional footer
   page-footer:
+    border: true
     left: |
-      Ethical Hacking 2026 por Diego Saavedra
+      © 2026 **Diego Saavedra**. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)
+    center: |
+      Este material es para uso educativo. No comercialice ni modifique sin autorización.
     right: |
-      [Acerca de](/about.qmd) | [Licencia](/license.qmd)
+      Built with [Quarto](https://quarto.org/)
+  
+  # Chapter structure
   chapters:
     - index.qmd
+    - contenido/intro.qmd
     - part: "Contenido"
       chapters:
         - contenido/unidad1.qmd
@@ -29,6 +86,7 @@ book:
         - contenido/unidad6.qmd
         - contenido/unidad7.qmd
         - contenido/unidad8.qmd
+        - contenido/unidad9.qmd
     - part: "Laboratorios"
       chapters:
         - labs/lab-unidad1.md
@@ -39,38 +97,76 @@ book:
         - labs/lab-unidad6.md
         - labs/lab-unidad7.md
         - labs/lab-unidad8.md
-    - part: "Evaluación"
+        - labs/lab-owasp.md
+    - part: "Apéndices"
       chapters:
-        - quizzes/unidad1.md
-        - quizzes/unidad2.md
-        - quizzes/unidad3.md
-        - quizzes/unidad4.md
-        - quizzes/unidad5.md
-        - quizzes/unidad6.md
-        - quizzes/unidad7.md
-        - quizzes/unidad8.md
-    - part: "Anexos"
-      chapters:
-        - anexos/anexo-bash-scripting.qmd
-        - anexos/anexo-docker.qmd
-        - anexos/anexo-maquinas-virtuales.qmd
+        - contenido/apendice-puertos.qmd
+        - contenido/apendice-herramientas.qmd
+        - contenido/apendice-glosario.qmd
     - part: "Información"
       chapters:
         - about.qmd
         - license.qmd
 
+# Bibliography
+bibliography: references.bib
+biblio-style: "apalike"
+
+# Output formats
 format:
   html:
-    theme:
+    # Maintain Solar theme with custom enhancements
+    theme: 
       - solar
-      - custom.scss
-    css:
-      - css/styles.css
-      - custom.css
+      - theme.scss
+    # Fonts - using system fonts for better performance
+    mainfont: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+    monofont: "'Fira Code', 'JetBrains Mono', 'Source Code Pro', monospace"
+    # Numbering
+    number-sections: false
+    number-depth: 4
+    # Code annotations
+    code-annotations: hover
+    # External links
+    link-external-icon: true
+    link-external-newwindow: true
+    # Include fonts CSS
+    css: css/fonts.css
+    # Title page
+    title-page: true
+    title-page-logo: images/portada.png
+    # Bootstrap tweaks
+    bootstrap-version: 5
+    # Include custom headers
+    include-in-header: _include.html
+  
+  # PDF output
   pdf:
     documentclass: scrbook
+    # Cover for PDF
+    cover-image: images/portada.png
+    # Bibliography
+    bibliography: references.bib
+    biblio-style: apalike
+    # Page setup
+    papersize: a4
+    geometry:
+      - margin=2cm
+      - bindingoffset=0.5cm
+  
+  # EPUB output
   epub:
-    cover-image: images/hacking.png
+    cover-image: images/portada.png
+    belongs-to-collection: "Ethical Hacking 2026"
+    group-position: 0
+    creator: "Diego Saavedra"
+    rights: "Attribution-NonCommercial-NoDerivatives 4.0 International"
+    fig-responsive: true
+    number-sections: true
 
+# Execution settings
 execute:
   echo: false
+  enabled: false
+  code-annotations: hover
+  number-depth: 3

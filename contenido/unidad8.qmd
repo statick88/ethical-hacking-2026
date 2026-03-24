@@ -1,5 +1,7 @@
 # 🎯 Unidad 8: Post-Explotación, Reporte y Ética
 
+![Post-Explotación](../images/unidad8-post-exploitation.png)
+
 ## 🎯 Objetivos de Aprendizaje
 
 - **Ejecutar** técnicas de post-explotación y mantenimiento de acceso.

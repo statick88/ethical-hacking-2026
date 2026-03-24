@@ -1,5 +1,7 @@
 # 🏭 Unidad 7: Ciberseguridad Industrial
 
+![Ciberseguridad Industrial](../images/unidad7-industrial-security.png)
+
 ## 🎯 Objetivos de Aprendizaje
 
 - **Comprender** la arquitectura de sistemas OT/ICS.

@@ -1,0 +1,243 @@
+# 🛠️ Unidad 9: BurpSuite & OWASP ZAP - Herramientas de Seguridad Web
+
+![BurpSuite & OWASP ZAP](../images/unidad9-web-tools.png)
+
+## 🎯 Objetivos de Aprendizaje
+
+- Dominar BurpSuite como herramienta principal para pruebas de seguridad web
+- Conocer OWASP ZAP como alternativa gratuita y de código abierto
+- Configurar correctamente ambas herramientas con Docker
+- Aplicar metodología de testing/web fuzzing
+
+---
+
+## 1. BurpSuite vs OWASP ZAP - No Son lo Mismo 🆚
+
+:::{.callout-warning}
+## ¡Importante! Son herramientas DIFERENTES
+
+A pesar de que ambos son proxies de seguridad web, son productos completamente distintos:
+
+| Característica | BurpSuite | OWASP ZAP |
+|----------------|-----------|-----------|
+| **Licencia** | Comercial (Versión Paid/Pro) | Código Abierto (100% Free) |
+| **Desarrollador** | PortSwigger | OWASP Foundation |
+| **Instalación** | Java (Kali: `apt install burpsuite`) | Java/Docker (`zap.sh` o Docker) |
+| **Funciones Pro** | Scanner automático, Intruder avanzado | Limitadas |
+| **Ideal para** | Bug Bounty, Pentesting profesional | Aprendizaje, proyectos gratuitos |
+
+:::
+
+---
+
+## 2. BurpSuite - Configuración y Uso 🛡️
+
+### 2.1 Instalación
+
+```bash
+# En Kali Linux
+sudo apt update
+sudo apt install burpsuite
+
+# O descargar desde https://portswigger.net/burp/releases (requiere Java)
+```
+
+### 2.2 Componentes Principales
+
+| Componente | Función |
+|------------|---------|
+| **Proxy** | Intercepta tráfico navegador↔servidor |
+| **Spider** | Descubrimiento automático de contenido |
+| **Repeater** | Repite y modifica peticiones |
+| **Intruder** | Fuerza bruta y fuzzing automatizado |
+| **Decoder** | Codifica/decodifica datos |
+| **Sequencer** | Analiza aleatoriedad de tokens |
+
+### 2.3 Configuración del Proxy
+
+```
+BurpSuite → Proxy → Options
+├── Running: ✓ (activado)
+├── Port: 8080 (por defecto)
+├── Intercept: ON/OFF
+└── SSL Negotiation: Enable
+```
+
+**Configurar navegador:**
+```
+Navegador → Settings → Network → Proxy
+├── HTTP Proxy: 127.0.0.1:8080
+└── SSL Proxy: 127.0.0.1:8080
+```
+
+### 2.4 Certificados CA
+
+```bash
+# Exportar certificado de Burp
+BurpSuite → Proxy → Options → Import/Export CA Certificate
+
+# Instalar en navegador
+# Firefox: Preferences → Certificates → Import
+# Chrome: Settings → Manage Certificates → Import
+```
+
+---
+
+## 3. OWASP ZAP - Alternativa Libre 🌍
+
+### 3.1 Instalación
+
+```bash
+# Opción 1: Paquete
+sudo apt install owasp-zap
+
+# Opción 2: Docker (RECOMENDADO para laboratorio)
+docker pull owasp/zap2docker-stable
+docker run -u zap -p 8080:8080 owasp/zap2docker-stable zap.sh -port 8080
+```
+
+### 3.2 Modos de Uso
+
+| Modo | Descripción |
+|------|-------------|
+| **Safe** | No modifica requests |
+| **Protected** | Solo scope definido |
+| **Attack** | Escanea todo lo descubierto |
+
+### 3.3 Comandos Docker Útiles
+
+```bash
+# Ver contenedor activo
+docker ps | grep zap
+
+# Detener contenedor ZAP
+docker stop <container_id>
+
+# Iniciar ZAP en background
+docker run -d -p 8080:8080 owasp/zap2docker-stable
+```
+
+---
+
+## 4. Entorno de Prácticas - WebGoat 🐐
+
+### 4.1 Contenedor Docker
+
+:::{.callout-important}
+## Error común: El contenedor se llama `webgoat`, NO `webgoat-server`
+
+```
+# ✅ CORRECTO - Ver contenedor activo
+docker ps | grep webgoat
+
+# ❌ INCORRECTO - Esto no encontrará nada
+docker ps | grep webgoat-server
+```
+:::
+
+**Iniciar WebGoat:**
+
+```bash
+# Arrancar WebGoat
+docker run -d -p 8080:8080 -p 9090:9090 --name webgoat webgoat/webgoat
+
+# Verificar que está corriendo
+docker ps | grep webgoat
+
+# Ver logs
+docker logs webgoat
+
+# Acceder desde navegador
+# http://localhost:8080/WebGoat
+```
+
+**Otros contenedores útiles:**
+
+```bash
+# DVWA
+docker run --rm -it -p 80:80 vulnerables/web-dvwa
+
+# Juice Shop
+docker run -d -p 3000:3000 bkimminich/juice-shop
+```
+
+---
+
+## 5. Metodología de Testing 🔬
+
+### 5.1 Flujo de Trabajo con BurpSuite
+
+```
+1. Proxy → Configurar navegador
+2. Target → Agregar sitio al scope
+3. Spider → Descubrir contenido
+4. Proxy → Interceptar y modificar
+5. Repeater → Testear endpoints
+6. Intruder → Fuzzing automatizado
+7. Scanner → (Pro) Detección automática
+```
+
+### 5.2 Flujo con OWASP ZAP
+
+```
+1. Quick Start → Automated Scan
+2. Spider → Descubrir contenido
+3. Active Scan → Encontrar vulnerabilidades
+4. Alerts → Revisar hallazgos
+5. Report → Generar informe
+```
+
+---
+
+## 6. Laboratorio - Configuración 🔧
+
+### Práctica 1: Configurar BurpSuite
+
+```
+1. Iniciar BurpSuite
+2. Proxy → Options → Verificar puerto 8080
+3. Proxy → Intercept → ON
+4. Navegador → Configurar proxy 127.0.0.1:8080
+5. Install CA certificate en navegador
+6. Visitar DVWA → Observar tráfico en Proxy → HTTP History
+```
+
+### Práctica 2: Configurar OWASP ZAP con Docker
+
+```bash
+# Iniciar ZAP
+docker run -d -p 8080:8080 -p 9090:9090 --name zap owasp/zap2docker-stable
+
+# Ver estado
+docker ps | grep zap
+
+# Acceder: http://localhost:9090
+```
+
+### Práctica 3: Fuzzing Básico
+
+```
+1. BurpSuite → Intruder → Enviar request
+2. Posicionar payloads en parameters
+3. Load wordlist (SecLists o custom)
+4. Configurar Grep para respuestas
+5. Start attack → Analizar resultados
+```
+
+---
+
+## 📚 Recursos
+
+- [BurpSuite Documentation](https://portswigger.net/burp/documentation)
+- [OWASP ZAP Official](https://www.zaproxy.org/)
+- [PortSwigger Academy](https://portswigger.net/web-security)
+- [OWASP WebGoat](https://owasp.org/www-project-webgoat/)
+
+---
+
+## 📖 Bibliografía
+
+- PortSwigger Web Security Academy
+- OWASP Testing Guide v4.2
+- "The Web Application Hacker's Handbook" - Dafydd Stuttard
+- OWASP ZAP Documentation

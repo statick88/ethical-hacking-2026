@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <rect width="800" height="400" fill="#002b36"/>
+  <text x="400" y="50" font-family="Arial" font-size="28" fill="#b58900" text-anchor="middle" font-weight="bold">🛡️ UNIDAD 1: Fundamentos y Reconocimiento</text>
+  
+  <!-- Pentesting Phases -->
+  <rect x="50" y="80" width="140" height="60" rx="10" fill="#073642" stroke="#2aa198" stroke-width="2"/>
+  <text x="120" y="105" font-family="Arial" font-size="14" fill="#fff" text-anchor="middle">🔍 RECON</text>
+  <text x="120" y="125" font-family="Arial" font-size="12" fill="#839496" text-anchor="middle">Information Gathering</text>
+  
+  <rect x="210" y="80" width="140" height="60" rx="10" fill="#073642" stroke="#2aa198" stroke-width="2"/>
+  <text x="280" y="105" font-family="Arial" font-size="14" fill="#fff" text-anchor="middle">📡 ESCANEO</text>
+  <text x="280" y="125" font-family="Arial" font-size="12" fill="#839496" text-anchor="middle">Enumeration</text>
+  
+  <rect x="370" y="80" width="140" height="60" rx="10" fill="#073642" stroke="#dc322f" stroke-width="2"/>
+  <text x="440" y="105" font-family="Arial" font-size="14" fill="#fff" text-anchor="middle">💥 EXPLOTACIÓN</text>
+  <text x="440" y="125" font-family="Arial" font-size="12" fill="#839496" text-anchor="middle">Exploitation</text>
+  
+  <rect x="530" y="80" width="140" height="60" rx="10" fill="#073642" stroke="#b58900" stroke-width="2"/>
+  <text x="600" y="105" font-family="Arial" font-size="14" fill="#fff" text-anchor="middle">🎯 POST-EXP</text>
+  <text x="600" y="125" font-family="Arial" font-size="12" fill="#839496" text-anchor="middle">Post-Exploitation</text>
+  
+  <rect x="690" y="80" width="60" height="60" rx="10" fill="#073642" stroke="#859900" stroke-width="2"/>
+  <text x="720" y="115" font-family="Arial" font-size="14" fill="#fff" text-anchor="middle">📝</text>
+  
+  <!-- Arrows -->
+  <path d="M190 110 L210 110" stroke="#2aa198" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M350 110 L370 110" stroke="#2aa198" stroke-width="2" fill="none"/>
+  <path d="M510 110 L530 110" stroke="#2aa198" stroke-width="2" fill="none"/>
+  
+  <!-- Tools -->
+  <rect x="50" y="180" width="700" height="180" rx="10" fill="#073642" stroke="#b58900" stroke-width="1"/>
+  <text x="400" y="210" font-family="Arial" font-size="18" fill="#b58900" text-anchor="middle" font-weight="bold">HERRAMIENTAS DE RECONOCIMIENTO</text>
+  
+  <circle cx="120" cy="280" r="40" fill="#002b36" stroke="#3498db" stroke-width="2"/>
+  <text x="120" y="275" font-family="Arial" font-size="24" text-anchor="middle">🗺️</text>
+  <text x="120" y="335" font-family="Arial" font-size="12" fill="#fff" text-anchor="middle">Nmap</text>
+  
+  <circle cx="250" cy="280" r="40" fill="#002b36" stroke="#3498db" stroke-width="2"/>
+  <text x="250" y="275" font-family="Arial" font-size="24" text-anchor="middle">🔍</text>
+  <text x="250" y="335" font-family="Arial" font-size="12" fill="#fff" text-anchor="middle">Recon-ng</text>
+  
+  <circle cx="380" cy="280" r="40" fill="#002b36" stroke="#3498db" stroke-width="2"/>
+  <text x="380" y="275" font-family="Arial" font-size="24" text-anchor="middle">🕷️</text>
+  <text x="380" y="335" font-family="Arial" font-size="12" fill="#fff" text-anchor="middle">SpiderFoot</text>
+  
+  <circle cx="510" cy="280" r="40" fill="#002b36" stroke="#3498db" stroke-width="2"/>
+  <text x="510" y="275" font-family="Arial" font-size="24" text-anchor="middle">📧</text>
+  <text x="510" y="335" font-family="Arial" font-size="12" fill="#fff" text-anchor="middle">theHarvester</text>
+  
+  <circle cx="640" cy="280" r="40" fill="#002b36" stroke="#3498db" stroke-width="2"/>
+  <text x="640" y="275" font-family="Arial" font-size="24" text-anchor="middle">🔎</text>
+  <text x="640" y="335" font-family="Arial" font-size="12" fill="#fff" text-anchor="middle">Shodan</text>
+</svg>

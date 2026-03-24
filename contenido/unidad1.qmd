@@ -1,5 +1,7 @@
 # 🛡️ Unidad 1: Fundamentos y Reconocimiento Agéntico
 
+![Fases del Pentesting](../images/unidad1-fases-pentesting.png)
+
 ## 🎯 Objetivos de Aprendizaje
 
 - **Identificar** las fases del pentesting y su importancia en una evaluación de seguridad.

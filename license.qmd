@@ -2,40 +2,75 @@
 title: "Licencia"
 ---
 
-# Licencia del Curso
+# Licencia
 
-Este material educativo se distribuye bajo los siguientes términos:
+```{=html}
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+  <img alt="Licencia Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" />
+</a>
+```
+
+Este curso está bajo una licencia [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International](http://creativecommons.org/licenses/by-nc-nd/4.0/).
+
+---
 
 ## © 2026 Diego Saavedra. Todos los derechos reservados.
 
-Queda prohibida la reproducción, distribución, comunicación pública y transformación de esta obra salvo con la autorización explícita y por escrito del titular de los derechos.
+---
 
-### Permisos otorgados
+## Usted es libre de:
 
-Se autoriza el uso personal y educativo de este material bajo las siguientes condiciones:
+- **Compartir** — copiar y redistribuir el material en cualquier medio o formato
+- **Sin royalties** — no tiene que pagar por el material
 
-1. **Uso exclusivamente educativo**: El material solo puede utilizarse para fines de aprendizaje y enseñanza no comercial.
-2. **Atribución requerida**: En cualquier uso derivado, debe acreditarse claramente a Diego Saavedra como autor original.
-3. **No modificación**: El contenido no puede modificarse sin autorización previa.
-4. **No comercialización**: Queda prohibida la venta, licenciamiento o cualquier forma de explotación económica del material.
+---
 
-### Excepciones
+## Bajo los siguientes términos:
 
-Se permite:
-- Citas breves con atribución adecuada para fines académicos o de investigación.
-- Uso en entornos educativos regulados (escuelas, universidades, bootcamps) con fines exclusivamente pedagógicos.
-- Compartir enlaces de acceso al repositorio original en GitHub.
+| Requisito | Descripción |
+|-----------|-------------|
+| **Atribución** | Debe dar crédito de manera adecuada, brindar un enlace a la licencia, e indicar si se han realizado cambios. |
+| **No Comercial** | No puede hacer uso del material con propósitos comerciales. |
+| **Sin Derivadas** | Si remezcla, transforma o crea a partir del material, no podrá distribuir el material modificado. |
 
-### Descargo de responsabilidad
+---
+
+## ⚠️ Importante
+
+- No tiene que cumplir con la licencia para elementos del material en el dominio público o cuando su uso esté permitido por una excepción o limitación aplicable.
+- No se dan garantías. La licencia podría no darle todos los permisos que necesita para el uso que tenga previsto.
+
+---
+
+## Uso Educativo
+
+Este material está diseñado para uso educativo en:
+
+- 🏫 Instituciones académicas (universidades, escuelas)
+- 👨‍🏫 Bootcamps y cursos de formación
+- 📚 Investigación académica
+- 🌐 Compartición de enlaces al repositorio original
+
+---
+
+## Descargo de Responsabilidad
 
 El autor no se hace responsable por:
-- El mal uso de las técnicas descritas en este material.
-- Daños ocasionados por la aplicación de los conocimientos adquiridos.
-- La obsolescencia técnica del contenido debido al rápido avance de la tecnología.
 
-Las técnicas descritas deben aplicarse únicamente en entornos autorizados y legales, respetando las leyes de cada jurisdicción.
+- ❌ El mal uso de las técnicas descritas en este material
+- ❌ Daños ocasionados por la aplicación de los conocimientos adquiridos
+- ❌ La obsolescencia técnica del contenido
 
-Para solicitar permisos de uso específicos, contactar a: diego.saavedra@statick.dev
+> **Nota**: Las técnicas descritas deben aplicarse únicamente en entornos autorizados y legales, respetando las leyes de cada jurisdicción.
+
+---
+
+## Contacto
+
+Para solicitudes de uso específicas que excedan los términos de esta licencia:
+
+📧 **dsaavedra88@gmail.com**  
+🐙 **@statick88** (GitHub)
 
 ---
 

@@ -1,5 +1,7 @@
 # 🚀 Unidad 5: Pentesting Autónomo y Red Teaming Agéntico
 
+![Pentesting Autónomo](../images/unidad5-autonomous-pentesting.png)
+
 ## 🎯 Objetivos de Aprendizaje
 
 - **Automatizar** tareas de pentesting utilizando agentes de IA.

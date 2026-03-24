@@ -1,0 +1,113 @@
+# 📋 Apéndice A: Puertos y Protocolos Comunes
+
+## Puertos well-known (0-1023)
+
+| Puerto | Protocolo | Servicio | Notas de Seguridad |
+|--------|-----------|----------|-------------------|
+| 20/21 | TCP | FTP | Datos/Control - inseguro sin TLS |
+| 22 | TCP | SSH/SFTP | Seguro, usar clave SSH |
+| 23 | TCP | Telnet | **OBSOLETO** - texto plano |
+| 25 | TCP | SMTP | Email servers |
+| 53 | TCP/UDP | DNS | Crítico - filtrar recursive |
+| 67/68 | UDP | DHCP | Asignación IP |
+| 69 | UDP | TFTP | Sin auth - peligroso |
+| 80 | TCP | HTTP | No segura - usar HTTPS |
+| 110 | TCP | POP3 | Email retrieval |
+| 123 | UDP | NTP | Sincronización tiempo |
+| 135 | TCP | MS RPC | Windows servicios |
+| 137-139 | TCP/UDP | NetBIOS | SMB legacy |
+| 143 | TCP | IMAP | Email access |
+| 161/162 | UDP | SNMP | Monitoreo - v3 solo |
+| 389 | TCP | LDAP | Directorio |
+| 443 | TCP | HTTPS | Web segura |
+| 445 | TCP | SMB | Compartir archivos |
+| 464 | TCP | Kerberos | Auth Windows |
+| 636 | TCP | LDAPS | LDAP seguro |
+| 993 | TCP | IMAPS | IMAP seguro |
+| 995 | TCP | POP3S | POP3 seguro |
+
+---
+
+## Puertos registrados (1024-49151)
+
+| Puerto | Protocolo | Servicio | Notas de Seguridad |
+|--------|-----------|----------|-------------------|
+| 1025-1029 | TCP | Windows | Puertos RPC dinámicos |
+| 1433 | TCP | MSSQL | Base de datos |
+| 1434 | TCP | MSSQL Browser | No exponer a internet |
+| 3306 | TCP | MySQL | Base de datos |
+| 3389 | TCP | RDP | **BLANCO** - target favorito |
+| 5432 | TCP | PostgreSQL | Base de datos |
+| 5900 | TCP | VNC | insecure - usar SSH tunnel |
+| 8080 | TCP | HTTP Proxy/Alt | Tomcat, proxies |
+| 8443 | TCP | HTTPS Alt | Admin interfaces |
+| 27017 | TCP | MongoDB | No auth por defecto |
+
+---
+
+## Puertos dinámicos (49152-65535)
+
+Utilizados para conexiones cliente temporales. No suelen exponerse directamente.
+
+---
+
+## Protocolos de Pentesting
+
+### Enumeração de Servicios
+
+```bash
+# Nmap básico
+nmap -sV -p- 10.10.10.10
+
+# Detección de SO
+nmap -O 10.10.10.10
+
+# Scripts de vuln
+nmap --script vuln 10.10.10.10
+```
+
+### Puertos Críticos para Auditoría
+
+| Objetivo | Puertos a Evaluar |
+|----------|-------------------|
+| Web | 80, 443, 8080, 8443 |
+| Databases | 3306, 5432, 1433, 27017 |
+| SMB | 139, 445 |
+| SSH | 22 |
+| RDP | 3389 |
+| Email | 25, 110, 143, 587 |
+
+---
+
+## Comandos de Verificación
+
+### Windows
+
+```cmd
+# Ver puertos activos
+netstat -ano
+
+# Buscar proceso en puerto
+netstat -ano | findstr :3389
+```
+
+### Linux
+
+```bash
+# Ver puertos activos
+ss -tuln
+
+# Buscar proceso
+lsof -i :22
+
+# Ver conexiones
+netstat -antp
+```
+
+---
+
+## Referencias
+
+- IANA Service Name Registry
+- Nmap Port Scanning Documentation
+- MITRE ATT&CK T1046 - Network Service Discovery

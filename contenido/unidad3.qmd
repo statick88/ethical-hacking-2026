@@ -1,5 +1,7 @@
 # Unidad 3: Explotación Web y APIs 2026 🕷️
 
+![Explotación Web](../images/unidad3-web-exploitation.png)
+
 ## 🎯 Objetivos de Aprendizaje
 
 - **Identificar** 🔍 y explotar vulnerabilidades web modernas según OWASP Top 10.

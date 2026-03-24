@@ -1,0 +1,22 @@
+/* Fira Code Nerd Font for Ethical Hacking 2026 */
+
+/* Import Fira Code from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
+
+/* Code blocks - Fira Code Nerd Font */
+pre, code, .code, code.sourceCode, pre.sourceCode {
+  font-family: 'Fira Code', 'JetBrains Mono', 'Source Code Pro', 'Cascadia Code', monospace !important;
+  font-size: 0.9em;
+}
+
+/* Improve code block readability */
+pre {
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+/* Code in text */
+:not(pre) > code {
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+}

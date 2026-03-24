@@ -1,5 +1,7 @@
 # 🤖 Unidad 2: Vulnerabilidades en IA y Modelos de Lenguaje
 
+![Seguridad en IA](../images/unidad2-ia-security.png)
+
 ## 🎯 Objetivos de Aprendizaje
 
 - **Identificar** las vulnerabilidades específicas en sistemas de IA y modelos de lenguaje.

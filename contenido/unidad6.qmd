@@ -1,5 +1,7 @@
 # 🛡️ Unidad 6: Evasión de Defensas
 
+![Evasión de Defensas](../images/unidad6-defense-evasion.png)
+
 ## 🎯 Objetivos de Aprendizaje
 
 - **Bypassear** soluciones EDR y antivirus.

@@ -1,5 +1,7 @@
 # 🔐 Unidad 4: Hacking de Identidad y AD Moderno
 
+![Active Directory](../images/unidad4-active-directory.png)
+
 ## 🎯 Objetivos de Aprendizaje
 
 - **Evaluar** la seguridad de entornos Active Directory.

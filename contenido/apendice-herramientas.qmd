@@ -1,0 +1,156 @@
+# 🔧 Apéndice B: Herramientas de Pentesting
+
+## Categorías de Herramientas
+
+---
+
+## 1. Reconocimiento y OSINT
+
+| Herramienta | Propósito | Instalación |
+|-------------|-----------|-------------|
+| **Nmap** | Escaneo de red | `apt install nmap` |
+| **Recon-ng** | Framework OSINT | `apt install recon-ng` |
+| **SpiderFoot** | Automatización OSINT | `pip install spiderfoot` |
+| **theHarvester** | Emails y subdomains | `apt install theharvester` |
+| **Shodan** | Buscador IoT | CLI: `pip install shodan` |
+| **Maltego** | Graph OSINT | `apt install maltego` |
+| **Amass** | Enumeración subdomains | `apt install amass` |
+
+---
+
+## 2. Vulnerabilidad Assessment
+
+| Herramienta | Propósito | Instalación |
+|-------------|-----------|-------------|
+| **OpenVAS** | Escáner vulnerabilidades | Docker: `docker pull openscap/openscap` |
+| **Nessus** | Scanner comercial | Descargar de tenable.com |
+| **Nikto** | Escáner web | `apt install nikto` |
+| ** nuclei** | Templates de vulnerab. | `go install github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest` |
+
+---
+
+## 3. Explotación Web
+
+| Herramienta | Propósito | Instalación |
+|-------------|-----------|-------------|
+| **BurpSuite** | Proxy + Scanner | `apt install burpsuite` |
+| **OWASP ZAP** | Proxy open source | `docker pull owasp/zap2docker-stable` |
+| **sqlmap** | SQL Injection | `apt install sqlmap` |
+| **XSStrike** | XSS detection | `git clone https://github.com/s0md3v/XSStrike` |
+| **Dirbuster** | Directory brute force | Incluido en Kali |
+| **Gobuster** | Fuzzing web | `apt install gobuster` |
+
+---
+
+## 4. Password Attacks
+
+| Herramienta | Propósito | Instalación |
+|-------------|-----------|-------------|
+| **John the Ripper** | Password cracking | `apt install john` |
+| **Hashcat** | GPU password cracking | `apt install hashcat` |
+| **Hydra** | Brute force | `apt install hydra` |
+| **CrackMapExec** | Domain credentials | `pip install crackmapexec` |
+| **mimikatz** | Windows credentials | GitHub gentilkiwi |
+
+---
+
+## 5. Active Directory
+
+| Herramienta | Propósito | Instalación |
+|-------------|-----------|-------------|
+| **BloodHound** | AD graph analysis | `apt install bloodhound` |
+| **ldapsearch** | Enumeración LDAP | Incluido |
+| **enum4linux** | Enum SMB | `apt install enum4linux` |
+| **Impacket** | AD exploitation | `pip install impacket` |
+| **Responder** | LLMNR/NBTNS | `apt install responder` |
+| **Kerbrute** | Kerberos brute force | GitHub rokereyej |
+
+---
+
+## 6. Wireless
+
+| Herramienta | Propósito | Instalación |
+|-------------|-----------|-------------|
+| **Aircrack-ng** | WiFi auditing | `apt install aircrack-ng` |
+| **Wifite** | Automatización wireless | `apt install wifite` |
+| **Wireshark** | Packet analysis | `apt install wireshark` |
+| **Fern Wifi Cracker** | GUI WiFi | `apt install fern-wifi-cracker` |
+
+---
+
+## 7. Explotación y Post-Explotación
+
+| Herramienta | Propósito | Instalación |
+|-------------|-----------|-------------|
+| **Metasploit** | Framework exploitation | `apt install metasploit-framework` |
+| **msfvenom** | Payload generation | Incluido en Metasploit |
+| **Cobalt Strike** | Red team (paid) | Commercial |
+| **Covenant** | C2 framework | Docker |
+| **Empire** | Post-exploitation | `git clone` |
+| **Mimikatz** | Credential dumping | Windows only |
+
+---
+
+## 8. Evasión
+
+| Herramienta | Propósito | Instalación |
+|-------------|-----------|-------------|
+| **Invoke-Obfuscation** | PowerShell obfuscation | GitHub danielbohannon |
+| **Veil** | Generate indetectable payloads | `apt install veil` |
+| **UPX** | Packer | `apt install upx` |
+| **DefenderCheck** | Check AV detection | GitHub matterpreter |
+| **Shellter** | Dynamic shellcode injection | `apt install shellter` |
+
+---
+
+## 9. Forense y Análisis
+
+| Herramienta | Propósito | Instalación |
+|-------------|-----------|-------------|
+| **Volatility** | Memory forensics | `pip install volatility3` |
+| **Autopsy** | Disk forensics | `apt install autopsy` |
+| **Binwalk** | Firmware analysis | `apt install binwalk` |
+| **Ghidra** | Reverse engineering | `apt install ghidra` |
+| **BurpSuite Pro** | Web analysis | Commercial |
+
+---
+
+## Instalación Rápida - Entorno Básico
+
+```bash
+# Paquetes esenciales Kali
+sudo apt update
+sudo apt install -y nmap metasploit-framework burpsuite \
+    sqlmap nikto hydra john hashcat enum4linux \
+    responder crackmapexec openvas wireshark aircrack-ng
+
+# Herramientas Python
+pip install impacket bloodhound nuclei sqlmap xsstrike
+
+# Docker containers útiles
+docker pull owasp/zap2docker-stable
+docker pull vulnhub/metasploitable2
+docker pull vulnerables/dvwa
+```
+
+---
+
+## Cheat Sheet: Selección de Herramientas
+
+| Escenario | Herramientas Primary |
+|-----------|---------------------|
+| Pentest web completo | BurpSuite, sqlmap, nuclei |
+| Active Directory | BloodHound, Impacket, CrackMapExec |
+| Wireless audit | Aircrack-ng, Wireshark |
+| Social engineering | Setoolkit, Gophish |
+| Malware analysis | Ghidra, YARA, Floss |
+| Red team | Cobalt Strike / Covenant / Sliver |
+
+---
+
+## Referencias
+
+- Official tool documentation
+- PayloadsAllTheThings (GitHub)
+- HackTricks
+- PTES (Penetration Testing Execution Standard)

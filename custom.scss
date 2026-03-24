@@ -1,58 +1,35 @@
 /*-- scss:defaults --*/
 
-// Color palette - Solar theme overrides
-$primary: #b58900;
-$secondary: #2aa198;
-$success: #859900;
-$danger: #dc322f;
-$warning: #b58900;
-$info: #268bd2;
+// Font imports - Fira Code Nerd Font
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
 
 /*-- scss:rules --*/
 
-// Code blocks - dark background with white text
-pre, code {
-  background-color: #002b36 !important;
-  color: #fff !important;
-  border-radius: 4px;
-  font-family: 'Courier New', Courier, monospace;
+// Code blocks - Fira Code Nerd Font
+pre, code, .code {
+  font-family: 'Fira Code', 'JetBrains Mono', 'Source Code Pro', 'Cascadia Code', monospace !important;
 }
 
-// Headers
-h1, h2, h3, h4, h5, h6 {
-  color: #fff !important;
+// Utility classes matching course_docker
+.center {
+  text-align: center;
 }
 
-// Links
-a {
-  color: #2aa198;
-  &:hover {
-    color: #268bd2;
-  }
+.justify {
+  text-align: justify;
 }
 
-// Navbar
-.navbar {
-  background-color: #073642 !important;
+.container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
 }
 
-// Sidebar
-.sidebar {
-  background-color: #002b36;
-}
-
-// Main content
-main, .body {
-  background-color: #002b36;
-  color: #fff;
-}
-
-// Code block borders
-pre {
-  border: 1px solid #073642;
-}
-
-// Paragraphs
-p {
-  color: #839496;
+.container > iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
