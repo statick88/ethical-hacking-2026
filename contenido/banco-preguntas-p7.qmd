@@ -1,0 +1,63 @@
+# Banco de Preguntas - Parte 7 🎓
+
+### 📦 Bloque 7: Auditoría de APIs y Sistemas Industriales (61-70)
+
+61. **¿Qué herramienta de escaneo web utiliza plantillas (templates) YAML para detectar vulnerabilidades específicas de forma rápida?**
+    - [ ] Nikto.
+    - [X] Nuclei.
+    - [ ] SQLmap.
+    - [ ] Dirb.
+
+62. **En una auditoría de API, ¿qué técnica se usa para descubrir todos los endpoints y tipos de datos de un servicio GraphQL?**
+    - [ ] Fuzzing de diccionarios.
+    - [X] Introspección (Introspection query).
+    - [ ] Inyección SQL.
+    - [ ] Análisis de logs.
+
+63. **¿Cuál es el código de función de Modbus TCP utilizado comúnmente para leer registros de almacenamiento (Holding Registers)?**
+    - [ ] 01
+    - [X] 03
+    - [ ] 05
+    - [ ] 16
+
+64. **¿Qué técnica de evasión de EDR consiste en inyectar código malicioso en el espacio de memoria de un proceso legítimo sin crear nuevos hilos?**
+    - [ ] DLL Hijacking.
+    - [X] Process Ghosting / Hollowing.
+    - [ ] AMSI Bypass.
+    - [ ] Timestomping.
+
+65. **¿Qué es un "Agentic Pentest"?**
+    - [ ] Un pentest realizado por agentes humanos en sitio.
+    - [X] El uso de agentes de IA autónomos que planifican y ejecutan ataques de forma automática basándose en objetivos.
+    - [ ] Un escaneo de vulnerabilidades que requiere un agente instalado en cada host.
+    - [ ] Una auditoría de seguridad física de una oficina.
+
+66. **¿Qué artículo del Código Penal español regula el acceso ilícito a sistemas informáticos (intrusión)?**
+    - [ ] Artículo 155.
+    - [X] Artículo 197 bis.
+    - [ ] Artículo 264.
+    - [ ] Artículo 500.
+
+67. **¿Cuál es la función principal de la herramienta `winPEAS`?**
+    - [ ] Escanear puertos en Windows.
+    - [X] Enumerar automáticamente posibles vectores de escalada de privilegios en sistemas Windows.
+    - [ ] Realizar ataques de denegación de servicio.
+    - [ ] Descifrar hashes de Kerberos.
+
+68. **¿Qué vulnerabilidad de IA ocurre cuando los datos utilizados para entrenar o re-entrenar el modelo contienen ejemplos maliciosos que alteran su comportamiento futuro?**
+    - [ ] Prompt Injection.
+    - [X] Training Data Poisoning.
+    - [ ] Sensitive Info Disclosure.
+    - [ ] Model Theft.
+
+69. **¿Qué herramienta de C2 destaca por su interfaz visual moderna y el uso de "Beacons" similares a Cobalt Strike?**
+    - [ ] Sliver.
+    - [X] Havoc.
+    - [ ] Metasploit.
+    - [ ] PoshC2.
+
+70. **¿Cuál de las siguientes es una técnica "Antiforense" para ocultar la actividad en un sistema comprometido?**
+    - [ ] Ejecutar un escaneo de puertos.
+    - [X] Limpiar los registros de eventos de Windows (Event Logs).
+    - [ ] Crear un nuevo usuario administrador.
+    - [ ] Descargar herramientas desde GitHub.

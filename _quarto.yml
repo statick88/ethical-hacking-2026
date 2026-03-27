@@ -103,6 +103,18 @@ book:
         - contenido/apendice-puertos.qmd
         - contenido/apendice-herramientas.qmd
         - contenido/apendice-glosario.qmd
+    - part: "Banco de Preguntas"
+      chapters:
+        - contenido/banco-preguntas-p1.qmd
+        - contenido/banco-preguntas-p2.qmd
+        - contenido/banco-preguntas-p3.qmd
+        - contenido/banco-preguntas-p4.qmd
+        - contenido/banco-preguntas-p5.qmd
+        - contenido/banco-preguntas-p6.qmd
+        - contenido/banco-preguntas-p7.qmd
+        - contenido/banco-preguntas-p8.qmd
+        - contenido/banco-preguntas-p9.qmd
+        - contenido/banco-preguntas-p10.qmd
     - part: "Información"
       chapters:
         - about.qmd

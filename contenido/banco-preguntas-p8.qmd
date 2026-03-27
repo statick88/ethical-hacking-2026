@@ -1,0 +1,63 @@
+# Banco de Preguntas - Parte 8 🎓
+
+### 📦 Bloque 8: Persistencia y Movimiento Lateral (71-80)
+
+71. **¿Qué protocolo de red se utiliza para la sincronización de bases de datos de Active Directory y es abusado por el ataque DCSync?**
+    - [ ] SMB.
+    - [ ] Kerberos.
+    - [X] DRSR (Directory Replication Service Remote Protocol).
+    - [ ] LDAP.
+
+72. **En una evaluación de seguridad, el "Reporte Ejecutivo" debe estar orientado a:**
+    - [ ] Los administradores de sistemas y desarrolladores.
+    - [X] La alta dirección y tomadores de decisiones, enfocándose en riesgos de negocio.
+    - [ ] Los auditores externos únicamente.
+    - [ ] El equipo de respuesta a incidentes (Blue Team).
+
+73. **¿Qué vulnerabilidad web permite a un atacante ejecutar código JavaScript en el navegador de otros usuarios de forma permanente?**
+    - [ ] Reflected XSS.
+    - [X] Stored XSS.
+    - [ ] DOM-based XSS.
+    - [ ] SQL Injection.
+
+74. **¿Qué puerto utiliza el servicio LDAP por defecto?**
+    - [ ] 636
+    - [X] 389
+    - [ ] 3268
+    - [ ] 445
+
+75. **¿Qué herramienta se utiliza para el movimiento lateral mediante la ejecución remota de comandos vía WMI?**
+    - [ ] `psexec.py`
+    - [X] `wmiexec.py`
+    - [ ] `smbexec.py`
+    - [ ] `secretsdump.py`
+
+76. **¿Qué es el "Credential Sandboxing" en el contexto de defensa de AD?**
+    - [ ] Ejecutar aplicaciones en un entorno aislado.
+    - [X] Limitar dónde y cómo se pueden usar las credenciales de alta jerarquía para evitar que queden en memoria de equipos inseguros.
+    - [ ] Cifrar las contraseñas con un algoritmo de caja de arena.
+    - [ ] Bloquear el acceso a Internet de los administradores.
+
+77. **¿Qué técnica de evasión de AV/EDR utiliza el bit de "suspendido" en la creación de procesos para inyectar shellcode?**
+    - [ ] Reflective DLL Injection.
+    - [X] Process Hollowing.
+    - [ ] Atom Bombing.
+    - [ ] DLL Proxying.
+
+78. **¿Cuál es el propósito del "Principio de Menor Privilegio"?**
+    - [ ] Dar a todos los usuarios acceso total para evitar bloqueos de trabajo.
+    - [X] Otorgar a cada usuario y proceso solo los permisos mínimos necesarios para realizar su función.
+    - [ ] Asegurar que el administrador tenga la contraseña más corta.
+    - [ ] Bloquear el acceso a todos los usuarios por defecto.
+
+79. **¿Qué vulnerabilidad permite a un atacante leer archivos locales del servidor web, como `/etc/passwd`, a través de una aplicación web mal programada?**
+    - [ ] SQLi.
+    - [ ] XSS.
+    - [X] LFI (Local File Inclusion).
+    - [ ] CSRF.
+
+80. **¿Cuál es la principal diferencia entre un "Virus" y un "Gusano" (Worm)?**
+    - [ ] El virus es más peligroso que el gusano.
+    - [ ] El virus requiere intervención humana para propagarse (ej. ejecutar un archivo), mientras que el gusano se propaga automáticamente por la red.
+    - [ ] El gusano solo afecta a sistemas Linux.
+    - [ ] El virus se oculta en el sector de arranque y el gusano no.

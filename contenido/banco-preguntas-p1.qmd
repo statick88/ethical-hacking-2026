@@ -1,0 +1,63 @@
+# Banco de Preguntas - Parte 1 🎓
+
+### 📦 Bloque 1: Fundamentos y Reconocimiento (1-10)
+
+1. **¿Cuál es el propósito principal del uso de las flags `-sV` y `-sC` en un escaneo de Nmap?**
+   - [ ] Realizar un escaneo de puertos rápido ignorando servicios.
+   - [X] Detectar versiones de servicios y ejecutar scripts de enumeración estándar.
+   - [ ] Ejecutar un ataque de denegación de servicio Slowloris.
+   - [ ] Escanear únicamente puertos UDP.
+
+2. **En el modelo de responsabilidad compartida de la IA, ¿qué vulnerabilidad ocurre cuando un atacante manipula el comportamiento del LLM mediante instrucciones en lenguaje natural?**
+   - [ ] Inyección de SQL en la base de datos del modelo.
+   - [ ] Ataque de denegación de servicio distribuido (DDoS).
+   - [X] Prompt Injection (Inyección de Prompt).
+   - [ ] Envenenamiento de datos de entrenamiento (Data Poisoning).
+
+3. **¿Cuál de las siguientes fases del pentesting según el estándar PTES se enfoca en la recolección de información y modelado de amenazas antes de la explotación?**
+   - [ ] Post-Explotación.
+   - [X] Intelligence Gathering.
+   - [ ] Reporting.
+   - [ ] Lateral Movement.
+
+4. **¿Qué técnica permite extraer tickets TGS de la memoria para crackearlos offline y obtener contraseñas de cuentas de servicio en Active Directory?**
+   - [ ] Pass-the-Hash (PtH).
+   - [X] Kerberoasting.
+   - [ ] Golden Ticket Attack.
+   - [ ] AS-REP Roasting.
+
+5. **El parámetro "Temperatura" en un modelo de lenguaje (LLM) controla:**
+   - [ ] La velocidad de respuesta del servidor.
+   - [X] La aleatoriedad y creatividad de las respuestas generadas.
+   - [ ] El número de tokens máximos por petición.
+   - [ ] El nivel de cifrado de la conexión TLS.
+
+6. **¿Qué protocolo de seguridad en redes Zero Trust exige que tanto el cliente como el servidor presenten certificados válidos para establecer la conexión?**
+   - [ ] HTTP con cifrado AES-256.
+   - [X] mTLS (Mutual Transport Layer Security).
+   - [ ] Wireguard VPN.
+   - [ ] DNS Tunneling.
+
+7. **¿Cuál es el comando de Gobuster más eficiente para descubrir subdominios de forma activa utilizando un diccionario?**
+   - [X] `gobuster dns -d dominio.com -w subdomains.txt`
+   - [ ] `subfinder -d dominio.com`
+   - [ ] `nmap --script dns-brute dominio.com`
+   - [ ] `masscan -p53 dominio.com`
+
+8. **La vulnerabilidad BOLA (Broken Object Level Authorization) en APIs se caracteriza por:**
+   - [ ] El uso de algoritmos de cifrado débiles en JWT.
+   - [X] La falta de validación de que el usuario tiene permiso para acceder a un ID específico de recurso.
+   - [ ] La ejecución de comandos del sistema operativo a través de la API.
+   - [ ] La ausencia de límites de velocidad (Rate Limiting).
+
+9. **¿Qué ataque permite a un adversario interactuar con servicios internos de una red de nube a través de un servidor vulnerable, a menudo para exfiltrar metadatos de instancias?**
+   - [ ] Cross-Site Scripting (XSS).
+   - [X] Server-Side Request Forgery (SSRF).
+   - [ ] Inyección de Comandos del SO.
+   - [ ] Inyección SQL de segundo orden.
+
+10. **¿Cuál es la técnica de evasión que consiste en sobreescribir las instrucciones de la librería `amsi.dll` en memoria para deshabilitar el escaneo de scripts?**
+    - [ ] Modificar el registro para desactivar Windows Defender.
+    - [X] Memory Patching de la función AmsiScanBuffer.
+    - [ ] Renombrar el binario de PowerShell.
+    - [ ] Cifrar el script malicioso con BitLocker.

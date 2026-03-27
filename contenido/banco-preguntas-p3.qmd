@@ -1,0 +1,63 @@
+# Banco de Preguntas - Parte 3 🎓
+
+### 📦 Bloque 3: Técnicas de Ataque y Herramientas (21-30)
+
+21. **¿Qué herramienta destaca por orquestar múltiples escaneos (Nmap, Nikto, Feroxbuster) en paralelo basándose en los puertos abiertos detectados?**
+    - [ ] Microsoft Excel.
+    - [X] AutoRecon.
+    - [ ] Wireshark.
+    - [ ] Hashcat.
+
+22. **¿Qué ataque de Active Directory permite suplantar cualquier identidad en el dominio por un periodo extendido (hasta 10 años) tras comprometer la cuenta `krbtgt`?**
+    - [ ] Silver Ticket.
+    - [X] Golden Ticket.
+    - [ ] Diamond Ticket.
+    - [ ] Skeleton Key.
+
+23. **El concepto de "Jailbreaking" en IA se refiere a:**
+    - [ ] Escalar privilegios en el sistema operativo que aloja el modelo.
+    - [X] El uso de ingeniería social y prompts complejos para evadir los filtros de seguridad del modelo.
+    - [ ] Realizar un ataque de desbordamiento de búfer en la API del LLM.
+    - [ ] Interceptar el tráfico cifrado entre el cliente y la IA.
+
+24. **¿Cuál es el puerto estándar utilizado por el protocolo Kerberos para la autenticación en un dominio de Windows?**
+    - [ ] 445 (SMB)
+    - [ ] 389 (LDAP)
+    - [X] 88 (TCP/UDP)
+    - [ ] 636 (LDAPS)
+
+25. **¿Qué técnica de evasión avanzada consiste en cargar una DLL limpia desde el disco para sobreescribir los hooks del EDR en memoria?**
+    - [ ] DLL Hijacking.
+    - [X] DLL Unhooking.
+    - [ ] Process Hollowing.
+    - [ ] Reflective Loading.
+
+26. **El estándar PTES define una fase de "Pre-engagement Interactions" para:**
+    - [ ] Realizar el primer escaneo de puertos.
+    - [X] Establecer el alcance, las reglas de compromiso y los límites legales del pentest.
+    - [ ] Entregar el reporte final al cliente.
+    - [ ] Realizar el escalamiento de privilegios.
+
+27. **¿Qué metodología de pentesting es conocida por su enfoque científico y el uso del "Carnellie Index" para medir la seguridad?**
+    - [ ] PTES.
+    - [X] OSSTMM.
+    - [ ] OWASP.
+    - [ ] NIST SP 800-115.
+
+28. **¿Cuál es el comando de Nmap para realizar un escaneo UDP rápido de los puertos más comunes?**
+    - [ ] `nmap -sS target`
+    - [X] `nmap -sU -F target`
+    - [ ] `nmap -p- target`
+    - [ ] `nmap -sT target`
+
+29. **En OSINT, ¿qué herramienta se utiliza principalmente para buscar subdominios, correos electrónicos y nombres de usuarios en múltiples fuentes públicas?**
+    - [ ] Nmap.
+    - [X] theHarvester.
+    - [ ] Wireshark.
+    - [ ] Metasploit.
+
+30. **¿Qué vulnerabilidad de la lista OWASP LLM 2025 se refiere al uso de plugins con permisos excesivos por parte de un agente de IA?**
+    - [ ] LLM01: Prompt Injection.
+    - [ ] LLM03: Data Poisoning.
+    - [X] LLM08: Excessive Agency.
+    - [ ] LLM06: Sensitive Info Disclosure.

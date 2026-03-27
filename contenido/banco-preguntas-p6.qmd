@@ -1,0 +1,63 @@
+# Banco de Preguntas - Parte 6 🎓
+
+### 📦 Bloque 6: Pentesting Avanzado y C2 (51-60)
+
+51. **¿Qué puerto utiliza típicamente el servicio de administración remota WinRM (HTTP)?**
+    - [ ] 3389
+    - [ ] 22
+    - [X] 5985
+    - [ ] 443
+
+52. **¿Cuál es la principal función del framework "Sliver" en una operación de Red Team?**
+    - [ ] Escaneo de vulnerabilidades web.
+    - [X] Gestión de implantes y comando y control (C2) de máquinas comprometidas.
+    - [ ] Análisis forense de memoria RAM.
+    - [ ] Crackeo de contraseñas mediante GPU.
+
+53. **¿Qué ataque de Active Directory permite suplantar cualquier servicio de un equipo específico usando el hash de la cuenta de computadora?**
+    - [X] Silver Ticket.
+    - [ ] Golden Ticket.
+    - [ ] DCSync.
+    - [ ] Kerberoasting.
+
+54. **La vulnerabilidad CSRF (Cross-Site Request Forgery) permite a un atacante:**
+    - [ ] Leer las cookies de sesión del usuario.
+    - [X] Forzar al navegador del usuario a realizar acciones no deseadas en una aplicación web donde está autenticado.
+    - [ ] Inyectar código JavaScript en la base de datos.
+    - [ ] Descifrar el tráfico HTTPS.
+
+55. **¿Qué herramienta de "Defense Evasion" permite verificar qué partes de un payload son detectadas por Windows Defender?**
+    - [ ] msfvenom.
+    - [X] DefenderCheck.
+    - [ ] UPX.
+    - [ ] Burp Suite.
+
+56. **En el contexto de Active Directory, ¿qué es el "Pivoting"?**
+    - [ ] Cambiar la contraseña de un usuario mediante fuerza bruta.
+    - [X] Usar una máquina comprometida como puente para acceder a otras redes que no son accesibles directamente.
+    - [ ] Escalar privilegios de usuario local a administrador.
+    - [ ] Realizar un escaneo de puertos desde Internet.
+
+57. **¿Qué ataque consiste en enviar peticiones HTTP maliciosas para que un servidor web realice peticiones en nombre del atacante hacia su propia infraestructura interna?**
+    - [ ] XSS.
+    - [ ] SQLi.
+    - [X] SSRF.
+    - [ ] LFI.
+
+58. **¿Cuál es la puntuación máxima en el sistema CVSS v3.1 y qué severidad representa?**
+    - [ ] 5.0 (Media)
+    - [ ] 7.5 (Alta)
+    - [X] 10.0 (Crítica)
+    - [ ] 1.0 (Baja)
+
+59. **¿Qué técnica de post-explotación permite modificar la fecha de creación y acceso de un archivo para confundir el análisis forense?**
+    - [ ] Obfuscation.
+    - [X] Timestomping.
+    - [ ] Artifact Wiping.
+    - [ ] Data Dumping.
+
+60. **El ataque "Golden Ticket" requiere el compromiso previo de:**
+    - [ ] El Administrador del Dominio.
+    - [X] El hash de la cuenta `krbtgt`.
+    - [ ] La base de datos SQL del servidor.
+    - [ ] El firewall perimetral.

@@ -1,0 +1,63 @@
+# Banco de Preguntas - Parte 10 🎓
+
+### 📦 Bloque 10: Ética, IA y Reporte (91-100)
+
+91. **¿Qué vulnerabilidad de la lista OWASP Top 10 2025 se refiere a la falta de mecanismos para detectar y responder a brechas de seguridad de forma oportuna?**
+    - [ ] A01: Broken Access Control.
+    - [ ] A05: Security Misconfiguration.
+    - [X] A09: Security Logging and Monitoring Failures.
+    - [ ] A10: Server-Side Request Forgery.
+
+92. **¿Qué técnica permite ejecutar código malicioso en el contexto de un proceso de navegador web mediante la manipulación del DOM?**
+    - [ ] Reflected XSS.
+    - [X] DOM-based XSS.
+    - [ ] SQLi.
+    - [ ] CSRF.
+
+93. **¿Cuál es el propósito de un "Honeypot" en una red corporativa?**
+    - [ ] Acelerar la conexión a Internet de los empleados.
+    - [X] Actuar como una trampa para detectar, desviar o estudiar intentos de uso no autorizado de los sistemas.
+    - [ ] Almacenar copias de seguridad de las bases de datos.
+    - [ ] Filtrar el spam de los correos electrónicos.
+
+94. **¿Qué ataque de denegación de servicio (DoS) contra LLMs consiste en enviar inputs diseñados para forzar el máximo consumo de tokens y capacidad de procesamiento?**
+    - [ ] Prompt Injection.
+    - [X] Model Denial of Service.
+    - [ ] Training Data Poisoning.
+    - [ ] Model Theft.
+
+95. **¿Qué herramienta se utiliza para auditar la seguridad de las configuraciones de Azure AD / Entra ID?**
+    - [ ] Nmap.
+    - [X] AADInternals / ROADtools.
+    - [ ] Metasploit.
+    - [ ] SQLmap.
+
+96. **¿Qué es el "Pivoting" mediante SSH Tunneling (Local Forwarding)?**
+    - [ ] Usar SSH para cifrar el disco duro.
+    - [X] Redirigir un puerto de la máquina atacante a través del servidor SSH hacia un puerto en la red interna de la víctima.
+    - [ ] Escalar privilegios a root en el servidor SSH.
+    - [ ] Realizar un ataque de fuerza bruta contra el servicio SSH.
+
+97. **¿Cuál de los siguientes es un marco legal europeo que obliga a las empresas a proteger los datos personales y notificar brechas en 72 horas?**
+    - [ ] NIST.
+    - [X] GDPR (RGPD).
+    - [ ] PCI-DSS.
+    - [ ] HIPAA.
+
+98. **¿Qué técnica de evasión de antivirus utiliza algoritmos polimórficos para cambiar la firma del malware en cada ejecución?**
+    - [ ] UPX Packing.
+    - [X] Shikata-Ga-Nai (u otros encoders polimórficos).
+    - [ ] Timestomping.
+    - [ ] Obfuscation manual.
+
+99. **En un reporte de pentesting, el "Resumen Ejecutivo" debe evitar:**
+    - [ ] Mencionar los riesgos de negocio.
+    - [X] Usar lenguaje excesivamente técnico, líneas de comandos o código fuente detallado.
+    - [ ] Indicar el alcance de la prueba.
+    - [ ] Proponer recomendaciones generales de seguridad.
+
+100. **¿Cuál es la regla de oro número uno de un Pentester ético?**
+    - [ ] Ser el más rápido encontrando vulnerabilidades.
+    - [ ] Usar las herramientas más caras del mercado.
+    - [X] Nunca realizar ninguna prueba de seguridad sin una autorización escrita y firmada por el propietario del sistema (Permiso para Atacar).
+    - [ ] Ganar el máximo dinero posible en programas de Bug Bounty.

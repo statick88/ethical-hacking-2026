@@ -1,0 +1,63 @@
+# Banco de Preguntas - Parte 2 🎓
+
+### 📦 Bloque 2: Infraestructura y Sistemas (11-20)
+
+11. **En el Modelo Purdue de seguridad industrial, ¿en qué nivel se encuentran típicamente los PLCs y controladores de procesos físicos?**
+    - [ ] Nivel 4 (Red Corporativa).
+    - [ ] Nivel 3 (DMZ Industrial).
+    - [X] Nivel 1 (Control Básico).
+    - [ ] Nivel 5 (Internet).
+
+12. **¿Qué protocolo industrial transmite datos en texto plano y carece de autenticación nativa, permitiendo la manipulación directa de PLCs?**
+    - [ ] HTTPS con TLS 1.3.
+    - [X] Modbus TCP.
+    - [ ] SSH (Secure Shell).
+    - [ ] MQTT con certificados.
+
+13. **¿Cuál es el archivo en sistemas Linux que contiene los hashes de las contraseñas y solo es legible por el usuario root?**
+    - [ ] `/etc/passwd`
+    - [X] `/etc/shadow`
+    - [ ] `/var/log/auth.log`
+    - [ ] `/root/.bash_history`
+
+14. **¿Cuál de los siguientes es un "LOLBin" utilizado frecuentemente para descargar archivos maliciosos evadiendo detecciones de red?**
+    - [ ] `whoami.exe`
+    - [X] `certutil.exe`
+    - [ ] `notepad.exe`
+    - [ ] `calc.exe`
+
+15. **¿Qué módulo de Burp Suite es el más adecuado para realizar un ataque de fuerza bruta automatizado contra un formulario de login?**
+    - [ ] Decoder.
+    - [ ] Repeater.
+    - [X] Intruder.
+    - [ ] Proxy.
+
+16. **El ataque DCSync se aprovecha de una característica legítima de Active Directory para:**
+    - [ ] Ejecutar código remoto en el Controlador de Dominio.
+    - [X] Simular la replicación de datos para extraer hashes de contraseñas de cualquier usuario.
+    - [ ] Realizar un ataque de denegación de servicio al DNS.
+    - [ ] Escalar privilegios mediante vulnerabilidades del kernel.
+
+17. **¿Qué componente de Metasploit se encarga de esperar y gestionar la conexión entrante desde una víctima comprometida?**
+    - [ ] `auxiliary/scanner`
+    - [X] `exploit/multi/handler`
+    - [ ] `payload/windows/x64/meterpreter`
+    - [ ] `post/multi/gather`
+
+18. **¿Qué técnica de persistencia en Windows utiliza las llaves del Registro para ejecutar un binario cada vez que el usuario inicia sesión?**
+    - [ ] Scheduled Tasks.
+    - [X] Run Keys (HKCU\\...\\Run).
+    - [ ] WMI Event Subscription.
+    - [ ] DLL Sideloading.
+
+19. **La "extracción de datos de entrenamiento" en LLMs es un riesgo de privacidad que ocurre cuando:**
+    - [ ] El modelo es robado mediante ingeniería inversa.
+    - [X] El modelo memoriza y revela información sensible (PII) presente en su dataset original.
+    - [ ] El atacante inyecta datos maliciosos durante el fine-tuning.
+    - [ ] El usuario agota los tokens del sistema mediante ataques de DoS.
+
+20. **¿Cuál es la técnica de post-explotación en Linux que busca archivos con permisos especiales para ejecutar comandos con privilegios de propietario?**
+    - [ ] Enumeración de procesos.
+    - [X] Búsqueda de binarios con el bit SUID activo.
+    - [ ] Análisis de logs de Apache.
+    - [ ] Revisión del historial de comandos `.bash_history`.
